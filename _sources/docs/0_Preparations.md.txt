@@ -57,7 +57,7 @@ GitとはPC内でコードの履歴管理をおこなうことによりファイ
 
 * MacにはTerminalがもともとインストールされている。
 * WindowsにGitをインストールする際，Git Bashは一緒に自動でインストールされる。
-* TerminalとGit Bashは，コマンド（例えば，`ls`）を入力し，そのコマンドを実行することによりPCを制御する。これらを使う理由はCLI（Command Line Interface）を通してGitとGithubを使うためである。
+* TerminalとGit Bashは，コマンド（例えば，`ls`）を入力し，そのコマンドを実行することによりPCを制御する。これらを使う理由はCLI（Command Line Interface）を通してGitとGitHubを使うためである。
 * WindowsではAnaconda Promptも使うことができるが，ここではGit Bashだけを取り上げる。
 * Git Bashは，WindowsでもMacのTerminalと同じCLIが使えるように開発されたものなので，コマンド（次の「３種のコマンド」も含めて）は共通である。
 
@@ -276,8 +276,10 @@ GitHubとは，コードとコードの履歴をクラウド上で管理し，�
 
 * **ゼミのための設定**
     * ゼミ用レポのGitHubウェブページを開く。README.mdの内容が表示されているはず
-    * Settings -> Collaborators & teams を開き，春山のユーザー名`spring-haru`を Collaborators に追加し，Permission Level　を Read に設定する。
-    * この設定により，春山だけがそれぞれの学生のレポを閲覧することが可能となる。
+    * 以下の設定をおこない，春山だけがそれぞれの学生のレポを閲覧することが可能となる。
+        * Settings -> Manage access を開き， Invite a collaborator と書かれた緑色のボタンを押す。
+        * 出てきたポップアップに春山のユーザー名`spring-haru`を入力すると春山の名前が出てくるのでマウスで選択する。
+        * Add spring-haru to ... と書かれた緑色のボタンをおす。
 
 ```{warning}
 コンフリクトの問題発生を防ぐためにGitHubのサイトで直接ファイルを変更**しないように！**もし変更した場合は，パソコンで該当ファイルを変更する**前に必ず**以下のコードを実行すること。
