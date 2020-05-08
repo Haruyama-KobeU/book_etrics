@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>単回帰分析（Simple Regression） &#8212; Pythonで学ぶ入門計量経済学</title>
+    <title>単回帰分析 &#8212; Pythonで学ぶ入門計量経済学</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
@@ -107,7 +107,7 @@
       <a href="7_Review_of_Statistics.html">統計学の簡単な復習</a>
     </li>
     <li class="active">
-      <a href="">単回帰分析（Simple Regression）</a>
+      <a href="">単回帰分析</a>
     </li>
     <li class="">
       <a href="9_dummy.html">重回帰分析</a>
@@ -218,19 +218,19 @@
     <ul class="nav section-nav flex-column">
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#id1" class="nav-link">用語集</a>
+            <a href="#id2" class="nav-link">用語集</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#id2" class="nav-link">説明</a>
+            <a href="#id3" class="nav-link">説明</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#id3" class="nav-link">データ</a>
+            <a href="#id4" class="nav-link">データ</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#id4" class="nav-link">「手計算」</a>
+            <a href="#id5" class="nav-link">「手計算」</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -238,22 +238,22 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#id5" class="nav-link">図</a>
+            <a href="#id6" class="nav-link">図</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#id6" class="nav-link">モデルの適合度</a>
+            <a href="#id7" class="nav-link">モデルの適合度</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#id7" class="nav-link">変数の変換</a><ul class="nav section-nav flex-column">
+            <a href="#id8" class="nav-link">変数の変換</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id8" class="nav-link">方法１：回帰式を直接書き換える</a>
+            <a href="#id9" class="nav-link">方法１：回帰式を直接書き換える</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id9" class="nav-link">方法２：事前に変数を作成</a>
+            <a href="#id10" class="nav-link">方法２：事前に変数を作成</a>
         </li>
     
             </ul>
@@ -263,23 +263,23 @@
             <a href="#ols" class="nav-link">シミュレーション：OLS推定</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id10" class="nav-link">母集団の考え方</a>
+            <a href="#id11" class="nav-link">母集団の考え方</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id11" class="nav-link">プラン</a>
+            <a href="#id12" class="nav-link">プラン</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id12" class="nav-link">シミュレーション</a>
+            <a href="#id13" class="nav-link">シミュレーション</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id13" class="nav-link">関数化</a>
+            <a href="#id14" class="nav-link">関数化</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id14" class="nav-link">ループを使ってシミュレーション</a>
+            <a href="#id15" class="nav-link">ループを使ってシミュレーション</a>
         </li>
     
             </ul>
@@ -296,10 +296,10 @@
         
               <div>
                 
-  <div class="section" id="simple-regression">
-<h1>単回帰分析（Simple Regression）<a class="headerlink" href="#simple-regression" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id1">
-<h2>用語集<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="id1">
+<h1>単回帰分析<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2>用語集<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>横断面データ（cross-sectional data）</p>
 <ul>
@@ -391,6 +391,7 @@
 <li><p>モデル = models</p>
 <ul class="simple">
 <li><p>母集団のパラメータを推定するために使う回帰式</p></li>
+<li><p>最小二乗法推定法は，推定方法でありモデルではないので注意しよう。</p></li>
 </ul>
 </li>
 <li><p>残差 ＝ residuals</p>
@@ -405,9 +406,9 @@
 </li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h2>説明<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>説明変数が１つの回帰式を考える。</p>
+<div class="section" id="id3">
+<h2>説明<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>説明変数が１つの単回帰（Simple Regression）を考える。</p>
 <div class="math notranslate nohighlight">
 \[y_i=\beta_0+\beta_1 x_i + u_i\]</div>
 <ul class="simple">
@@ -462,10 +463,10 @@
 <div class="math notranslate nohighlight">
 \[\hat{u}_i=y_i-\hat{y}_i\]</div>
 <p>データを使ってPythonの使い方を説明するが，次の世界的に有名な教科書のデータを使う。</p>
-<p>J.M. Wooldridge (2016) <em>Introductory Econometrics: A Modern Approach</em>, Cengage Learning, 6th edition.</p>
+<p>J.M. Wooldridge (2019) <em>Introductory Econometrics: A Modern Approach</em>, Cengage Learning, 7th edition.</p>
 </div>
-<div class="section" id="id3">
-<h2>データ<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2>データ<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -730,14 +731,13 @@ memory usage: 8.3 KB
 </div></div></div>
 </div>
 </div>
-<div class="section" id="id4">
-<h2>「手計算」<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>「手計算」<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>まず上で示した<span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>と<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の式を使い計算する。</p>
-<p>共分散</p>
+<p>まず分散共分散行列を計算する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mat_wage_educ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;wage&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">])</span>
-<span class="n">cov_wage_educ</span> <span class="o">=</span> <span class="n">mat_wage_educ</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 <span class="n">mat_wage_educ</span>
 </pre></div>
 </div>
@@ -749,7 +749,34 @@ memory usage: 8.3 KB
 </div>
 </div>
 </div>
-<p>分散</p>
+<p>共分散の値を<code class="docutils literal notranslate"><span class="pre">cov_wage_edu</span></code>に割り当てる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cov_wage_educ</span> <span class="o">=</span> <span class="n">mat_wage_educ</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">cov_wage_educ</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>4.15086399857298
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">wage</span></code>と<code class="docutils literal notranslate"><span class="pre">educ</span></code>の分散</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mat_wage_educ</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">mat_wage_educ</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(13.638884363775007, 7.667485062466051)
+</pre></div>
+</div>
+</div>
+</div>
+<p>次のように計算しても同じ値となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var_wage</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -954,8 +981,8 @@ dtype: float64
 Dep. Variable:                   wage   R-squared:                       0.165
 Model:                            OLS   Adj. R-squared:                  0.163
 Method:                 Least Squares   F-statistic:                     103.4
-Date:                Thu, 07 May 2020   Prob (F-statistic):           2.78e-22
-Time:                        21:59:28   Log-Likelihood:                -1385.7
+Date:                Fri, 08 May 2020   Prob (F-statistic):           2.78e-22
+Time:                        20:35:42   Log-Likelihood:                -1385.7
 No. Observations:                 526   AIC:                             2775.
 Df Residuals:                     524   BIC:                             2784.
 Df Model:                           1                                         
@@ -1005,8 +1032,8 @@ educ           0.5414      0.053     10.167      0.000       0.437       0.646
 </div>
 <p>OLS推定の結果を割り当てた<code class="docutils literal notranslate"><span class="pre">res</span></code>には，ここで説明した以外に数多くの属性が存在する。それらに関する説明は<a class="reference external" href="https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.RegressionResults.html">このサイト</a>を参照すること。</p>
 </div>
-<div class="section" id="id5">
-<h2>図<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2>図<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>予測値の取得</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1028,12 +1055,12 @@ educ           0.5414      0.053     10.167      0.000       0.437       0.646
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8_Simple_Regression_59_0.png" src="../_images/8_Simple_Regression_59_0.png" />
+<img alt="../_images/8_Simple_Regression_63_0.png" src="../_images/8_Simple_Regression_63_0.png" />
 </div>
 </div>
 </div>
-<div class="section" id="id6">
-<h2>モデルの適合度<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h2>モデルの適合度<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>SST（Total Sum of Squares; 全変動の平方和）</p></li>
 </ul>
@@ -1162,11 +1189,11 @@ R^2
 </div>
 </div>
 </div>
-<div class="section" id="id7">
-<h2>変数の変換<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<p>上の回帰分析では被説明変数は<code class="docutils literal notranslate"><span class="pre">wage</span></code>をそのまま使ったが，労働経済学では賃金の対数をとり推定するのが一般的であり，そのような式を賃金方程式と呼ぶ。その考えに沿って，ここでは<code class="docutils literal notranslate"><span class="pre">wage</span></code>の自然対数変換をおこない回帰分析をおこなう。</p>
 <div class="section" id="id8">
-<h3>方法１：回帰式を直接書き換える<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<h2>変数の変換<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>上の回帰分析では被説明変数は<code class="docutils literal notranslate"><span class="pre">wage</span></code>をそのまま使ったが，労働経済学では賃金の対数をとり推定するのが一般的であり，そのような式を賃金方程式と呼ぶ。その考えに沿って，ここでは<code class="docutils literal notranslate"><span class="pre">wage</span></code>の自然対数変換をおこない回帰分析をおこなう。</p>
+<div class="section" id="id9">
+<h3>方法１：回帰式を直接書き換える<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1</span> <span class="o">=</span> <span class="s1">&#39;np.log(wage) ~ educ&#39;</span>
@@ -1213,12 +1240,12 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8_Simple_Regression_78_0.png" src="../_images/8_Simple_Regression_78_0.png" />
+<img alt="../_images/8_Simple_Regression_82_0.png" src="../_images/8_Simple_Regression_82_0.png" />
 </div>
 </div>
 </div>
-<div class="section" id="id9">
-<h3>方法２：事前に変数を作成<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h3>方法２：事前に変数を作成<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p>方法１では回帰式を直接書き換えたが、ここでは事前に変数を新しく生成し推定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1270,15 +1297,15 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8_Simple_Regression_85_0.png" src="../_images/8_Simple_Regression_85_0.png" />
+<img alt="../_images/8_Simple_Regression_89_0.png" src="../_images/8_Simple_Regression_89_0.png" />
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="ols">
 <h2>シミュレーション：<span class="math notranslate nohighlight">\(OLS\)</span>推定<a class="headerlink" href="#ols" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id10">
-<h3>母集団の考え方<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3>母集団の考え方<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>分析の対象となる共通の属性などを持つ個人・企業・産業・地域・国などの集合体といえる。ここで重要な点は母集団の大きさとランダム抽出の関係である。</p>
 <ul class="simple">
 <li><p>「人間の身長」の母集団：地球上の人間</p>
@@ -1300,8 +1327,8 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </li>
 </ul>
 </div>
-<div class="section" id="id11">
-<h3>プラン<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h3>プラン<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <p>回帰分析の理解を深めるするためにシミュレーションを以下の手順でおこなう。</p>
 <p><strong>＜Step 1＞</strong></p>
 <ul>
@@ -1343,8 +1370,8 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </li>
 </ul>
 </div>
-<div class="section" id="id12">
-<h3>シミュレーション<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h3>シミュレーション<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>母集団のパラメータの設定</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1398,8 +1425,8 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.510553
-Y            0.780676
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.936952
+Y            0.645843
 dtype: float64
 </pre></div>
 </div>
@@ -1407,8 +1434,8 @@ dtype: float64
 </div>
 <p>母集団パラメータと比べると、推定誤差が発生していることがわかる。</p>
 </div>
-<div class="section" id="id13">
-<h3>関数化<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h3>関数化<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">def</span></code>を使って上のコードを関数としてまとめる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1431,8 +1458,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.861679
-X            0.515694
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.905530
+X            0.503505
 dtype: float64
 </pre></div>
 </div>
@@ -1440,8 +1467,8 @@ dtype: float64
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">b0</span></code>，<code class="docutils literal notranslate"><span class="pre">b1</span></code>，<code class="docutils literal notranslate"><span class="pre">su</span></code>変えて計算してみよう。</p>
 </div>
-<div class="section" id="id14">
-<h3>ループを使ってシミュレーション<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id15">
+<h3>ループを使ってシミュレーション<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code>のデータを<code class="docutils literal notranslate"><span class="pre">N</span></code>組用意し（<code class="docutils literal notranslate"><span class="pre">N</span></code>は標本数），<code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定を<code class="docutils literal notranslate"><span class="pre">N</span></code>回おこなう。</p></li>
 <li><p>シミュレーション毎に計算した回帰係数の推定値の分布を図示する。</p></li>
@@ -1474,7 +1501,7 @@ dtype: float64
 <p>シミュレーションの回数</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span><span class="o">=</span><span class="mi">500</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span><span class="o">=</span><span class="mi">1000</span>
 </pre></div>
 </div>
 </div>
@@ -1496,7 +1523,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8_Simple_Regression_121_0.png" src="../_images/8_Simple_Regression_121_0.png" />
+<img alt="../_images/8_Simple_Regression_125_0.png" src="../_images/8_Simple_Regression_125_0.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布</p>
@@ -1508,7 +1535,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8_Simple_Regression_123_0.png" src="../_images/8_Simple_Regression_123_0.png" />
+<img alt="../_images/8_Simple_Regression_127_0.png" src="../_images/8_Simple_Regression_127_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">y</span></code>の理論値を図示</p>
@@ -1526,18 +1553,18 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8_Simple_Regression_125_0.png" src="../_images/8_Simple_Regression_125_0.png" />
+<img alt="../_images/8_Simple_Regression_129_0.png" src="../_images/8_Simple_Regression_129_0.png" />
 </div>
 </div>
 <p>上のコード・ブロックの最後から２行目に<code class="docutils literal notranslate"><span class="pre">f'{N}</span> <span class="pre">rounds</span> <span class="pre">of</span> <span class="pre">OLS</span> <span class="pre">simulation'</span></code>とある。文字列の前に<code class="docutils literal notranslate"><span class="pre">f</span></code>を置き、文字列の中で変数を<code class="docutils literal notranslate"><span class="pre">{}</span></code>で囲むと変数の値を代入してくれるのである。これを<code class="docutils literal notranslate"><span class="pre">f-string</span></code>と呼ぶ。</p>
 <hr class="docutils" />
 <p><strong>＜シミュレーションの含意＞</strong></p>
 <p>まず２つのヒストグラムをみると，値にばらつきがある。これは推定量（<span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>と<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>）が確率変数であるためである。その実現値は，概ね真の値（<span class="math notranslate nohighlight">\(\beta_0=1\)</span>と<span class="math notranslate nohighlight">\(\beta_1=0.5\)</span>）を中心に左右対象に分布している。即ち，推定量は不偏性を満たしている。次の章で簡単に説明するが，上で行ったシミュレーションは不偏推定量に必要な仮定を満たしているのである。</p>
-<p>これを踏まえて，回帰直線の図を考えよう。同じ回帰式を使い<code class="docutils literal notranslate"><span class="pre">N</span></code>回のシミュレーションを行い，<code class="docutils literal notranslate"><span class="pre">N</span></code>個の回帰直線を重ねて描いているためパイプのような形になっている。一方で，実際の実証分析ではこのような繰り返しの試行は不可能であり多くの場合は一度だけである。言い換えると，実証研究では<code class="docutils literal notranslate"><span class="pre">N</span></code>個の回帰直線の中から１つだけを結果として「選んでいる」のと等しい。この意味を更に考えるために，（標本の大きさは所与として）たまたま２組みのデータセットが手に入り，別々の回帰分析を行ったとしよう。その場合，パイプの幅が大きければ大きいほど，２つの回帰直線の位置は大きく異なる可能性が高くなり，正確性が低い結果になる。逆に，パイプの幅が小さければ小さいほど，２つの結果は似たものになり，より正確な推定結果となる。このように実証分析ではパイプの幅が可能な限り小さくなる工夫が必要になる。その１つが標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code>である。直感的にわかると思うが，<code class="docutils literal notranslate"><span class="pre">n</span></code>が増えるとパイプは細くなり，極限<span class="math notranslate nohighlight">\(n\rightarrow\infty\)</span>（即ち，標本の大きさと母集団の大きさの差が限りなくゼロに近づく）ではパイプの形が直線（母集団回帰式）に近づくことは容易にイメージできるのではないだろうか。このように，実証分析において標本の大きさは非常に重要な役割を果たすことになる。</p>
+<p>これを踏まえて，回帰直線の図を考えよう。同じ回帰式を使い<code class="docutils literal notranslate"><span class="pre">N</span></code>回のシミュレーションを行い，<code class="docutils literal notranslate"><span class="pre">N</span></code>個の回帰直線を重ねて描いているためパイプのような形になっている。一方で，実際の実証分析ではこのような繰り返しの試行は不可能であり多くの場合は一度だけである。言い換えると，実証研究では<code class="docutils literal notranslate"><span class="pre">N</span></code>個の回帰直線の中から１つだけを結果として「選んでいる」のと等しい。この意味を更に考えるために，（標本の大きさは所与として）たまたま２組みのデータセットが手に入り，別々の回帰分析を行ったとしよう。その場合，パイプの幅が広ければ広いほど，２つの回帰直線の位置は大きく異なる可能性が高くなり，正確性が低い結果になる。逆に，パイプの幅が狭ければ狭いほど，２つの結果は似たものになり，より正確な推定結果となる。このように実証分析ではパイプの幅が可能な限り小さくなる工夫が必要になる。その１つが標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code>である。直感的にわかると思うが，<code class="docutils literal notranslate"><span class="pre">n</span></code>が増えるとパイプは細くなり，極限<span class="math notranslate nohighlight">\(n\rightarrow\infty\)</span>（即ち，標本の大きさと母集団の大きさの差が限りなくゼロに近づく）ではパイプの形が直線（母集団回帰式）に近づくことは容易にイメージできるのではないだろうか。このように，実証分析において標本の大きさは非常に重要な役割を果たすことになる。</p>
 <p>（注意）</p>
 <ul class="simple">
-<li><p>推定量の<strong>一致性</strong>が満たされる場合に，パイプが母集団回帰式に収束することになるが，標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code>を限りなく増やせば一致性が必ず成立するとは限らない。ある仮定のもとでのみ推定量は一致性を満たすことになる。</p></li>
-<li><p>不偏性は満たさないが一致性を満たす推定量も存在する。</p></li>
+<li><p>このシミュレーションの場合，推定量の<strong>一致性</strong>が満たされているため，パイプが母集団回帰式に収束することになる。しかし一般的に必ずそうなるとは限らない。ある仮定のもとでのみ推定量は一致性を満たすことになる。</p></li>
+<li><p>推定方法によっては，不偏性は満たさないが一致性を満たす推定量も存在する。また，エギゾチックな例になるがその逆もあり得る。</p></li>
 </ul>
 <hr class="docutils" />
 <p>—– Give it a try! —–</p>
