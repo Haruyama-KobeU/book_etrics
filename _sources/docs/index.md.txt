@@ -1,4 +1,25 @@
-# はじめに
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
+
+# Pythonで学ぶ入門計量経済学
+
+```{epigraph}
+春山 鉄源
+
+神戸大学経済学研究科
+```
+
+本書に関するコメントなどは<haruyama@econ.kobe-u.ac.jp>までご連絡ください。
+
+## はじめに
 
 「なぜプログラミング？」文系の経済学の学生が理系のプログラミングを学ぶとなると，まず頭に浮かぶ質問かも知れない。過去にも同じような質問を問うた経済学部の卒業生は多くいると思われる。例えば，Excelのようなスプレッドシートのソフトは1980年代からあり，当時の大学生も使い方を学ぶ際「なぜ？」と思ったことだろう。しかし今ではWord，Excel，PowerPointの使い方は，大学卒業生にとって当たり前のスキルになっている。同じように，AI（人工知能）やビッグデータが注目を浴びる社会では，ある程度のプログラミング能力も経済学部卒業生にとって当たり前のスキルになると予測される。実際，文系出身でプログラミングとは縁のなかったある大手新聞社の記者の話では，社内で`Python`の研修を受けており，仕事に活かすことが期待されているという。また，プログラミングを学ぶ重要性を象徴するかのように，2020年度からは小学校でプログラミング的思考を育成する学習指導要領が実施され，続いて中高教育でもプログラミングに関する内容・科目が充実される予定である。このようにプログラミングのスキルの重要性は益々大きくなると思われる。
 
@@ -16,17 +37,21 @@ Stack Overflowとは，プログラミングに関する質問をすると参加
 
 このような背景の下，本書の目的は基本的な`Python`の使い方を学び，入門レベルの計量経済学を`Python`を使って学ぶことである。換言すると，計量経済学を通して`Python`の使い方を学ぶことである。本書を通して学ぶ`Python`の知識は，他分野への応用に大いに役立つと期待される。また`Python`を使い推定だけではなくシミュレーションもおこなうため，計量経済学の教科書で学ぶ推定量の性質などを直に感じ取り，計量経済学の復習にも役立つであろう。第１部では，`Python`の基礎を学び，第２部では計量経済分析に`Python`をどのように使うかを解説する。第３部では番外編として，関連するトピックに言及する。
 
-```{note}
-本書の計量経済学の説明は世界的に有名な学部レベルの教科書であるWooldridge (2019)を参考にしている。またこの本で扱われるデータを使い推定をおこなう。
+## 参考書
+本書では世界的に有名な学部レベルの教科書であるWooldridge (2019)を参考にしている。またこの本で扱われるデータを使い推定をおこなう。
 
-Introductory Econometrics: A Modern Approach, 7th ed, by J.M. Wooldridge
+> Introductory Econometrics: A Modern Approach, 7th ed, by J.M. Wooldridge
 
 残念ながら邦訳はないが，読者には是非英語で読んで欲しい教科書である。
+
+## 本書で使うPythonとパッケージのバージョン：
+```{code-cell} python3
+import numpy, scipy, pandas, matplotlib, statsmodels, linearmodels, wooldridge, see, lmdiag
+from platform import python_version
+
+package = ['Python:','numpy:','scipy:','pandas','matplotlib','statsmodels','linearmodels','see','wooldridge','lmdiag']
+version = [python_version(),numpy.__version__,scipy.__version__,pandas.__version__,matplotlib.__version__,statsmodels.__version__,linearmodels.__version__,see.__version__,'0.3.0','0.3.7']
+
+for pack, ver in zip(package,version):
+    print('{0:14}{1}'.format(pack,ver))
 ```
-
----
-本書に関するコメントなどありましたら<haruyama@econ.kobe-u.ac.jp>までご連絡ください。
-
-神戸大学経済学研究科
-
-春山 鉄源
