@@ -856,28 +856,28 @@ dtype: float64
 \[\text{Var}\left(u|X\right)=\sigma^2\]</div>
 <hr class="docutils" />
 <p>仮定１〜５をガウス・マルコフ仮定（横断回帰分析のGM仮定）と呼び，この下では以下が成立する。</p>
-<ol class="simple">
-<li><p>誤差分散の推定量 <span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span>の平均は母集団の値と等しい（誤差分散の不偏推定量）。</p></li>
-</ol>
+<ol>
+<li><p>誤差分散の推定量 <span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span>の平均は母集団の値と等しい（誤差分散の不偏推定量）。</p>
 <div class="math notranslate nohighlight">
 \[
-\text{E}\left(\hat{\sigma}^2\right)=\sigma^2
-\]</div>
+    \text{E}\left(\hat{\sigma}^2\right)=\sigma^2
+    \]</div>
 <p>ここで，<span class="math notranslate nohighlight">\(\hat{\sigma}^2=\dfrac{\sum_{i=1}^n\hat{u}_i^2}{n-k-1}=\dfrac{SSR}{n-k-1}\)</span>
 であり，<span class="math notranslate nohighlight">\(\hat{u}_i=y_i-\hat{y}_i\)</span>はOLS残差であり，<span class="math notranslate nohighlight">\(SSR\)</span>は残差の二乗平方和。<span class="math notranslate nohighlight">\(\hat{\sigma}\)</span>にはさまざまな呼称があり，the Standard Error of Regression, the Standard Error of the Estimate, the Root Mean Squared Errorがある。</p>
-<ol class="simple">
-<li><p>OLS係数の（標本）分散の推定量（<span class="math notranslate nohighlight">\(\sigma^2\)</span>に<span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span>代入されている）</p></li>
-</ol>
+</li>
+<li><p>OLS係数の（標本）分散の推定量（<span class="math notranslate nohighlight">\(\sigma^2\)</span>に<span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span>代入されている）</p>
 <div class="math notranslate nohighlight">
 \[
-\widehat{\text{Var}}\left(\hat{\beta}_j\right)
-=\dfrac{\hat{\sigma}^2}{SST_j\left(1-R_j^2\right)}
-=\dfrac{1}{n-1}\cdot
-\dfrac{\hat{\sigma}^2}{\text{Var}(x_j)}\cdot
-\dfrac{1}{1-R_j^2}
-\]</div>
+    \widehat{\text{Var}}\left(\hat{\beta}_j\right)
+    =\dfrac{\hat{\sigma}^2}{SST_j\left(1-R_j^2\right)}
+    =\dfrac{1}{n-1}\cdot
+    \dfrac{\hat{\sigma}^2}{\text{Var}(x_j)}\cdot
+    \dfrac{1}{1-R_j^2}
+    \]</div>
 <p>ここで，<span class="math notranslate nohighlight">\(\text{Var}(x_j)=(n-1)^{-1}\sum_{i=1}^n\left(x_{ij}-\overline{x}_j\right)\)</span>であり，<span class="math notranslate nohighlight">\(R_j^2\)</span>は<span class="math notranslate nohighlight">\(x_j\)</span>を他の全ての説明変数に回帰分析する際の決定係数である。
 <span class="math notranslate nohighlight">\(\widehat{\text{Var}}\left(\hat{\beta}_j\right)\)</span>はOLS推定量<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>の正確性を捉え，低ければより高い正確性を示す。（「なぜ分散？」と思う場合は前章のシミュレーション１で，標本のランダム抽出を行うたびに，<span class="math notranslate nohighlight">\(\hat{\beta}\)</span>の値が変わったことを思い出そう。）</p>
+</li>
+</ol>
 <hr class="docutils" />
 <p>パラメータの分散の推定値の式から以下が分かる。</p>
 <ul class="simple">
@@ -1021,9 +1021,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>b0: 0.9956835100360485 
-b1: 0.5009802539217736 
-b1: 1.499106763279193
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>b0: 1.005089192734597 
+b1: 0.4968693766629293 
+b1: 1.499956796331402
 </pre></div>
 </div>
 </div>
@@ -1308,7 +1308,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.038448928418760055, 0.10624986783865069)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.039374764663101636, 0.10464498376708284)
 </pre></div>
 </div>
 </div>

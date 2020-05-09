@@ -776,9 +776,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## ガウス・マルコフ定理"
    ]
@@ -786,8 +784,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### 母集団回帰式と標本回帰式"
@@ -879,19 +876,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "### 仮定と望ましい性質"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "* 仮定１：Linear in parameters（母集団回帰式の線形性）\n",
     "    * 母集団のモデルは次式のようにパラメータに関して線形である。\n",
@@ -904,9 +896,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "* 仮定２：Random Sampling（標本の無作為抽出）\n",
     "    * 無作為に$\\left\\{y_i,x_{i1},,x_{i2},...,,x_{ik}\\right\\}$, $i=1,2,...,n$が抽出される。\n",
@@ -920,9 +910,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "* 仮定３：No perfect collinearity（母集団回帰式の説明変数の非完全多重共線性）\n",
     "    * 説明変数$x_j$が他の説明変数の完全な線形結合（例えば，$x_2=1+2x_1$や$x_1=x_2+5x_4$）として表すことができないという意味。もしこの仮定が満たされなければ$x_j$は何の追加的な情報を持たないため。\n",
@@ -931,9 +919,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "* 仮定４：Zero conditional mean（母集団回帰式の誤差項の条件付き期待値は０）\n",
     "\n",
@@ -953,9 +939,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "仮定１〜４の下で母集団パラメータのOLS推定量は不偏性（unbiasedness）を満たす。\n",
@@ -973,9 +957,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "* 仮定５：Homoskedasticity（均一分散; 母集団回帰式の説明変数は誤差項の分散に影響を与えない）\n",
@@ -985,40 +967,36 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "仮定１〜５をガウス・マルコフ仮定（横断回帰分析のGM仮定）と呼び，この下では以下が成立する。\n",
     "1. 誤差分散の推定量 $\\hat{\\sigma}^2$の平均は母集団の値と等しい（誤差分散の不偏推定量）。\n",
     "\n",
-    "$$\n",
-    "\\text{E}\\left(\\hat{\\sigma}^2\\right)=\\sigma^2\n",
-    "$$\n",
+    "    $$\n",
+    "    \\text{E}\\left(\\hat{\\sigma}^2\\right)=\\sigma^2\n",
+    "    $$\n",
     "\n",
-    "ここで，$\\hat{\\sigma}^2=\\dfrac{\\sum_{i=1}^n\\hat{u}_i^2}{n-k-1}=\\dfrac{SSR}{n-k-1}$\n",
-    "であり，$\\hat{u}_i=y_i-\\hat{y}_i$はOLS残差であり，$SSR$は残差の二乗平方和。$\\hat{\\sigma}$にはさまざまな呼称があり，the Standard Error of Regression, the Standard Error of the Estimate, the Root Mean Squared Errorがある。\n",
+    "    ここで，$\\hat{\\sigma}^2=\\dfrac{\\sum_{i=1}^n\\hat{u}_i^2}{n-k-1}=\\dfrac{SSR}{n-k-1}$\n",
+    "    であり，$\\hat{u}_i=y_i-\\hat{y}_i$はOLS残差であり，$SSR$は残差の二乗平方和。$\\hat{\\sigma}$にはさまざまな呼称があり，the Standard Error of Regression, the Standard Error of the Estimate, the Root Mean Squared Errorがある。\n",
     "\n",
     "2. OLS係数の（標本）分散の推定量（$\\sigma^2$に$\\hat{\\sigma}^2$代入されている）\n",
     "\n",
-    "$$\n",
-    "\\widehat{\\text{Var}}\\left(\\hat{\\beta}_j\\right)\n",
-    "=\\dfrac{\\hat{\\sigma}^2}{SST_j\\left(1-R_j^2\\right)}\n",
-    "=\\dfrac{1}{n-1}\\cdot\n",
-    "\\dfrac{\\hat{\\sigma}^2}{\\text{Var}(x_j)}\\cdot\n",
-    "\\dfrac{1}{1-R_j^2}\n",
-    "$$\n",
+    "    $$\n",
+    "    \\widehat{\\text{Var}}\\left(\\hat{\\beta}_j\\right)\n",
+    "    =\\dfrac{\\hat{\\sigma}^2}{SST_j\\left(1-R_j^2\\right)}\n",
+    "    =\\dfrac{1}{n-1}\\cdot\n",
+    "    \\dfrac{\\hat{\\sigma}^2}{\\text{Var}(x_j)}\\cdot\n",
+    "    \\dfrac{1}{1-R_j^2}\n",
+    "    $$\n",
     "\n",
-    "ここで，$\\text{Var}(x_j)=(n-1)^{-1}\\sum_{i=1}^n\\left(x_{ij}-\\overline{x}_j\\right)$であり，$R_j^2$は$x_j$を他の全ての説明変数に回帰分析する際の決定係数である。\n",
-    "$\\widehat{\\text{Var}}\\left(\\hat{\\beta}_j\\right)$はOLS推定量$\\hat{\\beta}_j$の正確性を捉え，低ければより高い正確性を示す。（「なぜ分散？」と思う場合は前章のシミュレーション１で，標本のランダム抽出を行うたびに，$\\hat{\\beta}$の値が変わったことを思い出そう。）"
+    "    ここで，$\\text{Var}(x_j)=(n-1)^{-1}\\sum_{i=1}^n\\left(x_{ij}-\\overline{x}_j\\right)$であり，$R_j^2$は$x_j$を他の全ての説明変数に回帰分析する際の決定係数である。\n",
+    "    $\\widehat{\\text{Var}}\\left(\\hat{\\beta}_j\\right)$はOLS推定量$\\hat{\\beta}_j$の正確性を捉え，低ければより高い正確性を示す。（「なぜ分散？」と思う場合は前章のシミュレーション１で，標本のランダム抽出を行うたびに，$\\hat{\\beta}$の値が変わったことを思い出そう。）"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "パラメータの分散の推定値の式から以下が分かる。\n",
@@ -1029,9 +1007,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "$\\widehat{\\text{Var}}\\left(\\hat{\\beta}_j\\right)$のルートは**OLS推定量の標準誤差**と呼ぶ（パラメータの推定値の標準偏差）。\n",
@@ -1049,9 +1025,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "**ガウス・マルコフ定理**（望ましい性質）\n",
@@ -1064,9 +1038,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "上の回帰分析結果`res_1`を使って，ここで定義した推定値の取得方法を説明する。\n",
@@ -1079,9 +1051,7 @@
   {
    "cell_type": "code",
    "execution_count": 21,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -1101,9 +1071,7 @@
   {
    "cell_type": "code",
    "execution_count": 22,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -1125,9 +1093,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "＜コメント＞\n",
     "\n",
@@ -1136,9 +1102,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "**パラメータの標準誤差 $\\text{se}\\left(\\hat{\\beta}_j\\right)$**\n",
     "\n",
@@ -1148,9 +1112,7 @@
   {
    "cell_type": "code",
    "execution_count": 23,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -1173,9 +1135,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "パラメータの標準誤差は$se$（standard error）だが属性は`bse`となっている。これはパラメータを$b$で表しており，$b$の$se$として覚えれば良いだろう。"
    ]
