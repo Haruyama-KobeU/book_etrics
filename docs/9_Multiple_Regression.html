@@ -864,8 +864,10 @@ dtype: float64
 \text{E}\left(\hat{\sigma}^2\right)=\sigma^2
 \]</div>
 <p>ここで，<span class="math notranslate nohighlight">\(\hat{\sigma}^2=\dfrac{\sum_{i=1}^n\hat{u}_i^2}{n-k-1}=\dfrac{SSR}{n-k-1}\)</span>
-であり，<span class="math notranslate nohighlight">\(\hat{u}_i=y_i-\hat{y}_i\)</span>は<code class="docutils literal notranslate"><span class="pre">OLS</span></code>残差であり，<span class="math notranslate nohighlight">\(SSR\)</span>は残差の二乗平方和。<span class="math notranslate nohighlight">\(\hat{\sigma}\)</span>にはさまざまな呼称があり，the Standard Error of Regression, the Standard Error of the Estimate, the Root Mean Squared Errorがある。
-2. OLS推定値の（標本）分散の推定値（<span class="math notranslate nohighlight">\(\sigma^2\)</span>に<span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span>代入されている）</p>
+であり，<span class="math notranslate nohighlight">\(\hat{u}_i=y_i-\hat{y}_i\)</span>はOLS残差であり，<span class="math notranslate nohighlight">\(SSR\)</span>は残差の二乗平方和。<span class="math notranslate nohighlight">\(\hat{\sigma}\)</span>にはさまざまな呼称があり，the Standard Error of Regression, the Standard Error of the Estimate, the Root Mean Squared Errorがある。</p>
+<ol class="simple">
+<li><p>OLS係数の（標本）分散の推定量（<span class="math notranslate nohighlight">\(\sigma^2\)</span>に<span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span>代入されている）</p></li>
+</ol>
 <div class="math notranslate nohighlight">
 \[
 \widehat{\text{Var}}\left(\hat{\beta}_j\right)
@@ -953,6 +955,7 @@ dtype: float64
 </div>
 </div>
 </div>
+<p>パラメータの標準誤差は<span class="math notranslate nohighlight">\(se\)</span>（standard error）だが属性は<code class="docutils literal notranslate"><span class="pre">bse</span></code>となっている。これはパラメータを<span class="math notranslate nohighlight">\(b\)</span>で表しており，<span class="math notranslate nohighlight">\(b\)</span>の<span class="math notranslate nohighlight">\(se\)</span>として覚えれば良いだろう。</p>
 </div>
 </div>
 <div class="section" id="id10">
@@ -1018,9 +1021,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>b0: 0.9764582322792207 
-b1: 0.5062675526156429 
-b1: 1.4994350835156345
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>b0: 0.9956835100360485 
+b1: 0.5009802539217736 
+b1: 1.499106763279193
 </pre></div>
 </div>
 </div>
@@ -1036,7 +1039,7 @@ b1: 1.4994350835156345
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_82_0.png" src="../_images/9_Multiple_Regression_82_0.png" />
+<img alt="../_images/9_Multiple_Regression_83_0.png" src="../_images/9_Multiple_Regression_83_0.png" />
 </div>
 </div>
 <p>概ね<code class="docutils literal notranslate"><span class="pre">b1</span></code>の真の値<code class="docutils literal notranslate"><span class="pre">0.5</span></code>を中心に左右対象に分布している。</p>
@@ -1060,7 +1063,7 @@ b1: 1.4994350835156345
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_86_0.png" src="../_images/9_Multiple_Regression_86_0.png" />
+<img alt="../_images/9_Multiple_Regression_87_0.png" src="../_images/9_Multiple_Regression_87_0.png" />
 </div>
 </div>
 <p>２つの図を重ねる。</p>
@@ -1078,7 +1081,7 @@ b1: 1.4994350835156345
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_88_0.png" src="../_images/9_Multiple_Regression_88_0.png" />
+<img alt="../_images/9_Multiple_Regression_89_0.png" src="../_images/9_Multiple_Regression_89_0.png" />
 </div>
 </div>
 <p>＜Give it a try!＞</p>
@@ -1296,7 +1299,8 @@ exper 	 1.4776177726317783
 <img alt="../_images/9_Multiple_Regression_120_0.png" src="../_images/9_Multiple_Regression_120_0.png" />
 </div>
 </div>
-<p>多重共線性が高いと推定値の分布は，真の値（<span class="math notranslate nohighlight">\(\beta_1=\)</span><code class="docutils literal notranslate"><span class="pre">0.5</span></code>）の周辺で低くなり左右に広がっている。推定値の正確性が低下することを示している。<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分散を計算してみよう。</p>
+<p>多重共線性が高いと推定値の分布は，真の値（<span class="math notranslate nohighlight">\(\beta_1=\)</span>
+<code class="docutils literal notranslate"><span class="pre">0.5</span></code>）の周辺で低くなり左右に広がっている。推定値の正確性が低下することを示している。<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分散を計算してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">b1hat_0</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">b1hat_1</span><span class="p">)</span>
@@ -1304,7 +1308,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.0392965435345557, 0.11230840131075863)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.038448928418760055, 0.10624986783865069)
 </pre></div>
 </div>
 </div>
@@ -1313,7 +1317,7 @@ exper 	 1.4776177726317783
 <p>以下のシミュレーションをおこない，違いは何か確認しなさい。</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>と<span class="math notranslate nohighlight">\(\hat{\beta}_2\)</span>の分布も図示しなさい。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">sim_multi</span></code>を書き換えて，<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>と<span class="math notranslate nohighlight">\(\hat{\beta}_2\)</span>の標準誤差をプロットし平均を計算しなさい。（ヒント：推定結果の属性<code class="docutils literal notranslate"><span class="pre">bse</span></code>を使う）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sim_multi</span></code>を書き換えて<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>と<span class="math notranslate nohighlight">\(\hat{\beta}_2\)</span>の標準誤差をプロットし，平均を計算しなさい。（ヒント：推定結果の属性<code class="docutils literal notranslate"><span class="pre">bse</span></code>を使う）</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>を変化させて違いを確かめなさい。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">N</span></code>を変化させて違いを確かめなさい。</p></li>
 </ul>
@@ -1335,7 +1339,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_127_0.png" src="../_images/9_Multiple_Regression_127_0.png" />
+<img alt="../_images/9_Multiple_Regression_132_0.png" src="../_images/9_Multiple_Regression_132_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">pandas</span></code>の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>や<code class="docutils literal notranslate"><span class="pre">Series</span></code>には図を作成するメソッド<code class="docutils literal notranslate"><span class="pre">plot()</span></code>が用意されている（裏では<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>が動いている）。例えば，<code class="docutils literal notranslate"><span class="pre">wage1</span></code>にある<code class="docutils literal notranslate"><span class="pre">educ</span></code>のヒストグラムであれば次のコードで図示することができる。</p>
@@ -1372,7 +1376,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_130_0.png" src="../_images/9_Multiple_Regression_130_0.png" />
+<img alt="../_images/9_Multiple_Regression_135_0.png" src="../_images/9_Multiple_Regression_135_0.png" />
 </div>
 </div>
 <p>横軸と縦軸のラベルを確認すること。対角線上はそれぞれの変数のヒストグラム，対角線以外の図はそれぞれのペアの変数の散布図となっており，相関度をある程度目で確認できる。</p>
@@ -1390,7 +1394,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_132_0.png" src="../_images/9_Multiple_Regression_132_0.png" />
+<img alt="../_images/9_Multiple_Regression_137_0.png" src="../_images/9_Multiple_Regression_137_0.png" />
 </div>
 </div>
 <p>次に相関係数を使った方法を紹介する。<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">corr()</span></code>を使うと変数の相関係数を自動的に表示される。</p>
@@ -1478,7 +1482,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_138_0.png" src="../_images/9_Multiple_Regression_138_0.png" />
+<img alt="../_images/9_Multiple_Regression_143_0.png" src="../_images/9_Multiple_Regression_143_0.png" />
 </div>
 </div>
 <p>図の解釈は<code class="docutils literal notranslate"><span class="pre">pandas</span></code>の場合と同じである。</p>
@@ -1502,7 +1506,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_140_0.png" src="../_images/9_Multiple_Regression_140_0.png" />
+<img alt="../_images/9_Multiple_Regression_145_0.png" src="../_images/9_Multiple_Regression_145_0.png" />
 </div>
 </div>
 <p>上の色使いが分かりにくい場合は，以下のオプション<code class="docutils literal notranslate"><span class="pre">cmap</span></code>を指定するとプラスとマイナスの差がより鮮明になる。</p>
@@ -1514,7 +1518,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_142_0.png" src="../_images/9_Multiple_Regression_142_0.png" />
+<img alt="../_images/9_Multiple_Regression_147_0.png" src="../_images/9_Multiple_Regression_147_0.png" />
 </div>
 </div>
 </div>
