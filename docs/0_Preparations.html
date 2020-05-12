@@ -671,10 +671,12 @@ $ which python
 <li><p>Student Accountにすると様々な<a class="reference external" href="https://education.github.com/pack#offers">特典</a>が付いてくる。</p></li>
 </ul>
 </li>
-<li><p>登録すると１つのレポジトリ（repository）が作成されるが、それをゼミようのレポジトリとする。</p>
+<li><p>GitHubの画面の左側に”レポジトリ”（repository）を作成するボタンがあるので，それを押して作成する</p>
 <ul>
-<li><p>レポジトリを「レポ（repo）」と略す場合がよくある。レポとはコードをアップロードした際に保存される領域を示す。</p></li>
-<li><p>レポは必要な数だけ作成することができる。</p></li>
+<li><p>レポとはコードをアップロードした際に保存される領域を示す。</p></li>
+<li><p>レポジトリを「レポ（repo）」と略す場合がよくある。</p></li>
+<li><p>それをゼミようのレポジトリとする。</p></li>
+<li><p>レポは必要な数だけ作成することができる。(ゼミでは１つのレポを使う)</p></li>
 </ul>
 </li>
 <li><p>春山に<code class="docutils literal notranslate"><span class="pre">username</span></code>のみを知らせる。</p></li>
@@ -686,13 +688,23 @@ $ which python
 <li><p>ゼミだけで使い，GitHubと同期させるフォルダーを作成する。</p>
 <ul class="simple">
 <li><p>以下ではそのフォルダーを<code class="docutils literal notranslate"><span class="pre">ZF</span></code>（ゼミ・フォルダー）と呼ぶ。</p></li>
+<li><p>Macでは「書類」フォルダー，Windowsでは「ドキュメント」フォルダーに<code class="docutils literal notranslate"><span class="pre">ZF</span></code>を作成することを推奨する。</p></li>
 </ul>
 </li>
 <li><p>TerminalもしくはGit Bashを起動し，カレント・ディレクトリを<code class="docutils literal notranslate"><span class="pre">ZF</span></code>にする。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ZF</span></code>とGitHubを連携させるためにTerminalもしくはGit Bashで以下を実行する。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git remote add origin &lt;repURL&gt;
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ZF</span></code>をGit用に設定する。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git init
 </pre></div>
 </div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ZF</span></code>とGitHubを紐付ける</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git remote add origin &lt;repoURL&gt;
+</pre></div>
+</div>
+</li>
+</ul>
 <p>ここで<code class="docutils literal notranslate"><span class="pre">&lt;repoURL&gt;</span></code>は上で作成したレポのアドレスであり，以下の手順でコピーできる。</p>
 <ul class="simple">
 <li><p>repoのページにある<code class="docutils literal notranslate"><span class="pre">Clone</span> <span class="pre">or</span> <span class="pre">download</span></code>と書かれた緑色のボタンをクリックし，<code class="docutils literal notranslate"><span class="pre">https://</span></code>から始まるリンクを確認する。その右横のボタンを押す。</p></li>
@@ -703,11 +715,11 @@ $ which python
 </li>
 <li><p><strong>GitとGitHubの同期の設定：Part II</strong></p>
 <ul>
-<li><p>エディター（例えば，Atom）を使い<code class="docutils literal notranslate"><span class="pre">README.md</span></code>というファイルを<code class="docutils literal notranslate"><span class="pre">ZF</span></code>に作成し，自己紹介の内容を記入する（例えば，自分の名前や学部など）。</p></li>
+<li><p>エディター（例えば，MacであればAtomやテキストエディット，WindowsであればAtomやメモ帳）を使い<code class="docutils literal notranslate"><span class="pre">README.md</span></code>というファイルを<code class="docutils literal notranslate"><span class="pre">ZF</span></code>に作成し，自己紹介の内容を記入する（例えば，自分の名前や学部など）。</p></li>
 <li><p>以下はすべてカレント・ディレクトリを<code class="docutils literal notranslate"><span class="pre">ZF</span></code>にしたTerminalもしくはGit Bashでおこなう。</p>
 <ol>
-<li><p><code class="docutils literal notranslate"><span class="pre">ZF</span></code>をGit用に設定する。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">init</span>
+<li><p><code class="docutils literal notranslate"><span class="pre">ZF</span></code>の状態を確認する。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">status</span>
 </pre></div>
 </div>
 </li>
@@ -724,7 +736,11 @@ $ which python
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">&quot;First commit&quot;</span>
 </pre></div>
 </div>
-<p>ここで「First Commit」は履歴についての短いコメントであり，毎回記述する必要がある。変更内容について分かりやすいものすること。</p>
+<p>ここで<code class="docutils literal notranslate"><span class="pre">-m</span></code>はその後にメッセージを入れるオプション。「First Commit」は履歴についての短いコメントであり，毎回記述する必要がある。変更内容について分かりやすいものすること。もしくは，</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">commit</span>
+</pre></div>
+</div>
+<p>としても良いが，その場合，Gitを設定した時に指定したエディターが起動されるので，「First commit」のようなコメントを書いて保存する。エディターは終了しても良い。</p>
 </li>
 <li><p>GitHubにファイルをアップロードする。これは「プッシュ」と呼ばれるプロセス。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">master</span>
@@ -734,6 +750,7 @@ $ which python
 <li><p>パスワードを求められるので，GitHubのパスワードを入力する。</p></li>
 </ol>
 </li>
+<li><p>ゼミ終了後毎回１〜５のステップ（README.mdを違うファイルに変えて）をおこなうことになる。</p></li>
 </ul>
 </li>
 <li><p><strong>ゼミのための設定</strong></p>
@@ -751,7 +768,7 @@ $ which python
 </ul>
 <div class="alert alert-warning">
 <p class="admonition-title">Warning</p>
-<p>コンフリクトの問題発生を防ぐためにGitHubのサイトで直接ファイルを変更<strong>しないように！<strong>もし変更した場合は，パソコンで該当ファイルを変更する</strong>前に必ず</strong>以下のコードを実行すること。</p>
+<p>コンフリクトと呼ばれる問題発生を防ぐためにGitHubのサイトで直接ファイルを変更<strong>しないように！<strong>もし変更した場合は，パソコンで該当ファイルを変更する</strong>前に必ず</strong>以下のコードを実行すること。</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ git pull origin master
 </pre></div>
 </div>
