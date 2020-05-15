@@ -246,6 +246,7 @@ GitHubとは，コードとコードの履歴をクラウド上で管理し，�
     * ゼミだけで使い，GitHubと同期させるフォルダーを作成する。
         * 以下ではそのフォルダーを`ZF`（ゼミ・フォルダー）と呼ぶ。
         * Macでは「書類」フォルダー，Windowsでは「ドキュメント」フォルダーに`ZF`を作成することを推奨する。
+        * (注意：Mac) iCloud Drive用のフォルダーを指定しないように。（Finder → 移動 → コンピュータ → ...）
     * TerminalもしくはGit Bashを起動し，カレント・ディレクトリを`ZF`にする。
     * `ZF`とGitHubを連携させるためにTerminalもしくはGit Bashで以下を実行する。
         * `ZF`をGit用に設定する。
@@ -314,7 +315,7 @@ GitHubとは，コードとコードの履歴をクラウド上で管理し，�
 * `lmdiag`
 * `see`
 
-これらをインストールするには，Anacondaに含まれている`pip`コマンドを使う。`pip`は以下で説明するTerminal（Mac用）もしくはGit Bash（Windows用）を使い実行する。例えば，`see`をインストールするには
+これらをインストールするには，Anacondaに含まれている`pip`コマンドを使う。`pip`は以Terminal（Mac用）もしくはGit Bash（Windows用）を使い実行する。例えば，`see`をインストールするには
 ```
 $ pip install see
 ```
