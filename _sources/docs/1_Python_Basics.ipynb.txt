@@ -170,7 +170,7 @@
     "hidden": true
    },
    "source": [
-    "データ型（data types）は無数にあり，まず基本となる次の４つを考えよう。\n",
+    "Pythonでは全てがオブジェクトと話したが，オブジェクトの種類は無数にある。まず，その中心であるデータ型（data types）を紹介する。基本となる次の４つを考える。\n",
     "\n",
     "* 整数型（int）\n",
     "* 浮動小数点型（float）\n",
@@ -208,12 +208,52 @@
     "hidden": true
    },
    "source": [
-    "も整数型です。浮動小数点型は，"
+    "も整数型である。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
+   "execution_count": 18,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "int"
+      ]
+     },
+     "execution_count": 18,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "type(157)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`int`はintegerの略で整数型を表す。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "浮動小数点型は"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
    "metadata": {
     "hidden": true
    },
@@ -224,7 +264,7 @@
        "10.24"
       ]
      },
-     "execution_count": 6,
+     "execution_count": 8,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -239,14 +279,21 @@
     "hidden": true
    },
    "source": [
-    "のように小数点がついた数字です。`1`は整数型ですが，`1.0`は浮動小数点型です。\n",
-    "\n",
+    "のように小数点がついた数字である。`1`は整数型ですが，`1.0`は浮動小数点型となる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
     "文字列型はシングルクォート`'`かダブルクォート`\"`の間に文字を入力します。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 1,
    "metadata": {
     "hidden": true
    },
@@ -257,7 +304,7 @@
        "'apple'"
       ]
      },
-     "execution_count": 7,
+     "execution_count": 1,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -268,7 +315,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
+   "execution_count": 2,
    "metadata": {
     "hidden": true
    },
@@ -279,7 +326,7 @@
        "'pear'"
       ]
      },
-     "execution_count": 8,
+     "execution_count": 2,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -294,7 +341,7 @@
     "hidden": true
    },
    "source": [
-    "どちらを使っても同じですが，クォートの中でクォートを使う必要がある場合は，それぞれ違ったものを使います。"
+    "どちらを使っても同じだが，クォートの中でクォートを使う必要がある場合は，それぞれ違ったものを使う。例えば，"
    ]
   },
   {
@@ -325,12 +372,12 @@
     "hidden": true
    },
    "source": [
-    "また数字をクォートで囲むと文字列型になります。"
+    "また数字をクォートで囲むと文字列型になる。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
+   "execution_count": 3,
    "metadata": {
     "hidden": true
    },
@@ -341,7 +388,7 @@
        "'100'"
       ]
      },
-     "execution_count": 10,
+     "execution_count": 3,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -351,12 +398,34 @@
    ]
   },
   {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "str"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "type('100')"
+   ]
+  },
+  {
    "cell_type": "markdown",
    "metadata": {
     "hidden": true
    },
    "source": [
-    "ブール型には`True`（真）, `False`（偽）があります。名前が示すように「真偽」を確認できるわけです。例えば，"
+    "ブール型には`True`（真）, `False`（偽）がある。名前が示すように「真偽」を確認できる。例えば，"
    ]
   },
   {
@@ -387,7 +456,7 @@
     "hidden": true
    },
    "source": [
-    "後ほど説明しますが，`==`は「等しい」ということを意味します。また，`True`は`1`, `False`は`0`として計算されます。"
+    "後ほど説明するが，`==`は「等しい」ということを意味する。また，`True`は`1`, `False`は`0`として計算される。"
    ]
   },
   {
@@ -464,9 +533,9 @@
    "source": [
     "（注意）\n",
     "\n",
-    "`Python`には「クラス（class）」という概念があり，この授業で説明はおこなわないが「データ型（data types）」と同義である。\n",
+    "`Python`には「クラス（class）」という概念がある。オブジェクトを生成するための設計図となるもので，この授業で説明はおこなわないが「型（types）」と同義と考えて良い。ちなみにクラス自体もオブジェクトである。\n",
     "\n",
-    "データ型は関数`type()`を使って確認することができるが，`type()`で表示されるものは「データ型＝クラス名」と考えれば良い。更に、引数を画面上に表示する組み込み関数である`print()`を使うと「データ型＝クラス名」が確認できる。"
+    "上では関数`type()`を使ってデータ型を確認したが，引数を画面上に表示する関数である`print()`を使うと「クラス名$\\approx$データ型」が確認できる。"
    ]
   },
   {
@@ -639,9 +708,9 @@
     "hidden": true
    },
    "source": [
-    "コードのかなで想定されたデータ型と異なるデータ型を使うとがエラーが出たり，間違った結果につながる場合がありますので，自信がない時は`type()`を使って確認しましょう。\n",
+    "コードのかなで想定されたデータ型と異なるデータ型を使うとがエラーが出たり，間違った結果につながる場合があるので，自信がない時は`type()`を使って確認すること。\n",
     "\n",
-    "この他`complex type`と`NoneTyep`も存在する。以下の`None`とは「無」という意味である。"
+    "この他類似する型に`complex type`（複素数型）と`NoneTyep`も存在する。以下の`None`とは「無」という意味である。"
    ]
   },
   {
@@ -700,34 +769,37 @@
     "hidden": true
    },
    "source": [
-    "コレクション系とは上で説明した基本データ型の集まりとなるデータ型で，ここでは以下を簡単に説明します。\n",
+    "コレクション系とは上で説明した基本データ型の集まりとなるデータ型で，ここでは以下を簡単に説明する。\n",
     "\n",
     "* リスト（list）\n",
     "* タプル（tuple）\n",
     "* 辞書（dict）\n",
     "* 集合（set）\n",
     "\n",
-    "リストは`[]`を使います。"
+    "リストは`[]`を使う。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 25,
+   "execution_count": 1,
    "metadata": {
     "hidden": true
    },
    "outputs": [
     {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "[10, 3, 2]\n"
-     ]
+     "data": {
+      "text/plain": [
+       "[10, 3, 2]"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
     }
    ],
    "source": [
     "list0 = [10, 3 , 2]\n",
-    "print(list0)"
+    "list0"
    ]
   },
   {
@@ -736,7 +808,7 @@
     "hidden": true
    },
    "source": [
-    "上で説明したように、`print()`は定義したリストを画面上に表示する関数です。以下もリストの一例です。"
+    "以下もリストの一例である。"
    ]
   },
   {
@@ -787,7 +859,7 @@
     "hidden": true
    },
    "source": [
-    "`list`というクラス（class）であることも確認できる。"
+    "上で説明したように、`print()`は定義したリストを画面上に表示する関数であり，`print()`を使うと`list`というクラス（class）であることも確認できる。"
    ]
   },
   {
@@ -797,7 +869,7 @@
    },
    "source": [
     "---\n",
-    "タプルは`()`を使って作成できる。"
+    "タプルは`()`を使って作成する。"
    ]
   },
   {
@@ -826,12 +898,12 @@
     "hidden": true
    },
    "source": [
-    "リストと変わりないように見えますが，大きな違いは要素を変更できるかできないかという点です。\n",
+    "リストと変わりないように見えるが，大きな違いは要素を変更できるかできないかという点である。\n",
     "\n",
     "* リストの要素は変更可能\n",
     "* タプルの要素は変更不可能\n",
     "\n",
-    "リストの要素の変更方法は以下で説明します。\n",
+    "リストの要素の変更方法は以下で説明する。\n",
     "\n",
     "**＜コメント１＞**\n",
     "\n",
@@ -840,7 +912,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 29,
+   "execution_count": 2,
    "metadata": {
     "hidden": true
    },
@@ -851,7 +923,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 30,
+   "execution_count": 3,
    "metadata": {
     "hidden": true
    },
@@ -878,7 +950,7 @@
    "source": [
     "**＜コメント２＞**\n",
     "\n",
-    "１つの要素からなるタプルを作成する場合、コンマ`,`を必ず追加すること。"
+    "１つの要素からなるタプルを作成する場合、コンマ`,`が必ず必要となる。"
    ]
   },
   {
@@ -961,12 +1033,12 @@
    },
    "source": [
     "---\n",
-    "辞書はキー（key）と値（value）のペアとなって定義され，`:`を挟んで１つのペアとなります。全てを`{}`で囲み辞書を定義します。"
+    "辞書はキー（key）と値（value）のペアとなって定義され，`:`を挟んで１つのペアとなる。全てを`{}`で囲み辞書を定義する。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 35,
+   "execution_count": 4,
    "metadata": {
     "hidden": true
    },
@@ -981,12 +1053,12 @@
     "hidden": true
    },
    "source": [
-    "`dict0`には２つのペアがあります。`a`のキーには値`10`が対応しており，`b`には`'kobe'`が設定されています。今の段階では辞書を使う目的が不明確でしっくりこないと思いますが，勉強を進めるととてもパワフルなツールだと気づくと思います。"
+    "`dict0`には２つのペアがある。`a`のキーには値`10`が対応しており，`b`には`'kobe'`が設定されている。今の段階では辞書を使う目的が不明確でしっくりこないと思うが，勉強を進めるととてもパワフルなツールだと気づくだろう。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 36,
+   "execution_count": 5,
    "metadata": {
     "hidden": true
    },
@@ -997,7 +1069,7 @@
        "dict"
       ]
      },
-     "execution_count": 36,
+     "execution_count": 5,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1008,7 +1080,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 37,
+   "execution_count": 6,
    "metadata": {
     "hidden": true
    },
@@ -1031,7 +1103,7 @@
     "hidden": true
    },
    "source": [
-    "集合は使う機会がないので説明は割愛します。"
+    "集合は使う機会がないので説明は割愛する。"
    ]
   },
   {
@@ -1049,12 +1121,12 @@
     "hidden": true
    },
    "source": [
-    "まずリストを考えましょう。リストの要素にアクセスするためには，左から`0`, `1`, `2`...と数えて指定します。例えば"
+    "まずリストを考えよう。リストの要素にアクセスするためには，左から`0`, `1`, `2`...と数えて指定する。例えば"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 38,
+   "execution_count": 7,
    "metadata": {
     "hidden": true
    },
@@ -1069,7 +1141,7 @@
     "hidden": true
    },
    "source": [
-    "の場合，`'A'`は０番目，`'B'`１番目，`'C'`は２番目と数えます。例えば，`A`を抽出したい場合，"
+    "の場合，`'A'`は０番目，`'B'`１番目，`'C'`は２番目と数える。例えば，`A`を抽出したい場合，"
    ]
   },
   {
@@ -1100,12 +1172,12 @@
     "hidden": true
    },
    "source": [
-    "またマイナス・サイン`-`を使って右から`-1`, `-2`, `-3`と数えて指定することも可能です。"
+    "またマイナス・サイン`-`を使って右から`-1`, `-2`, `-3`と数えて指定することも可能である。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 40,
+   "execution_count": 8,
    "metadata": {
     "hidden": true
    },
@@ -1116,7 +1188,7 @@
        "'F'"
       ]
      },
-     "execution_count": 40,
+     "execution_count": 8,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1131,7 +1203,7 @@
     "hidden": true
    },
    "source": [
-    "要素の数え方は以下のように考えるとよいでしょう。\n",
+    "要素の数え方は以下のように考えるとよいだろう。\n",
     "\n",
     "```\n",
     "   0   1   2   3   4   5  （左から数える） \n",
@@ -1141,12 +1213,13 @@
     "  -6  -5  -4  -3  -2  -1　（右から数える）\n",
     "```\n",
     "\n",
-    "連続する複数の要素を選択する場合（スライシング）は`:`を使います。`:`の左側が選択する最初の要素で，`:`の右側が選択する最後の次の番号です。"
+    "---\n",
+    "連続する複数の要素を選択する場合（スライシング）は`:`を使う。`:`の左側が選択する最初の要素で，`:`の右側が選択する最後の次の番号である（即ち，`:`の右側の番号の要素は含まれない。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 41,
+   "execution_count": 9,
    "metadata": {
     "hidden": true
    },
@@ -1157,7 +1230,7 @@
        "['B', 'C', 'D']"
       ]
      },
-     "execution_count": 41,
+     "execution_count": 9,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1172,12 +1245,12 @@
     "hidden": true
    },
    "source": [
-    "この例では１番目から3番目を選択しています。`:`の左側の番号を省略すると`0`と解釈され，`:`右側を省略すると`-1`と解釈されます。"
+    "この例では１番目から3番目を選択している。`:`の左側の番号を省略すると`0`と解釈され，`:`右側を省略すると`-1`と解釈される。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 42,
+   "execution_count": 11,
    "metadata": {
     "hidden": true
    },
@@ -1188,7 +1261,7 @@
        "['A', 'B', 'C', 'D']"
       ]
      },
-     "execution_count": 42,
+     "execution_count": 11,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1199,7 +1272,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 43,
+   "execution_count": 12,
    "metadata": {
     "hidden": true
    },
@@ -1210,7 +1283,7 @@
        "['B', 'C', 'D', 'E', 'F']"
       ]
      },
-     "execution_count": 43,
+     "execution_count": 12,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1225,12 +1298,12 @@
     "hidden": true
    },
    "source": [
-    "タプルも同じように選択できます。"
+    "タプルも同じように選択でる。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 44,
+   "execution_count": 13,
    "metadata": {
     "hidden": true
    },
@@ -1241,7 +1314,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 45,
+   "execution_count": 14,
    "metadata": {
     "hidden": true
    },
@@ -1252,7 +1325,7 @@
        "'C'"
       ]
      },
-     "execution_count": 45,
+     "execution_count": 14,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1263,7 +1336,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 46,
+   "execution_count": 15,
    "metadata": {
     "hidden": true
    },
@@ -1274,7 +1347,7 @@
        "('A', 'B', 'C')"
       ]
      },
-     "execution_count": 46,
+     "execution_count": 15,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1285,7 +1358,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 47,
+   "execution_count": 16,
    "metadata": {
     "hidden": true
    },
@@ -1296,7 +1369,7 @@
        "('C', 'D', 'E', 'F')"
       ]
      },
-     "execution_count": 47,
+     "execution_count": 16,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1311,12 +1384,12 @@
     "hidden": true
    },
    "source": [
-    "辞書も同じ方法でアクセスできます。"
+    "辞書も同じ方法でアクセスできる。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 48,
+   "execution_count": 17,
    "metadata": {
     "hidden": true
    },
@@ -1327,7 +1400,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 49,
+   "execution_count": 18,
    "metadata": {
     "hidden": true
    },
@@ -1338,7 +1411,7 @@
        "'niv'"
       ]
      },
-     "execution_count": 49,
+     "execution_count": 18,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1353,12 +1426,12 @@
     "hidden": true
    },
    "source": [
-    "辞書の場合はキーで指定します。複数指定する場合は，`for loop`などのより複雑な手法が必要となります。"
+    "辞書の場合はキーで指定する。複数指定する場合は，`for loop`などの複雑な手法が必要となる。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 50,
+   "execution_count": 19,
    "metadata": {
     "hidden": true
    },
@@ -1369,7 +1442,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 51,
+   "execution_count": 20,
    "metadata": {
     "hidden": true
    },
@@ -1380,7 +1453,7 @@
        "10"
       ]
      },
-     "execution_count": 51,
+     "execution_count": 20,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1391,7 +1464,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 52,
+   "execution_count": 21,
    "metadata": {
     "hidden": true
    },
@@ -1402,7 +1475,7 @@
        "[1, 2, 5]"
       ]
      },
-     "execution_count": 52,
+     "execution_count": 21,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1426,13 +1499,13 @@
     "hidden": true
    },
    "source": [
-    "上の例では`my_list`など好きなアルファベットの組み合わせを使いわかりやすい変数名にしています。しかし，変数の名前を作る上で守らなくてはならないルールがあります。\n",
+    "上の例では`my_list`など好きなアルファベットの組み合わせを使いわかりやすい変数名にしている。しかし，変数の名前を作る上で守らなくてはならないルールがある。\n",
     "\n",
     "* `(a-z, A-Z)`もしくは`_`（アンダースコア）で始める\n",
     "* 最初の文字以外であれば`(a-z, A-Z)`と`_`に加え数字も可\n",
     "* 長さに制限はない\n",
     "* 小文字と大文字は異なる記号としてあつかう\n",
-    "* 次の単語はある目的のために事前に定義されているため，変数名としては使えない。\n",
+    "* 次の単語は特定の目的のために事前に定義されているため，変数名としては使えない。\n",
     "\n",
     "<pre>\n",
     "and       exec     not\n",
@@ -1802,7 +1875,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 65,
+   "execution_count": 22,
    "metadata": {
     "hidden": true
    },
@@ -1813,13 +1886,13 @@
        "1"
       ]
      },
-     "execution_count": 65,
+     "execution_count": 22,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "5%2 # 5÷２＝２ 余り 1"
+    "5%2 # 5÷2＝2 余り 1"
    ]
   },
   {
@@ -2043,11 +2116,11 @@
     "hidden": true
    },
    "source": [
-    "`if`文を使うと，あるブール型（真偽）の条件のもとでコードを実行することが可能となる。例えば，以下の関数を考える。\n",
+    "`if`文を使うと，あるブール型（真偽）の条件のもとでコードを実行することが可能となる。例えば，`X`の値が正の場合，\n",
     "\n",
     "`print(X, 'は正です')`\n",
     "\n",
-    "`X`の値が正の場合，この関数を実行したいとする。"
+    "を実行したいとしよう。"
    ]
   },
   {
@@ -2095,7 +2168,7 @@
     "* `else`とは「`X>0`以外の場合」という意味。\n",
     "* `pass`は「何もしない」という意味。\n",
     "\n",
-    "ここで`else`以下を省略してもエラーにはならない（結果も変わらない）。"
+    "ここで`else`以下を省略してもエラーにはならない（結果も変わらない）。即ち，`else`以下がない場合は，それが省略されていると考えれば良い。"
    ]
   },
   {
@@ -2158,7 +2231,7 @@
     "1. `print(X, 'はゼロです')`\n",
     "1. `print(X, 'は負です')`\n",
     "\n",
-    "`X`の値が正の場合は`１`を，ゼロの場合は`２`を，負の場合は`３`を表示したいとする。"
+    "`X`の値が正の場合は`1`を，ゼロの場合は`2`を，負の場合は`3`を表示したいとしよう。"
    ]
   },
   {
@@ -2225,7 +2298,7 @@
     "hidden": true
    },
    "source": [
-    "`for`ループは同じコードを複数回リピートして実行したい場合に有効な方法である。例えば，次のリストにある名前を表示したいとする。"
+    "`for`ループは同じコードを複数回リピートして実行したい場合に有効な方法である。例えば，次のリストにある名前を表示したいとしよう。"
    ]
   },
   {
@@ -2273,7 +2346,7 @@
     "* `for`がある一行目は`:`で終わる。\n",
     "* `i`は`name_list`にあるそれぞれの要素を示すダミー記号。\n",
     "* `name_list`にある要素を最初から一つずつ実行する。\n",
-    "* ２行目は４つの半角スペースがインデントして入る。\n",
+    "* 2行目は4つの半角スペースがインデントして入る。\n",
     "\n",
     "`for`ループのよく使う例として以下を挙げる。この例では，リストに要素を追加する関数である`.append()`を使うが，この関数については以下でより詳しく説明する。\n",
     "\n",
@@ -2282,7 +2355,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 82,
+   "execution_count": 24,
    "metadata": {
     "hidden": true
    },
@@ -2297,18 +2370,19 @@
     "hidden": true
    },
    "source": [
-    "それぞれの要素の２倍からなるリストを作成するとしよう。"
+    "それぞれの要素の2倍からなるリストを作成するとしよう。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 83,
+   "execution_count": 25,
    "metadata": {
     "hidden": true
    },
    "outputs": [],
    "source": [
     "my_list = []  # 1\n",
+    "\n",
     "for i in val_list:  # 2\n",
     "    my_list.append(2*i)  # 3"
    ]
@@ -2321,16 +2395,16 @@
    "source": [
     "このループの考え方：\n",
     "\n",
-    "1. 空のリストの作成\n",
-    "1. ここから`for`ループの始まり。`i`はリスト`[1,2,3,4,5]`の要素の代理変数であり，リストの左から一つずつ次の行の`i`に該当する要素を代入して評価する。\n",
-    "1. `.append()`は`2*i`を`my_list`に追加する関数\n",
+    "1. 空のリストの作成（ここに2倍の要素を格納する）\n",
+    "1. ここから`for`ループの始まり。`i`はリスト`[1,2,3,4,5]`の要素の代理変数であり，`var_list`の左から一つずつ次の行の`i`に該当する要素を代入して評価する。\n",
+    "1. `.append()`は`2*i`を`my_list`に追加するメソッド（関数と同義であり，後ほど違いを説明する）\n",
     "\n",
     "`my_list`を表示しよう。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 84,
+   "execution_count": 26,
    "metadata": {
     "hidden": true
    },
@@ -2353,7 +2427,7 @@
     "hidden": true
    },
    "source": [
-    "上の例では，３行のコードを書き`for`ループを使いリストを作成した。内包表記（list comprehension）を使うと同じ結果を１行のコードで得ることもできる。"
+    "上の例では，3行のコードを書き`for`ループを使いリストを作成した。内包表記（list comprehension）を使うと同じ結果を1行のコード（one linerと呼ばれる）で得ることもできる。"
    ]
   },
   {
@@ -2387,7 +2461,6 @@
     "上の`for`ループと内包表記は以下のような対応関係にある。\n",
     "\n",
     "<pre>\n",
-    "<font color=blue>my_list</font> = [ ]\n",
     "for <font color=red>i</font> in <font color=orange>val_list</font>:\n",
     "    <font color=blue>my_list</font>.append(<font color=green>expression</font>)\n",
     "</pre>\n",
@@ -2403,7 +2476,7 @@
     "hidden": true
    },
    "source": [
-    "内包表記に`if`文を加えることも可能である。次の例では，偶数の２倍だけをリストに追加している。"
+    "内包表記に`if`文を加えることも可能である。次の例では，偶数の2倍だけをリストに追加している。"
    ]
   },
   {
@@ -2530,8 +2603,9 @@
     "* １行目の意味：$i<=4$の条件が満たされ散る限り，下に続くコードを反復実行する（タイプする文字数を少なくするために$i<5$と書く場合が多い\n",
     "* ２行目の意味：`name_list`の`i`番目の要素を表示\n",
     "* ３行目の意味：カウンター`i`の値を`1`増やす\n",
-    "    * 先に右辺を評価した後，それを左辺に代入すると考える。（方程式としては考えない）\n",
-    "* ２行目と３行目は４つの半角スペースがインデントして入る。"
+    "    * 先に右辺を評価した後，それを左辺の`i`に割り当てる考える。（方程式としては考えない!）\n",
+    "* ２行目と３行目は４つの半角スペースがインデントとして入る。\n",
+    "* `while`ループは無限ループになる場合があるので注意しよう。"
    ]
   },
   {
@@ -2549,13 +2623,12 @@
     "hidden": true
    },
    "source": [
-    "コードを書くうえで関数は非常に重要な役割を果たす。Pythonには組み込み関数（事前に準備された関数; built-in functions）が数多くあり，上で使った`print()`も組み込み関数である。組み込み関数はデータ型によって様々なものが存在するが、ここではプログラマー自信が作成する関数について説明する。\n",
+    "コードを書くうえで関数は非常に重要な役割を果たす。Pythonには組み込み関数（事前に準備された関数; built-in functions）が数多くあり，上で使った`print()`と`type()`\n",
+    "も組み込み関数である。組み込み関数は様々なものが存在するが、ここではプログラマー自信が作成する関数について説明する。\n",
     "\n",
-    "関数には引数が設定されるが（省略される場合もある）、大きく分けて２種類存在する。\n",
-    "* **位置引数**（Positional Arguments）\n",
-    "* **キーワード専用引数**（Keyward Only Arguments）\n",
+    "（注意）\n",
     "\n",
-    "順番に説明する。"
+    "関数には引数が設定されるが（省略される場合もある）、複数の種類がある。ここでは基本となる引数のみを考えるが，引数の**位置**と`=`が重要な役割を果たすことになる。"
    ]
   },
   {
@@ -2564,16 +2637,7 @@
     "hidden": true
    },
    "source": [
-    "### 位置引数（Positional Arguments）"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "次の例を考えよう。これは数字の２乗を計算する関数である。"
+    "最初の例は数字の2乗を計算する関数である。"
    ]
   },
   {
@@ -2596,11 +2660,13 @@
    "source": [
     "説明：\n",
     "* １行目：\n",
-    "    * `def`で始まり（`def`はdefinitionの省略形）`:`で終わる\n",
+    "    * `def`で始まり（`def`はdefinitionの省略形）`:`で終わる。\n",
     "    * `func_0`が関数名，`x`が第１引数（ひきすう）であり唯一の引数である。\n",
     "* ２行目：\n",
+    "    * `return`は評価した値を「返す」という意味。必ず`return`の前には4つのスペースが必要であり，ないとエラーになる。\n",
     "    * `x**2`という返り値（戻り値）の設定をする\n",
-    "    * `return`は評価した値を「返す」という意味"
+    "\n",
+    "関数を評価するには，引数に数字を入れて実行する。"
    ]
   },
   {
@@ -2631,12 +2697,59 @@
     "hidden": true
    },
    "source": [
-    "複数の位置引数を設定することも可能である。次の例で使う`sum()`は，数字の合計を計算する関数であり，`()`の中にはタプルやリストが入る。即ち，タプルやリストの要素の合計を返す関数となる。"
+    "（注意）\n",
+    "* 関数を定義する場合の引数（上の例では`x`)は「仮引数」（parameter）と呼ぶ。\n",
+    "* 関数を評価する際に関数に引き渡す引数（上の例では`2`）は「実引数」（argument）と呼ぶ。\n",
+    "* 本書では両方を「引数」と読んでいる。\n",
+    "\n",
+    "---\n",
+    "引数が無い関数を定義することを可能である。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 92,
+   "execution_count": 78,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "I love Kobe :)\n"
+     ]
+    }
+   ],
+   "source": [
+    "def func_kobe():\n",
+    "    print('I love Kobe :)')\n",
+    "\n",
+    "func_kobe()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 引数の位置が重要"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "上の例では引数が１つしかないが，引数が複数ある場合にその位置が重要になってくる。次の例を考えよう。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 44,
    "metadata": {
     "hidden": true
    },
@@ -2648,7 +2761,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 93,
+   "execution_count": 45,
    "metadata": {
     "hidden": true
    },
@@ -2659,13 +2772,13 @@
        "5.0"
       ]
      },
-     "execution_count": 93,
+     "execution_count": 45,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "func_1(10,2)"
+    "func_1(10, 2)"
    ]
   },
   {
@@ -2674,12 +2787,12 @@
     "hidden": true
    },
    "source": [
-    "`a`が第１引数、`b`が第２引数である。位置引数の順番を間違えると意図しない結果につながるので注意が必要。"
+    "`a`が第1引数、`b`が第2引数である。引数の順番を間違えると意図しない結果につながる。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 94,
+   "execution_count": 47,
    "metadata": {
     "hidden": true
    },
@@ -2690,13 +2803,13 @@
        "0.2"
       ]
      },
-     "execution_count": 94,
+     "execution_count": 47,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "func_1(2,10)"
+    "func_1(2, 10)"
    ]
   },
   {
@@ -2705,117 +2818,233 @@
     "hidden": true
    },
    "source": [
-    "**関数を実行する際**に、位置引数に`=`を使って値を指定することも可能である。"
+    "もちろん，3つ以上の位置引数も設定可能である。次の例で使う`sum()`は，数字の合計を計算する関数であり，`()`の中にはタプルやリストが入る。即ち，タプルやリストの要素の合計を返す関数となる。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 95,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "5.0"
-      ]
-     },
-     "execution_count": 95,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "func_1(a=10,b=2)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "位置引数に`=`を使う利点は、引数の順番を変えることが可能となることである。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 96,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "5.0"
-      ]
-     },
-     "execution_count": 96,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "func_1(b=2,a=10)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "ただし、`=`を使う場合は必ず`=`を使う引数を右端に並べること。このルールが守られないとエラーとなる。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 97,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "5.0"
-      ]
-     },
-     "execution_count": 97,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "func_1(10,b=2)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "次の例は，**関数を定義する際**、`=`を使って引数のデフォルトの値を設定する場合である。即ち，引数を入力すると入力された数値を使うが，引数を入力しない場合は引数を予め設定した値（デフォルトの値）として計算する。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 98,
+   "execution_count": 48,
    "metadata": {
     "hidden": true
    },
    "outputs": [],
    "source": [
-    "def func_2(a, b, c=10):\n",
-    "    return sum([a,b])*c"
+    "def func_2(a, b, c, d):\n",
+    "    return sum((a, b, c, d))"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 99,
+   "execution_count": 50,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "100"
+      ]
+     },
+     "execution_count": 50,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "func_2(10, 20, 30, 40)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 実行する際に`=`を使う"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "**関数を実行する際**に、引数に`=`を使って値を指定することも可能である。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 51,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "5.0"
+      ]
+     },
+     "execution_count": 51,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "func_1(a=10, b=2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "この場合，引数の順番を変えることが可能となる。それが関数を実行する際に`=`を使う利点である。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 52,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "5.0"
+      ]
+     },
+     "execution_count": 52,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "func_1(b=2, a=10)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "この場合，全ての引数に`=`を使わないとエラーとなる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 53,
+   "metadata": {
+    "hidden": true,
+    "tags": [
+     "raises-exception"
+    ]
+   },
+   "outputs": [
+    {
+     "ename": "TypeError",
+     "evalue": "func_1() got multiple values for argument 'a'",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mTypeError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-53-a68692af39a3>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mfunc_1\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;36m10\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0ma\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;36m2\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;31mTypeError\u001b[0m: func_1() got multiple values for argument 'a'"
+     ]
+    }
+   ],
+   "source": [
+    "func_1(10,a=2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "理由は最初の`10`を`a`の値と解釈されるためである。一方で，引数の位置が揃っていれば，全ての引数に`=`を付ける必要なない。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 54,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "100"
+      ]
+     },
+     "execution_count": 54,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "func_2(10, 20, d=40, c=30)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "ここでも引数の位置の重要性がうかがえる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 定義する際に`=`を使う"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "**関数を定義する際**、`=`を使って引数のデフォルトの値を設定することができる。即ち，引数を入力すると入力された数値を使うが，引数を入力しない場合は引数を予め設定した値（デフォルトの値）が使われて評価される。次の例では`c`のデフォルトの値が`10`に設定されている。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "def func_3(a, b, c=10):\n",
+    "    return sum([a,b])*c"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`c`の値を与えずに評価してみる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 55,
    "metadata": {
     "hidden": true
    },
@@ -2826,18 +3055,27 @@
        "50"
       ]
      },
-     "execution_count": 99,
+     "execution_count": 55,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "func_2(2,3)"
+    "func_3(2, 3)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "次に`c`にデフォルトと異なる値を設定してみる。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 100,
+   "execution_count": 56,
    "metadata": {
     "hidden": true
    },
@@ -2848,13 +3086,13 @@
        "500"
       ]
      },
-     "execution_count": 100,
+     "execution_count": 56,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "func_2(2,3,100)"
+    "func_3(2, 3, 100)"
    ]
   },
   {
@@ -2863,29 +3101,19 @@
     "hidden": true
    },
    "source": [
-    "`=`を使って指定すると順番を気にする必要はない。（最初の位置引数は`a`になることに注意）"
+    "（Note）\n",
+    "* 関数を実行する際に`=`無しで関数に渡される引数は，その位置が重要であるため「位置引数」と呼ばれる。\n",
+    "* 関数を実行する際に`=`付きで関数に渡される引数は「キーワード引数」と呼ばれる。"
    ]
   },
   {
-   "cell_type": "code",
-   "execution_count": 101,
+   "cell_type": "markdown",
    "metadata": {
+    "heading_collapsed": true,
     "hidden": true
    },
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "500"
-      ]
-     },
-     "execution_count": 101,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
    "source": [
-    "func_2(2, c=100, b=3)"
+    "### `*args`"
    ]
   },
   {
@@ -2894,27 +3122,24 @@
     "hidden": true
    },
    "source": [
-    "ここでの`c=100`や`b=3`はキーワード引数と呼ばれることもあるが、以下で説明するキーワード専用引数とは異なることに注意しよう。\n",
-    "\n",
-    "---\n",
-    "`func_0()`の場合，引数の数は１に固定されており，`func_1()`の位置引数は２に固定されている。位置引数の数が指定された数と合わないとエラーが発生する。では，位置引数の数が事前に決まっていない場合はどうするのか。例えば，`func_3(1,2)`と書いても`func_3(1,2,3,4,5,6)`と書いても位置引数の合計を計算したいとしよう。この場合，位置引数の代わりに`*args`を使う。"
+    "`func_0()`の引数の数は1に，`func_1()`の引数は2に，`func_2()`の引数は4に設定されている。関数を実行する際，引数の数が指定された数と合わないとエラーが発生する。では，位置引数の数が事前に決まっていない場合はどうするのか。例えば，`func_2(1,2)`と書いても`func_2(1,2,3,4,5,6)`と書いても引数の合計を計算したいとしよう。この場合に`*args`を使う。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 102,
+   "execution_count": 58,
    "metadata": {
     "hidden": true
    },
    "outputs": [],
    "source": [
-    "def func_3(*args):\n",
+    "def func_4(*args):\n",
     "    return sum(args)"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 103,
+   "execution_count": 59,
    "metadata": {
     "hidden": true
    },
@@ -2925,18 +3150,18 @@
        "3"
       ]
      },
-     "execution_count": 103,
+     "execution_count": 59,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "func_3(1,2)"
+    "func_4(1,2)"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 104,
+   "execution_count": 60,
    "metadata": {
     "hidden": true
    },
@@ -2947,13 +3172,13 @@
        "21"
       ]
      },
-     "execution_count": 104,
+     "execution_count": 60,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "func_3(1,2,3,4,5,6)"
+    "func_4(1,2,3,4,5,6)"
    ]
   },
   {
@@ -2962,7 +3187,7 @@
     "hidden": true
    },
    "source": [
-    "では`*args`は何を返しているのだろう。これを理解するために次の例を考えよう。"
+    "`*args`は何を返しているのだろう。これを理解するために次の例を考えよう。"
    ]
   },
   {
@@ -3051,7 +3276,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 108,
+   "execution_count": 64,
    "metadata": {
     "hidden": true
    },
@@ -3065,10 +3290,10 @@
     }
    ],
    "source": [
-    "def func_temp(*args):\n",
+    "def func_5(*args):\n",
     "    print(args)\n",
     "\n",
-    "func_temp(1,2,3)"
+    "func_5(1,2,3)"
    ]
   },
   {
@@ -3077,12 +3302,12 @@
     "hidden": true
    },
    "source": [
-    "`args`は引数のタプルであることがわかる。次に`*`を加える。"
+    "`args`は引数のタプルであることがわかる。次に`print()`の`args`に`*`を加える。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 109,
+   "execution_count": 68,
    "metadata": {
     "hidden": true
    },
@@ -3096,10 +3321,10 @@
     }
    ],
    "source": [
-    "def func_temp(*args):\n",
+    "def func_5(*args):\n",
     "    print(*args)\n",
     "\n",
-    "func_temp(1,2,3)"
+    "func_5(1,2,3)"
    ]
   },
   {
@@ -3108,30 +3333,30 @@
     "hidden": true
    },
    "source": [
-    "ここから分かることは、`func_temp()`の`*args`は引数をタプルにし、`print()`の`*args`はタプルを展開しているのである。この性質を使うことにより、関数に任意の数の引数を指定することが可能となる。\n",
+    "ここから分かることは、`func_5(*args)`の`*args`は引数をタプルにし、`print(*args)`の`*args`はタプルを展開しているのである。この性質を使うことにより、関数に任意の数の引数を指定することが可能となる。\n",
     "\n",
     "＜コメント＞\n",
     "* `*args`の`args`はarguments（引数）の省略形である。\n",
     "* `*args`の代わりに`*aaa`や`*abc`としても同じ結果をえることができる。しかし`*args`と書くのが慣例である。\n",
     "\n",
-    "次の例は`*args`と位置引数を一緒に使うケースである。"
+    "次の例は`*args`と引数を一緒に使うケースである。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 110,
+   "execution_count": 71,
    "metadata": {
     "hidden": true
    },
    "outputs": [],
    "source": [
-    "def func_4(a,*args):\n",
+    "def func_6(a, *args):\n",
     "    return a*sum(args)"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 111,
+   "execution_count": 72,
    "metadata": {
     "hidden": true
    },
@@ -3142,13 +3367,13 @@
        "60"
       ]
      },
-     "execution_count": 111,
+     "execution_count": 72,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "func_4(10,2,2,2)"
+    "func_6(10,2,2,2)"
    ]
   },
   {
@@ -3159,341 +3384,7 @@
    "source": [
     "＜注意＞\n",
     "\n",
-    "`def func_4(*args, a)`とし、`func_4(2,2,2,10)`を実行するとエラーが発生する。これは`*args`が「その他全ての位置引数」という意味であるためであり、全ての位置引数の後に位置してこそ意味があるからである。言い換えると、`*args`は位置引数の終わりを意味する。"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
-   "source": [
-    "### キーワード専用引数（Keyward Only Arguments）"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "**（このセクションはスキップしてもOK）**"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "＜重要＞\n",
-    "* `def`の中でキーワード専用引数は位置引数の後に設定する。\n",
-    "    * `*args`がある場合：その後にキーワード専用引数を設定する\n",
-    "        ```\n",
-    "        def func(a, *args, キーワード専用引数):\n",
-    "            # code...\n",
-    "        ```\n",
-    "    * `*args`がない場合：全ての位置引数の後に`*`を挿入し、その後にキーワード専用引数を設定する\n",
-    "        ```\n",
-    "        def func(a, *, キーワード専用引数):\n",
-    "            # code...\n",
-    "        ```\n",
-    "    * 位置引数も`*args`もない場合：`*`の後にキーワード専用引数を設定する\n",
-    "        ```\n",
-    "        def func(*, キーワード専用引数):\n",
-    "            # code...\n",
-    "        ```\n",
-    "* 以下で説明する`**kwargs`を使う場合、`def`の中で最後の引数とする。\n",
-    "* 関数を評価する際、`=`を使い値を設定する。次の例では、`z`がキーワード専用引数。\n",
-    "        ```\n",
-    "        def func(a, *, z):\n",
-    "            # code...\n",
-    "        \n",
-    "        func(a, z=10)\n",
-    "        ```\n",
-    "\n",
-    "---\n",
-    "次の例では`a`と`b`は位置引数であり`c`と`d`はキーワード専用引数。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 112,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "12.0"
-      ]
-     },
-     "execution_count": 112,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "def func_5(a, b, *, c, d):\n",
-    "    return a/b + c/d\n",
-    "\n",
-    "func_5(10, 5, c=100, d=10)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "`**kwargs`以外のキーワード専用引数が複数ある場合、関数を評価する際、その中のでの順番を変更しても結果は同じになる。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 113,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "12.0"
-      ]
-     },
-     "execution_count": 113,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "func_5(10, 5, d=10, c=100)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "デフォルトの値を設定する場合は、`=`を使う（位置引数と同じ）。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 114,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "12.0"
-      ]
-     },
-     "execution_count": 114,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "def func_6(a, b, *, c=100, d):\n",
-    "    return a/b + c/d\n",
-    "\n",
-    "func_6(10, 5, d=10)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "`*args`がある場合の例。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 115,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "1 (2, 3) 4 5\n"
-     ]
-    }
-   ],
-   "source": [
-    "def func_7(a, *args, c, d):\n",
-    "    print(a, args, c, d)\n",
-    "\n",
-    "func_7(1, 2, 3, c=4, d=5)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "---\n",
-    "`*args`は「その他全ての位置引数」であるが、それに対応する「その他全てのキーワード専用引数」を示す変数が`**kwargs`である。（`kwargs`はkeyword argumentsの省略形である。）\n",
-    "\n",
-    "`**kwargs`の役割を説明するために、次の例を考えよう。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 116,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "5"
-      ]
-     },
-     "execution_count": 116,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "def func_8(*, a, b):\n",
-    "    return a + b\n",
-    "\n",
-    "func_8(**{'a':2, 'b':3})"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "`func_8`は`a`と`b`をキーワード専用引数とする関数である。それを評価するために辞書`{'a':2, 'b':3}`を使っているが、ここでの`**`の役割は\n",
-    "* 辞書キー`a`の値`2`は`func_8`の`a`に、\n",
-    "* 辞書キー`b`の値`3`は`func_8`の`b`に\n",
-    "\n",
-    "割り当てることである。それにより`5`という返り値となる。\n",
-    "\n",
-    "更に次の関数を使い`kwargs`が何かを表示してみよう。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 117,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [],
-   "source": [
-    "def func_9(**kwargs):\n",
-    "    print(kwargs)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 118,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "{'a': 2, 'b': 3}\n"
-     ]
-    }
-   ],
-   "source": [
-    "func_9(a=2, b=3)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "`kwargs`は辞書であることがわかる。この例では、辞書キーの値を割り当てる`**`の役割が明示的ではないので、関数を引数とする関数を例として考える。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 119,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [],
-   "source": [
-    "def func_10(fn, a, *, b, **kwargs):\n",
-    "    return a + b + fn(**kwargs)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "`func_10`では`fn`が関数であり位置引数として設定されている。ここでの`fn`は関数名（即ち、関数の「参照記号」）であることに注意しよう。次に、引数に入れる関数の例として２つの変数を足し算する関数を考える。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 120,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [],
-   "source": [
-    "def adder(x,y):\n",
-    "    return x + y"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 121,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "10"
-      ]
-     },
-     "execution_count": 121,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "func_10(adder, 1, b=2, x=3, y=4)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "この例では、`x`と`y`が`kwargs`に入り`{'x':3, 'y':4}`となる。そして`**`により`adder`の`x`と`y`に割り当てられるこのになる。ここで`func_10(adder(),・・・)`となっていないことに注意しよう。引数の`adder`は関数名であり`adder()`とすると関数を評価することになりエラーが発生する。\n",
-    "\n",
-    "`*args`と`**kwargs`の両方を同時に使うこともできることも覚えておこう。"
+    "必ず`*args`は，位置引数の次に置くこと。これは`*args`が「その他全ての位置引数」という意味であるためであり、全ての位置引数の後に位置してこそ意味があるからである。言い換えると、`*args`は位置引数の終わりを意味する。"
    ]
   },
   {
@@ -3517,7 +3408,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 122,
+   "execution_count": 73,
    "metadata": {
     "hidden": true
    },
@@ -3528,15 +3419,15 @@
        "4"
       ]
      },
-     "execution_count": 122,
+     "execution_count": 73,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "func_11 = lambda a: a**2\n",
+    "func_7 = lambda a: a**2\n",
     "\n",
-    "func_11(2)"
+    "func_7(2)"
    ]
   },
   {
@@ -3550,18 +3441,18 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 123,
+   "execution_count": 74,
    "metadata": {
     "hidden": true
    },
    "outputs": [],
    "source": [
-    "func_12 = lambda a, b: a*b"
+    "func_8 = lambda a, b: a*b"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 124,
+   "execution_count": 75,
    "metadata": {
     "hidden": true
    },
@@ -3572,35 +3463,79 @@
        "6"
       ]
      },
-     "execution_count": 124,
+     "execution_count": 75,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "func_12(2,3)"
+    "func_8(2,3)"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "引数が無い場合"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 81,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "func_9 = lambda : print('I love Kobe ;)')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 82,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "I love Kobe ;)\n"
+     ]
+    }
+   ],
+   "source": [
+    "func_9()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
    "source": [
     "## 関数とメソッド"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
-    "Pythonには「関数（functions）」と「メソッド（methods）」があり，基本的には同じ働きをする。ではどう異なるのか。これを理解するためには，数字の`1`を含めて「全てがオブジェクト」というPythonの根底にある考え方を知る必要がある。しかし，ここではこの問題には踏み込まず，オブジェクトに特有なものかどうかで「関数」と「メソッド」に区別されると思って十分である。\n",
+    "Pythonには「関数（functions）」と「メソッド（methods）」があり，基本的には同じ働きをする。ではどう異なるのか。これを理解するためには，数字の`1`を含めて「全てがオブジェクト」というPythonの根底にある考え方を思い出そう。簡単い説明すると，オブジェクトに特有なものかどうかで「関数」と「メソッド」に区別されると思って十分である。\n",
     "\n",
-    "例えば、上で定義した`func_0()`や`func_7()`は関数であり，特定のオブジェクトに働きかけるものではない。単に引数から計算した返値を出力している。一方，メソッドはオブジェクト特有の関数と考えると良いだろう。例として，数字の`1`を考えよう。`1`というオブジェクトには様々なメソッドが用意されており，そのリストを`dir()`という関数を使うことにより表示できる。"
+    "例えば、上で定義した`func_0()`や`func_7()`は関数であり，特定のオブジェクトに働きかけるものではない。単に引数から計算した返り値を出力している。一方，メソッドは元々オブジェクトに備わっている関数と考えると良いだろう。例として，数字の`1`を考えよう。`1`というオブジェクトには様々なメソッドが用意されており，そのリストを`dir()`という関数を使うことにより表示できる。"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 125,
    "metadata": {
+    "hidden": true,
     "tags": [
      "output_scroll"
     ]
@@ -3693,7 +3628,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "この中の上の方に`__dir__`とあるがこれが`dir()`を示している。`__str__`とあるが，これは整数`1`を文字列に変換する関数である。"
    ]
@@ -3701,7 +3638,9 @@
   {
    "cell_type": "code",
    "execution_count": 126,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -3721,7 +3660,9 @@
   {
    "cell_type": "code",
    "execution_count": 127,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -3740,7 +3681,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "「全てがオブジェクト」なのでリストもそうである。"
    ]
@@ -3748,7 +3691,9 @@
   {
    "cell_type": "code",
    "execution_count": 128,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [],
    "source": [
     "list_0 = [4,3,9,0,1]"
@@ -3758,6 +3703,7 @@
    "cell_type": "code",
    "execution_count": 129,
    "metadata": {
+    "hidden": true,
     "tags": [
      "output_scroll"
     ]
@@ -3825,7 +3771,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "この中に`append`とあるが，`for`ループの説明で使ったメソッドである。"
    ]
@@ -3833,7 +3781,9 @@
   {
    "cell_type": "code",
    "execution_count": 130,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [],
    "source": [
     "list_0.append(100)"
@@ -3842,7 +3792,9 @@
   {
    "cell_type": "code",
    "execution_count": 131,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -3861,7 +3813,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "注意して欲しい点は，`list_0`の後に`.append(100)`が来ていることである。先に来る`list_0`を引数として`appned()`は関数の働きをしていると考えれば良いだろう。\n",
     "\n",
@@ -3871,7 +3825,9 @@
   {
    "cell_type": "code",
    "execution_count": 132,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [],
    "source": [
     "list_0.sort()"
@@ -3880,7 +3836,9 @@
   {
    "cell_type": "code",
    "execution_count": 133,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -3899,7 +3857,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "ぜひ他のメソッドを試して欲しい。またオブジェクトのメソッドを調べる場合，`dir()`の出力は見にくいので[`see`モジュール](https://pypi.org/project/see/)を使うのがおすすめである（モジュールについては次のセクションを参照）。もちろん，Pythonやモジュールの説明書（docs）をチェックするのも必要であろう。"
    ]
@@ -3926,7 +3886,7 @@
     "\n",
     "となる。従って，あるパッケージの１つのモジュールを読み込むということが可能である。\n",
     "\n",
-    "まず例として`math`モジュールを考える。名前が示すように数学用のモジュールである。使うためには`import`を使って読み込む。"
+    "まず例として`math`モジュールを考える。名前が示すように数学用のモジュールである。使うためには`import`を使って読み込む必要がある。"
    ]
   },
   {
@@ -4063,9 +4023,9 @@
     "hidden": true
    },
    "source": [
-    "この読み込み方法の利点はモジュール名を省略できることである。\n",
+    "この読み込み方法の利点はモジュール名を省略できることである。しかし他のパッケージやモジュールと同じ関数がある場合は，後で`import`したものが優先されるので注意が必要だ。\n",
     "\n",
-    "通常`import`文はファイルの最初に書き，どのモジュールが導入されるかを明示的に示すとわかりやすい。"
+    "通常`import`文はファイルの最初に書き，どのモジュールが導入されるかを明示的に示すとわかりやすいだろう。"
    ]
   },
   {
@@ -4184,7 +4144,7 @@
     "1. 構文エラー（Syntax Errors）\n",
     "    * 構文自体が間違っている場合に発生するエラー（例えば，スペル間違い）。\n",
     "1. 例外（Exceptoins）\n",
-    "    * 構文は間違っていなくてもコードの実行中に発生するエラー（例えば，数字を０で割る）\n",
+    "    * 構文は間違っていなくてもコードの実行中に発生するエラー（例えば，数字を`0`で割る）\n",
     "\n",
     "---\n",
     "＜＜コメント＞＞\n",
@@ -4361,7 +4321,7 @@
     "hidden": true
    },
    "source": [
-    "この場合，`Python`はプログラマーがどこに`)`を入れようとしたかは分からない。従って，最後にが入ると想定して`^`を文末に置いている。\n",
+    "この場合，`Python`はプログラマーがどこに`)`を入れようとしたかは分からない。従って，最後に`)`が入ると想定して`^`を文末に置いている。\n",
     "\n",
     "---\n",
     "＜＜コメント１＞＞<br>\n",
@@ -4437,6 +4397,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
+    "heading_collapsed": true,
     "hidden": true
    },
    "source": [
@@ -4449,7 +4410,7 @@
     "hidden": true
    },
    "source": [
-    "`0`分母にある。"
+    "`0`が分母にある。"
    ]
   },
   {
@@ -4481,6 +4442,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
+    "heading_collapsed": true,
     "hidden": true
    },
    "source": [

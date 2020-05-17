@@ -283,11 +283,19 @@
             <a href="#id8" class="nav-link">関数</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#positional-arguments" class="nav-link">位置引数（Positional Arguments）</a>
+            <a href="#id9" class="nav-link">引数の位置が重要</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#keyward-only-arguments" class="nav-link">キーワード専用引数（Keyward Only Arguments）</a>
+            <a href="#id10" class="nav-link">実行する際に=を使う</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id11" class="nav-link">定義する際に=を使う</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#args" class="nav-link">*args</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
@@ -298,51 +306,51 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#id9" class="nav-link">関数とメソッド</a>
+            <a href="#id12" class="nav-link">関数とメソッド</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#id10" class="nav-link">パッケージとモジュール</a>
+            <a href="#id13" class="nav-link">パッケージとモジュール</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#id11" class="nav-link">よく使う組み込み関数</a>
+            <a href="#id14" class="nav-link">よく使う組み込み関数</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
             <a href="#errors" class="nav-link">エラー（Errors）</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id12" class="nav-link">構文エラー</a><ul class="nav section-nav flex-column">
+            <a href="#id15" class="nav-link">構文エラー</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h4">
-            <a href="#id13" class="nav-link">例１</a>
+            <a href="#id16" class="nav-link">例１</a>
         </li>
     
         <li class="nav-item toc-entry toc-h4">
-            <a href="#id14" class="nav-link">例２</a>
+            <a href="#id17" class="nav-link">例２</a>
         </li>
     
         <li class="nav-item toc-entry toc-h4">
-            <a href="#id15" class="nav-link">例３</a>
+            <a href="#id18" class="nav-link">例３</a>
         </li>
     
             </ul>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id16" class="nav-link">例外</a><ul class="nav section-nav flex-column">
+            <a href="#id19" class="nav-link">例外</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h4">
-            <a href="#id17" class="nav-link">例１</a>
+            <a href="#id20" class="nav-link">例１</a>
         </li>
     
         <li class="nav-item toc-entry toc-h4">
-            <a href="#id18" class="nav-link">例２</a>
+            <a href="#id21" class="nav-link">例２</a>
         </li>
     
         <li class="nav-item toc-entry toc-h4">
-            <a href="#id19" class="nav-link">例３</a>
+            <a href="#id22" class="nav-link">例３</a>
         </li>
     
             </ul>
@@ -352,7 +360,7 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#id20" class="nav-link">Pythonの基本のまとめ（日英対訳）</a>
+            <a href="#id23" class="nav-link">Pythonの基本のまとめ（日英対訳）</a>
         </li>
     
     </ul>
@@ -439,7 +447,7 @@
 </div>
 <div class="section" id="data-types">
 <h2>４つの基本データ型（Data Types）<a class="headerlink" href="#data-types" title="Permalink to this headline">¶</a></h2>
-<p>データ型（data types）は無数にあり，まず基本となる次の４つを考えよう。</p>
+<p>Pythonでは全てがオブジェクトと話したが，オブジェクトの種類は無数にある。まず，その中心であるデータ型（data types）を紹介する。基本となる次の４つを考える。</p>
 <ul class="simple">
 <li><p>整数型（int）</p></li>
 <li><p>浮動小数点型（float）</p></li>
@@ -459,7 +467,21 @@
 </div>
 </div>
 </div>
-<p>も整数型です。浮動小数点型は，</p>
+<p>も整数型である。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="mi">157</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>int
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">int</span></code>はintegerの略で整数型を表す。</p>
+<p>浮動小数点型は</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">10.24</span>
@@ -472,7 +494,7 @@
 </div>
 </div>
 </div>
-<p>のように小数点がついた数字です。<code class="docutils literal notranslate"><span class="pre">1</span></code>は整数型ですが，<code class="docutils literal notranslate"><span class="pre">1.0</span></code>は浮動小数点型です。</p>
+<p>のように小数点がついた数字である。<code class="docutils literal notranslate"><span class="pre">1</span></code>は整数型ですが，<code class="docutils literal notranslate"><span class="pre">1.0</span></code>は浮動小数点型となる。</p>
 <p>文字列型はシングルクォート<code class="docutils literal notranslate"><span class="pre">'</span></code>かダブルクォート<code class="docutils literal notranslate"><span class="pre">&quot;</span></code>の間に文字を入力します。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -498,7 +520,7 @@
 </div>
 </div>
 </div>
-<p>どちらを使っても同じですが，クォートの中でクォートを使う必要がある場合は，それぞれ違ったものを使います。</p>
+<p>どちらを使っても同じだが，クォートの中でクォートを使う必要がある場合は，それぞれ違ったものを使う。例えば，</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;He said &quot;Good luck!&quot; to me.&#39;</span>
@@ -511,7 +533,7 @@
 </div>
 </div>
 </div>
-<p>また数字をクォートで囲むと文字列型になります。</p>
+<p>また数字をクォートで囲むと文字列型になる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;100&#39;</span>
@@ -524,7 +546,19 @@
 </div>
 </div>
 </div>
-<p>ブール型には<code class="docutils literal notranslate"><span class="pre">True</span></code>（真）, <code class="docutils literal notranslate"><span class="pre">False</span></code>（偽）があります。名前が示すように「真偽」を確認できるわけです。例えば，</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="s1">&#39;100&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>str
+</pre></div>
+</div>
+</div>
+</div>
+<p>ブール型には<code class="docutils literal notranslate"><span class="pre">True</span></code>（真）, <code class="docutils literal notranslate"><span class="pre">False</span></code>（偽）がある。名前が示すように「真偽」を確認できる。例えば，</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">==</span><span class="mi">10</span>
@@ -537,7 +571,7 @@
 </div>
 </div>
 </div>
-<p>後ほど説明しますが，<code class="docutils literal notranslate"><span class="pre">==</span></code>は「等しい」ということを意味します。また，<code class="docutils literal notranslate"><span class="pre">True</span></code>は<code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code>は<code class="docutils literal notranslate"><span class="pre">0</span></code>として計算されます。</p>
+<p>後ほど説明するが，<code class="docutils literal notranslate"><span class="pre">==</span></code>は「等しい」ということを意味する。また，<code class="docutils literal notranslate"><span class="pre">True</span></code>は<code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code>は<code class="docutils literal notranslate"><span class="pre">0</span></code>として計算される。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span><span class="o">==</span><span class="mi">1</span> <span class="c1"># Trueは１なのでTrueを返す</span>
@@ -575,8 +609,8 @@
 </div>
 </div>
 <p>（注意）</p>
-<p><code class="docutils literal notranslate"><span class="pre">Python</span></code>には「クラス（class）」という概念があり，この授業で説明はおこなわないが「データ型（data types）」と同義である。</p>
-<p>データ型は関数<code class="docutils literal notranslate"><span class="pre">type()</span></code>を使って確認することができるが，<code class="docutils literal notranslate"><span class="pre">type()</span></code>で表示されるものは「データ型＝クラス名」と考えれば良い。更に、引数を画面上に表示する組み込み関数である<code class="docutils literal notranslate"><span class="pre">print()</span></code>を使うと「データ型＝クラス名」が確認できる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Python</span></code>には「クラス（class）」という概念がある。オブジェクトを生成するための設計図となるもので，この授業で説明はおこなわないが「型（types）」と同義と考えて良い。ちなみにクラス自体もオブジェクトである。</p>
+<p>上では関数<code class="docutils literal notranslate"><span class="pre">type()</span></code>を使ってデータ型を確認したが，引数を画面上に表示する関数である<code class="docutils literal notranslate"><span class="pre">print()</span></code>を使うと「クラス名<span class="math notranslate nohighlight">\(\approx\)</span>データ型」が確認できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -673,8 +707,8 @@
 </div>
 </div>
 </div>
-<p>コードのかなで想定されたデータ型と異なるデータ型を使うとがエラーが出たり，間違った結果につながる場合がありますので，自信がない時は<code class="docutils literal notranslate"><span class="pre">type()</span></code>を使って確認しましょう。</p>
-<p>この他<code class="docutils literal notranslate"><span class="pre">complex</span> <span class="pre">type</span></code>と<code class="docutils literal notranslate"><span class="pre">NoneTyep</span></code>も存在する。以下の<code class="docutils literal notranslate"><span class="pre">None</span></code>とは「無」という意味である。</p>
+<p>コードのかなで想定されたデータ型と異なるデータ型を使うとがエラーが出たり，間違った結果につながる場合があるので，自信がない時は<code class="docutils literal notranslate"><span class="pre">type()</span></code>を使って確認すること。</p>
+<p>この他類似する型に<code class="docutils literal notranslate"><span class="pre">complex</span> <span class="pre">type</span></code>（複素数型）と<code class="docutils literal notranslate"><span class="pre">NoneTyep</span></code>も存在する。以下の<code class="docutils literal notranslate"><span class="pre">None</span></code>とは「無」という意味である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
@@ -702,28 +736,28 @@
 </div>
 <div class="section" id="id2">
 <h2>コレクション系データ型<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>コレクション系とは上で説明した基本データ型の集まりとなるデータ型で，ここでは以下を簡単に説明します。</p>
+<p>コレクション系とは上で説明した基本データ型の集まりとなるデータ型で，ここでは以下を簡単に説明する。</p>
 <ul class="simple">
 <li><p>リスト（list）</p></li>
 <li><p>タプル（tuple）</p></li>
 <li><p>辞書（dict）</p></li>
 <li><p>集合（set）</p></li>
 </ul>
-<p>リストは<code class="docutils literal notranslate"><span class="pre">[]</span></code>を使います。</p>
+<p>リストは<code class="docutils literal notranslate"><span class="pre">[]</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">list0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span> <span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">list0</span><span class="p">)</span>
+<span class="n">list0</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[10, 3, 2]
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[10, 3, 2]
 </pre></div>
 </div>
 </div>
 </div>
-<p>上で説明したように、<code class="docutils literal notranslate"><span class="pre">print()</span></code>は定義したリストを画面上に表示する関数です。以下もリストの一例です。</p>
+<p>以下もリストの一例である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
@@ -749,9 +783,9 @@
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">list</span></code>というクラス（class）であることも確認できる。</p>
+<p>上で説明したように、<code class="docutils literal notranslate"><span class="pre">print()</span></code>は定義したリストを画面上に表示する関数であり，<code class="docutils literal notranslate"><span class="pre">print()</span></code>を使うと<code class="docutils literal notranslate"><span class="pre">list</span></code>というクラス（class）であることも確認できる。</p>
 <hr class="docutils" />
-<p>タプルは<code class="docutils literal notranslate"><span class="pre">()</span></code>を使って作成できる。</p>
+<p>タプルは<code class="docutils literal notranslate"><span class="pre">()</span></code>を使って作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tuple0</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -765,12 +799,12 @@
 </div>
 </div>
 </div>
-<p>リストと変わりないように見えますが，大きな違いは要素を変更できるかできないかという点です。</p>
+<p>リストと変わりないように見えるが，大きな違いは要素を変更できるかできないかという点である。</p>
 <ul class="simple">
 <li><p>リストの要素は変更可能</p></li>
 <li><p>タプルの要素は変更不可能</p></li>
 </ul>
-<p>リストの要素の変更方法は以下で説明します。</p>
+<p>リストの要素の変更方法は以下で説明する。</p>
 <p><strong>＜コメント１＞</strong></p>
 <p>上で通常タプルは<code class="docutils literal notranslate"><span class="pre">(</span></code>と<code class="docutils literal notranslate"><span class="pre">)</span></code>を使って作成できると説明したが、実は、コンマ<code class="docutils literal notranslate"><span class="pre">,</span></code>によってタプルは定義されるため<code class="docutils literal notranslate"><span class="pre">(</span></code>と<code class="docutils literal notranslate"><span class="pre">)</span></code>は必須ではない。例えば、次のコードでもタプルとなる。従って、<code class="docutils literal notranslate"><span class="pre">(</span></code>と<code class="docutils literal notranslate"><span class="pre">)</span></code>はタプルを明確にするためと考えて良い。</p>
 <div class="cell docutils container">
@@ -795,7 +829,7 @@
 </div>
 </div>
 <p><strong>＜コメント２＞</strong></p>
-<p>１つの要素からなるタプルを作成する場合、コンマ<code class="docutils literal notranslate"><span class="pre">,</span></code>を必ず追加すること。</p>
+<p>１つの要素からなるタプルを作成する場合、コンマ<code class="docutils literal notranslate"><span class="pre">,</span></code>が必ず必要となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tuple2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,)</span>
@@ -840,7 +874,7 @@
 </div>
 </div>
 <hr class="docutils" />
-<p>辞書はキー（key）と値（value）のペアとなって定義され，<code class="docutils literal notranslate"><span class="pre">:</span></code>を挟んで１つのペアとなります。全てを<code class="docutils literal notranslate"><span class="pre">{}</span></code>で囲み辞書を定義します。</p>
+<p>辞書はキー（key）と値（value）のペアとなって定義され，<code class="docutils literal notranslate"><span class="pre">:</span></code>を挟んで１つのペアとなる。全てを<code class="docutils literal notranslate"><span class="pre">{}</span></code>で囲み辞書を定義する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dict0</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="s1">&#39;Kobe&#39;</span><span class="p">}</span>
@@ -848,7 +882,7 @@
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">dict0</span></code>には２つのペアがあります。<code class="docutils literal notranslate"><span class="pre">a</span></code>のキーには値<code class="docutils literal notranslate"><span class="pre">10</span></code>が対応しており，<code class="docutils literal notranslate"><span class="pre">b</span></code>には<code class="docutils literal notranslate"><span class="pre">'kobe'</span></code>が設定されています。今の段階では辞書を使う目的が不明確でしっくりこないと思いますが，勉強を進めるととてもパワフルなツールだと気づくと思います。</p>
+<p><code class="docutils literal notranslate"><span class="pre">dict0</span></code>には２つのペアがある。<code class="docutils literal notranslate"><span class="pre">a</span></code>のキーには値<code class="docutils literal notranslate"><span class="pre">10</span></code>が対応しており，<code class="docutils literal notranslate"><span class="pre">b</span></code>には<code class="docutils literal notranslate"><span class="pre">'kobe'</span></code>が設定されている。今の段階では辞書を使う目的が不明確でしっくりこないと思うが，勉強を進めるととてもパワフルなツールだと気づくだろう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">dict0</span><span class="p">)</span>
@@ -873,11 +907,11 @@
 </div>
 </div>
 </div>
-<p>集合は使う機会がないので説明は割愛します。</p>
+<p>集合は使う機会がないので説明は割愛する。</p>
 </div>
 <div class="section" id="id3">
 <h2>要素のアクセス方法<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>まずリストを考えましょう。リストの要素にアクセスするためには，左から<code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>…と数えて指定します。例えば</p>
+<p>まずリストを考えよう。リストの要素にアクセスするためには，左から<code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>…と数えて指定する。例えば</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">]</span>
@@ -885,7 +919,7 @@
 </div>
 </div>
 </div>
-<p>の場合，<code class="docutils literal notranslate"><span class="pre">'A'</span></code>は０番目，<code class="docutils literal notranslate"><span class="pre">'B'</span></code>１番目，<code class="docutils literal notranslate"><span class="pre">'C'</span></code>は２番目と数えます。例えば，<code class="docutils literal notranslate"><span class="pre">A</span></code>を抽出したい場合，</p>
+<p>の場合，<code class="docutils literal notranslate"><span class="pre">'A'</span></code>は０番目，<code class="docutils literal notranslate"><span class="pre">'B'</span></code>１番目，<code class="docutils literal notranslate"><span class="pre">'C'</span></code>は２番目と数える。例えば，<code class="docutils literal notranslate"><span class="pre">A</span></code>を抽出したい場合，</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -898,7 +932,7 @@
 </div>
 </div>
 </div>
-<p>またマイナス・サイン<code class="docutils literal notranslate"><span class="pre">-</span></code>を使って右から<code class="docutils literal notranslate"><span class="pre">-1</span></code>, <code class="docutils literal notranslate"><span class="pre">-2</span></code>, <code class="docutils literal notranslate"><span class="pre">-3</span></code>と数えて指定することも可能です。</p>
+<p>またマイナス・サイン<code class="docutils literal notranslate"><span class="pre">-</span></code>を使って右から<code class="docutils literal notranslate"><span class="pre">-1</span></code>, <code class="docutils literal notranslate"><span class="pre">-2</span></code>, <code class="docutils literal notranslate"><span class="pre">-3</span></code>と数えて指定することも可能である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -911,7 +945,7 @@
 </div>
 </div>
 </div>
-<p>要素の数え方は以下のように考えるとよいでしょう。</p>
+<p>要素の数え方は以下のように考えるとよいだろう。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   0   1   2   3   4   5  （左から数える） 
  +---+---+---+---+---+---+
  | P | y | t | h | o | n |
@@ -919,7 +953,8 @@
   -6  -5  -4  -3  -2  -1　（右から数える）
 </pre></div>
 </div>
-<p>連続する複数の要素を選択する場合（スライシング）は<code class="docutils literal notranslate"><span class="pre">:</span></code>を使います。<code class="docutils literal notranslate"><span class="pre">:</span></code>の左側が選択する最初の要素で，<code class="docutils literal notranslate"><span class="pre">:</span></code>の右側が選択する最後の次の番号です。</p>
+<hr class="docutils" />
+<p>連続する複数の要素を選択する場合（スライシング）は<code class="docutils literal notranslate"><span class="pre">:</span></code>を使う。<code class="docutils literal notranslate"><span class="pre">:</span></code>の左側が選択する最初の要素で，<code class="docutils literal notranslate"><span class="pre">:</span></code>の右側が選択する最後の次の番号である（即ち，<code class="docutils literal notranslate"><span class="pre">:</span></code>の右側の番号の要素は含まれない。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
@@ -932,7 +967,7 @@
 </div>
 </div>
 </div>
-<p>この例では１番目から3番目を選択しています。<code class="docutils literal notranslate"><span class="pre">:</span></code>の左側の番号を省略すると<code class="docutils literal notranslate"><span class="pre">0</span></code>と解釈され，<code class="docutils literal notranslate"><span class="pre">:</span></code>右側を省略すると<code class="docutils literal notranslate"><span class="pre">-1</span></code>と解釈されます。</p>
+<p>この例では１番目から3番目を選択している。<code class="docutils literal notranslate"><span class="pre">:</span></code>の左側の番号を省略すると<code class="docutils literal notranslate"><span class="pre">0</span></code>と解釈され，<code class="docutils literal notranslate"><span class="pre">:</span></code>右側を省略すると<code class="docutils literal notranslate"><span class="pre">-1</span></code>と解釈される。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
@@ -957,7 +992,7 @@
 </div>
 </div>
 </div>
-<p>タプルも同じように選択できます。</p>
+<p>タプルも同じように選択でる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">)</span>
@@ -1001,7 +1036,7 @@
 </div>
 </div>
 </div>
-<p>辞書も同じ方法でアクセスできます。</p>
+<p>辞書も同じ方法でアクセスできる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_text</span> <span class="o">=</span> <span class="s1">&#39;University&#39;</span>
@@ -1021,7 +1056,7 @@
 </div>
 </div>
 </div>
-<p>辞書の場合はキーで指定します。複数指定する場合は，<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">loop</span></code>などのより複雑な手法が必要となります。</p>
+<p>辞書の場合はキーで指定する。複数指定する場合は，<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">loop</span></code>などの複雑な手法が必要となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">]}</span>
@@ -1056,13 +1091,13 @@
 </div>
 <div class="section" id="id4">
 <h2>変数名に使う記号について<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<p>上の例では<code class="docutils literal notranslate"><span class="pre">my_list</span></code>など好きなアルファベットの組み合わせを使いわかりやすい変数名にしています。しかし，変数の名前を作る上で守らなくてはならないルールがあります。</p>
+<p>上の例では<code class="docutils literal notranslate"><span class="pre">my_list</span></code>など好きなアルファベットの組み合わせを使いわかりやすい変数名にしている。しかし，変数の名前を作る上で守らなくてはならないルールがある。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">(a-z,</span> <span class="pre">A-Z)</span></code>もしくは<code class="docutils literal notranslate"><span class="pre">_</span></code>（アンダースコア）で始める</p></li>
 <li><p>最初の文字以外であれば<code class="docutils literal notranslate"><span class="pre">(a-z,</span> <span class="pre">A-Z)</span></code>と<code class="docutils literal notranslate"><span class="pre">_</span></code>に加え数字も可</p></li>
 <li><p>長さに制限はない</p></li>
 <li><p>小文字と大文字は異なる記号としてあつかう</p></li>
-<li><p>次の単語はある目的のために事前に定義されているため，変数名としては使えない。</p></li>
+<li><p>次の単語は特定の目的のために事前に定義されているため，変数名としては使えない。</p></li>
 </ul>
 <pre>
 and       exec     not
@@ -1248,7 +1283,7 @@ except
 <p>剰余演算</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span><span class="o">%</span><span class="mi">2</span> <span class="c1"># 5÷２＝２ 余り 1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span><span class="o">%</span><span class="mi">2</span> <span class="c1"># 5÷2＝2 余り 1</span>
 </pre></div>
 </div>
 </div>
@@ -1365,9 +1400,9 @@ except
 </div>
 <div class="section" id="if">
 <h2>if 文<a class="headerlink" href="#if" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">if</span></code>文を使うと，あるブール型（真偽）の条件のもとでコードを実行することが可能となる。例えば，以下の関数を考える。</p>
+<p><code class="docutils literal notranslate"><span class="pre">if</span></code>文を使うと，あるブール型（真偽）の条件のもとでコードを実行することが可能となる。例えば，<code class="docutils literal notranslate"><span class="pre">X</span></code>の値が正の場合，</p>
 <p><code class="docutils literal notranslate"><span class="pre">print(X,</span> <span class="pre">'は正です')</span></code></p>
-<p><code class="docutils literal notranslate"><span class="pre">X</span></code>の値が正の場合，この関数を実行したいとする。</p>
+<p>を実行したいとしよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="mi">10</span>
@@ -1397,7 +1432,7 @@ except
 <li><p><code class="docutils literal notranslate"><span class="pre">else</span></code>とは「<code class="docutils literal notranslate"><span class="pre">X&gt;0</span></code>以外の場合」という意味。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">pass</span></code>は「何もしない」という意味。</p></li>
 </ul>
-<p>ここで<code class="docutils literal notranslate"><span class="pre">else</span></code>以下を省略してもエラーにはならない（結果も変わらない）。</p>
+<p>ここで<code class="docutils literal notranslate"><span class="pre">else</span></code>以下を省略してもエラーにはならない（結果も変わらない）。即ち，<code class="docutils literal notranslate"><span class="pre">else</span></code>以下がない場合は，それが省略されていると考えれば良い。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
@@ -1431,7 +1466,7 @@ except
 <li><p><code class="docutils literal notranslate"><span class="pre">print(X,</span> <span class="pre">'はゼロです')</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">print(X,</span> <span class="pre">'は負です')</span></code></p></li>
 </ol>
-<p><code class="docutils literal notranslate"><span class="pre">X</span></code>の値が正の場合は<code class="docutils literal notranslate"><span class="pre">１</span></code>を，ゼロの場合は<code class="docutils literal notranslate"><span class="pre">２</span></code>を，負の場合は<code class="docutils literal notranslate"><span class="pre">３</span></code>を表示したいとする。</p>
+<p><code class="docutils literal notranslate"><span class="pre">X</span></code>の値が正の場合は<code class="docutils literal notranslate"><span class="pre">1</span></code>を，ゼロの場合は<code class="docutils literal notranslate"><span class="pre">2</span></code>を，負の場合は<code class="docutils literal notranslate"><span class="pre">3</span></code>を表示したいとしよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
@@ -1467,7 +1502,7 @@ except
 </div>
 <div class="section" id="for">
 <h2>for ループ<a class="headerlink" href="#for" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">for</span></code>ループは同じコードを複数回リピートして実行したい場合に有効な方法である。例えば，次のリストにある名前を表示したいとする。</p>
+<p><code class="docutils literal notranslate"><span class="pre">for</span></code>ループは同じコードを複数回リピートして実行したい場合に有効な方法である。例えば，次のリストにある名前を表示したいとしよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;太郎&#39;</span><span class="p">,</span> <span class="s1">&#39;次郎&#39;</span><span class="p">,</span> <span class="s1">&#39;三郎&#39;</span><span class="p">,</span> <span class="s1">&#39;四郎&#39;</span><span class="p">,</span> <span class="s1">&#39;五郎&#39;</span><span class="p">]</span>
@@ -1497,7 +1532,7 @@ except
 <li><p><code class="docutils literal notranslate"><span class="pre">for</span></code>がある一行目は<code class="docutils literal notranslate"><span class="pre">:</span></code>で終わる。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>は<code class="docutils literal notranslate"><span class="pre">name_list</span></code>にあるそれぞれの要素を示すダミー記号。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">name_list</span></code>にある要素を最初から一つずつ実行する。</p></li>
-<li><p>２行目は４つの半角スペースがインデントして入る。</p></li>
+<li><p>2行目は4つの半角スペースがインデントして入る。</p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">for</span></code>ループのよく使う例として以下を挙げる。この例では，リストに要素を追加する関数である<code class="docutils literal notranslate"><span class="pre">.append()</span></code>を使うが，この関数については以下でより詳しく説明する。</p>
 <p>まず次のリストを定義する。</p>
@@ -1508,10 +1543,11 @@ except
 </div>
 </div>
 </div>
-<p>それぞれの要素の２倍からなるリストを作成するとしよう。</p>
+<p>それぞれの要素の2倍からなるリストを作成するとしよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 1</span>
+
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">val_list</span><span class="p">:</span>  <span class="c1"># 2</span>
     <span class="n">my_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="p">)</span>  <span class="c1"># 3</span>
 </pre></div>
@@ -1520,9 +1556,9 @@ except
 </div>
 <p>このループの考え方：</p>
 <ol class="simple">
-<li><p>空のリストの作成</p></li>
-<li><p>ここから<code class="docutils literal notranslate"><span class="pre">for</span></code>ループの始まり。<code class="docutils literal notranslate"><span class="pre">i</span></code>はリスト<code class="docutils literal notranslate"><span class="pre">[1,2,3,4,5]</span></code>の要素の代理変数であり，リストの左から一つずつ次の行の<code class="docutils literal notranslate"><span class="pre">i</span></code>に該当する要素を代入して評価する。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">.append()</span></code>は<code class="docutils literal notranslate"><span class="pre">2*i</span></code>を<code class="docutils literal notranslate"><span class="pre">my_list</span></code>に追加する関数</p></li>
+<li><p>空のリストの作成（ここに2倍の要素を格納する）</p></li>
+<li><p>ここから<code class="docutils literal notranslate"><span class="pre">for</span></code>ループの始まり。<code class="docutils literal notranslate"><span class="pre">i</span></code>はリスト<code class="docutils literal notranslate"><span class="pre">[1,2,3,4,5]</span></code>の要素の代理変数であり，<code class="docutils literal notranslate"><span class="pre">var_list</span></code>の左から一つずつ次の行の<code class="docutils literal notranslate"><span class="pre">i</span></code>に該当する要素を代入して評価する。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.append()</span></code>は<code class="docutils literal notranslate"><span class="pre">2*i</span></code>を<code class="docutils literal notranslate"><span class="pre">my_list</span></code>に追加するメソッド（関数と同義であり，後ほど違いを説明する）</p></li>
 </ol>
 <p><code class="docutils literal notranslate"><span class="pre">my_list</span></code>を表示しよう。</p>
 <div class="cell docutils container">
@@ -1537,7 +1573,7 @@ except
 </div>
 </div>
 </div>
-<p>上の例では，３行のコードを書き<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使いリストを作成した。内包表記（list comprehension）を使うと同じ結果を１行のコードで得ることもできる。</p>
+<p>上の例では，3行のコードを書き<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使いリストを作成した。内包表記（list comprehension）を使うと同じ結果を1行のコード（one linerと呼ばれる）で得ることもできる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">val_list</span><span class="p">]</span>
@@ -1552,13 +1588,12 @@ except
 </div>
 <p>上の<code class="docutils literal notranslate"><span class="pre">for</span></code>ループと内包表記は以下のような対応関係にある。</p>
 <pre>
-<font color=blue>my_list</font> = [ ]
 for <font color=red>i</font> in <font color=orange>val_list</font>:
     <font color=blue>my_list</font>.append(<font color=green>expression</font>)
 </pre>
 <pre>
 <font color=blue>my_list</font> = [<font color=green>expression</font> for <font color=red>i</font> in <font color=orange>val_list</font>]
-</pre><p>内包表記に<code class="docutils literal notranslate"><span class="pre">if</span></code>文を加えることも可能である。次の例では，偶数の２倍だけをリストに追加している。</p>
+</pre><p>内包表記に<code class="docutils literal notranslate"><span class="pre">if</span></code>文を加えることも可能である。次の例では，偶数の2倍だけをリストに追加している。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">val_list</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
@@ -1626,24 +1661,20 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <li><p>２行目の意味：<code class="docutils literal notranslate"><span class="pre">name_list</span></code>の<code class="docutils literal notranslate"><span class="pre">i</span></code>番目の要素を表示</p></li>
 <li><p>３行目の意味：カウンター<code class="docutils literal notranslate"><span class="pre">i</span></code>の値を<code class="docutils literal notranslate"><span class="pre">1</span></code>増やす</p>
 <ul>
-<li><p>先に右辺を評価した後，それを左辺に代入すると考える。（方程式としては考えない）</p></li>
+<li><p>先に右辺を評価した後，それを左辺の<code class="docutils literal notranslate"><span class="pre">i</span></code>に割り当てる考える。（方程式としては考えない!）</p></li>
 </ul>
 </li>
-<li><p>２行目と３行目は４つの半角スペースがインデントして入る。</p></li>
+<li><p>２行目と３行目は４つの半角スペースがインデントとして入る。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">while</span></code>ループは無限ループになる場合があるので注意しよう。</p></li>
 </ul>
 </div>
 <div class="section" id="id8">
 <h2>関数<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
-<p>コードを書くうえで関数は非常に重要な役割を果たす。Pythonには組み込み関数（事前に準備された関数; built-in functions）が数多くあり，上で使った<code class="docutils literal notranslate"><span class="pre">print()</span></code>も組み込み関数である。組み込み関数はデータ型によって様々なものが存在するが、ここではプログラマー自信が作成する関数について説明する。</p>
-<p>関数には引数が設定されるが（省略される場合もある）、大きく分けて２種類存在する。</p>
-<ul class="simple">
-<li><p><strong>位置引数</strong>（Positional Arguments）</p></li>
-<li><p><strong>キーワード専用引数</strong>（Keyward Only Arguments）</p></li>
-</ul>
-<p>順番に説明する。</p>
-<div class="section" id="positional-arguments">
-<h3>位置引数（Positional Arguments）<a class="headerlink" href="#positional-arguments" title="Permalink to this headline">¶</a></h3>
-<p>次の例を考えよう。これは数字の２乗を計算する関数である。</p>
+<p>コードを書くうえで関数は非常に重要な役割を果たす。Pythonには組み込み関数（事前に準備された関数; built-in functions）が数多くあり，上で使った<code class="docutils literal notranslate"><span class="pre">print()</span></code>と<code class="docutils literal notranslate"><span class="pre">type()</span></code>
+も組み込み関数である。組み込み関数は様々なものが存在するが、ここではプログラマー自信が作成する関数について説明する。</p>
+<p>（注意）</p>
+<p>関数には引数が設定されるが（省略される場合もある）、複数の種類がある。ここでは基本となる引数のみを考えるが，引数の<strong>位置</strong>と<code class="docutils literal notranslate"><span class="pre">=</span></code>が重要な役割を果たすことになる。</p>
+<p>最初の例は数字の2乗を計算する関数である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_0</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -1656,17 +1687,18 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <ul class="simple">
 <li><p>１行目：</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">def</span></code>で始まり（<code class="docutils literal notranslate"><span class="pre">def</span></code>はdefinitionの省略形）<code class="docutils literal notranslate"><span class="pre">:</span></code>で終わる</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">def</span></code>で始まり（<code class="docutils literal notranslate"><span class="pre">def</span></code>はdefinitionの省略形）<code class="docutils literal notranslate"><span class="pre">:</span></code>で終わる。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">func_0</span></code>が関数名，<code class="docutils literal notranslate"><span class="pre">x</span></code>が第１引数（ひきすう）であり唯一の引数である。</p></li>
 </ul>
 </li>
 <li><p>２行目：</p>
 <ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">return</span></code>は評価した値を「返す」という意味。必ず<code class="docutils literal notranslate"><span class="pre">return</span></code>の前には4つのスペースが必要であり，ないとエラーになる。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">x**2</span></code>という返り値（戻り値）の設定をする</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">return</span></code>は評価した値を「返す」という意味</p></li>
 </ul>
 </li>
 </ul>
+<p>関数を評価するには，引数に数字を入れて実行する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_0</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -1679,7 +1711,32 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<p>複数の位置引数を設定することも可能である。次の例で使う<code class="docutils literal notranslate"><span class="pre">sum()</span></code>は，数字の合計を計算する関数であり，<code class="docutils literal notranslate"><span class="pre">()</span></code>の中にはタプルやリストが入る。即ち，タプルやリストの要素の合計を返す関数となる。</p>
+<p>（注意）</p>
+<ul class="simple">
+<li><p>関数を定義する場合の引数（上の例では<code class="docutils literal notranslate"><span class="pre">x</span></code>)は「仮引数」（parameter）と呼ぶ。</p></li>
+<li><p>関数を評価する際に関数に引き渡す引数（上の例では<code class="docutils literal notranslate"><span class="pre">2</span></code>）は「実引数」（argument）と呼ぶ。</p></li>
+<li><p>本書では両方を「引数」と読んでいる。</p></li>
+</ul>
+<hr class="docutils" />
+<p>引数が無い関数を定義することを可能である。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_kobe</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;I love Kobe :)&#39;</span><span class="p">)</span>
+
+<span class="n">func_kobe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>I love Kobe :)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3>引数の位置が重要<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>上の例では引数が１つしかないが，引数が複数ある場合にその位置が重要になってくる。次の例を考えよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_1</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
@@ -1690,7 +1747,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_1</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_1</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1700,10 +1757,10 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">a</span></code>が第１引数、<code class="docutils literal notranslate"><span class="pre">b</span></code>が第２引数である。位置引数の順番を間違えると意図しない結果につながるので注意が必要。</p>
+<p><code class="docutils literal notranslate"><span class="pre">a</span></code>が第1引数、<code class="docutils literal notranslate"><span class="pre">b</span></code>が第2引数である。引数の順番を間違えると意図しない結果につながる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_1</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_1</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1713,10 +1770,34 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<p><strong>関数を実行する際</strong>に、位置引数に<code class="docutils literal notranslate"><span class="pre">=</span></code>を使って値を指定することも可能である。</p>
+<p>もちろん，3つ以上の位置引数も設定可能である。次の例で使う<code class="docutils literal notranslate"><span class="pre">sum()</span></code>は，数字の合計を計算する関数であり，<code class="docutils literal notranslate"><span class="pre">()</span></code>の中にはタプルやリストが入る。即ち，タプルやリストの要素の合計を返す関数となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_1</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_2</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>100
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3>実行する際に<code class="docutils literal notranslate"><span class="pre">=</span></code>を使う<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p><strong>関数を実行する際</strong>に、引数に<code class="docutils literal notranslate"><span class="pre">=</span></code>を使って値を指定することも可能である。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_1</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1726,10 +1807,10 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<p>位置引数に<code class="docutils literal notranslate"><span class="pre">=</span></code>を使う利点は、引数の順番を変えることが可能となることである。</p>
+<p>この場合，引数の順番を変えることが可能となる。それが関数を実行する際に<code class="docutils literal notranslate"><span class="pre">=</span></code>を使う利点である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_1</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_1</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1739,31 +1820,54 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<p>ただし、<code class="docutils literal notranslate"><span class="pre">=</span></code>を使う場合は必ず<code class="docutils literal notranslate"><span class="pre">=</span></code>を使う引数を右端に並べること。このルールが守られないとエラーとなる。</p>
-<div class="cell docutils container">
+<p>この場合，全ての引数に<code class="docutils literal notranslate"><span class="pre">=</span></code>を使わないとエラーとなる。</p>
+<div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_1</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_1</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>5.0
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">102</span><span class="o">-</span><span class="n">a68692af39a3</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">func_1</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="ne">TypeError</span>: func_1() got multiple values for argument &#39;a&#39;
 </pre></div>
 </div>
 </div>
 </div>
-<p>次の例は，<strong>関数を定義する際</strong>、<code class="docutils literal notranslate"><span class="pre">=</span></code>を使って引数のデフォルトの値を設定する場合である。即ち，引数を入力すると入力された数値を使うが，引数を入力しない場合は引数を予め設定した値（デフォルトの値）として計算する。</p>
+<p>理由は最初の<code class="docutils literal notranslate"><span class="pre">10</span></code>を<code class="docutils literal notranslate"><span class="pre">a</span></code>の値と解釈されるためである。一方で，引数の位置が揃っていれば，全ての引数に<code class="docutils literal notranslate"><span class="pre">=</span></code>を付ける必要なない。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_2</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>100
+</pre></div>
+</div>
+</div>
+</div>
+<p>ここでも引数の位置の重要性がうかがえる。</p>
+</div>
+<div class="section" id="id11">
+<h3>定義する際に<code class="docutils literal notranslate"><span class="pre">=</span></code>を使う<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p><strong>関数を定義する際</strong>、<code class="docutils literal notranslate"><span class="pre">=</span></code>を使って引数のデフォルトの値を設定することができる。即ち，引数を入力すると入力された数値を使うが，引数を入力しない場合は引数を予め設定した値（デフォルトの値）が使われて評価される。次の例では<code class="docutils literal notranslate"><span class="pre">c</span></code>のデフォルトの値が<code class="docutils literal notranslate"><span class="pre">10</span></code>に設定されている。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_3</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">])</span><span class="o">*</span><span class="n">c</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">c</span></code>の値を与えずに評価してみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_2</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_3</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1773,9 +1877,10 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
+<p>次に<code class="docutils literal notranslate"><span class="pre">c</span></code>にデフォルトと異なる値を設定してみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_2</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_3</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1785,25 +1890,18 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">=</span></code>を使って指定すると順番を気にする必要はない。（最初の位置引数は<code class="docutils literal notranslate"><span class="pre">a</span></code>になることに注意）</p>
+<p>（Note）</p>
+<ul class="simple">
+<li><p>関数を実行する際に<code class="docutils literal notranslate"><span class="pre">=</span></code>無しで関数に渡される引数は，その位置が重要であるため「位置引数」と呼ばれる。</p></li>
+<li><p>関数を実行する際に<code class="docutils literal notranslate"><span class="pre">=</span></code>付きで関数に渡される引数は「キーワード引数」と呼ばれる。</p></li>
+</ul>
+</div>
+<div class="section" id="args">
+<h3><code class="docutils literal notranslate"><span class="pre">*args</span></code><a class="headerlink" href="#args" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">func_0()</span></code>の引数の数は1に，<code class="docutils literal notranslate"><span class="pre">func_1()</span></code>の引数は2に，<code class="docutils literal notranslate"><span class="pre">func_2()</span></code>の引数は4に設定されている。関数を実行する際，引数の数が指定された数と合わないとエラーが発生する。では，位置引数の数が事前に決まっていない場合はどうするのか。例えば，<code class="docutils literal notranslate"><span class="pre">func_2(1,2)</span></code>と書いても<code class="docutils literal notranslate"><span class="pre">func_2(1,2,3,4,5,6)</span></code>と書いても引数の合計を計算したいとしよう。この場合に<code class="docutils literal notranslate"><span class="pre">*args</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_2</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>500
-</pre></div>
-</div>
-</div>
-</div>
-<p>ここでの<code class="docutils literal notranslate"><span class="pre">c=100</span></code>や<code class="docutils literal notranslate"><span class="pre">b=3</span></code>はキーワード引数と呼ばれることもあるが、以下で説明するキーワード専用引数とは異なることに注意しよう。</p>
-<hr class="docutils" />
-<p><code class="docutils literal notranslate"><span class="pre">func_0()</span></code>の場合，引数の数は１に固定されており，<code class="docutils literal notranslate"><span class="pre">func_1()</span></code>の位置引数は２に固定されている。位置引数の数が指定された数と合わないとエラーが発生する。では，位置引数の数が事前に決まっていない場合はどうするのか。例えば，<code class="docutils literal notranslate"><span class="pre">func_3(1,2)</span></code>と書いても<code class="docutils literal notranslate"><span class="pre">func_3(1,2,3,4,5,6)</span></code>と書いても位置引数の合計を計算したいとしよう。この場合，位置引数の代わりに<code class="docutils literal notranslate"><span class="pre">*args</span></code>を使う。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_3</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_4</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1811,7 +1909,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_4</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1823,7 +1921,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_4</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1833,7 +1931,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<p>では<code class="docutils literal notranslate"><span class="pre">*args</span></code>は何を返しているのだろう。これを理解するために次の例を考えよう。</p>
+<p><code class="docutils literal notranslate"><span class="pre">*args</span></code>は何を返しているのだろう。これを理解するために次の例を考えよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
@@ -1875,10 +1973,10 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <p>即ち、<code class="docutils literal notranslate"><span class="pre">*</span></code>はタプルである<code class="docutils literal notranslate"><span class="pre">(1,2,3)</span></code>を<code class="docutils literal notranslate"><span class="pre">1,2,3</span></code>に置き換えている。このような置き換えを「展開する」（unpack）と呼ぶ。この<code class="docutils literal notranslate"><span class="pre">*</span></code>の役割を念頭に次の関数を使い<code class="docutils literal notranslate"><span class="pre">*</span></code>と<code class="docutils literal notranslate"><span class="pre">args</span></code>の役割を分けて考えてみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_temp</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_5</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
-<span class="n">func_temp</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">func_5</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1888,13 +1986,13 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">args</span></code>は引数のタプルであることがわかる。次に<code class="docutils literal notranslate"><span class="pre">*</span></code>を加える。</p>
+<p><code class="docutils literal notranslate"><span class="pre">args</span></code>は引数のタプルであることがわかる。次に<code class="docutils literal notranslate"><span class="pre">print()</span></code>の<code class="docutils literal notranslate"><span class="pre">args</span></code>に<code class="docutils literal notranslate"><span class="pre">*</span></code>を加える。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_temp</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_5</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
 
-<span class="n">func_temp</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">func_5</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1904,16 +2002,16 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<p>ここから分かることは、<code class="docutils literal notranslate"><span class="pre">func_temp()</span></code>の<code class="docutils literal notranslate"><span class="pre">*args</span></code>は引数をタプルにし、<code class="docutils literal notranslate"><span class="pre">print()</span></code>の<code class="docutils literal notranslate"><span class="pre">*args</span></code>はタプルを展開しているのである。この性質を使うことにより、関数に任意の数の引数を指定することが可能となる。</p>
+<p>ここから分かることは、<code class="docutils literal notranslate"><span class="pre">func_5(*args)</span></code>の<code class="docutils literal notranslate"><span class="pre">*args</span></code>は引数をタプルにし、<code class="docutils literal notranslate"><span class="pre">print(*args)</span></code>の<code class="docutils literal notranslate"><span class="pre">*args</span></code>はタプルを展開しているのである。この性質を使うことにより、関数に任意の数の引数を指定することが可能となる。</p>
 <p>＜コメント＞</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">*args</span></code>の<code class="docutils literal notranslate"><span class="pre">args</span></code>はarguments（引数）の省略形である。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">*args</span></code>の代わりに<code class="docutils literal notranslate"><span class="pre">*aaa</span></code>や<code class="docutils literal notranslate"><span class="pre">*abc</span></code>としても同じ結果をえることができる。しかし<code class="docutils literal notranslate"><span class="pre">*args</span></code>と書くのが慣例である。</p></li>
 </ul>
-<p>次の例は<code class="docutils literal notranslate"><span class="pre">*args</span></code>と位置引数を一緒に使うケースである。</p>
+<p>次の例は<code class="docutils literal notranslate"><span class="pre">*args</span></code>と引数を一緒に使うケースである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_4</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_6</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">a</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1921,7 +2019,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_4</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_6</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1932,194 +2030,16 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 <p>＜注意＞</p>
-<p><code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">func_4(*args,</span> <span class="pre">a)</span></code>とし、<code class="docutils literal notranslate"><span class="pre">func_4(2,2,2,10)</span></code>を実行するとエラーが発生する。これは<code class="docutils literal notranslate"><span class="pre">*args</span></code>が「その他全ての位置引数」という意味であるためであり、全ての位置引数の後に位置してこそ意味があるからである。言い換えると、<code class="docutils literal notranslate"><span class="pre">*args</span></code>は位置引数の終わりを意味する。</p>
-</div>
-<div class="section" id="keyward-only-arguments">
-<h3>キーワード専用引数（Keyward Only Arguments）<a class="headerlink" href="#keyward-only-arguments" title="Permalink to this headline">¶</a></h3>
-<p><strong>（このセクションはスキップしてもOK）</strong></p>
-<p>＜重要＞</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">def</span></code>の中でキーワード専用引数は位置引数の後に設定する。</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">*args</span></code>がある場合：その後にキーワード専用引数を設定する</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">キーワード専用引数</span><span class="p">):</span>
-    <span class="c1"># code...</span>
-</pre></div>
-</div>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">*args</span></code>がない場合：全ての位置引数の後に<code class="docutils literal notranslate"><span class="pre">*</span></code>を挿入し、その後にキーワード専用引数を設定する</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">キーワード専用引数</span><span class="p">):</span>
-    <span class="c1"># code...</span>
-</pre></div>
-</div>
-</li>
-<li><p>位置引数も<code class="docutils literal notranslate"><span class="pre">*args</span></code>もない場合：<code class="docutils literal notranslate"><span class="pre">*</span></code>の後にキーワード専用引数を設定する</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">キーワード専用引数</span><span class="p">):</span>
-    <span class="c1"># code...</span>
-</pre></div>
-</div>
-</li>
-</ul>
-</li>
-<li><p>以下で説明する<code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>を使う場合、<code class="docutils literal notranslate"><span class="pre">def</span></code>の中で最後の引数とする。</p></li>
-<li><p>関数を評価する際、<code class="docutils literal notranslate"><span class="pre">=</span></code>を使い値を設定する。次の例では、<code class="docutils literal notranslate"><span class="pre">z</span></code>がキーワード専用引数。
-```
-def func(a, *, z):
-# code…</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  func(a, z=10)
-  ```
-</pre></div>
-</div>
-</li>
-</ul>
-<hr class="docutils" />
-<p>次の例では<code class="docutils literal notranslate"><span class="pre">a</span></code>と<code class="docutils literal notranslate"><span class="pre">b</span></code>は位置引数であり<code class="docutils literal notranslate"><span class="pre">c</span></code>と<code class="docutils literal notranslate"><span class="pre">d</span></code>はキーワード専用引数。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_5</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">a</span><span class="o">/</span><span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="o">/</span><span class="n">d</span>
-
-<span class="n">func_5</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>12.0
-</pre></div>
-</div>
-</div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>以外のキーワード専用引数が複数ある場合、関数を評価する際、その中のでの順番を変更しても結果は同じになる。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_5</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>12.0
-</pre></div>
-</div>
-</div>
-</div>
-<p>デフォルトの値を設定する場合は、<code class="docutils literal notranslate"><span class="pre">=</span></code>を使う（位置引数と同じ）。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_6</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">a</span><span class="o">/</span><span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="o">/</span><span class="n">d</span>
-
-<span class="n">func_6</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>12.0
-</pre></div>
-</div>
-</div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">*args</span></code>がある場合の例。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_7</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
-
-<span class="n">func_7</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>1 (2, 3) 4 5
-</pre></div>
-</div>
-</div>
-</div>
-<hr class="docutils" />
-<p><code class="docutils literal notranslate"><span class="pre">*args</span></code>は「その他全ての位置引数」であるが、それに対応する「その他全てのキーワード専用引数」を示す変数が<code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>である。（<code class="docutils literal notranslate"><span class="pre">kwargs</span></code>はkeyword argumentsの省略形である。）</p>
-<p><code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>の役割を説明するために、次の例を考えよう。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_8</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
-
-<span class="n">func_8</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">})</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>5
-</pre></div>
-</div>
-</div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">func_8</span></code>は<code class="docutils literal notranslate"><span class="pre">a</span></code>と<code class="docutils literal notranslate"><span class="pre">b</span></code>をキーワード専用引数とする関数である。それを評価するために辞書<code class="docutils literal notranslate"><span class="pre">{'a':2,</span> <span class="pre">'b':3}</span></code>を使っているが、ここでの<code class="docutils literal notranslate"><span class="pre">**</span></code>の役割は</p>
-<ul class="simple">
-<li><p>辞書キー<code class="docutils literal notranslate"><span class="pre">a</span></code>の値<code class="docutils literal notranslate"><span class="pre">2</span></code>は<code class="docutils literal notranslate"><span class="pre">func_8</span></code>の<code class="docutils literal notranslate"><span class="pre">a</span></code>に、</p></li>
-<li><p>辞書キー<code class="docutils literal notranslate"><span class="pre">b</span></code>の値<code class="docutils literal notranslate"><span class="pre">3</span></code>は<code class="docutils literal notranslate"><span class="pre">func_8</span></code>の<code class="docutils literal notranslate"><span class="pre">b</span></code>に</p></li>
-</ul>
-<p>割り当てることである。それにより<code class="docutils literal notranslate"><span class="pre">5</span></code>という返り値となる。</p>
-<p>更に次の関数を使い<code class="docutils literal notranslate"><span class="pre">kwargs</span></code>が何かを表示してみよう。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_9</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_9</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>{&#39;a&#39;: 2, &#39;b&#39;: 3}
-</pre></div>
-</div>
-</div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">kwargs</span></code>は辞書であることがわかる。この例では、辞書キーの値を割り当てる<code class="docutils literal notranslate"><span class="pre">**</span></code>の役割が明示的ではないので、関数を引数とする関数を例として考える。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_10</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">fn</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">func_10</span></code>では<code class="docutils literal notranslate"><span class="pre">fn</span></code>が関数であり位置引数として設定されている。ここでの<code class="docutils literal notranslate"><span class="pre">fn</span></code>は関数名（即ち、関数の「参照記号」）であることに注意しよう。次に、引数に入れる関数の例として２つの変数を足し算する関数を考える。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">adder</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_10</span><span class="p">(</span><span class="n">adder</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>10
-</pre></div>
-</div>
-</div>
-</div>
-<p>この例では、<code class="docutils literal notranslate"><span class="pre">x</span></code>と<code class="docutils literal notranslate"><span class="pre">y</span></code>が<code class="docutils literal notranslate"><span class="pre">kwargs</span></code>に入り<code class="docutils literal notranslate"><span class="pre">{'x':3,</span> <span class="pre">'y':4}</span></code>となる。そして<code class="docutils literal notranslate"><span class="pre">**</span></code>により<code class="docutils literal notranslate"><span class="pre">adder</span></code>の<code class="docutils literal notranslate"><span class="pre">x</span></code>と<code class="docutils literal notranslate"><span class="pre">y</span></code>に割り当てられるこのになる。ここで<code class="docutils literal notranslate"><span class="pre">func_10(adder(),・・・)</span></code>となっていないことに注意しよう。引数の<code class="docutils literal notranslate"><span class="pre">adder</span></code>は関数名であり<code class="docutils literal notranslate"><span class="pre">adder()</span></code>とすると関数を評価することになりエラーが発生する。</p>
-<p><code class="docutils literal notranslate"><span class="pre">*args</span></code>と<code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>の両方を同時に使うこともできることも覚えておこう。</p>
+<p>必ず<code class="docutils literal notranslate"><span class="pre">*args</span></code>は，位置引数の次に置くこと。これは<code class="docutils literal notranslate"><span class="pre">*args</span></code>が「その他全ての位置引数」という意味であるためであり、全ての位置引数の後に位置してこそ意味があるからである。言い換えると、<code class="docutils literal notranslate"><span class="pre">*args</span></code>は位置引数の終わりを意味する。</p>
 </div>
 <div class="section" id="lambda">
 <h3><code class="docutils literal notranslate"><span class="pre">lambda</span></code>関数<a class="headerlink" href="#lambda" title="Permalink to this headline">¶</a></h3>
 <p>上の例では<code class="docutils literal notranslate"><span class="pre">def</span></code>を使う方法を紹介したが，複雑な関数を定義する場合によく使われる。一方で単純な関数の場合，より簡単な方法がある。それが<code class="docutils literal notranslate"><span class="pre">lambda</span></code>関数である。例として，<span class="math notranslate nohighlight">\(x^2\)</span>を計算する関数を考えよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_11</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_7</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span>
 
-<span class="n">func_11</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">func_7</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2132,14 +2052,14 @@ def func(a, *, z):
 <p>複数の引数の場合</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_12</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span><span class="o">*</span><span class="n">b</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_8</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span><span class="o">*</span><span class="n">b</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_12</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_8</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2149,12 +2069,32 @@ def func(a, *, z):
 </div>
 </div>
 </div>
+<p>引数が無い場合</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_9</span> <span class="o">=</span> <span class="k">lambda</span> <span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;I love Kobe ;)&#39;</span><span class="p">)</span>
+</pre></div>
 </div>
 </div>
-<div class="section" id="id9">
-<h2>関数とメソッド<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
-<p>Pythonには「関数（functions）」と「メソッド（methods）」があり，基本的には同じ働きをする。ではどう異なるのか。これを理解するためには，数字の<code class="docutils literal notranslate"><span class="pre">1</span></code>を含めて「全てがオブジェクト」というPythonの根底にある考え方を知る必要がある。しかし，ここではこの問題には踏み込まず，オブジェクトに特有なものかどうかで「関数」と「メソッド」に区別されると思って十分である。</p>
-<p>例えば、上で定義した<code class="docutils literal notranslate"><span class="pre">func_0()</span></code>や<code class="docutils literal notranslate"><span class="pre">func_7()</span></code>は関数であり，特定のオブジェクトに働きかけるものではない。単に引数から計算した返値を出力している。一方，メソッドはオブジェクト特有の関数と考えると良いだろう。例として，数字の<code class="docutils literal notranslate"><span class="pre">1</span></code>を考えよう。<code class="docutils literal notranslate"><span class="pre">1</span></code>というオブジェクトには様々なメソッドが用意されており，そのリストを<code class="docutils literal notranslate"><span class="pre">dir()</span></code>という関数を使うことにより表示できる。</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_9</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>I love Kobe ;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id12">
+<h2>関数とメソッド<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<p>Pythonには「関数（functions）」と「メソッド（methods）」があり，基本的には同じ働きをする。ではどう異なるのか。これを理解するためには，数字の<code class="docutils literal notranslate"><span class="pre">1</span></code>を含めて「全てがオブジェクト」というPythonの根底にある考え方を思い出そう。簡単い説明すると，オブジェクトに特有なものかどうかで「関数」と「メソッド」に区別されると思って十分である。</p>
+<p>例えば、上で定義した<code class="docutils literal notranslate"><span class="pre">func_0()</span></code>や<code class="docutils literal notranslate"><span class="pre">func_7()</span></code>は関数であり，特定のオブジェクトに働きかけるものではない。単に引数から計算した返り値を出力している。一方，メソッドは元々オブジェクトに備わっている関数と考えると良いだろう。例として，数字の<code class="docutils literal notranslate"><span class="pre">1</span></code>を考えよう。<code class="docutils literal notranslate"><span class="pre">1</span></code>というオブジェクトには様々なメソッドが用意されており，そのリストを<code class="docutils literal notranslate"><span class="pre">dir()</span></code>という関数を使うことにより表示できる。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">dir</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -2370,15 +2310,15 @@ def func(a, *, z):
 </div>
 <p>ぜひ他のメソッドを試して欲しい。またオブジェクトのメソッドを調べる場合，<code class="docutils literal notranslate"><span class="pre">dir()</span></code>の出力は見にくいので<a class="reference external" href="https://pypi.org/project/see/"><code class="docutils literal notranslate"><span class="pre">see</span></code>モジュール</a>を使うのがおすすめである（モジュールについては次のセクションを参照）。もちろん，Pythonやモジュールの説明書（docs）をチェックするのも必要であろう。</p>
 </div>
-<div class="section" id="id10">
-<h2>パッケージとモジュール<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id13">
+<h2>パッケージとモジュール<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
 <p>Pythonには組み込み関数が多く用意されている。例えば，<a class="reference external" href="https://docs.python.org/ja/3/library/functions.html">このリンク</a>を参照。しかし組み込み関数には計量経済学用の便利な関数は用意されていない。そこで活躍するのがモジュール（modules）やパッケージ（package）と呼ばれるもである。もちろん計量経済学以外のモジュールやパッケージが無数にあり，使う用途（例えば，グラフを描く）に沿って読み込むことになる。２つの違いを簡単にいうと</p>
 <ul class="simple">
 <li><p>モジュールは１つのファイル（.py）にまとめられた関数群であり，</p></li>
 <li><p>パッケージは複数つのファイル（.py）で構成されている（フォルダーにまとめられている）</p></li>
 </ul>
 <p>となる。従って，あるパッケージの１つのモジュールを読み込むということが可能である。</p>
-<p>まず例として<code class="docutils literal notranslate"><span class="pre">math</span></code>モジュールを考える。名前が示すように数学用のモジュールである。使うためには<code class="docutils literal notranslate"><span class="pre">import</span></code>を使って読み込む。</p>
+<p>まず例として<code class="docutils literal notranslate"><span class="pre">math</span></code>モジュールを考える。名前が示すように数学用のモジュールである。使うためには<code class="docutils literal notranslate"><span class="pre">import</span></code>を使って読み込む必要がある。</p>
 <p>モジュールの全てを読み込むとモジュール内の全ての関数が使用可能となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2440,11 +2380,11 @@ def func(a, *, z):
 </div>
 </div>
 </div>
-<p>この読み込み方法の利点はモジュール名を省略できることである。</p>
-<p>通常<code class="docutils literal notranslate"><span class="pre">import</span></code>文はファイルの最初に書き，どのモジュールが導入されるかを明示的に示すとわかりやすい。</p>
+<p>この読み込み方法の利点はモジュール名を省略できることである。しかし他のパッケージやモジュールと同じ関数がある場合は，後で<code class="docutils literal notranslate"><span class="pre">import</span></code>したものが優先されるので注意が必要だ。</p>
+<p>通常<code class="docutils literal notranslate"><span class="pre">import</span></code>文はファイルの最初に書き，どのモジュールが導入されるかを明示的に示すとわかりやすいだろう。</p>
 </div>
-<div class="section" id="id11">
-<h2>よく使う組み込み関数<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id14">
+<h2>よく使う組み込み関数<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 表示</span>
@@ -2454,9 +2394,6 @@ def func(a, *, z):
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>私は神戸大学の学生です。
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
@@ -2511,7 +2448,7 @@ def func(a, *, z):
 </li>
 <li><p>例外（Exceptoins）</p>
 <ul class="simple">
-<li><p>構文は間違っていなくてもコードの実行中に発生するエラー（例えば，数字を０で割る）</p></li>
+<li><p>構文は間違っていなくてもコードの実行中に発生するエラー（例えば，数字を<code class="docutils literal notranslate"><span class="pre">0</span></code>で割る）</p></li>
 </ul>
 </li>
 </ol>
@@ -2521,10 +2458,10 @@ def func(a, *, z):
 <li><p>エラーが発生するとエラー・メッセージが表示されるが，多くの場合，エラー・メッセージにエラーの理由のヒントがあるので確認することを強く推奨する。はじめは意味が分からないかも知れないが，パターンがあるので慣れると直ぐに理解できるケースも多くあるだろう。</p></li>
 <li><p>例外の場合，最初にエラーが発生するとそれに付随して他の場所でもエラーが誘発される場合がある。<code class="docutils literal notranslate"><span class="pre">Python</span></code>はエラーを追跡し，最後に確認したエラーをメッセージの一番最後に示すことになる。</p></li>
 </ul>
-<div class="section" id="id12">
-<h3>構文エラー<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id13">
-<h4>例１<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id15">
+<h3>構文エラー<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id16">
+<h4>例１<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
 <p>（正）<code class="docutils literal notranslate"><span class="pre">print</span></code><br>
 （誤）<code class="docutils literal notranslate"><span class="pre">primt</span></code></p>
 <div class="cell tag_raises-exception docutils container">
@@ -2536,7 +2473,7 @@ def func(a, *, z):
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="n">ff852d311315</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">141</span><span class="o">-</span><span class="n">ff852d311315</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">primt</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
 
 <span class="ne">NameError</span>: name &#39;primt&#39; is not defined
@@ -2549,8 +2486,8 @@ def func(a, *, z):
 <li><p><code class="docutils literal notranslate"><span class="pre">NameError</span></code>として最終行にスペル間違いである<code class="docutils literal notranslate"><span class="pre">primt</span></code>が示されている。</p></li>
 </ul>
 </div>
-<div class="section" id="id14">
-<h4>例２<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id17">
+<h4>例２<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
 <p>次のセルの３行目の終わりに<code class="docutils literal notranslate"><span class="pre">:</span></code>が抜けている。</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
@@ -2562,7 +2499,7 @@ def func(a, *, z):
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-145-2a993c6acd9f&gt;&quot;</span><span class="gt">, line </span><span class="mi">3</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-142-2a993c6acd9f&gt;&quot;</span><span class="gt">, line </span><span class="mi">3</span>
 <span class="nn">    for i</span> in <span class="ni">range</span><span class="nt">(0,3)</span>
                        <span class="o">^</span>
 <span class="ne">SyntaxError</span>: invalid syntax
@@ -2575,8 +2512,8 @@ def func(a, *, z):
 <li><p><code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>として最後の行で<code class="docutils literal notranslate"><span class="pre">:</span></code>が足りない箇所を<code class="docutils literal notranslate"><span class="pre">^</span></code>で指し示している。</p></li>
 </ul>
 </div>
-<div class="section" id="id15">
-<h4>例３<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id18">
+<h4>例３<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
 <p>括弧を閉じていない。</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
@@ -2585,7 +2522,7 @@ def func(a, *, z):
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-146-9ebf21e104e8&gt;&quot;</span><span class="gt">, line </span><span class="mi">1</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-143-9ebf21e104e8&gt;&quot;</span><span class="gt">, line </span><span class="mi">1</span>
     <span class="p">(</span><span class="mf">2.1</span> <span class="o">+</span> <span class="mf">1.5</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">10.0</span> <span class="o">+</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">3.2</span>
                                   <span class="o">^</span>
 <span class="ne">SyntaxError</span>: unexpected EOF while parsing
@@ -2593,7 +2530,7 @@ def func(a, *, z):
 </div>
 </div>
 </div>
-<p>この場合，<code class="docutils literal notranslate"><span class="pre">Python</span></code>はプログラマーがどこに<code class="docutils literal notranslate"><span class="pre">)</span></code>を入れようとしたかは分からない。従って，最後にが入ると想定して<code class="docutils literal notranslate"><span class="pre">^</span></code>を文末に置いている。</p>
+<p>この場合，<code class="docutils literal notranslate"><span class="pre">Python</span></code>はプログラマーがどこに<code class="docutils literal notranslate"><span class="pre">)</span></code>を入れようとしたかは分からない。従って，最後に<code class="docutils literal notranslate"><span class="pre">)</span></code>が入ると想定して<code class="docutils literal notranslate"><span class="pre">^</span></code>を文末に置いている。</p>
 <hr class="docutils" />
 <p>＜＜コメント１＞＞<br>
 <code class="docutils literal notranslate"><span class="pre">()</span></code>の場合，改行しても構わない。一行が長くなる場合，<code class="docutils literal notranslate"><span class="pre">(</span></code>と<code class="docutils literal notranslate"><span class="pre">)</span></code>の間で改行することができる。</p>
@@ -2627,11 +2564,11 @@ def func(a, *, z):
 </div>
 </div>
 </div>
-<div class="section" id="id16">
-<h3>例外<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id17">
-<h4>例１<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
-<p><code class="docutils literal notranslate"><span class="pre">0</span></code>分母にある。</p>
+<div class="section" id="id19">
+<h3>例外<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id20">
+<h4>例１<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">0</span></code>が分母にある。</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">2.0</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
@@ -2641,7 +2578,7 @@ def func(a, *, z):
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ZeroDivisionError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">149</span><span class="o">-</span><span class="mf">150e437</span><span class="n">ad231</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">146</span><span class="o">-</span><span class="mf">150e437</span><span class="n">ad231</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
 
 <span class="ne">ZeroDivisionError</span>: division by zero
@@ -2650,8 +2587,8 @@ def func(a, *, z):
 </div>
 </div>
 </div>
-<div class="section" id="id18">
-<h4>例２<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id21">
+<h4>例２<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
 <p>定義されていない変数<code class="docutils literal notranslate"><span class="pre">xx</span></code>が使われている。</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
@@ -2662,7 +2599,7 @@ def func(a, *, z):
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">150</span><span class="o">-</span><span class="mi">0</span><span class="n">a288a4fc67b</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">147</span><span class="o">-</span><span class="mi">0</span><span class="n">a288a4fc67b</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">xx</span> <span class="o">*</span> <span class="mi">2</span>
 
 <span class="ne">NameError</span>: name &#39;xx&#39; is not defined
@@ -2671,8 +2608,8 @@ def func(a, *, z):
 </div>
 </div>
 </div>
-<div class="section" id="id19">
-<h4>例３<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id22">
+<h4>例３<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
 <p>文字列とfloatを足している。</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
@@ -2683,7 +2620,7 @@ def func(a, *, z):
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">151</span><span class="o">-</span><span class="mi">9437</span><span class="n">dcf020b7</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">148</span><span class="o">-</span><span class="mi">9437</span><span class="n">dcf020b7</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="s1">&#39;3&#39;</span> <span class="o">+</span> <span class="mi">10</span>
 
 <span class="ne">TypeError</span>: can only concatenate str (not &quot;int&quot;) to str
@@ -2694,8 +2631,8 @@ def func(a, *, z):
 </div>
 </div>
 </div>
-<div class="section" id="id20">
-<h2>Pythonの基本のまとめ（日英対訳）<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id23">
+<h2>Pythonの基本のまとめ（日英対訳）<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://learnxinyminutes.com/docs/ja-jp/python3-jp/">日本語</a></p>
 <p><a class="reference external" href="https://learnxinyminutes.com/docs/python3/">英語</a></p>
 </div>

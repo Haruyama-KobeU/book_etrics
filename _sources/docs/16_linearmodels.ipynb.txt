@@ -9,14 +9,18 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "heading_collapsed": true
+   },
    "source": [
     "## 説明"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "`linearmodels`は`statsmodels`を補完する目的として開発されている。主に，パネルデータ，操作変数法を使った推定法やGMMを扱う場合には非常に重宝するパッケージである。しかし，`linearmodels`は`statsmodels`の両方を使う上で以下の点に注意する必要がある。\n",
     "* 推定結果などのメソッドや属性が共通化されているわけではない。次の表に３つの例を挙げる。\n",
@@ -48,7 +52,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "---\n",
     "以下では`linearmodels`を使うが，そのためには`DataFrame`を`MultiIndex`に変換する必要がある。以下では，まず`MultiIndex`について説明し，その後に`linearmodel`にある`PanelData`関数について説明する\n",
@@ -59,7 +65,9 @@
   {
    "cell_type": "code",
    "execution_count": 1,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [],
    "source": [
     "import pandas as pd\n",
@@ -70,21 +78,27 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "heading_collapsed": true
+   },
    "source": [
     "## `Pandas`の`MultiIndex`"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "### 説明"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "パネル・データを扱うために必要な`Pandas`の`MultiIndex`について説明する。`MultiIndex`とは行や列のラベルが階層的になった`DataFrame`や`Series`を指す。以下では，`DataFrame`の行における`MultiIndex`を説明する。\n",
     "\n",
@@ -94,7 +108,9 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -242,7 +258,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "行・列ともにラベルの階層は１つずつとなっている。`set_index()`を使い行に`MultiIndex`を作成するが，引数に\n",
     "\n",
@@ -258,7 +276,9 @@
   {
    "cell_type": "code",
    "execution_count": 3,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -393,7 +413,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "階層インデックスが綺麗に並んでいるが，元のデータの並び方によっては階層インデックスが期待通りに並ばない場合がありえる。その場合は，メソッド`sort_index()`を使うと良いだろう。\n",
     "\n",
@@ -404,7 +426,9 @@
   {
    "cell_type": "code",
    "execution_count": 4,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -546,7 +570,8 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true
+    "heading_collapsed": true,
+    "hidden": true
    },
    "source": [
     "### 要素，行，列の抽出"
@@ -1798,14 +1823,18 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "heading_collapsed": true
+   },
    "source": [
     "## `linearmodels`の`PanelData`"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "`linearmodels`では`MultiIndex`化された`DataFrame`をそのまま読み込み推定することができる。一方で，`linearmodels`の関数`PanelData`を使い`MultiIndex`化された`DataFrame`を`PanelData`オブジェクトに変換すると分析に必要な計算を簡単にできるようになる。必須ではないが，知っていて損はしない関数である。\n",
     "\n",
@@ -1815,7 +1844,9 @@
   {
    "cell_type": "code",
    "execution_count": 19,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -1952,7 +1983,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "---\n",
     "属性`shape`は，`PanelData`の変数の数を表示する。以下が返り値の内容である。\n",
@@ -1963,7 +1996,9 @@
   {
    "cell_type": "code",
    "execution_count": 20,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -1982,7 +2017,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "* 変数の数：4（列にある変数）\n",
     "* 期間数：3（年）\n",
@@ -1991,7 +2028,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "---\n",
     "データセットには欠損値がある場合がある。観察単位数が$N$で期間数が$T$の場合，観測値の数は$n=N\\times T$となるが，次の2つを区別する。\n",
@@ -2004,7 +2043,9 @@
   {
    "cell_type": "code",
    "execution_count": 21,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -2085,7 +2126,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "観察単位（国）に対して，それぞれの変数に欠損値ではない観測値がいくつ存在するかを`DataFrame`として返す。期間数は3なので，3より低い数字があれば欠損値の存在を表す。例えば，Australiaの`inv`には欠損値がある。\n",
     "\n",
@@ -2095,7 +2138,9 @@
   {
    "cell_type": "code",
    "execution_count": 22,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -2176,7 +2221,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "`all()`は，列に対して全ての要素が`True`の場合のみ`True`を返すので，これを使い確認できる。"
    ]
@@ -2184,7 +2231,9 @@
   {
    "cell_type": "code",
    "execution_count": 23,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -2207,7 +2256,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "`( )`はその中を先に評価する，という意味（数学と同じ）。変数が多い場合，`all()`を2回使うと全ての変数に対して評価するので便利である。"
    ]
@@ -2215,7 +2266,9 @@
   {
    "cell_type": "code",
    "execution_count": 24,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -2234,14 +2287,18 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "`False`なので unbalanced panel data ということが確認できた。"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "---\n",
     "変数の観察単位毎の平均の計算"
@@ -2250,7 +2307,9 @@
   {
    "cell_type": "code",
    "execution_count": 25,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -2331,7 +2390,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "---\n",
     "変数の時間毎の平均の計算"
@@ -2340,7 +2401,9 @@
   {
    "cell_type": "code",
    "execution_count": 26,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -2421,7 +2484,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "---\n",
     "変数の平均からの乖離　$x-\\bar{x}$，$\\bar{x}$は平均。"
@@ -2430,7 +2495,9 @@
   {
    "cell_type": "code",
    "execution_count": 27,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -2566,7 +2633,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "---\n",
     "変数の１階階差の計算　$x_t-x_{t-1}$"
@@ -2575,7 +2644,9 @@
   {
    "cell_type": "code",
    "execution_count": 28,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -2671,7 +2742,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "---\n",
     "（注意）\n",
@@ -2684,7 +2757,9 @@
   {
    "cell_type": "code",
    "execution_count": 29,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -2780,7 +2855,11 @@
   {
    "cell_type": "code",
    "execution_count": 30,
-   "metadata": {},
+   "metadata": {
+    "tags": [
+     "output_scroll"
+    ]
+   },
    "outputs": [
     {
      "data": {
@@ -2997,7 +3076,11 @@
   {
    "cell_type": "code",
    "execution_count": 31,
-   "metadata": {},
+   "metadata": {
+    "tags": [
+     "output_scroll"
+    ]
+   },
    "outputs": [
     {
      "data": {
@@ -3445,6 +3528,7 @@
   }
  ],
  "metadata": {
+  "celltoolbar": "Tags",
   "kernelspec": {
    "display_name": "latest",
    "language": "python",

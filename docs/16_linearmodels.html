@@ -2269,7 +2269,7 @@ dtype: bool
 <div class="section" id="id9">
 <h2>１階差分推定（再考）<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p>ここでは<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>を使い，以前行った１階差分推定を再考する。データ<code class="docutils literal notranslate"><span class="pre">crime4</span></code>を使う。</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crime4</span> <span class="o">=</span> <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;crime4&#39;</span><span class="p">)</span>
 <span class="n">crime4</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -2445,7 +2445,7 @@ dtype: bool
 </div></div></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">county</span></code>と<code class="docutils literal notranslate"><span class="pre">year</span></code>を使い<code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>化する。</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crime4</span> <span class="o">=</span> <span class="n">crime4</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;county&#39;</span><span class="p">,</span><span class="s1">&#39;year&#39;</span><span class="p">])</span>
 <span class="n">crime4</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>

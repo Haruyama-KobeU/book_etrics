@@ -32,9 +32,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## 固定効果モデル（Fixed Effects Model）"
    ]
@@ -42,8 +40,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### 説明"
@@ -105,29 +102,21 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "### Estimation"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "#### EntityEffects"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "`linearmodels`には`PanelOLS`モジュールがあり，その関数`from_formula()`を使うことにより，`statsmodels`同様，回帰式を`y ~ x`の文字列で書くことが可能となる。その際，次の点に注意すること。\n",
     "* 固定効果推定をする場合，回帰式に`+ EntityEffect`を含める。\n",
@@ -137,9 +126,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "以下では，`wagepan`というデータセットを使い，賃金に対する労働組合などの変数の効果を推定する。"
    ]
@@ -148,7 +135,9 @@
    "cell_type": "code",
    "execution_count": 2,
    "metadata": {
-    "hidden": true
+    "tags": [
+     "output_scroll"
+    ]
    },
    "outputs": [
     {
@@ -224,9 +213,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "（使う変数）\n",
     "* `lwage`：賃金（対数）\n",
@@ -246,9 +233,7 @@
   {
    "cell_type": "code",
    "execution_count": 3,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [],
    "source": [
     "wagepan = wagepan.set_index(['nr','year'],drop=False)"
@@ -258,7 +243,9 @@
    "cell_type": "code",
    "execution_count": 4,
    "metadata": {
-    "hidden": true
+    "tags": [
+     "output_scroll"
+    ]
    },
    "outputs": [
     {
@@ -491,7 +478,9 @@
    "cell_type": "code",
    "execution_count": 5,
    "metadata": {
-    "hidden": true
+    "tags": [
+     "output_scroll"
+    ]
    },
    "outputs": [
     {
@@ -558,9 +547,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "次に`PanelData`オブジェクトに変換しデータの特徴を調べる。"
    ]
@@ -568,9 +555,7 @@
   {
    "cell_type": "code",
    "execution_count": 6,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -590,9 +575,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "* 44: 変数の数\n",
     "* 8: 期間数（年）\n",
@@ -601,9 +584,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "次に，balanced もしくは unbalanced data set かを確認する。"
    ]
@@ -611,9 +592,7 @@
   {
    "cell_type": "code",
    "execution_count": 7,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -632,18 +611,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "このデータ・セットはbalancedだが，unbalanced だったとしても，固定効果モデルの考え方や以下で説明するコードは変わらない。"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "実際に回帰式を書くことにする。使い方は`statsmodels`と似ている。\n",
@@ -660,9 +635,7 @@
   {
    "cell_type": "code",
    "execution_count": 8,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [],
    "source": [
     "formula_fe = 'lwage ~ married + union + expersq \\\n",
@@ -671,9 +644,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "* 固定効果モデルのインスタンスの作成"
    ]
@@ -681,9 +652,7 @@
   {
    "cell_type": "code",
    "execution_count": 9,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [],
    "source": [
     "mod_fe = PanelOLS.from_formula(formula_fe, data=wagepan)"
@@ -691,9 +660,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "* `statsmodels`と同じように，そこから得た結果にメソッド`.fit()`を使い計算し結果が返される。"
    ]
@@ -701,9 +668,7 @@
   {
    "cell_type": "code",
    "execution_count": 10,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [],
    "source": [
     "result_fe = mod_fe.fit()"
@@ -711,9 +676,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "＜結果の表示方法＞\n",
     "1. `res_fe`を実行。\n",
@@ -727,9 +690,7 @@
   {
    "cell_type": "code",
    "execution_count": 11,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -786,9 +747,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "（結果）\n",
     "* `exper**2`の係数が負で統計的有意性が高いのは，賃金に対して経験の効果は低減することを示している。\n",
@@ -798,9 +757,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "$R^2$を表示してみる。"
    ]
@@ -808,9 +765,7 @@
   {
    "cell_type": "code",
    "execution_count": 12,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "name": "stdout",
@@ -845,9 +800,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "この表にある$R^2$について説明する。\n",
     "* $R^2$＝$R^2(\\text{Within})$：(式３)を推定した際の$R^2$である（$\\ddot{y}_i$が$\\ddot{x}_i$によってどれだけ説明されたかを示す）。\n",
@@ -858,8 +811,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "#### TimeEffects"
@@ -2877,6 +2829,7 @@
   }
  ],
  "metadata": {
+  "celltoolbar": "Tags",
   "kernelspec": {
    "display_name": "latest",
    "language": "python",
