@@ -783,23 +783,19 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "### 母集団回帰式と標本回帰式"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "今までは回帰式に基づいて`Python`を使い係数の推定方法を説明したが，ここではOLS推定量の望ましい性質とはなにか，望ましい性質の条件はなにかを考える。そのために，まず母集団回帰式と標本回帰式について説明する。\n",
     "\n",
-    "計量経済学では，データを使い**経済理論（経済学的な考え）**に基づいた仮説を検証する。\n",
-    "例として「消費は家計の所得$x_1$が高くなると増えるが，子どもの数$x_2$と反比例する」という仮説を考える。所得と子どもの数に依存する消費の部分だけを$y^*$と書くと，一般型の消費関数は$y^*=f\\left(x_1,x_2\\right)$となる。更に，線形を仮定すると次式となる。\n",
+    "計量経済学では，データを使い**経済理論（経済学的な考え）**\n",
+    "に基づいた仮説を検証する。例として「消費は家計の所得$x_1$が高くなると増えるが，子どもの数$x_2$と反比例する」という仮説を考える。所得と子どもの数に依存する消費の部分だけを$y^*$と書くと，一般型の消費関数は$y^*=f\\left(x_1,x_2\\right)$となる。更に，線形を仮定すると次式となる。\n",
     "\n",
     "$$y^*=\\beta_0+\\beta_1x_1+\\beta_2x_2\\qquad{(式１)}$$\n",
     "\n",
@@ -812,9 +808,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "一方で，同じ所得と子どもの数の家計でも好み等の要因が違ったりするため，消費に違いがでる。その違いを（平均ゼロの）誤差項$u$として捉えると，消費 $y$は次式で与えられる。\n",
     "\n",
@@ -832,14 +826,12 @@
     "\n",
     "$$\\text{E}\\left(y|x_1,x_2\\right)=y^*\\qquad\\because\\;\\text{E}(u)=0$$\n",
     "\n",
-    "これは「$x_1$と$x_2$を所与とする」という条件の下での期待値なので**条件付き期待値**（conditional expectations）と呼ばれる。この式は，$y$の条件付き期待値は母集団回帰式の$x_1$と$x_2$に依存する部分である$y^*$と等しいことを示している。"
+    "これは「$x_1$と$x_2$を所与とする」という条件の下での期待値なので**条件付き期待値**（conditional expectations）と呼ばれる。この式は，$y$の条件付き期待値は母集団回帰式の$x_1$と$x_2$に依存する部分である$y^*$と等しいことを示している。換言すると，（式１）は母集団で平均として成立する**母集団回帰線**を表している。"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "（注意点）\n",
@@ -850,9 +842,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "母集団回帰式(式３)が成立するという**仮定**のもとで母集団パラメータ$\\beta_j$，$j=0,1,2$を推定することになる。そのためには，\n",
@@ -1462,9 +1452,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## シミュレーション：多重共線性"
    ]
@@ -1472,8 +1460,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### 説明"
@@ -1499,8 +1486,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### 方法１：手計算"
@@ -1655,8 +1641,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### 方法２：`statsmodels`"
@@ -1736,8 +1721,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### シミュレーション"
@@ -2049,8 +2033,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### 図を使ってチェック"

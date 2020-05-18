@@ -341,9 +341,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## プーリング・データの応用：差分の差分析"
    ]
@@ -351,8 +349,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### 説明"
@@ -479,8 +476,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### `DiD`推定\n",
@@ -842,18 +838,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## １階差分推定の準備：`groupby`"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "パネル・データを使った推定方法として１階差分推定（First Differenced Estimator）があり，次の節で説明する。その前準備として変数の差分の作成方法について説明する。\n",
     "\n",
@@ -865,9 +857,7 @@
   {
    "cell_type": "code",
    "execution_count": 15,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -1012,9 +1002,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "列`country`がカテゴリー変数であり，3つの国がある。この列を使いグループ分けする。\n",
     "\n",
@@ -1028,9 +1016,7 @@
   {
    "cell_type": "code",
    "execution_count": 16,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -1172,9 +1158,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "`country`でグループ化した`df_group`を作成する。"
    ]
@@ -1182,9 +1166,7 @@
   {
    "cell_type": "code",
    "execution_count": 17,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -1204,9 +1186,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "このコードの出力が示すように，`df_group`は`DataFrameGroupBy`というクラス名のオブジェクト（データ型）であり，`DataFrame`とは異なる。これによりグループ別の計算が格段と容易になる。\n",
     "\n",
@@ -1216,9 +1196,7 @@
   {
    "cell_type": "code",
    "execution_count": 18,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -1241,9 +1219,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "`mean()`は`df_group`に備わるメソッドである。他にも便利な使い方があるが，ここでは変数の差分の作りかを説明する。\n",
     "\n",
@@ -1253,9 +1229,7 @@
   {
    "cell_type": "code",
    "execution_count": 19,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -1358,18 +1332,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "次に`df`と`df_diff`を横に結合する。"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "**＜方法１：`pd.concat`＞**\n",
     "1. `df_diff`の列名を変更\n",
@@ -1379,9 +1349,7 @@
   {
    "cell_type": "code",
    "execution_count": 20,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -1484,9 +1452,7 @@
   {
    "cell_type": "code",
    "execution_count": 21,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -1647,18 +1613,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "上のコードの`axis='columns'`は`axis=1`としてもOK。この方法は、`df`と`df_diff_1`の行の順序が同じという想定のもとで行っている。行の順番が同じでない場合や不明な場合は、次の方法が良いであろう。"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "**＜方法２：`pd.merge`＞**\n",
     "\n",
@@ -1675,9 +1637,7 @@
   {
    "cell_type": "code",
    "execution_count": 22,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -1838,37 +1798,28 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "dfを上書きしたい場合は，`df=`を付け加える。"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## １階差分推定（First Differenced Estimator）"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "### 説明"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "異質性バイアスの一番簡単な解決方法が１階差分推定（FDE）である。考え方は非常に簡単である。次の１階差分を定義する。\n",
     "* $\\Delta y_{i}=y_{i1}-y_{i0}$\n",
@@ -1892,9 +1843,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "＜推定方法＞\n",
@@ -1904,19 +1853,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "### 推定：２期間の場合"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "* 以下では`crime2`のデータを使い説明する。\n",
     "* このデータを使い，失業率が犯罪に負の影響を与えるかどうかを検証する。"
@@ -1924,9 +1868,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "データの読み込み。"
    ]
@@ -1934,9 +1876,7 @@
   {
    "cell_type": "code",
    "execution_count": 23,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [],
    "source": [
     "crime2 = dataWoo('crime2')"
@@ -1944,9 +1884,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "変数の説明。"
    ]
@@ -1955,7 +1893,6 @@
    "cell_type": "code",
    "execution_count": 24,
    "metadata": {
-    "hidden": true,
     "tags": [
      "output_scroll"
     ]
@@ -2021,9 +1958,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "興味がある変数\n",
     "* `crmes`：犯罪率（1000人当たり犯罪数）\n",
@@ -2038,7 +1973,6 @@
    "cell_type": "code",
    "execution_count": 25,
    "metadata": {
-    "hidden": true,
     "tags": [
      "output_scroll"
     ]
@@ -2250,9 +2184,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "このデータセットには，観察単位識別用の変数がない。しかし，行0と1が1つの地域のデータ，行2と3が別の地域のデータをなっていることがわかる（`year`を見るとわかる）。まず観察単位識別用のの列を作成する。"
    ]
@@ -2260,9 +2192,7 @@
   {
    "cell_type": "code",
    "execution_count": 26,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [],
    "source": [
     "# 観察単位の数\n",
@@ -2277,9 +2207,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "`country_list`の説明：\n",
     "1. `Series`のメソッド`repeat(2)`は`lst`の要素を２回リピートする`Series`を生成する。\n",
@@ -2291,9 +2219,7 @@
   {
    "cell_type": "code",
    "execution_count": 27,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -2372,9 +2298,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "`unem`と`crmrte`の差分を求める。"
    ]
@@ -2382,9 +2306,7 @@
   {
    "cell_type": "code",
    "execution_count": 28,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -2465,9 +2387,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "`crime2_diff`を使って回帰分析をおこなう。\n",
     "\n",
@@ -2479,9 +2399,7 @@
   {
    "cell_type": "code",
    "execution_count": 29,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "name": "stdout",
@@ -2504,9 +2422,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "＜結果＞\n",
     "* 失業率が1%増加すると，犯罪率は約2.2%上昇する。\n",
@@ -2520,9 +2436,7 @@
   {
    "cell_type": "code",
    "execution_count": 30,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -2545,18 +2459,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "片側検定では，1%水準で帰無仮説を棄却できる。"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "**＜参考１＞**\n",
@@ -2567,9 +2477,7 @@
   {
    "cell_type": "code",
    "execution_count": 31,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "name": "stdout",
@@ -2593,9 +2501,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "* 失業の効果は過小評価されている。\n",
     "    * 地域の異質性を考慮しなため異質性バイアス（欠落変数バイアス）が発生している。\n",
@@ -2610,9 +2516,7 @@
   {
    "cell_type": "code",
    "execution_count": 32,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "name": "stdout",
@@ -2635,19 +2539,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "### 推定：３期間以上の場合"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "`crime4`のデータセットを使い，犯罪の決定要因について推定する。"
    ]
@@ -2656,7 +2555,9 @@
    "cell_type": "code",
    "execution_count": 33,
    "metadata": {
-    "hidden": true
+    "tags": [
+     "output_scroll"
+    ]
    },
    "outputs": [
     {
@@ -2868,7 +2769,6 @@
    "cell_type": "code",
    "execution_count": 34,
    "metadata": {
-    "hidden": true,
     "tags": [
      "output_scroll"
     ]
@@ -2958,9 +2858,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "＜興味がある変数＞\n",
     "* 被説明変数\n",
@@ -2978,9 +2876,7 @@
   {
    "cell_type": "code",
    "execution_count": 35,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [],
    "source": [
     "# グループ化\n",
@@ -3000,9 +2896,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "推定式については，2期間モデルと同じように考える。違う点は，7年間の年次データであるため，６つの時間ダミー変数を入れることだけである。"
@@ -3011,9 +2905,7 @@
   {
    "cell_type": "code",
    "execution_count": 36,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [],
    "source": [
     "formula_2 = 'lcrmrte_diff ~ d83 + d84 + d85 + d86 + d87 + \\\n",
@@ -3025,9 +2917,7 @@
   {
    "cell_type": "code",
    "execution_count": 37,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "name": "stdout",
@@ -3058,9 +2948,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "＜結果＞\n",
     "* `lprbarr`（逮捕の確率），`lprbconv`（有罪判決の確率），`lprbpris`（収監確率），`lavgsen`（平均服役期間）は全て予想通りの結果。\n",

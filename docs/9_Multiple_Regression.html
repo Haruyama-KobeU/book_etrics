@@ -123,7 +123,7 @@
       <a href="10_Residuals.html">残差診断</a>
     </li>
     <li class="">
-      <a href="11_dummy.html">推論（検定）</a>
+      <a href="11_Inference.html">推論（Inference）</a>
     </li>
     <li class="">
       <a href="12_dummy.html">大標本特性</a>
@@ -756,8 +756,8 @@ dtype: float64
 <div class="section" id="id8">
 <h3>母集団回帰式と標本回帰式<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>今までは回帰式に基づいて<code class="docutils literal notranslate"><span class="pre">Python</span></code>を使い係数の推定方法を説明したが，ここではOLS推定量の望ましい性質とはなにか，望ましい性質の条件はなにかを考える。そのために，まず母集団回帰式と標本回帰式について説明する。</p>
-<p>計量経済学では，データを使い**経済理論（経済学的な考え）**に基づいた仮説を検証する。
-例として「消費は家計の所得<span class="math notranslate nohighlight">\(x_1\)</span>が高くなると増えるが，子どもの数<span class="math notranslate nohighlight">\(x_2\)</span>と反比例する」という仮説を考える。所得と子どもの数に依存する消費の部分だけを<span class="math notranslate nohighlight">\(y^*\)</span>と書くと，一般型の消費関数は<span class="math notranslate nohighlight">\(y^*=f\left(x_1,x_2\right)\)</span>となる。更に，線形を仮定すると次式となる。</p>
+<p>計量経済学では，データを使い<strong>経済理論（経済学的な考え）</strong>
+に基づいた仮説を検証する。例として「消費は家計の所得<span class="math notranslate nohighlight">\(x_1\)</span>が高くなると増えるが，子どもの数<span class="math notranslate nohighlight">\(x_2\)</span>と反比例する」という仮説を考える。所得と子どもの数に依存する消費の部分だけを<span class="math notranslate nohighlight">\(y^*\)</span>と書くと，一般型の消費関数は<span class="math notranslate nohighlight">\(y^*=f\left(x_1,x_2\right)\)</span>となる。更に，線形を仮定すると次式となる。</p>
 <div class="math notranslate nohighlight">
 \[y^*=\beta_0+\beta_1x_1+\beta_2x_2\qquad{(式１)}\]</div>
 <p>例えば，所得30万円，子ども2人の家計の場合、消費は<span class="math notranslate nohighlight">\(\beta_0+\beta_1\cdot\left(\text{30万円}\right)+\beta_2\cdot\left(\text{2人}\right)\)</span>となる。所得 <span class="math notranslate nohighlight">\(x_1\)</span>が変化すると消費<span class="math notranslate nohighlight">\(y^*\)</span>も変化することが分かる。このことは<span class="math notranslate nohighlight">\(\beta_2=0\)</span>の単回帰の場合を考えればもっと分かりやすいだろう。その場合，(式１)は</p>
@@ -778,7 +778,7 @@ dtype: float64
 <p>となる。この式は仮説に基づいた関係式であり，<strong>母集団回帰式</strong>と呼ばれる。また(式３)を使い<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>を所与として期待値を計算すると次式を得る。</p>
 <div class="math notranslate nohighlight">
 \[\text{E}\left(y|x_1,x_2\right)=y^*\qquad\because\;\text{E}(u)=0\]</div>
-<p>これは「<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>を所与とする」という条件の下での期待値なので<strong>条件付き期待値</strong>（conditional expectations）と呼ばれる。この式は，<span class="math notranslate nohighlight">\(y\)</span>の条件付き期待値は母集団回帰式の<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>に依存する部分である<span class="math notranslate nohighlight">\(y^*\)</span>と等しいことを示している。</p>
+<p>これは「<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>を所与とする」という条件の下での期待値なので<strong>条件付き期待値</strong>（conditional expectations）と呼ばれる。この式は，<span class="math notranslate nohighlight">\(y\)</span>の条件付き期待値は母集団回帰式の<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>に依存する部分である<span class="math notranslate nohighlight">\(y^*\)</span>と等しいことを示している。換言すると，（式１）は母集団で平均として成立する<strong>母集団回帰線</strong>を表している。</p>
 <hr class="docutils" />
 <p>（注意点）</p>
 <ul class="simple">
