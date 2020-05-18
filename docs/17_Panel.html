@@ -135,7 +135,7 @@
       <a href="14_dummy.html">不均一分散</a>
     </li>
     <li class="">
-      <a href="15_dummy.html">プーリング・データとパネル・データ</a>
+      <a href="15_Pooling.html">プーリング・データとパネル・データ</a>
     </li>
     <li class="">
       <a href="16_linearmodels.html">linearmodels</a>
@@ -938,8 +938,8 @@ memory usage: 1.5 MB
 Dep. Variable:                  lwage   R-squared:                        0.1806
 Estimator:                   PanelOLS   R-squared (Between):              0.2386
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Sun, May 17 2020   R-squared (Overall):              0.2361
-Time:                        22:24:34   Log-likelihood                   -1324.8
+Date:                Mon, May 18 2020   R-squared (Overall):              0.2361
+Time:                        09:08:25   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      83.851
 Entities:                         545   P-value                           0.0000
@@ -981,8 +981,8 @@ Max Obs:                       545.00
 Dep. Variable:                  lwage   R-squared:                        0.0216
 Estimator:                   PanelOLS   R-squared (Between):             -0.2717
 No. Observations:                4360   R-squared (Within):              -0.4809
-Date:                Sun, May 17 2020   R-squared (Overall):             -0.2808
-Time:                        22:24:34   Log-likelihood                   -1324.8
+Date:                Mon, May 18 2020   R-squared (Overall):             -0.2808
+Time:                        09:08:25   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      27.959
 Entities:                         545   P-value                           0.0000
@@ -1351,8 +1351,8 @@ Name: Variance Decomposition, dtype: float64
 Dep. Variable:                  lwage   R-squared:                        0.1711
 Estimator:              RandomEffects   R-squared (Between):              0.0967
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Sun, May 17 2020   R-squared (Overall):              0.1355
-Time:                        22:24:35   Log-likelihood                   -1609.8
+Date:                Mon, May 18 2020   R-squared (Overall):              0.1355
+Time:                        09:08:26   Log-likelihood                   -1609.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      69.027
 Entities:                         545   P-value                           0.0000
@@ -1426,7 +1426,7 @@ H0: Linear equality constraint is valid
 Statistic: 35.6454
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x118a7bfd0
+WaldTestStatistic, id: 0x11c591940
 </pre></div>
 </div>
 </div>
@@ -1507,7 +1507,7 @@ H0: Linear equality constraint is valid
 Statistic: 26.0233
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x1191bffa0
+WaldTestStatistic, id: 0x11c6b5040
 </pre></div>
 </div>
 </div>
@@ -1837,32 +1837,32 @@ T-stats reported in parentheses
     <tr>
       <th rowspan="5" valign="top">0</th>
       <th>2000</th>
-      <td>4.583534</td>
-      <td>0.436690</td>
+      <td>-0.556276</td>
+      <td>-0.492323</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2001</th>
-      <td>2.144620</td>
-      <td>0.459495</td>
+      <td>0.250037</td>
+      <td>0.319154</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2002</th>
-      <td>-0.719279</td>
-      <td>-1.424754</td>
+      <td>1.503883</td>
+      <td>0.851891</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2003</th>
-      <td>1.599285</td>
-      <td>0.752444</td>
+      <td>0.475271</td>
+      <td>-0.440133</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2004</th>
-      <td>1.582770</td>
-      <td>0.452454</td>
+      <td>-0.154342</td>
+      <td>-0.074489</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -1883,7 +1883,7 @@ T-stats reported in parentheses
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-X              2.0272     0.0498     40.732     0.0000      1.9293      2.1250
+X              1.8944     0.0498     38.013     0.0000      1.7964      1.9924
 ==============================================================================
 </pre></div>
 </div>
@@ -1904,10 +1904,10 @@ X              2.0272     0.0498     40.732     0.0000      1.9293      2.1250
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.5786     0.1448     10.899     0.0000      1.2941      1.8632
-X              2.8947     0.0248     116.68     0.0000      2.8460      2.9435
+Intercept      1.8954     0.1495     12.678     0.0000      1.6017      2.1892
+X              2.8233     0.0252     112.07     0.0000      2.7738      2.8728
 ==============================================================================
-theta: [0.22351531]
+theta: [0.25989444]
 </pre></div>
 </div>
 </div>
@@ -1935,9 +1935,9 @@ theta: [0.22351531]
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      0.8457     0.1177     7.1852     0.0000      0.6144      1.0769
-X              2.0272     0.0497     40.763     0.0000      1.9295      2.1249
-X_mean         1.0149     0.0538     18.857     0.0000      0.9091      1.1206
+Intercept      1.1348     0.1177     9.6375     0.0000      0.9034      1.3661
+X              1.8944     0.0498     38.042     0.0000      1.7966      1.9923
+X_mean         1.0816     0.0538     20.117     0.0000      0.9760      1.1872
 ==============================================================================
 </pre></div>
 </div>
@@ -1957,8 +1957,8 @@ X_mean         1.0149     0.0538     18.857     0.0000      0.9091      1.1206
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.3146     0.1206     10.900     0.0000      1.0777      1.5516
-X              2.9478     0.0208     141.55     0.0000      2.9069      2.9887
+Intercept      1.5798     0.1199     13.176     0.0000      1.3443      1.8154
+X              2.8867     0.0204     141.52     0.0000      2.8466      2.9268
 ==============================================================================
 </pre></div>
 </div>
