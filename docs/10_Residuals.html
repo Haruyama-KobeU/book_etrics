@@ -31,7 +31,7 @@
     <link rel="canonical" href="https://haruyama-kobeu.github.io/book_etrics/docs/10_Residuals.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="推論（Inference）" href="11_Inference.html" />
+    <link rel="next" title="推論" href="11_Inference.html" />
     <link rel="prev" title="重回帰分析" href="9_Multiple_Regression.html" />
 
 
@@ -49,7 +49,7 @@
 <meta property="og:url"         content="https://haruyama-kobeu.github.io/book_etrics/docs/10_Residuals.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="残差診断" />
-<meta property="og:description" content="残差診断  説明  ＜目的＞  実際に回帰分析をする際，少なくとも２つの問題が存在する。  母集団回帰式自体が正しいかどうか（モデルの特定化の問題）。  GM仮定1,4,5は観測できない母集団回帰式の誤差項に関するものだが，これらの仮定が成立するかどうか。  これらは重要な問題であり，非常に難しい問題でもある。１つの対" />
+<meta property="og:description" content="残差診断  import numpy as np import pandas as pd import matplotlib.pyplot as plt from statsmodels.formula.api import ols from scipy.stats import norm, uniform impor" />
 
 
 <meta name="twitter:card" content="summary">
@@ -123,10 +123,10 @@
       <a href="">残差診断</a>
     </li>
     <li class="">
-      <a href="11_Inference.html">推論（Inference）</a>
+      <a href="11_Inference.html">推論</a>
     </li>
     <li class="">
-      <a href="12_dummy.html">大標本特性</a>
+      <a href="12_Asymptotics.html">大標本特性</a>
     </li>
     <li class="">
       <a href="13_dummy.html">ダミー変数</a>
@@ -338,6 +338,19 @@
                 
   <div class="section" id="id1">
 <h1>残差診断<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">uniform</span>
+<span class="kn">import</span> <span class="nn">lmdiag</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="id2">
 <h2>説明<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p><strong>＜目的＞</strong></p>
@@ -370,19 +383,6 @@
 </ul>
 </li>
 </ol>
-<hr class="docutils" />
-<p>以下で使うパッケージをインポートする。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
-<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">uniform</span>
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="r-2">
 <h2>残差と<span class="math notranslate nohighlight">\(R^2\)</span><a class="headerlink" href="#r-2" title="Permalink to this headline">¶</a></h2>
@@ -424,12 +424,16 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ols_sim</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">u_sd</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ，　u_sd=誤差項の標準偏差</span>
+    
     <span class="n">x</span> <span class="o">=</span> <span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 説明変数</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 誤差項</span>
     <span class="n">y</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">u</span>               <span class="c1"># 被説明変数</span>
+    
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>  <span class="c1"># DataFrame</span>
+    
     <span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLSの計算</span>
     <span class="n">u_standardized</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">get_influence</span><span class="p">()</span><span class="o">.</span><span class="n">resid_studentized_internal</span>  <span class="c1"># 標準化残差</span>
+    
     <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">u_standardized</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">rsquared</span>  <span class="c1"># 返り値の設定</span>
 </pre></div>
 </div>
@@ -465,8 +469,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>決定係数が高いケース: 0.892
-決定係数が高いケース: 0.289
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>決定係数が高いケース: 0.864
+決定係数が高いケース: 0.484
 </pre></div>
 </div>
 </div>
@@ -681,23 +685,17 @@
 <h3>説明<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <p>上で見たように，残差を単に図示しただけでは「理想的な残差」からどれだけ乖離しているかを判断するのは難しいところがある。標本の大きさが小さい場合は特にそうである。ではどのように対処すれば良いのか。１つの方法が，計量経済学のソフトウェア<code class="docutils literal notranslate"><span class="pre">R</span></code>に実装されている残差を図示するコマンドである。これにより回帰式の定式化に「失敗」がないかをある程度確認することができる。ここではその内の４つの図を自動で描くことができるパッケージ<code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>を紹介する。「正常」なパターンから著しく異なる場合，回帰式の修正の必要性を知らせる「早期警戒システム」と思えば良いだろう。</p>
 <p>まずGM仮定1~6の全ての仮定が満たされる場合を考え，<code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>のコマンドを説明する。その後，問題が疑われるケースではどのような図になるかを示すことにする。</p>
-<hr class="docutils" />
-<p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージのインポート</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lmdiag</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>次のシミュレーションを考えよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># 標本の大きさ</span>
+
 <span class="n">x</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 説明変数</span>
 <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 誤差項（標準正規分布）</span>
 <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># 説明変数</span>
+
 <span class="n">df_diag</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>  <span class="c1"># DataFrameの作成</span>
+
 <span class="n">res_diag</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_diag</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLS推定</span>
 </pre></div>
 </div>
@@ -728,7 +726,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_47_0.png" src="../_images/10_Residuals_47_0.png" />
+<img alt="../_images/10_Residuals_46_0.png" src="../_images/10_Residuals_46_0.png" />
 </div>
 </div>
 </div>
@@ -753,7 +751,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_50_0.png" src="../_images/10_Residuals_50_0.png" />
+<img alt="../_images/10_Residuals_49_0.png" src="../_images/10_Residuals_49_0.png" />
 </div>
 </div>
 </div>
@@ -785,7 +783,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_53_0.png" src="../_images/10_Residuals_53_0.png" />
+<img alt="../_images/10_Residuals_52_0.png" src="../_images/10_Residuals_52_0.png" />
 </div>
 </div>
 </div>
@@ -844,7 +842,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_56_0.png" src="../_images/10_Residuals_56_0.png" />
+<img alt="../_images/10_Residuals_55_0.png" src="../_images/10_Residuals_55_0.png" />
 </div>
 </div>
 </div>
@@ -859,7 +857,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_58_0.png" src="../_images/10_Residuals_58_0.png" />
+<img alt="../_images/10_Residuals_57_0.png" src="../_images/10_Residuals_57_0.png" />
 </div>
 </div>
 </div>
@@ -867,13 +865,6 @@
 <h3><code class="docutils literal notranslate"><span class="pre">qq</span></code>プロット（again）<a class="headerlink" href="#qq-again" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">qq</span></code>プロットを表示する代替方法として，<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">qqplot</span></code>モジュールがある。ここではその使い方を簡単に説明する。</p>
 <p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>自体を<code class="docutils literal notranslate"><span class="pre">sm</span></code>として読み込む。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>＜<code class="docutils literal notranslate"><span class="pre">qqplot</span></code>の使い方＞</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    sm.qqplot(引数，fit=True, line=&#39;45)
 </pre></div>
@@ -891,7 +882,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_63_0.png" src="../_images/10_Residuals_63_0.png" />
+<img alt="../_images/10_Residuals_61_0.png" src="../_images/10_Residuals_61_0.png" />
 </div>
 </div>
 </div>
@@ -912,9 +903,11 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># 標本の大きさ</span>
+
 <span class="n">x</span> <span class="o">=</span> <span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 説明変数</span>
 <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 誤差項</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">200.0</span> <span class="o">+</span> <span class="o">.</span><span class="mi">1</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">u</span><span class="p">)</span>   <span class="c1"># 被説明変数</span>
+
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>  <span class="c1"># DataFrame</span>
 
 <span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLSの計算</span>
@@ -929,7 +922,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_67_0.png" src="../_images/10_Residuals_67_0.png" />
+<img alt="../_images/10_Residuals_65_0.png" src="../_images/10_Residuals_65_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -947,11 +940,14 @@
   r = _umath_linalg.det(a, signature=signature)
 /Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/numpy/linalg/linalg.py:2116: RuntimeWarning: overflow encountered in det
   r = _umath_linalg.det(a, signature=signature)
-/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/numpy/linalg/linalg.py:2116: RuntimeWarning: overflow encountered in det
+</pre>
+</div>
+<div class="stderr docutils container">
+<pre class="stderr literal-block">/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/numpy/linalg/linalg.py:2116: RuntimeWarning: overflow encountered in det
   r = _umath_linalg.det(a, signature=signature)
 </pre>
 </div>
-<img alt="../_images/10_Residuals_69_1.png" src="../_images/10_Residuals_69_1.png" />
+<img alt="../_images/10_Residuals_67_2.png" src="../_images/10_Residuals_67_2.png" />
 </div>
 </div>
 </div>
@@ -987,7 +983,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_72_0.png" src="../_images/10_Residuals_72_0.png" />
+<img alt="../_images/10_Residuals_70_0.png" src="../_images/10_Residuals_70_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1000,7 +996,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_74_0.png" src="../_images/10_Residuals_74_0.png" />
+<img alt="../_images/10_Residuals_72_0.png" src="../_images/10_Residuals_72_0.png" />
 </div>
 </div>
 </div>
@@ -1026,10 +1022,12 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+
 <span class="n">b0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">])</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
 <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">u</span>
+
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>
 
 <span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -1044,7 +1042,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_77_0.png" src="../_images/10_Residuals_77_0.png" />
+<img alt="../_images/10_Residuals_75_0.png" src="../_images/10_Residuals_75_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1057,7 +1055,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_79_0.png" src="../_images/10_Residuals_79_0.png" />
+<img alt="../_images/10_Residuals_77_0.png" src="../_images/10_Residuals_77_0.png" />
 </div>
 </div>
 </div>
@@ -1107,7 +1105,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_82_0.png" src="../_images/10_Residuals_82_0.png" />
+<img alt="../_images/10_Residuals_80_0.png" src="../_images/10_Residuals_80_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1120,7 +1118,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_84_0.png" src="../_images/10_Residuals_84_0.png" />
+<img alt="../_images/10_Residuals_82_0.png" src="../_images/10_Residuals_82_0.png" />
 </div>
 </div>
 </div>
@@ -1163,7 +1161,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_89_0.png" src="../_images/10_Residuals_89_0.png" />
+<img alt="../_images/10_Residuals_87_0.png" src="../_images/10_Residuals_87_0.png" />
 </div>
 </div>
 <p>外れ値（赤の観測値）がない場合の回帰診断</p>
@@ -1176,7 +1174,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_91_0.png" src="../_images/10_Residuals_91_0.png" />
+<img alt="../_images/10_Residuals_89_0.png" src="../_images/10_Residuals_89_0.png" />
 </div>
 </div>
 <p>外れ値（赤の観測値）がある場合の回帰診断</p>
@@ -1189,7 +1187,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_93_0.png" src="../_images/10_Residuals_93_0.png" />
+<img alt="../_images/10_Residuals_91_0.png" src="../_images/10_Residuals_91_0.png" />
 </div>
 </div>
 <p>観測値<code class="docutils literal notranslate"><span class="pre">20</span></code>が非常に影響力が高いことが分かる。その観測値を取り出すには以下のようにする。</p>
@@ -1224,7 +1222,7 @@ Name: 20, dtype: float64
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="9_Multiple_Regression.html" title="previous page">重回帰分析</a>
-    <a class='right-next' id="next-link" href="11_Inference.html" title="next page">推論（Inference）</a>
+    <a class='right-next' id="next-link" href="11_Inference.html" title="next page">推論</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

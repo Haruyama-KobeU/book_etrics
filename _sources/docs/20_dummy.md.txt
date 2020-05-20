@@ -11,5 +11,5 @@ kernelspec:
 
 # 離散選択モデル
 
-7月までには公開する予定です。
+6月上旬には公開する予定です。
 春山ゼミ生は[ここをクリック](https://github.com/Haruyama-KobeU/Py4Etrics/)

@@ -49,7 +49,7 @@
 <meta property="og:url"         content="https://haruyama-kobeu.github.io/book_etrics/docs/8_Simple_Regression.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="単回帰分析" />
-<meta property="og:description" content="単回帰分析  用語集  横断面データ（cross-sectional data）  ある時点において複数の対象を観察し収集したデータ（例えば，2018年の47都道府県の県内総生産）  時系列データ（time-series data）  ある項目について時間に沿って集めたデータ（例えば，1950~2018年の兵庫県の県内" />
+<meta property="og:description" content="単回帰分析  import numpy as np import pandas as pd from scipy.stats import norm import matplotlib.pyplot as plt from wooldridge import *  # wooldridgeのデータ・パッケージ from" />
 
 
 <meta name="twitter:card" content="summary">
@@ -123,10 +123,10 @@
       <a href="10_Residuals.html">残差診断</a>
     </li>
     <li class="">
-      <a href="11_Inference.html">推論（Inference）</a>
+      <a href="11_Inference.html">推論</a>
     </li>
     <li class="">
-      <a href="12_dummy.html">大標本特性</a>
+      <a href="12_Asymptotics.html">大標本特性</a>
     </li>
     <li class="">
       <a href="13_dummy.html">ダミー変数</a>
@@ -316,6 +316,19 @@
                 
   <div class="section" id="id1">
 <h1>単回帰分析<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">wooldridge</span> <span class="kn">import</span> <span class="o">*</span>  <span class="c1"># wooldridgeのデータ・パッケージ</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>  <span class="c1"># 回帰分析のパッケージ</span>
+<span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="id2">
 <h2>用語集<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -485,19 +498,6 @@
 </div>
 <div class="section" id="id4">
 <h2>データ<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">wooldridge</span> <span class="kn">import</span> <span class="o">*</span>  <span class="c1"># wooldridgeのデータ・パッケージ</span>
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>  <span class="c1"># 回帰分析のパッケージ</span>
-<span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>データの読み込みには<code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>のパッケージを使う。使う関数は<code class="docutils literal notranslate"><span class="pre">dataWoo()</span></code>であり，引数なしで実行するとデータセットのリストが表示される。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -857,14 +857,6 @@ memory usage: 8.3 KB
 </ul>
 <p><strong>サブパッケージの読み込み</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>には多くのサブパッケージや関数があるが，ここでは回帰式を文字列で書くことができる<code class="docutils literal notranslate"><span class="pre">ols</span></code>をつかう。（他のコードの書き方もあるが，他のトピックで扱う。）</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># この章の最初に読み込んでいるので再度読み込む必要はないが、、、</span>
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p><strong>回帰式の定義</strong></p>
 <ul class="simple">
 <li><p>式を<code class="docutils literal notranslate"><span class="pre">''</span></code>で囲む（文字列）</p></li>
@@ -999,8 +991,8 @@ dtype: float64
 Dep. Variable:                   wage   R-squared:                       0.165
 Model:                            OLS   Adj. R-squared:                  0.163
 Method:                 Least Squares   F-statistic:                     103.4
-Date:                Mon, 18 May 2020   Prob (F-statistic):           2.78e-22
-Time:                        09:04:40   Log-Likelihood:                -1385.7
+Date:                Wed, 20 May 2020   Prob (F-statistic):           2.78e-22
+Time:                        18:27:23   Log-Likelihood:                -1385.7
 No. Observations:                 526   AIC:                             2775.
 Df Residuals:                     524   BIC:                             2784.
 Df Model:                           1                                         
@@ -1073,7 +1065,7 @@ educ           0.5414      0.053     10.167      0.000       0.437       0.646
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8_Simple_Regression_63_0.png" src="../_images/8_Simple_Regression_63_0.png" />
+<img alt="../_images/8_Simple_Regression_62_0.png" src="../_images/8_Simple_Regression_62_0.png" />
 </div>
 </div>
 </div>
@@ -1258,7 +1250,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8_Simple_Regression_82_0.png" src="../_images/8_Simple_Regression_82_0.png" />
+<img alt="../_images/8_Simple_Regression_81_0.png" src="../_images/8_Simple_Regression_81_0.png" />
 </div>
 </div>
 </div>
@@ -1315,7 +1307,7 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8_Simple_Regression_89_0.png" src="../_images/8_Simple_Regression_89_0.png" />
+<img alt="../_images/8_Simple_Regression_88_0.png" src="../_images/8_Simple_Regression_88_0.png" />
 </div>
 </div>
 </div>
@@ -1443,8 +1435,8 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    3.331178
-Y            0.171710
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    3.093196
+Y            0.246086
 dtype: float64
 </pre></div>
 </div>
@@ -1458,12 +1450,16 @@ dtype: float64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_sim</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">b0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">b1</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">su</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># nを指定する，　他はデフォルトを設定</span>
+    
     <span class="n">x</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">su</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">u</span>
+    
     <span class="n">df_sim</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">})</span>
+    
     <span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;Y ~ X&#39;</span>
     <span class="n">res_sim</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+    
     <span class="k">return</span> <span class="n">res_sim</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 </div>
@@ -1476,8 +1472,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.835398
-X            0.507927
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.011539
+X            0.511086
 dtype: float64
 </pre></div>
 </div>
@@ -1541,7 +1537,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8_Simple_Regression_125_0.png" src="../_images/8_Simple_Regression_125_0.png" />
+<img alt="../_images/8_Simple_Regression_124_0.png" src="../_images/8_Simple_Regression_124_0.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布</p>
@@ -1553,7 +1549,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8_Simple_Regression_127_0.png" src="../_images/8_Simple_Regression_127_0.png" />
+<img alt="../_images/8_Simple_Regression_126_0.png" src="../_images/8_Simple_Regression_126_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">y</span></code>の理論値を図示</p>
@@ -1571,7 +1567,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8_Simple_Regression_129_0.png" src="../_images/8_Simple_Regression_129_0.png" />
+<img alt="../_images/8_Simple_Regression_128_0.png" src="../_images/8_Simple_Regression_128_0.png" />
 </div>
 </div>
 <p>上のコード・ブロックの最後から２行目に<code class="docutils literal notranslate"><span class="pre">f'{N}</span> <span class="pre">rounds</span> <span class="pre">of</span> <span class="pre">OLS</span> <span class="pre">simulation'</span></code>とある。文字列の前に<code class="docutils literal notranslate"><span class="pre">f</span></code>を置き、文字列の中で変数を<code class="docutils literal notranslate"><span class="pre">{}</span></code>で囲むと変数の値を代入してくれるのである。これを<code class="docutils literal notranslate"><span class="pre">f-string</span></code>と呼ぶ。</p>
