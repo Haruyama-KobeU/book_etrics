@@ -508,12 +508,15 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [],
    "source": []
   }
  ],
  "metadata": {
+  "celltoolbar": "Tags",
   "kernel_info": {
    "name": "python3"
   },
