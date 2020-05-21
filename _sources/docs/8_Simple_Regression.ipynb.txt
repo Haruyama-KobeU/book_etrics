@@ -779,18 +779,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## `statsmodels`を使う"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "`statsmodels`のパッケージを使うことにより，多くの計算を自動化できる。以下の順番でおこなう。\n",
     "* `ols`サブパッケージを読み込む\n",
@@ -800,9 +796,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "**サブパッケージの読み込み**\n",
     "\n",
@@ -811,9 +805,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "**回帰式の定義**\n",
     "\n",
@@ -830,15 +822,16 @@
     "定数項がない場合：\n",
     "```\n",
     "被説明変数 ~ -1 + 説明変数\n",
-    "```"
+    "```\n",
+    "\n",
+    "---\n",
+    "`wage`を被説明変数にし，定数項を加えて`educ`を説明変数をする場合，次のように書く。"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 16,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [],
    "source": [
     "formula = 'wage ~ educ'"
@@ -846,9 +839,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "**自動計算**\n",
     "\n",
@@ -858,9 +849,7 @@
   {
    "cell_type": "code",
    "execution_count": 17,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [],
    "source": [
     "mod = ols(formula, data=df)"
@@ -868,9 +857,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "`mod`の属性を調べてみよう。"
    ]
@@ -878,9 +865,7 @@
   {
    "cell_type": "code",
    "execution_count": 18,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -908,9 +893,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "この中に実際に計算するためにメソッド`fit()`が準備されており、それを使い結果を`res`に割り当てる（`res`はresultの略）。"
    ]
@@ -918,9 +901,7 @@
   {
    "cell_type": "code",
    "execution_count": 19,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [],
    "source": [
     "res = mod.fit()"
@@ -928,9 +909,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "上の２つを分けずに一行で書いてもOK。\n",
     "```\n",
@@ -942,9 +921,7 @@
   {
    "cell_type": "code",
    "execution_count": 20,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -985,9 +962,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "例えば，上のリストの中に`.params`とあるが，このデータ属性を使い係数の推定値を取り出すことができる。"
    ]
@@ -995,9 +970,7 @@
   {
    "cell_type": "code",
    "execution_count": 21,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -1018,9 +991,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "また`wage`の予測値は`res.fittedvalues`もしくは`res.predict()`で得ることができる。`res.fittedvalues`はデータ属性であり`res.predict()`はメソッドであるが、後者は引数がない場合は前者と同じ結果を返す。\n",
     "\n",
@@ -1032,9 +1003,7 @@
   {
    "cell_type": "code",
    "execution_count": 22,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "name": "stdout",
@@ -1074,9 +1043,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "ここで`print()`関数を使ったが、使わなくとも同じ内容を表示できるので試してみよう。\n",
     "\n",
@@ -1092,9 +1059,7 @@
   {
    "cell_type": "code",
    "execution_count": 23,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "name": "stdout",
@@ -1115,9 +1080,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "OLS推定の結果を割り当てた`res`には，ここで説明した以外に数多くの属性が存在する。それらに関する説明は[このサイト](https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.RegressionResults.html)を参照すること。"
    ]

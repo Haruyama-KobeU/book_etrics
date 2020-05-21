@@ -100,7 +100,7 @@
       <a href="4_Matplotlib.html">Matplotlib</a>
     </li>
     <li class="">
-      <a href="5_SciPy_stats.html">SciPy</a>
+      <a href="5_SciPy_stats.html">SciPy.stats</a>
     </li>
     <li class="">
       <a href="6_things_to_note.html">Tipsと注意点</a>
@@ -150,7 +150,7 @@
       <a href="19_dummy.html">操作変数法と２段階OLS</a>
     </li>
     <li class="">
-      <a href="20_dummy.html">離散選択モデル</a>
+      <a href="20_LogitProbit.html">離散選択モデル：LogitとProbit</a>
     </li>
     <li class="">
       <a href="21_dummy.html">制限従属変数モデル</a>
@@ -876,6 +876,8 @@ memory usage: 8.3 KB
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">被説明変数</span> <span class="o">~</span> <span class="o">-</span><span class="mi">1</span> <span class="o">+</span> <span class="n">説明変数</span>
 </pre></div>
 </div>
+<hr class="docutils" />
+<p><code class="docutils literal notranslate"><span class="pre">wage</span></code>を被説明変数にし，定数項を加えて<code class="docutils literal notranslate"><span class="pre">educ</span></code>を説明変数をする場合，次のように書く。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;wage ~ educ&#39;</span>
@@ -992,7 +994,7 @@ Dep. Variable:                   wage   R-squared:                       0.165
 Model:                            OLS   Adj. R-squared:                  0.163
 Method:                 Least Squares   F-statistic:                     103.4
 Date:                Thu, 21 May 2020   Prob (F-statistic):           2.78e-22
-Time:                        11:55:32   Log-Likelihood:                -1385.7
+Time:                        21:07:31   Log-Likelihood:                -1385.7
 No. Observations:                 526   AIC:                             2775.
 Df Residuals:                     524   BIC:                             2784.
 Df Model:                           1                                         
@@ -1435,8 +1437,8 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    3.589720
-Y            0.114602
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    2.887184
+Y            0.371675
 dtype: float64
 </pre></div>
 </div>
@@ -1472,8 +1474,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.534154
-X            0.372871
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.087340
+X            0.464711
 dtype: float64
 </pre></div>
 </div>

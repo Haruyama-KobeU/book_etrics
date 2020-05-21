@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>SciPy &#8212; Pythonで学ぶ入門計量経済学</title>
+    <title>SciPy.stats &#8212; Pythonで学ぶ入門計量経済学</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
@@ -48,8 +48,8 @@
 <!-- Opengraph tags -->
 <meta property="og:url"         content="https://haruyama-kobeu.github.io/book_etrics/docs/5_SciPy_stats.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="SciPy" />
-<meta property="og:description" content="SciPy  SciPy（サイパイ）は，NumPyの拡張版と理解して良い。SciPyを読み込むとNumPyの関数などを利用できるようになる。しかしSciPyは大きなパッケージであり，全てを読み込む必要もない。従って，NumPyを読み込んで，SciPyのサブパッケージや関数を読み込むということで十分であろう。ここではSc" />
+<meta property="og:title"       content="SciPy.stats" />
+<meta property="og:description" content="SciPy.stats  SciPy（サイパイ）は，NumPyの拡張版と理解して良い。SciPyを読み込むとNumPyの関数などを利用できるようになる。しかしSciPyは大きなパッケージであり，全てを読み込む必要もない。従って，NumPyを読み込んで，SciPyのサブパッケージや関数を読み込むということで十分であろう。" />
 
 
 <meta name="twitter:card" content="summary">
@@ -100,7 +100,7 @@
       <a href="4_Matplotlib.html">Matplotlib</a>
     </li>
     <li class="active">
-      <a href="">SciPy</a>
+      <a href="">SciPy.stats</a>
     </li>
     <li class="">
       <a href="6_things_to_note.html">Tipsと注意点</a>
@@ -150,7 +150,7 @@
       <a href="19_dummy.html">操作変数法と２段階OLS</a>
     </li>
     <li class="">
-      <a href="20_dummy.html">離散選択モデル</a>
+      <a href="20_LogitProbit.html">離散選択モデル：LogitとProbit</a>
     </li>
     <li class="">
       <a href="21_dummy.html">制限従属変数モデル</a>
@@ -276,8 +276,8 @@
         
               <div>
                 
-  <div class="section" id="scipy">
-<h1>SciPy<a class="headerlink" href="#scipy" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="scipy-stats">
+<h1>SciPy.stats<a class="headerlink" href="#scipy-stats" title="Permalink to this headline">¶</a></h1>
 <p>SciPy（サイパイ）は，NumPyの拡張版と理解して良い。SciPyを読み込むとNumPyの関数などを利用できるようになる。しかしSciPyは大きなパッケージであり，全てを読み込む必要もない。従って，NumPyを読み込んで，SciPyのサブパッケージや関数を読み込むということで十分であろう。ここではSciPyのstatsというサブパッケージについて説明する。</p>
 <div class="section" id="normal-distribution">
 <h2>正規分布（Normal Distribution）<a class="headerlink" href="#normal-distribution" title="Permalink to this headline">¶</a></h2>

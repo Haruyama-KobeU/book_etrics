@@ -49,8 +49,8 @@ Stack Overflowとは，プログラミングに関する質問をすると参加
 import numpy, scipy, pandas, matplotlib, statsmodels, linearmodels, wooldridge, see, lmdiag
 from platform import python_version
 
-package = ['Python','numpy','scipy','pandas','matplotlib','statsmodels','linearmodels','see','wooldridge','lmdiag']
-version = [python_version(),numpy.__version__,scipy.__version__,pandas.__version__,matplotlib.__version__,statsmodels.__version__,linearmodels.__version__,see.__version__,'0.3.0','0.3.7']
+package = ['Python','numpy','scipy','pandas','matplotlib','statsmodels','linearmodels','see','wooldridge','lmdiag','py4etrics']
+version = [python_version(),numpy.__version__,scipy.__version__,pandas.__version__,matplotlib.__version__,statsmodels.__version__,linearmodels.__version__,see.__version__,'0.3.0','0.3.7','0.1.0']
 
 for pack, ver in zip(package,version):
     print('{0:14}{1}'.format(pack,ver))
