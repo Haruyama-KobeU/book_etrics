@@ -129,10 +129,10 @@
       <a href="12_Asymptotics.html">大標本特性</a>
     </li>
     <li class="">
-      <a href="13_Dummies.html">質的変数を使った回帰分析</a>
+      <a href="13_Dummies.html">質的変数と回帰分析</a>
     </li>
     <li class="">
-      <a href="14_dummy.html">不均一分散</a>
+      <a href="14_Heteroskedasticity.html">不均一分散</a>
     </li>
     <li class="">
       <a href="15_Pooling.html">プーリング・データとパネル・データ</a>
@@ -347,7 +347,7 @@
 <li><p>母集団のパラメータについて帰無仮説（Null Hypothesis）と対立仮説（Alternative Hypothesis）を設定する。</p>
 <ul class="simple">
 <li><p>帰無仮説は棄却するかどうかの判断の対象となる仮説（例えば，<span class="math notranslate nohighlight">\(\hat{\beta}_1=0\)</span>）</p></li>
-<li><p>対立仮説は「残したい」仮説（例えば，<span class="math notranslate nohighlight">\(\hat{\beta}_1\neq 0\)</span></p></li>
+<li><p>対立仮説は帰無仮説に相反する仮説（例えば，<span class="math notranslate nohighlight">\(\hat{\beta}_1\neq 0\)</span>）</p></li>
 </ul>
 </li>
 <li><p>適切な検定統計量を決め，判定するための有意水準を予め決める。</p>
@@ -355,7 +355,12 @@
 <li><p>有意水準 ＝ 下で説明する<strong>第一種過誤の確率</strong></p></li>
 </ul>
 </li>
-<li><p>計算した検定統計量の値と有意水準に対応する値を比較することにより，帰無仮説を棄却するかしないかを判断する。</p></li>
+<li><p>計算した検定統計量の値と有意水準に対応する値を比較することにより，帰無仮説を棄却するかしないかを判断する。２つの可能性しかない。</p>
+<ul class="simple">
+<li><p>帰無仮説を棄却する（対立仮説を採択する）。</p></li>
+<li><p>帰無仮説を棄却できない（対立仮説を採択できない）。</p></li>
+</ul>
+</li>
 </ol>
 <hr class="docutils" />
 <p>検定をおこなう際には間違いが発生する。それをまとめたのが次の表である。</p>
@@ -406,7 +411,10 @@
 </tr>
 </tbody>
 </table>
-<p>第一種過誤は帰無仮説が正しい場合に棄却する場合に発生する。慣例でその確率を<span class="math notranslate nohighlight">\(\alpha\)</span>で表す。<span class="math notranslate nohighlight">\(\alpha=0.05\)</span>がよく使われるが，これを使う場合，間違って正しい帰無仮説を棄却する確率は最大5%まで許容できるという意味になる。</p>
+<ul class="simple">
+<li><p>統計的優位性とは，帰無仮説が正しい場合，帰無仮説の内容が発生した確率が非常に低い場合を指す。即ち，発生イベントが非常に起こりにくく，偶然のの可能性が非常に高い場合を指す。</p></li>
+<li><p>第一種過誤は，帰無仮説が正しい場合に棄却する場合に発生する。慣例でその確率を<span class="math notranslate nohighlight">\(\alpha\)</span>で表す。<span class="math notranslate nohighlight">\(\alpha=0.05\)</span>がよく使われるが，これを使う場合，間違って正しい帰無仮説を棄却する確率は最大5%まで許容するという意味になる。</p></li>
+</ul>
 </div>
 <div class="section" id="t">
 <h2><span class="math notranslate nohighlight">\(t\)</span>検定<a class="headerlink" href="#t" title="Permalink to this headline">¶</a></h2>
@@ -414,9 +422,10 @@
 <h3>説明：<span class="math notranslate nohighlight">\(t\)</span>値と<span class="math notranslate nohighlight">\(p\)</span>値<a class="headerlink" href="#tp" title="Permalink to this headline">¶</a></h3>
 <p>新たな仮定を導入する。</p>
 <ul class="simple">
-<li><p>仮定６：誤差項は説明変数は独立であり正規分布に従う（誤差項の正規性）
-<span class="math notranslate nohighlight">\($u\sim N\left(0,\sigma^2\right)\)</span>$</p></li>
+<li><p>仮定６：誤差項は説明変数は独立であり正規分布に従う（誤差項の正規性）</p></li>
 </ul>
+<div class="math notranslate nohighlight">
+\[u\sim N\left(0,\sigma^2\right)\]</div>
 <p>仮定１〜６を<strong>Classical Linear Model (CLM) Assumptions</strong>（CLM仮定）と呼ぶ。</p>
 <hr class="docutils" />
 <p>CLM仮定の下では：</p>
@@ -1136,8 +1145,8 @@ Abstract of the United States.
 Dep. Variable:         np.log(salary)   R-squared:                       0.628
 Model:                            OLS   Adj. R-squared:                  0.622
 Method:                 Least Squares   F-statistic:                     117.1
-Date:                Wed, 20 May 2020   Prob (F-statistic):           2.94e-72
-Time:                        22:19:34   Log-Likelihood:                -385.11
+Date:                Thu, 21 May 2020   Prob (F-statistic):           2.94e-72
+Time:                        11:57:44   Log-Likelihood:                -385.11
 No. Observations:                 353   AIC:                             782.2
 Df Residuals:                     347   BIC:                             805.4
 Df Model:                           5                                         

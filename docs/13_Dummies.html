@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>質的変数を使った回帰分析 &#8212; Pythonで学ぶ入門計量経済学</title>
+    <title>質的変数と回帰分析 &#8212; Pythonで学ぶ入門計量経済学</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
@@ -31,7 +31,7 @@
     <link rel="canonical" href="https://haruyama-kobeu.github.io/book_etrics/docs/13_Dummies.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="不均一分散" href="14_dummy.html" />
+    <link rel="next" title="不均一分散" href="14_Heteroskedasticity.html" />
     <link rel="prev" title="大標本特性" href="12_Asymptotics.html" />
 
 
@@ -48,8 +48,8 @@
 <!-- Opengraph tags -->
 <meta property="og:url"         content="https://haruyama-kobeu.github.io/book_etrics/docs/13_Dummies.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="質的変数を使った回帰分析" />
-<meta property="og:description" content="質的変数を使った回帰分析  import numpy as np import pandas as pd from statsmodels.formula.api import ols from wooldridge import *  実証分析で使う変数を次の２種類に区別することができる。  量的変数（体重，賃金など" />
+<meta property="og:title"       content="質的変数と回帰分析" />
+<meta property="og:description" content="質的変数と回帰分析  import numpy as np import pandas as pd from statsmodels.formula.api import ols from wooldridge import *  実証分析で使う変数を次の２種類に区別することができる。  量的変数（体重，賃金など）  " />
 
 
 <meta name="twitter:card" content="summary">
@@ -129,10 +129,10 @@
       <a href="12_Asymptotics.html">大標本特性</a>
     </li>
     <li class="active">
-      <a href="">質的変数を使った回帰分析</a>
+      <a href="">質的変数と回帰分析</a>
     </li>
     <li class="">
-      <a href="14_dummy.html">不均一分散</a>
+      <a href="14_Heteroskedasticity.html">不均一分散</a>
     </li>
     <li class="">
       <a href="15_Pooling.html">プーリング・データとパネル・データ</a>
@@ -303,7 +303,7 @@
               <div>
                 
   <div class="section" id="id1">
-<h1>質的変数を使った回帰分析<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<h1>質的変数と回帰分析<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -457,10 +457,12 @@ dtype: float64
 </div>
 </div>
 </div>
-<ul class="simple">
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">female=0</span></code>の場合は男性なので，定数項の値（約7.10）が男性の時間賃金の平均である。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">female=1</span></code>の場合は女性なので，女性の時間賃金の平均は
-<span class="math notranslate nohighlight">\($7.10-2.51\approx 4.59\)</span>$</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">female=1</span></code>の場合は女性なので，女性の時間賃金の平均は</p>
+<div class="math notranslate nohighlight">
+\[7.10-2.51\approx 4.59\]</div>
+</li>
 </ul>
 <p>即ち，男性（基本カテゴリー）と比べて女性の平均賃金は2.51ドル低い。</p>
 <p>データを使い直接男女の平均を計算して確認する。</p>
@@ -1658,7 +1660,7 @@ np.log(income)          0.0914      0.021      4.441      0.000       0.051     
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="12_Asymptotics.html" title="previous page">大標本特性</a>
-    <a class='right-next' id="next-link" href="14_dummy.html" title="next page">不均一分散</a>
+    <a class='right-next' id="next-link" href="14_Heteroskedasticity.html" title="next page">不均一分散</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

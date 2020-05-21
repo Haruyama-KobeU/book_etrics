@@ -23,33 +23,29 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## 説明：仮説検定"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "仮説検定は以下の手順でおこなう。\n",
     "1. 母集団のパラメータについて帰無仮説（Null Hypothesis）と対立仮説（Alternative Hypothesis）を設定する。\n",
     "    * 帰無仮説は棄却するかどうかの判断の対象となる仮説（例えば，$\\hat{\\beta}_1=0$）\n",
-    "    * 対立仮説は「残したい」仮説（例えば，$\\hat{\\beta}_1\\neq 0$\n",
+    "    * 対立仮説は帰無仮説に相反する仮説（例えば，$\\hat{\\beta}_1\\neq 0$）\n",
     "1. 適切な検定統計量を決め，判定するための有意水準を予め決める。\n",
     "    * 有意水準 ＝ 下で説明する**第一種過誤の確率**\n",
-    "1. 計算した検定統計量の値と有意水準に対応する値を比較することにより，帰無仮説を棄却するかしないかを判断する。"
+    "1. 計算した検定統計量の値と有意水準に対応する値を比較することにより，帰無仮説を棄却するかしないかを判断する。２つの可能性しかない。\n",
+    "    * 帰無仮説を棄却する（対立仮説を採択する）。\n",
+    "    * 帰無仮説を棄却できない（対立仮説を採択できない）。"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "検定をおこなう際には間違いが発生する。それをまとめたのが次の表である。"
@@ -57,9 +53,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "|                        | 帰無仮説は真 | 帰無仮説は偽 |   |\n",
     "|------------------------|--------------|--------------|---|\n",
@@ -69,9 +63,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "検定を警察の行動に例えて次のように考えることもできる。\n",
     "* 帰無仮説 $\\Rightarrow$ 「無罪」\n",
@@ -83,9 +75,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "|                        | 無実は真 | 無実は偽 |\n",
     "|------------------------|:------------:|:------------:|\n",
@@ -95,41 +85,34 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
-    "第一種過誤は帰無仮説が正しい場合に棄却する場合に発生する。慣例でその確率を$\\alpha$で表す。$\\alpha=0.05$がよく使われるが，これを使う場合，間違って正しい帰無仮説を棄却する確率は最大5%まで許容できるという意味になる。"
+    "* 統計的優位性とは，帰無仮説が正しい場合，帰無仮説の内容が発生した確率が非常に低い場合を指す。即ち，発生イベントが非常に起こりにくく，偶然のの可能性が非常に高い場合を指す。\n",
+    "* 第一種過誤は，帰無仮説が正しい場合に棄却する場合に発生する。慣例でその確率を$\\alpha$で表す。$\\alpha=0.05$がよく使われるが，これを使う場合，間違って正しい帰無仮説を棄却する確率は最大5%まで許容するという意味になる。"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## $t$検定"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "### 説明：$t$値と$p$値"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "新たな仮定を導入する。\n",
     "\n",
     "* 仮定６：誤差項は説明変数は独立であり正規分布に従う（誤差項の正規性）\n",
+    "\n",
     "$$u\\sim N\\left(0,\\sigma^2\\right)$$\n",
     "\n",
     "仮定１〜６を**Classical Linear Model (CLM) Assumptions**（CLM仮定）と呼ぶ。"
@@ -137,9 +120,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "CLM仮定の下では：\n",
@@ -160,9 +141,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "この関係を使うことによりOLS推定量の検定が可能となる。\n",
@@ -199,9 +178,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "**＜$p$値＞**\n",
@@ -217,8 +194,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### $t$値と$p$値の例"
@@ -449,8 +425,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### 回帰分析と$t$検定"

@@ -4,7 +4,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "# 質的変数を使った回帰分析"
+    "# 質的変数と回帰分析"
    ]
   },
   {
@@ -32,37 +32,28 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## ダミー変数"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "### ケース１：定数項だけの回帰分析"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "#### ダミー変数なし"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "直感的な説明にするために説明変数が定数項だけの回帰分析から始める。\n",
     "具体的には次の回帰式を考える。\n",
@@ -76,7 +67,6 @@
    "cell_type": "code",
    "execution_count": 2,
    "metadata": {
-    "hidden": true,
     "tags": [
      "output_scroll"
     ]
@@ -131,9 +121,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "時間平均賃金`wage`を被説明変数に設定する。`statsmodels`では，定数項だけの回帰式を考える場合，`1`をつか加える必要がある。"
    ]
@@ -141,9 +129,7 @@
   {
    "cell_type": "code",
    "execution_count": 3,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -167,9 +153,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "この推定値が賃金の平均と等しいこをを確認するために，直接平均を計算する。"
    ]
@@ -177,9 +161,7 @@
   {
    "cell_type": "code",
    "execution_count": 4,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -198,9 +180,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "この結果はGM仮定4の$\\text{E}(u|X)=0$から簡単に導出できる。この仮定を標本回帰式で考えると次式となる。\n",
     "\n",
@@ -219,19 +199,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "#### ダミー変数あり：２つのケース"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "同じデータを使って$\\{0,1\\}$の値を取るダミー変数を考える。データセット`wage1`の中の`female`という変数があり，以下の値を取る。\n",
     "```\n",
@@ -264,9 +239,7 @@
   {
    "cell_type": "code",
    "execution_count": 5,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -291,13 +264,12 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "* `female=0`の場合は男性なので，定数項の値（約7.10）が男性の時間賃金の平均である。\n",
     "* `female=1`の場合は女性なので，女性の時間賃金の平均は\n",
-    "$$7.10-2.51\\approx 4.59$$\n",
+    "\n",
+    "    $$7.10-2.51\\approx 4.59$$\n",
     "\n",
     "即ち，男性（基本カテゴリー）と比べて女性の平均賃金は2.51ドル低い。\n",
     "\n",
@@ -309,9 +281,7 @@
   {
    "cell_type": "code",
    "execution_count": 6,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -333,9 +303,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "＜男性の場合＞"
    ]
@@ -343,9 +311,7 @@
   {
    "cell_type": "code",
    "execution_count": 7,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -367,9 +333,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "**（解釈）**\n",
     "* 女性の時間賃金は約2.51ドル低い\n",
@@ -379,8 +343,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "#### ダミー変数あり：４つのケース"
@@ -1132,8 +1095,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### ケース２：定量的変数の導入"
@@ -1196,8 +1158,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### ケース３：ダミー変数の交差項"
@@ -1349,18 +1310,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## カテゴリー変数"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "カテゴリー変数とは定性的な変数であり，男女もカテゴリー変数の一種である。カテゴリー変数をダミー変数に変換するには2つの方法がある。\n",
     "\n",
@@ -1371,8 +1328,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### `C()`を使う方法"
@@ -1850,8 +1806,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### `C()`を使わない方法"
