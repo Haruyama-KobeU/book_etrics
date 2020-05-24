@@ -336,6 +336,7 @@
 <span class="kn">from</span> <span class="nn">statsmodels.api</span> <span class="kn">import</span> <span class="n">qqplot</span>
 <span class="kn">from</span> <span class="nn">statsmodels.stats.stattools</span> <span class="kn">import</span> <span class="n">jarque_bera</span><span class="p">,</span> <span class="n">omni_normtest</span>
 <span class="kn">from</span> <span class="nn">wooldridge</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>
 </pre></div>
 </div>
 </div>
@@ -426,9 +427,9 @@ u = pu_N+(1-p)u_c
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># (1)</span>
     
-    <span class="n">prob</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.95</span><span class="p">,</span><span class="mf">0.05</span><span class="p">])</span>  <span class="c1"># (2)</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># (2)</span>
     <span class="n">dist_1</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1">#(3)</span>
-    <span class="n">dist_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">chi2</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>  <span class="c1"># (4)</span>
+    <span class="n">dist_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">chi2</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># (4)</span>
     
     <span class="n">error</span> <span class="o">=</span> <span class="n">prob</span><span class="o">*</span><span class="p">(</span><span class="n">dist_1</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">prob</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">dist_2</span><span class="p">)</span>  <span class="c1"># (5)</span>
     <span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">error</span>  <span class="c1"># (6)</span>
@@ -439,7 +440,7 @@ u = pu_N+(1-p)u_c
 <p>（上のコードの説明）</p>
 <ol class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>回<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを宣言。</p></li>
-<li><p>２つの確率分布が発生する確率<code class="docutils literal notranslate"><span class="pre">prob</span></code>を設定。<code class="docutils literal notranslate"><span class="pre">random.choice</span></code>は<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>のサブパッケージ<code class="docutils literal notranslate"><span class="pre">random</span></code>にある関数<code class="docutils literal notranslate"><span class="pre">choice</span></code>。この関数は<code class="docutils literal notranslate"><span class="pre">[0,1]</span></code>のどちらかの数値をダンダムに選び，その確率はオプション<code class="docutils literal notranslate"><span class="pre">p=</span></code>で設定。95%の確率で<code class="docutils literal notranslate"><span class="pre">0</span></code>，5%で<code class="docutils literal notranslate"><span class="pre">1</span></code>が発生する。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dist_1</span></code>の割合</p></li>
 <li><p>正規分布に従う１つのランダム変数を生成。</p></li>
 <li><p>カイ二乗分布に従う１つのランダム変数を生成。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">error</span></code>が誤差項</p></li>
@@ -453,8 +454,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([-0.39848108,  0.4817436 , -0.19944561, -0.3364264 , -0.0008194 ,
-        0.71961025, -0.38879397, -0.4680913 , -0.34503841, -0.46556572])
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([-0.29735124,  0.87339305, -0.3748126 , -0.38789594,  0.19298722,
+        0.16958663, -0.47307759,  1.12750947,  0.96825621,  3.30699419])
 </pre></div>
 </div>
 </div>
@@ -482,7 +483,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.006852405017057636
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.0018429379242744137
 </pre></div>
 </div>
 </div>
@@ -512,129 +513,119 @@ u = pu_N+(1-p)u_c
 <p>標本数（シミュレーションの回数）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">10000</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>シミュレーションをおこなう関数を定義する。</p>
+<p>シミュレーションをおこなう関数を以下で定義する。</p>
 <ul class="simple">
 <li><p>引数：標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code></p></li>
-<li><p>返り値：<code class="docutils literal notranslate"><span class="pre">b1</span></code>の推定値のリスト</p></li>
+<li><p>返り値：<code class="docutils literal notranslate"><span class="pre">b1</span></code>の推定値の<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の<code class="docutils literal notranslate"><span class="pre">array</span></code></p></li>
+</ul>
+<p>＜コメント＞</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">b1</span></code>の推定値の計算には<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使わずに，<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数を使い「手計算」とする。これにより計算を高速化するパッケージ<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使うことが可能となる。使い方は簡単でデコレーターと呼ばれる<code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>（又は<code class="docutils literal notranslate"><span class="pre">&#64;jit</span></code>）を関数の上に加えるだけである。これだけで計算速度が数十倍早くなる場合もある。</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sim_consistency</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="n">b1_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># b1の推定値を格納する空のリスト</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>  <span class="c1"># 計算の高速化</span>
+<span class="k">def</span> <span class="nf">sim_consistency</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    
+    <span class="n">b1_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># b1の推定値を格納する空のarray</span>
 
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1">#  forループで N回シミュレーション</span>
         
-        <span class="n">x</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 説明変数</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 説明変数</span>
         
         <span class="c1"># 残差の生成（上で説明したもの）</span>
         <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-            <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.95</span><span class="p">,</span><span class="mf">0.05</span><span class="p">])</span>
-            <span class="n">dist_1</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-            <span class="n">dist_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">chi2</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-            <span class="n">error</span> <span class="o">=</span> <span class="n">P</span><span class="o">*</span><span class="p">(</span><span class="n">dist_1</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">P</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">dist_2</span><span class="p">)</span>
+            <span class="n">prob</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># 正規分布の確率</span>
+            <span class="n">dist_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">)</span>
+            <span class="n">dist_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">chisquare</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="n">prob</span><span class="o">*</span><span class="p">(</span><span class="n">dist_1</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">prob</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">dist_2</span><span class="p">)</span>
             <span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">error</span>
             
         <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># yの抽出</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">})</span>  <span class="c1"># DataFrameの作成</span>
-        <span class="n">mod</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># 回帰分析</span>
-        <span class="n">intercept</span><span class="p">,</span> <span class="n">slope</span> <span class="o">=</span> <span class="n">mod</span><span class="o">.</span><span class="n">params</span>  <span class="c1"># 定数項とスロープ係数を取得</span>
-        <span class="n">b1_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">slope</span><span class="p">)</span>  <span class="c1"># スロープ係数を b1_listに追加</span>
-    <span class="k">return</span> <span class="n">b1_list</span>   <span class="c1"># 推定値のリストを返す   </span>
+        
+        <span class="n">var_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># 分散共分散行列</span>
+        <span class="n">cov_yx</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 共分散</span>
+        <span class="n">var_y</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># yの分散</span>
+        <span class="n">var_x</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># xの分散        </span>
+        <span class="n">b1hat</span> <span class="o">=</span> <span class="n">cov_yx</span> <span class="o">/</span> <span class="n">var_x</span>  <span class="c1"># スロープ係数       </span>
+        <span class="n">b1_arr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">b1hat</span>  <span class="c1"># スロープ係数を b1_arrに格納</span>
+
+    <span class="k">return</span> <span class="n">b1_arr</span>   <span class="c1"># 推定値のリストを返す</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p><span class="math notranslate nohighlight">\(n=30\)</span>のシミュレーション</p>
+<p><span class="math notranslate nohighlight">\(n=30,\;100,\;250,\;500\)</span>の４パターンのシミュレーションをおこなう。次のようなコードを書くことも可能である。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># n=30のシミュレーション</span>
+<span class="n">sim_30</span> <span class="o">=</span> <span class="n">sim_consistency</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+
+<span class="c1"># n=100のシミュレーション</span>
+<span class="n">sim_100</span> <span class="o">=</span> <span class="n">sim_consistency</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># n=250のシミュレーション</span>
+<span class="n">sim_250</span> <span class="o">=</span> <span class="n">sim_consistency</span><span class="p">(</span><span class="mi">250</span><span class="p">)</span>
+
+<span class="c1"># n=500のシミュレーション</span>
+<span class="n">sim_500</span> <span class="o">=</span> <span class="n">sim_consistency</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>もちろん，この方法でも問題はないが，パターンが増えると書く行も増えていく。別の方法として辞書を使う方法を紹介する。キーを<code class="docutils literal notranslate"><span class="pre">30</span></code>や<code class="docutils literal notranslate"><span class="pre">100</span></code>の数字にして，値にシミュレーションの結果を格納するのである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b1hat_30_consistency</span> <span class="o">=</span> <span class="n">sim_consistency</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data_consistency</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># 空の辞書の作成</span>
 
-<span class="nb">len</span><span class="p">(</span><span class="n">b1hat_30_consistency</span><span class="p">)</span>  <span class="c1"># b1hat_30の要素数のチェック</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">250</span><span class="p">,</span><span class="mi">500</span><span class="p">]:</span>
+    <span class="n">data_consistency</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">sim_consistency</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>最後の行の右辺は<code class="docutils literal notranslate"><span class="pre">sim_consistency()</span></code>の返り値である<code class="docutils literal notranslate"><span class="pre">array</span></code>であり，それをキー<code class="docutils literal notranslate"><span class="pre">'30'</span></code>や<code class="docutils literal notranslate"><span class="pre">'100'</span></code>とのペアにに設定し，それらから構成される辞書<code class="docutils literal notranslate"><span class="pre">data_consistency</span></code>を作成している。イメージとしては次のような辞書となっている。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;30&#39;</span><span class="p">:</span><span class="n">sim_consistency</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span><span class="s1">&#39;100&#39;</span><span class="p">:</span><span class="n">sim_consistency</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span><span class="o">....</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>シミュレーションの結果にアクセスするにはキーを使う。例えば，<code class="docutils literal notranslate"><span class="pre">sim_consistency(30)</span></code>の結果にアクセスする場合は</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;30&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>1000
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([0.56111623, 0.49694632, 0.82542031, ..., 0.42660196, 0.85252281,
+       0.3284213 ])
 </pre></div>
 </div>
 </div>
 </div>
-<p><span class="math notranslate nohighlight">\(n=100\)</span>のシミュレーション</p>
+<p>とする。次に図をプロットしよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b1hat_100_consistency</span> <span class="o">=</span> <span class="n">sim_consistency</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-
-<span class="nb">len</span><span class="p">(</span><span class="n">b1hat_100_consistency</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>1000
-</pre></div>
-</div>
-</div>
-</div>
-<p><span class="math notranslate nohighlight">\(n=250\)</span>のシミュレーション</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b1hat_250_consistency</span> <span class="o">=</span> <span class="n">sim_consistency</span><span class="p">(</span><span class="mi">250</span><span class="p">)</span>
-
-<span class="nb">len</span><span class="p">(</span><span class="n">b1hat_250_consistency</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>1000
-</pre></div>
-</div>
-</div>
-</div>
-<p><span class="math notranslate nohighlight">\(n=500\)</span>のシミュレーション</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b1hat_500_consistency</span> <span class="o">=</span> <span class="n">sim_consistency</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
-
-<span class="nb">len</span><span class="p">(</span><span class="n">b1hat_500_consistency</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>1000
-</pre></div>
-</div>
-</div>
-</div>
-<p>図のプロット</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">##### 図を作成するために横軸の値を設定</span>
-<span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 図を作成するために横軸の値を設定</span>
+<span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
 
 <span class="c1"># n = 30</span>
-<span class="n">kde_model_30</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1hat_30_consistency</span><span class="p">)</span>  <span class="c1"># カーネル密度推定を設定</span>
-<span class="n">b1_dist_30</span> <span class="o">=</span> <span class="n">kde_model_30</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>  <span class="c1"># カーネル密度推定を使いOLS推定量の分布を推定</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">b1_dist_30</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;n=30&#39;</span><span class="p">)</span>  <span class="c1"># OLS推定量の分布プロット</span>
+<span class="n">kde_model_30</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;30&#39;</span><span class="p">])</span>  <span class="c1"># カーネル密度推定を使いOLS推定量の分布を推定</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_30</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;n=30&#39;</span><span class="p">)</span>  <span class="c1"># OLS推定量の分布プロット</span>
 
 <span class="c1"># n = 100</span>
-<span class="n">kde_model_100</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1hat_100_consistency</span><span class="p">)</span>
-<span class="n">b1_dist_100</span> <span class="o">=</span> <span class="n">kde_model_100</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">b1_dist_100</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;n=100&#39;</span><span class="p">)</span>
+<span class="n">kde_model_100</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;100&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_100</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;n=100&#39;</span><span class="p">)</span>
 
 <span class="c1"># n = 250</span>
-<span class="n">kde_model_250</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1hat_250_consistency</span><span class="p">)</span>
-<span class="n">b1_dist_250</span> <span class="o">=</span> <span class="n">kde_model_250</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">b1_dist_250</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;n=250&#39;</span><span class="p">)</span>
+<span class="n">kde_model_250</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;250&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_250</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;n=250&#39;</span><span class="p">)</span>
 
 <span class="c1"># n = 500</span>
-<span class="n">kde_model_500</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1hat_500_consistency</span><span class="p">)</span>
-<span class="n">b1_dist_500</span> <span class="o">=</span> <span class="n">kde_model_500</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">b1_dist_500</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;n=500&#39;</span><span class="p">)</span>
+<span class="n">kde_model_500</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;500&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_500</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;n=500&#39;</span><span class="p">)</span>
 
 
 <span class="c1"># 母集団のパラメータの値に縦の線</span>
@@ -647,33 +638,30 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/12_Asymptotics_42_0.png" src="../_images/12_Asymptotics_42_0.png" />
+<img alt="../_images/12_Asymptotics_38_0.png" src="../_images/12_Asymptotics_38_0.png" />
 </div>
 </div>
-<p><span class="math notranslate nohighlight">\(n\)</span>が増加すると分布の分散が小さくなるのが視覚的に確認できる。</p>
-<hr class="docutils" />
 <p>上のコードには同じような行が複数あり，単純な間違いの可能性が高くなる。。<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使うとよりコンパクトに書くことが可能となり，間違いも少なくなる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLS推定量のリスト</span>
-<span class="n">b1hat_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">b1hat_30_consistency</span><span class="p">,</span><span class="n">b1hat_100_consistency</span><span class="p">,</span><span class="n">b1hat_250_consistency</span><span class="p">,</span><span class="n">b1hat_500_consistency</span><span class="p">]</span>
+<span class="n">b1hat_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;30&#39;</span><span class="p">],</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;100&#39;</span><span class="p">],</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;250&#39;</span><span class="p">],</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;500&#39;</span><span class="p">]]</span>
 
 <span class="c1"># 色のリスト</span>
 <span class="n">color_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">]</span>
 
 <span class="c1"># ラベルのリスト</span>
-<span class="n">label_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;n=30&#39;</span><span class="p">,</span> <span class="s1">&#39;n=100&#39;</span><span class="p">,</span> <span class="s1">&#39;n=250&#39;</span><span class="p">,</span> <span class="s1">&#39;n=500&#39;</span><span class="p">]</span>
+<span class="n">label_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">500</span><span class="p">]</span>
 
 <span class="c1">#　横軸</span>
-<span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
 
 <span class="c1">#　下の説明（１）を参照 </span>
-<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">b1hat_list</span><span class="p">,</span> <span class="n">color_list</span><span class="p">,</span> <span class="n">label_list</span><span class="p">):</span>
-    <span class="n">kde_model</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-    <span class="n">b1_dist</span> <span class="o">=</span> <span class="n">kde_model</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">b1_dist</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">l</span><span class="p">)</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">b1hat_list</span><span class="p">,</span> <span class="n">color_list</span><span class="p">,</span> <span class="n">label_list</span><span class="p">):</span>
+    <span class="n">kde_model</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="n">c</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;n=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>  <span class="c1"># 下の説明（２）</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=-</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Kernel Density&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Consistency: N=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>  <span class="c1"># 下の説明（２）</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
@@ -682,7 +670,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/12_Asymptotics_44_0.png" src="../_images/12_Asymptotics_44_0.png" />
+<img alt="../_images/12_Asymptotics_40_0.png" src="../_images/12_Asymptotics_40_0.png" />
 </div>
 </div>
 <ol>
@@ -693,8 +681,10 @@ u = pu_N+(1-p)u_c
 </div>
 <p>にはループ・インデックスが<code class="docutils literal notranslate"><span class="pre">i</span></code>の１種類しかない。しかし複数のループ・インデックスがあると便利な場合があり，その際使うのが<code class="docutils literal notranslate"><span class="pre">zip()</span></code>である。使い方は，<code class="docutils literal notranslate"><span class="pre">zip()</span></code>の中に複数のリスト（例えば，<code class="docutils literal notranslate"><span class="pre">b1hat_list</span></code>, <code class="docutils literal notranslate"><span class="pre">color_list</span></code>, <code class="docutils literal notranslate"><span class="pre">label_list</span></code>）を入れ，<code class="docutils literal notranslate"><span class="pre">in</span></code>の前にタプルとして同じ順番にループ・インデックスを並べる。</p>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">'...N={}'.format(N)</span></code>について。文字列は<code class="docutils literal notranslate"><span class="pre">''</span></code>で挟むが，その中に定義した変数の値を書きたい場合がある。直接書いても構わないが，値が変更される度に書き直すのは面倒である。<code class="docutils literal notranslate"><span class="pre">'&lt;文字列&gt;{}'.format(&lt;変数&gt;)</span></code>を使うと変数の値が変わっても自動的に変更される。使い方は，<code class="docutils literal notranslate"><span class="pre">''</span></code>の入れたい箇所に<code class="docutils literal notranslate"><span class="pre">{}</span></code>を入れ，その後に<code class="docutils literal notranslate"><span class="pre">.format(&lt;変数&gt;)</span></code>を書く。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'...N={}'.format(N)</span></code>について。文字列は<code class="docutils literal notranslate"><span class="pre">''</span></code>で挟むが，その中に定義した変数の値を書きたい場合がある。直接書いても構わないが，値が変更される度に書き直すのは面倒である。<code class="docutils literal notranslate"><span class="pre">'&lt;文字列&gt;{}'.format(&lt;変数&gt;)</span></code>を使うと変数の値が変わっても自動的に変更される。使い方は，<code class="docutils literal notranslate"><span class="pre">''</span></code>の入れたい箇所に<code class="docutils literal notranslate"><span class="pre">{}</span></code>を入れ，その後に<code class="docutils literal notranslate"><span class="pre">.format(&lt;変数&gt;)</span></code>を書く。<code class="docutils literal notranslate"><span class="pre">for</span></code>ループの中の<code class="docutils literal notranslate"><span class="pre">'n={}'.format(l)</span></code></p></li>
 </ol>
+<hr class="docutils" />
+<p>図から<span class="math notranslate nohighlight">\(n\)</span>が増加すると分布の分散が小さくなるのが視覚的に確認できる。これが一致性である。<code class="docutils literal notranslate"><span class="pre">n</span></code>の増加により推定量<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の正確性が増すことが理解できる。また4つの分布は真の値<span class="math notranslate nohighlight">\(b_1=0.5\)</span>を中心に左右対象であることもわかる。即ち，推定量<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>は不偏性も満たしていることがわかる。</p>
 </div>
 </div>
 </div>
@@ -771,7 +761,7 @@ u = pu_N+(1-p)u_c
 <p>標本数（シミュレーションの回数）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">10000</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100000</span>
 </pre></div>
 </div>
 </div>
@@ -780,9 +770,47 @@ u = pu_N+(1-p)u_c
 <p>（注意）</p>
 <ul class="simple">
 <li><p>小標本特性３に「説明変数の値を所与とすると」とあり，これを捉えるために以下のコードでは<code class="docutils literal notranslate"><span class="pre">for</span></code>ループの外に<code class="docutils literal notranslate"><span class="pre">x</span></code>を生成するコードを置く。こうすることにより，<span class="math notranslate nohighlight">\(x\)</span>を一度ランダム抽出し固定し，<code class="docutils literal notranslate"><span class="pre">N</span></code>回のシミュレーションに使用する。<span class="math notranslate nohighlight">\(x\)</span>は固定されているが，<span class="math notranslate nohighlight">\(u\)</span>と<span class="math notranslate nohighlight">\(y\)</span>は毎回変化することになる。</p></li>
+<li><p>シミュレーションの高速化のために<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数を使い「手計算」で<span class="math notranslate nohighlight">\(q_1\)</span>の分布を計算する。</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>  <span class="c1"># 関数の高速化</span>
+<span class="k">def</span> <span class="nf">sim_norm</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ</span>
+    
+    <span class="n">q1_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># q1を入れる空array</span>
+    
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># N回の推定に同じ説明変数を使う</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N 回のループ</span>
+        
+        <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 誤差項</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># 説明変数</span>
+        
+        <span class="n">var_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># 分散共分散行列</span>
+        <span class="n">cov_yx</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 共分散</span>
+        <span class="n">var_y</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># yの分散</span>
+        <span class="n">var_x</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># xの分散        </span>
+        
+        <span class="n">b1hat</span> <span class="o">=</span> <span class="n">cov_yx</span> <span class="o">/</span> <span class="n">var_x</span>  <span class="c1"># b1の推定値</span>
+        <span class="n">b0hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">-</span><span class="n">b1hat</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1">#b0の推定値</span>
+        <span class="n">yhat</span> <span class="o">=</span> <span class="n">b0hat</span> <span class="o">+</span> <span class="n">b1hat</span><span class="o">*</span><span class="n">x</span>  <span class="c1"># yの予測値</span>
+        <span class="n">uhat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat</span>  <span class="c1"># 残差</span>
+        
+        <span class="n">rss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">uhat</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 残差平方話</span>
+        <span class="n">sigma2</span> <span class="o">=</span> <span class="n">rss</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 回帰の残差（不偏）分散 </span>
+        <span class="n">ser</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma2</span><span class="p">)</span>  <span class="c1"># 回帰の標準誤差</span>
+        
+        <span class="n">b1se</span> <span class="o">=</span> <span class="n">ser</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># b1の標準誤差</span>
+        
+        <span class="n">q1</span> <span class="o">=</span> <span class="p">(</span><span class="n">b1hat</span> <span class="o">-</span> <span class="n">b1</span><span class="p">)</span><span class="o">/</span><span class="n">b1se</span>  <span class="c1"># q1の値</span>
+    
+        <span class="n">q1_arr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">q1</span>  <span class="c1"># t値をarrayに追加</span>
+    
+    <span class="k">return</span> <span class="n">q1_arr</span>  <span class="c1"># 返り値の設定</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sim_norm</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ</span>
     
     <span class="n">q1_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># q1を入れる空リスト</span>
@@ -805,22 +833,13 @@ u = pu_N+(1-p)u_c
     <span class="k">return</span> <span class="n">q1_list</span>  <span class="c1"># 返り値の設定</span>
 </pre></div>
 </div>
-</div>
-</div>
 <p><span class="math notranslate nohighlight">\(n=5,\;10,\;30,\;100\)</span>のシミュレーション</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># n = 5</span>
-<span class="n">q1_5_norm</span> <span class="o">=</span> <span class="n">sim_norm</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">q1_norm</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># 空の辞書の作成</span>
 
-<span class="c1"># n = 10</span>
-<span class="n">q1_10_norm</span> <span class="o">=</span> <span class="n">sim_norm</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="c1"># n = 30</span>
-<span class="n">q1_30_norm</span> <span class="o">=</span> <span class="n">sim_norm</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
-
-<span class="c1"># n = 100</span>
-<span class="n">q1_100_norm</span> <span class="o">=</span> <span class="n">sim_norm</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">100</span><span class="p">]:</span>
+    <span class="n">q1_norm</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">sim_norm</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -828,16 +847,15 @@ u = pu_N+(1-p)u_c
 <p><code class="docutils literal notranslate"><span class="pre">plot</span></code>するための関数を用意する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_dist</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">q1_list</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ，q1_list=q1値のリスト</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_dist</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">q1_arr</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ，q1_arr=q1値のarray</span>
     
     <span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
 
-    <span class="n">kde_model</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">q1_list</span><span class="p">)</span>  <span class="c1"># t値のカーネル密度推定を設定</span>
-    <span class="n">q1_dist</span> <span class="o">=</span> <span class="n">kde_model</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>  <span class="c1"># カーネル密度推定を使いt値の分布を推定</span>
+    <span class="n">kde_model</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">q1_arr</span><span class="p">)</span>  <span class="c1"># カーネル密度推定を使いt値の分布を推定</span>
     
     <span class="n">t_dist</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 同じ自由度のt分布</span>
     
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">q1_dist</span><span class="p">,</span> <span class="s1">&#39;g-&#39;</span><span class="p">)</span>  <span class="c1"># t値の分布プロット</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;g-&#39;</span><span class="p">)</span>  <span class="c1"># t値の分布プロット</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">t_dist</span><span class="p">,</span><span class="s1">&#39;b:&#39;</span><span class="p">)</span>  <span class="c1"># t分布</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Kernel Density&#39;</span><span class="p">)</span>  <span class="c1"># 縦軸のラベル</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;n = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>  <span class="c1"># タイトル</span>
@@ -855,26 +873,26 @@ u = pu_N+(1-p)u_c
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 
 <span class="c1"># n = 5</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
-<span class="n">plot_dist</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">q1_5_norm</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
+<span class="n">plot_dist</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">q1_norm</span><span class="p">[</span><span class="s1">&#39;5&#39;</span><span class="p">])</span>
 
 <span class="c1"># n = 10</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
-<span class="n">plot_dist</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">q1_10_norm</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span>
+<span class="n">plot_dist</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">q1_norm</span><span class="p">[</span><span class="s1">&#39;10&#39;</span><span class="p">])</span>
 
 <span class="c1"># n = 30</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span>
-<span class="n">plot_dist</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">q1_30_norm</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
+<span class="n">plot_dist</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">q1_norm</span><span class="p">[</span><span class="s1">&#39;30&#39;</span><span class="p">])</span>
 
 <span class="c1"># n = 100</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
-<span class="n">plot_dist</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">q1_100_norm</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
+<span class="n">plot_dist</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">q1_norm</span><span class="p">[</span><span class="s1">&#39;100&#39;</span><span class="p">])</span>
 <span class="k">pass</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/12_Asymptotics_69_0.png" src="../_images/12_Asymptotics_69_0.png" />
+<img alt="../_images/12_Asymptotics_67_0.png" src="../_images/12_Asymptotics_67_0.png" />
 </div>
 </div>
 <p>（結果：小標本特性）</p>
@@ -889,11 +907,51 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 \]</div>
 <p>これは一致性のシミュレーションで使った分布関数と同じである。これにより仮定６が満たされない。</p>
 <p>この仮定を導入するために，上で定義した<code class="docutils literal notranslate"><span class="pre">sim_norm()</span></code>関数の代わりに以下を使う。<code class="docutils literal notranslate"><span class="pre">sim_non_normal()</span></code>の中で<code class="docutils literal notranslate"><span class="pre">sim_normal()</span></code>と異なるのは次の一行だけである。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">u</span> <span class="o">=</span> <span class="p">(</span><span class="n">chi2</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">u</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">chisquare</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
 </pre></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>  <span class="c1"># 関数の高速化</span>
+<span class="k">def</span> <span class="nf">sim_non_norm</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ</span>
+    
+    <span class="n">q1_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># q1を入れる空array</span>
+    
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># N回の推定に同じ説明変数を使う</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N 回のループ</span>
+        
+        <span class="c1">###### 非正規分布の誤差項（次の行だけが異なる）######</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">chisquare</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        
+        <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># 説明変数</span>
+        
+        <span class="n">var_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># 分散共分散行列</span>
+        <span class="n">cov_yx</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 共分散</span>
+        <span class="n">var_y</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># yの分散</span>
+        <span class="n">var_x</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># xの分散        </span>
+        
+        <span class="n">b1hat</span> <span class="o">=</span> <span class="n">cov_yx</span> <span class="o">/</span> <span class="n">var_x</span>  <span class="c1"># b1の推定値</span>
+        <span class="n">b0hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">-</span><span class="n">b1hat</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1">#b0の推定値</span>
+        <span class="n">yhat</span> <span class="o">=</span> <span class="n">b0hat</span> <span class="o">+</span> <span class="n">b1hat</span><span class="o">*</span><span class="n">x</span>  <span class="c1"># yの予測値</span>
+        <span class="n">uhat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat</span>  <span class="c1"># 残差</span>
+        
+        <span class="n">rss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">uhat</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 残差平方話</span>
+        <span class="n">sigma2</span> <span class="o">=</span> <span class="n">rss</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 回帰の残差（不偏）分散 </span>
+        <span class="n">ser</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma2</span><span class="p">)</span>  <span class="c1"># 回帰の標準誤差</span>
+        
+        <span class="n">b1se</span> <span class="o">=</span> <span class="n">ser</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># b1の標準誤差</span>
+        
+        <span class="n">q1</span> <span class="o">=</span> <span class="p">(</span><span class="n">b1hat</span> <span class="o">-</span> <span class="n">b1</span><span class="p">)</span><span class="o">/</span><span class="n">b1se</span>  <span class="c1"># q1の値</span>
+    
+        <span class="n">q1_arr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">q1</span>  <span class="c1"># t値をarrayに追加</span>
+    
+    <span class="k">return</span> <span class="n">q1_arr</span>  <span class="c1"># 返り値の設定</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sim_non_norm</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     
     <span class="n">q1_list</span> <span class="o">=</span> <span class="p">[]</span>
@@ -917,22 +975,13 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
     <span class="k">return</span> <span class="n">q1_list</span>
 </pre></div>
 </div>
-</div>
-</div>
 <p><span class="math notranslate nohighlight">\(n=5,\;10,\;30,\;100\)</span>のシミュレーション</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># n = 5</span>
-<span class="n">q1_5_non_norm</span> <span class="o">=</span> <span class="n">sim_non_norm</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">q1_non_norm</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># 空の辞書の作成</span>
 
-<span class="c1"># n = 10</span>
-<span class="n">q1_10_non_norm</span> <span class="o">=</span> <span class="n">sim_non_norm</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="c1"># n = 30</span>
-<span class="n">q1_30_non_norm</span> <span class="o">=</span> <span class="n">sim_non_norm</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
-
-<span class="c1"># n = 100</span>
-<span class="n">q1_100_non_norm</span> <span class="o">=</span> <span class="n">sim_non_norm</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">100</span><span class="p">]:</span>
+    <span class="n">q1_non_norm</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">sim_non_norm</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -948,30 +997,30 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 
 <span class="c1"># n = 5</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
-<span class="n">plot_dist</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">q1_5_non_norm</span><span class="p">)</span>
+<span class="n">plot_dist</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">q1_non_norm</span><span class="p">[</span><span class="s1">&#39;5&#39;</span><span class="p">])</span>
 
 <span class="c1"># n = 10</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span>
-<span class="n">plot_dist</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">q1_10_non_norm</span><span class="p">)</span>
+<span class="n">plot_dist</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">q1_non_norm</span><span class="p">[</span><span class="s1">&#39;10&#39;</span><span class="p">])</span>
 
 <span class="c1"># n = 30</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
-<span class="n">plot_dist</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">q1_30_non_norm</span><span class="p">)</span>
+<span class="n">plot_dist</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">q1_non_norm</span><span class="p">[</span><span class="s1">&#39;30&#39;</span><span class="p">])</span>
 
 <span class="c1"># n = 100</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
-<span class="n">plot_dist</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">q1_100_non_norm</span><span class="p">)</span>
+<span class="n">plot_dist</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">q1_non_norm</span><span class="p">[</span><span class="s1">&#39;100&#39;</span><span class="p">])</span>
 <span class="k">pass</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/12_Asymptotics_77_0.png" src="../_images/12_Asymptotics_77_0.png" />
+<img alt="../_images/12_Asymptotics_76_0.png" src="../_images/12_Asymptotics_76_0.png" />
 </div>
 </div>
 <p>（結果：大標本特性）</p>
 <p>標本の大きさが小さい場合（<span class="math notranslate nohighlight">\(n=5,10\)</span>），<span class="math notranslate nohighlight">\(q_1\)</span>の分布は<span class="math notranslate nohighlight">\(t_{n-2}\)</span>分布から乖離している。一方で，標本の大きさが大きくなるにつれて<span class="math notranslate nohighlight">\(q_1\)</span>の分布は<span class="math notranslate nohighlight">\(t_{n-2}\)</span>分布に近づいていくのが確認できる。これが「大標本特性」である。標本の大きさが十分に大きい場合，<span class="math notranslate nohighlight">\(t\)</span>検定は有効であることが確認できる。同じことが<span class="math notranslate nohighlight">\(F\)</span>検定にも当てはまる。</p>
-<p>このシミュレーションの結果では，<span class="math notranslate nohighlight">\(n=30\)</span>でも概ね<span class="math notranslate nohighlight">\(t_{n-2}\)</span>分布に近いことが分かる。しかし同じ結果がどの場合にも当てはまるわけではなく，シミュレーションの設定が変わると異なる結果になることを覚えておこう。</p>
+<p>このシミュレーションの結果次第では，<span class="math notranslate nohighlight">\(n=30\)</span>でも概ね<span class="math notranslate nohighlight">\(t_{n-2}\)</span>分布に近くなる場合がある。しかし同じ結果がどの場合にも当てはまるわけではなく，シミュレーションの設定が変わると異なる結果になることを覚えておこう。</p>
 </div>
 </div>
 <div class="section" id="id12">
@@ -995,7 +1044,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/12_Asymptotics_83_0.png" src="../_images/12_Asymptotics_83_0.png" />
+<img alt="../_images/12_Asymptotics_82_0.png" src="../_images/12_Asymptotics_82_0.png" />
 </div>
 </div>
 <p><strong>一様分布</strong>から生成したデータのケース。</p>
@@ -1008,7 +1057,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/12_Asymptotics_85_0.png" src="../_images/12_Asymptotics_85_0.png" />
+<img alt="../_images/12_Asymptotics_84_0.png" src="../_images/12_Asymptotics_84_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>パッケージにある<code class="docutils literal notranslate"><span class="pre">wage1</span></code>のデータを使ってみる。</p>
@@ -1024,7 +1073,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/12_Asymptotics_87_0.png" src="../_images/12_Asymptotics_87_0.png" />
+<img alt="../_images/12_Asymptotics_86_0.png" src="../_images/12_Asymptotics_86_0.png" />
 </div>
 </div>
 <p>被説明変数の<code class="docutils literal notranslate"><span class="pre">wage</span></code>に対数を取る。こちらの方が当てはまりが良い。</p>
@@ -1039,7 +1088,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/12_Asymptotics_89_0.png" src="../_images/12_Asymptotics_89_0.png" />
+<img alt="../_images/12_Asymptotics_88_0.png" src="../_images/12_Asymptotics_88_0.png" />
 </div>
 </div>
 </div>
@@ -1062,10 +1111,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.0034146447085115915,
- 0.998294134291449,
- -0.0010753657455502802,
- 2.9873794889144003)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(3.3848433337318253,
+ 0.18407321979377864,
+ -0.016567080244816686,
+ 2.598285415465439)
 </pre></div>
 </div>
 </div>
@@ -1088,10 +1137,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(26.024918025388292,
- 2.2323426399734462e-06,
- -0.0040180215841078785,
- 1.8823544894606177)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(34.20617651740404,
+ 3.7344198750534226e-08,
+ 0.13458267021471174,
+ 1.7472244844558518)
 </pre></div>
 </div>
 </div>
@@ -1173,7 +1222,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=0.010014062154741358, pvalue=0.995005483207551)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=4.7532238079256866, pvalue=0.09286467955872553)
 </pre></div>
 </div>
 </div>
@@ -1189,7 +1238,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=187.12981421957846, pvalue=2.3188739534693144e-41)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=480.19664896493066, pvalue=5.328715857807291e-105)
 </pre></div>
 </div>
 </div>

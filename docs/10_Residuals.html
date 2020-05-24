@@ -266,10 +266,10 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#id8" class="nav-link">回帰診断</a><ul class="nav section-nav flex-column">
+            <a href="#lmdiag" class="nav-link">回帰診断：lmdiag</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id9" class="nav-link">説明</a>
+            <a href="#id8" class="nav-link">説明</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
@@ -292,34 +292,40 @@
             <a href="#plot-4" class="nav-link">plot()：４つの図を同時に表示</a>
         </li>
     
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#qq-again" class="nav-link">qqプロット（again）</a><ul class="nav section-nav flex-column">
+                
         <li class="nav-item toc-entry toc-h3">
-            <a href="#qq-again" class="nav-link">qqプロット（again）</a>
+            <a href="#statsmodels" class="nav-link">statsmodels</a>
         </li>
     
             </ul>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#id10" class="nav-link">問題がある残差の例</a><ul class="nav section-nav flex-column">
+            <a href="#id9" class="nav-link">問題がある残差の例</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id11" class="nav-link">ケース１：被説明変数の変換が必要な回帰式</a>
+            <a href="#id10" class="nav-link">ケース１：被説明変数の変換が必要な回帰式</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id12" class="nav-link">ケース２：説明変数の２乗項の欠落</a>
+            <a href="#id11" class="nav-link">ケース２：説明変数の２乗項の欠落</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id13" class="nav-link">ケース３：定数項がある条件により変化する場合</a>
+            <a href="#id12" class="nav-link">ケース３：定数項がある条件により変化する場合</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id14" class="nav-link">ケース４：不均一分散</a>
+            <a href="#id13" class="nav-link">ケース４：不均一分散</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id15" class="nav-link">ケース５：小数の観測値に影響される場合：高いレバレッジ</a>
+            <a href="#id14" class="nav-link">ケース５：小数の観測値に影響される場合：高いレバレッジ</a>
         </li>
     
             </ul>
@@ -469,8 +475,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>決定係数が高いケース: 0.788
-決定係数が高いケース: 0.356
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>決定係数が高いケース: 0.882
+決定係数が高いケース: 0.646
 </pre></div>
 </div>
 </div>
@@ -679,16 +685,16 @@
 </div>
 <p>標本の大きさが小さい場合，観測数が<code class="docutils literal notranslate"><span class="pre">10</span></code>少なくなると図が大きく違うように見える。</p>
 </div>
+<div class="section" id="lmdiag">
+<h2>回帰診断：<code class="docutils literal notranslate"><span class="pre">lmdiag</span></code><a class="headerlink" href="#lmdiag" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id8">
-<h2>回帰診断<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id9">
-<h3>説明<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<h3>説明<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>上で見たように，残差を単に図示しただけでは「理想的な残差」からどれだけ乖離しているかを判断するのは難しいところがある。標本の大きさが小さい場合は特にそうである。ではどのように対処すれば良いのか。１つの方法が，計量経済学のソフトウェア<code class="docutils literal notranslate"><span class="pre">R</span></code>に実装されている残差を図示するコマンドである。これにより回帰式の定式化に「失敗」がないかをある程度確認することができる。ここではその内の４つの図を自動で描くことができるパッケージ<code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>を紹介する。「正常」なパターンから著しく異なる場合，回帰式の修正の必要性を知らせる「早期警戒システム」と思えば良いだろう。</p>
 <p>まずGM仮定1~6の全ての仮定が満たされる場合を考え，<code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>のコマンドを説明する。その後，問題が疑われるケースではどのような図になるかを示すことにする。</p>
 <p>次のシミュレーションを考えよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># 標本の大きさ</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">50</span>  <span class="c1"># 標本の大きさ</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 説明変数</span>
 <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 誤差項（標準正規分布）</span>
@@ -729,6 +735,17 @@
 <img alt="../_images/10_Residuals_46_0.png" src="../_images/10_Residuals_46_0.png" />
 </div>
 </div>
+<p>回帰分析結果の「健康状態」を診断する上でこの図は最もよく使われる。この図について以下の点を覚えておこう。</p>
+<ul class="simple">
+<li><p>残差<span class="math notranslate nohighlight">\(\hat{u}\)</span>は観測できない母集団回帰式の誤差項<span class="math notranslate nohighlight">\(u\)</span>の推定である。</p></li>
+<li><p><span class="math notranslate nohighlight">\(y\)</span>の予測値は<span class="math notranslate nohighlight">\(\hat{y}=\hat{\beta}_0+\hat{\beta}_1x\)</span>である。従って，もし残差<span class="math notranslate nohighlight">\(\hat{u}\)</span>と<span class="math notranslate nohighlight">\(x\)</span>に何らかの関係があれば，残差<span class="math notranslate nohighlight">\(\hat{u}\)</span>と予測値<span class="math notranslate nohighlight">\(\hat{y}\)</span>の関係に現れる。</p></li>
+<li><p>GM仮定4を思い出そう。誤差項の条件つき期待値が<code class="docutils literal notranslate"><span class="pre">0</span></code><span class="math notranslate nohighlight">\(E(u|X)=0\)</span>という仮定である。</p>
+<ul>
+<li><p>この仮定が正しければ，残差<span class="math notranslate nohighlight">\(\hat{u}\)</span>の平均は<code class="docutils literal notranslate"><span class="pre">0</span></code>あり，図の赤い線は<code class="docutils literal notranslate"><span class="pre">0</span></code>で横軸と並行になることを意味している。</p></li>
+<li><p>この仮定が満たされず，説明変数<span class="math notranslate nohighlight">\(x\)</span>が何らかの形で<span class="math notranslate nohighlight">\(\hat{u}\)</span>に影響を与えているのであれば，その影響は上の図に現れてくる。（下の「問題がある残差の例」を参照）。</p></li>
+</ul>
+</li>
+</ul>
 </div>
 <div class="section" id="q-q">
 <h3><code class="docutils literal notranslate"><span class="pre">q_q()</span></code>関数<a class="headerlink" href="#q-q" title="Permalink to this headline">¶</a></h3>
@@ -751,7 +768,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_49_0.png" src="../_images/10_Residuals_49_0.png" />
+<img alt="../_images/10_Residuals_50_0.png" src="../_images/10_Residuals_50_0.png" />
 </div>
 </div>
 </div>
@@ -783,7 +800,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_52_0.png" src="../_images/10_Residuals_52_0.png" />
+<img alt="../_images/10_Residuals_53_0.png" src="../_images/10_Residuals_53_0.png" />
 </div>
 </div>
 </div>
@@ -842,7 +859,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_55_0.png" src="../_images/10_Residuals_55_0.png" />
+<img alt="../_images/10_Residuals_56_0.png" src="../_images/10_Residuals_56_0.png" />
 </div>
 </div>
 </div>
@@ -857,15 +874,18 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_57_0.png" src="../_images/10_Residuals_57_0.png" />
+<img alt="../_images/10_Residuals_58_0.png" src="../_images/10_Residuals_58_0.png" />
+</div>
 </div>
 </div>
 </div>
 <div class="section" id="qq-again">
-<h3><code class="docutils literal notranslate"><span class="pre">qq</span></code>プロット（again）<a class="headerlink" href="#qq-again" title="Permalink to this headline">¶</a></h3>
+<h2><code class="docutils literal notranslate"><span class="pre">qq</span></code>プロット（again）<a class="headerlink" href="#qq-again" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="statsmodels">
+<h3><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code><a class="headerlink" href="#statsmodels" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">qq</span></code>プロットを表示する代替方法として，<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">qqplot</span></code>モジュールがある。ここではその使い方を簡単に説明する。</p>
-<p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>自体を<code class="docutils literal notranslate"><span class="pre">sm</span></code>として読み込む。</p>
-<p>＜<code class="docutils literal notranslate"><span class="pre">qqplot</span></code>の使い方＞</p>
+<p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>自体を<code class="docutils literal notranslate"><span class="pre">sm</span></code>として読み込んでいる。</p>
+<p>＜の使い方＞</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    sm.qqplot(引数，fit=True, line=&#39;45)
 </pre></div>
 </div>
@@ -882,15 +902,15 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_61_0.png" src="../_images/10_Residuals_61_0.png" />
+<img alt="../_images/10_Residuals_63_0.png" src="../_images/10_Residuals_63_0.png" />
 </div>
 </div>
 </div>
 </div>
+<div class="section" id="id9">
+<h2>問題がある残差の例<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id10">
-<h2>問題がある残差の例<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id11">
-<h3>ケース１：被説明変数の変換が必要な回帰式<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<h3>ケース１：被説明変数の変換が必要な回帰式<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p>この例では以下を想定する。</p>
 <ul class="simple">
 <li><p>母集団回帰式
@@ -922,7 +942,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_65_0.png" src="../_images/10_Residuals_65_0.png" />
+<img alt="../_images/10_Residuals_67_0.png" src="../_images/10_Residuals_67_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -944,12 +964,12 @@
   r = _umath_linalg.det(a, signature=signature)
 </pre>
 </div>
-<img alt="../_images/10_Residuals_67_1.png" src="../_images/10_Residuals_67_1.png" />
+<img alt="../_images/10_Residuals_69_1.png" src="../_images/10_Residuals_69_1.png" />
 </div>
 </div>
 </div>
-<div class="section" id="id12">
-<h3>ケース２：説明変数の２乗項の欠落<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3>ケース２：説明変数の２乗項の欠落<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>この例では以下を想定する。</p>
 <ul class="simple">
 <li><p>母集団回帰式
@@ -980,7 +1000,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_70_0.png" src="../_images/10_Residuals_70_0.png" />
+<img alt="../_images/10_Residuals_72_0.png" src="../_images/10_Residuals_72_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -993,12 +1013,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_72_0.png" src="../_images/10_Residuals_72_0.png" />
+<img alt="../_images/10_Residuals_74_0.png" src="../_images/10_Residuals_74_0.png" />
 </div>
 </div>
 </div>
-<div class="section" id="id13">
-<h3>ケース３：定数項がある条件により変化する場合<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h3>ケース３：定数項がある条件により変化する場合<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <p>この例では以下を想定する。（以下にある「条件１」と「条件２」が何らかの理由で成立すると仮定する。）</p>
 <ul class="simple">
 <li><p>母集団回帰式
@@ -1039,7 +1059,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_75_0.png" src="../_images/10_Residuals_75_0.png" />
+<img alt="../_images/10_Residuals_77_0.png" src="../_images/10_Residuals_77_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1052,12 +1072,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_77_0.png" src="../_images/10_Residuals_77_0.png" />
+<img alt="../_images/10_Residuals_79_0.png" src="../_images/10_Residuals_79_0.png" />
 </div>
 </div>
 </div>
-<div class="section" id="id14">
-<h3>ケース４：不均一分散<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h3>ケース４：不均一分散<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>この例では以下を想定する。</p>
 <ul class="simple">
 <li><p>母集団回帰式
@@ -1102,7 +1122,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_80_0.png" src="../_images/10_Residuals_80_0.png" />
+<img alt="../_images/10_Residuals_82_0.png" src="../_images/10_Residuals_82_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1115,12 +1135,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_82_0.png" src="../_images/10_Residuals_82_0.png" />
+<img alt="../_images/10_Residuals_84_0.png" src="../_images/10_Residuals_84_0.png" />
 </div>
 </div>
 </div>
-<div class="section" id="id15">
-<h3>ケース５：小数の観測値に影響される場合：高いレバレッジ<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h3>ケース５：小数の観測値に影響される場合：高いレバレッジ<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p>ここでは推定値が１つの観測値に大きく左右される場合を考える。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1158,7 +1178,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_87_0.png" src="../_images/10_Residuals_87_0.png" />
+<img alt="../_images/10_Residuals_89_0.png" src="../_images/10_Residuals_89_0.png" />
 </div>
 </div>
 <p>外れ値（赤の観測値）がない場合の回帰診断</p>
@@ -1171,7 +1191,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_89_0.png" src="../_images/10_Residuals_89_0.png" />
+<img alt="../_images/10_Residuals_91_0.png" src="../_images/10_Residuals_91_0.png" />
 </div>
 </div>
 <p>外れ値（赤の観測値）がある場合の回帰診断</p>
@@ -1184,7 +1204,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_91_0.png" src="../_images/10_Residuals_91_0.png" />
+<img alt="../_images/10_Residuals_93_0.png" src="../_images/10_Residuals_93_0.png" />
 </div>
 </div>
 <p>観測値<code class="docutils literal notranslate"><span class="pre">20</span></code>が非常に影響力が高いことが分かる。その観測値を取り出すには以下のようにする。</p>
