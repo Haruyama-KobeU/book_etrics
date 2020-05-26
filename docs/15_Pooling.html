@@ -83,29 +83,6 @@
   <ul class="nav sidenav_l1">
   <li class="">
     <a href="part_1.html">１. Pythonの基礎</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="0_Preparations.html">ツールのインストールと説明</a>
-    </li>
-    <li class="">
-      <a href="1_Python_Basics.html">Pythonの基礎</a>
-    </li>
-    <li class="">
-      <a href="2_NumPy.html">NumPy</a>
-    </li>
-    <li class="">
-      <a href="3_Pandas.html">Pandas</a>
-    </li>
-    <li class="">
-      <a href="4_Matplotlib.html">Matplotlib</a>
-    </li>
-    <li class="">
-      <a href="5_SciPy_stats.html">SciPy.stats</a>
-    </li>
-    <li class="">
-      <a href="6_things_to_note.html">Tipsと注意点</a>
-    </li>
-  </ul>
   </li>
   <li class="active">
     <a href="part_2.html">２. Pythonを使った計量経済分析</a>
@@ -159,14 +136,6 @@
   </li>
   <li class="">
     <a href="part_3.html">３. 番外編</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="Gapminder.html">Gapminder</a>
-    </li>
-    <li class="">
-      <a href="Descriptive_stats_vs_Graphs.html">記述統計とグラフ</a>
-    </li>
-  </ul>
   </li>
 </ul>
 </nav>
@@ -346,13 +315,17 @@
 <li><p>変数：県内の雇用（<span class="math notranslate nohighlight">\(L\)</span>），公共支出（<span class="math notranslate nohighlight">\(G\)</span>），<span class="math notranslate nohighlight">\(x\)</span>は「その他の変数」</p></li>
 </ul>
 <p>47都道府県と時間の２次元データとなっているため，次の推定方法が考えられる。</p>
-<ul class="simple">
-<li><p>年別に横断面データとしてクロス・セクション分析行う。
-<span class="math notranslate nohighlight">\($y_i = \beta_{0} + \beta_{1} G_i + \beta_{2}x_i + u_i\)</span>$
-しかし，それぞれの推定は20年間の間に起こる要因の変化の効果を無視することになり，公的支出の動的な側面を捉えていない。</p></li>
-<li><p>47都道府県別に時系列の推定を行う。
-<span class="math notranslate nohighlight">\($y_t = \beta_{0} + \beta_{1} G_t + \beta_{2}x_t+ u_t\)</span>$
-しかし，それぞれの推定は同じ日本の地域でありながら他の都道府県の影響を無視することになる。</p></li>
+<ul>
+<li><p>年別に横断面データとしてクロス・セクション分析行う。</p>
+<div class="math notranslate nohighlight">
+\[y_i = \beta_{0} + \beta_{1} G_i + \beta_{2}x_i + u_i\]</div>
+<p>しかし，それぞれの推定は20年間の間に起こる要因の変化の効果を無視することになり，公的支出の動的な側面を捉えていない。</p>
+</li>
+<li><p>47都道府県別に時系列の推定を行う。</p>
+<div class="math notranslate nohighlight">
+\[y_t = \beta_{0} + \beta_{1} G_t + \beta_{2}x_t+ u_t\]</div>
+<p>しかし，それぞれの推定は同じ日本の地域でありながら他の都道府県の影響を無視することになる。</p>
+</li>
 </ul>
 <p>このように2次元のデータの1つの軸に沿ったデータだけを使うと何らかの影響を無視することになりうる。換言すると，パネル・データを使い異なる観察単位の動的なデータから得る情報を有効に使うことにより，より正確な推定量や検定統計量を得ることができることになる。</p>
 </div>
@@ -431,11 +404,15 @@ Farber kindly provided these data when we were colleagues at MIT.
 </div>
 </div>
 <p>（コメント）</p>
-<ul class="simple">
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">y85</span> <span class="pre">+</span> <span class="pre">educ</span> <span class="pre">+</span> <span class="pre">female</span> <span class="pre">+</span> <span class="pre">y85:educ</span> <span class="pre">+</span> <span class="pre">y85:female</span></code>の部分は長いので<code class="docutils literal notranslate"><span class="pre">y85*(educ+female)</span></code>と省略して記述しても結果は同じ。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">lwage</span></code>は名目賃金の対数の値である。この場合，実質賃金を考える方が自然なため，インフレの影響を取り除く必要がある。1978年と1985年の消費者物価指数をそれぞれ<span class="math notranslate nohighlight">\(p_{78}\)</span>と<span class="math notranslate nohighlight">\(p_{85}\)</span>とすると，その比率<span class="math notranslate nohighlight">\(P\equiv p_{85}/p_{78}\)</span>がその間のインフレの影響を捉える変数と考える。<span class="math notranslate nohighlight">\(P\)</span>を使い1985年の賃金を次式に従って実質化できる。
-<span class="math notranslate nohighlight">\($\ln\left(\text{実質賃金}_{85}\right) = \ln\left(\frac{\text{名目賃金}_{85}}{P}\right) = \ln\left(\text{名目賃金}_{85}\right)-\ln(P) = \text{85年のlwage}- \ln(P)\)</span>$
-この式から<span class="math notranslate nohighlight">\(\ln(P)\)</span>は回帰式の右辺の定数項に含まれることがわかる。即ち，上の式を変えることなく<code class="docutils literal notranslate"><span class="pre">educ</span></code>の係数は実質賃金で測った教育の収益率，<code class="docutils literal notranslate"><span class="pre">female</span></code>は実質賃金での男女賃金格差と解釈できる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lwage</span></code>は名目賃金の対数の値である。この場合，実質賃金を考える方が自然なため，インフレの影響を取り除く必要がある。1978年と1985年の消費者物価指数をそれぞれ<span class="math notranslate nohighlight">\(p_{78}\)</span>と<span class="math notranslate nohighlight">\(p_{85}\)</span>とすると，その比率<span class="math notranslate nohighlight">\(P\equiv p_{85}/p_{78}\)</span>がその間のインフレの影響を捉える変数と考える。<span class="math notranslate nohighlight">\(P\)</span>を使い1985年の賃金を次式に従って実質化できる。</p>
+<div class="math notranslate nohighlight">
+\[
+    \ln\left(\text{実質賃金}_{85}\right) = \ln\left(\frac{\text{名目賃金}_{85}}{P}\right) = \ln\left(\text{名目賃金}_{85}\right)-\ln(P) = \text{85年のlwage}- \ln(P)
+    \]</div>
+<p>この式から<span class="math notranslate nohighlight">\(\ln(P)\)</span>は回帰式の右辺の定数項に含まれることがわかる。即ち，上の式を変えることなく<code class="docutils literal notranslate"><span class="pre">educ</span></code>の係数は実質賃金で測った教育の収益率，<code class="docutils literal notranslate"><span class="pre">female</span></code>は実質賃金での男女賃金格差と解釈できる。</p>
+</li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -514,8 +491,9 @@ union                     0.2021      0.030      6.672      0.000       0.143   
 <li><p><code class="docutils literal notranslate"><span class="pre">t</span></code>=1：政策実施後の年</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">D</span></code>：住宅がゴミ焼却場の近くであれば１，そうでなければ０（距離のダミー変数）</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>：住宅価格</p></li>
-<li><p>次式を使って政策実施前と後それぞれで推定
-<span class="math notranslate nohighlight">\($y_t = \alpha_t + \gamma_t D + u\qquad t=0,1\)</span>$</p>
+<li><p>次式を使って政策実施前と後それぞれで推定</p>
+<div class="math notranslate nohighlight">
+\[y_t = \alpha_t + \gamma_t D + u\qquad t=0,1\]</div>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\hat{y}_0^{\text{遠}}=\hat{\alpha}_0\)</span>：政策実施前の遠くに立地する住宅価格の平均</p></li>
 <li><p><span class="math notranslate nohighlight">\(\hat{y}_0^{\text{近}}=\hat{\alpha}_0+\hat{\gamma}_0\)</span>：政策実施前の近くに立地する住宅価格の平均</p>
