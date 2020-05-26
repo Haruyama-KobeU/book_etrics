@@ -76,9 +76,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## `Pandas`の`MultiIndex`"
    ]
@@ -86,8 +84,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### 説明"
@@ -566,24 +563,21 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "### 要素，行，列の抽出"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "`MultiIndex`のまま要素・列・行の抽出およぼスライシングには様々な方法があり，複雑である。特に，スライシングをしたい場合，一番簡単なのは`reset_index()`で通常の`DataFrame`に戻し，スライシングし新たな`DataFrame`を作成するだけでも十分であろう。\n",
     "\n",
     "以下では，`.loc[]`を使い`MultiIndex`のままでの抽出方法について簡単に説明する。その際，以下のルールは変わらない。\n",
+    "\n",
     "$$.\\text{loc}\\left[\\text{行の指定},\\text{列の指定}\\right]$$\n",
+    "\n",
     "ただ，`行の指定`にリストやタプルを使うことになる（`列の指定`も同じ）。\n",
     "\n",
     "他の方法については[このサイト](https://note.nkmk.me/python-pandas-multiindex-indexing/)と[このサイト](https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html)が参考になる。"
@@ -591,18 +585,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "#### １つの観察単位の抽出"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "１つの要素を抽出する場合は，タプルを使う。例えば，日本の2001年の`gdp`を抽出したい場合。"
    ]
@@ -610,9 +600,7 @@
   {
    "cell_type": "code",
    "execution_count": 5,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -632,8 +620,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "#### 行の抽出"
@@ -849,8 +836,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "#### 第０インデックスの観察単位の全て"
@@ -1048,8 +1034,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "#### 列の抽出"
@@ -1471,8 +1456,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "#### 第１インデックスのある年だけの抽出"

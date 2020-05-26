@@ -83,29 +83,6 @@
   <ul class="nav sidenav_l1">
   <li class="">
     <a href="part_1.html">１. Pythonの基礎</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="0_Preparations.html">ツールのインストールと説明</a>
-    </li>
-    <li class="">
-      <a href="1_Python_Basics.html">Pythonの基礎</a>
-    </li>
-    <li class="">
-      <a href="2_NumPy.html">NumPy</a>
-    </li>
-    <li class="">
-      <a href="3_Pandas.html">Pandas</a>
-    </li>
-    <li class="">
-      <a href="4_Matplotlib.html">Matplotlib</a>
-    </li>
-    <li class="">
-      <a href="5_SciPy_stats.html">SciPy.stats</a>
-    </li>
-    <li class="">
-      <a href="6_things_to_note.html">Tipsと注意点</a>
-    </li>
-  </ul>
   </li>
   <li class="active">
     <a href="part_2.html">２. Pythonを使った計量経済分析</a>
@@ -159,14 +136,6 @@
   </li>
   <li class="">
     <a href="part_3.html">３. 番外編</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="Gapminder.html">Gapminder</a>
-    </li>
-    <li class="">
-      <a href="Descriptive_stats_vs_Graphs.html">記述統計とグラフ</a>
-    </li>
-  </ul>
   </li>
 </ul>
 </nav>
@@ -939,8 +908,8 @@ memory usage: 1.5 MB
 Dep. Variable:                  lwage   R-squared:                        0.1806
 Estimator:                   PanelOLS   R-squared (Between):              0.2386
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Tue, May 26 2020   R-squared (Overall):              0.2361
-Time:                        11:44:34   Log-likelihood                   -1324.8
+Date:                Tue, May 19 2020   R-squared (Overall):              0.2361
+Time:                        16:26:13   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      83.851
 Entities:                         545   P-value                           0.0000
@@ -982,8 +951,8 @@ Max Obs:                       545.00
 Dep. Variable:                  lwage   R-squared:                        0.0216
 Estimator:                   PanelOLS   R-squared (Between):             -0.2717
 No. Observations:                4360   R-squared (Within):              -0.4809
-Date:                Tue, May 26 2020   R-squared (Overall):             -0.2808
-Time:                        11:44:35   Log-likelihood                   -1324.8
+Date:                Tue, May 19 2020   R-squared (Overall):             -0.2808
+Time:                        16:26:13   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      27.959
 Entities:                         545   P-value                           0.0000
@@ -1266,16 +1235,17 @@ Name: Variance Decomposition, dtype: float64
 <div class="math notranslate nohighlight">
 \[v_{it}=r_i + u_{it}\]</div>
 <p>（含意）</p>
-<ul class="simple">
+<ul>
 <li><p><span class="math notranslate nohighlight">\(\text{Cov}\left(r_i,\bar{x}_{it}\right)\;\Rightarrow\;\text{Cov}\left(v_i,\bar{x}_{it}\right)\)</span></p></li>
 <li><p>REモデルと同じ構造となっており，違いは<span class="math notranslate nohighlight">\(\bar{x}_i\)</span>が追加されている。</p>
-<ul>
+<ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">RandomEffects</span></code>モジュールが使える。</p></li>
 </ul>
 </li>
-<li><p>次の結果が成立する。
-<span class="math notranslate nohighlight">\($\hat{\beta}_{FE}=\hat{\beta}_{CRE}\)</span>$</p>
-<ul>
+<li><p>次の結果が成立する。</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta}_{FE}=\hat{\beta}_{CRE}\]</div>
+<ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\hat{\beta}_{FE}\)</span>：固定効果推定量</p></li>
 <li><p><span class="math notranslate nohighlight">\(\hat{\beta}_{CRE}\)</span>：相関ランダム効果推定量</p></li>
 <li><p>この結果は，時間に対して不変な変数（例えば，<code class="docutils literal notranslate"><span class="pre">black</span></code>）を<strong>含めても</strong>成立する</p></li>
@@ -1356,8 +1326,8 @@ Name: Variance Decomposition, dtype: float64
 Dep. Variable:                  lwage   R-squared:                        0.1711
 Estimator:              RandomEffects   R-squared (Between):              0.0967
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Tue, May 26 2020   R-squared (Overall):              0.1355
-Time:                        11:44:35   Log-likelihood                   -1609.8
+Date:                Tue, May 19 2020   R-squared (Overall):              0.1355
+Time:                        16:26:14   Log-likelihood                   -1609.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      69.027
 Entities:                         545   P-value                           0.0000
@@ -1431,7 +1401,7 @@ H0: Linear equality constraint is valid
 Statistic: 35.6454
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x10a08a760
+WaldTestStatistic, id: 0x10b068dc0
 </pre></div>
 </div>
 </div>
@@ -1514,7 +1484,7 @@ H0: Linear equality constraint is valid
 Statistic: 26.0233
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x11b7c40d0
+WaldTestStatistic, id: 0x11e46ef10
 </pre></div>
 </div>
 </div>
@@ -1847,32 +1817,32 @@ T-stats reported in parentheses
     <tr>
       <th rowspan="5" valign="top">0</th>
       <th>2000</th>
-      <td>-0.331141</td>
-      <td>-0.978716</td>
+      <td>1.265823</td>
+      <td>0.590350</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2001</th>
-      <td>2.335925</td>
-      <td>0.535328</td>
+      <td>4.171735</td>
+      <td>1.375859</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2002</th>
-      <td>-2.313412</td>
-      <td>-1.207482</td>
+      <td>-1.436410</td>
+      <td>-0.411640</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2003</th>
-      <td>-0.064104</td>
-      <td>-1.025829</td>
+      <td>-1.462517</td>
+      <td>-1.582834</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2004</th>
-      <td>0.280802</td>
-      <td>0.321526</td>
+      <td>2.259550</td>
+      <td>0.733138</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -1895,7 +1865,7 @@ T-stats reported in parentheses
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-X              1.9963     0.0477     41.876     0.0000      1.9026      2.0901
+X              1.9479     0.0457     42.618     0.0000      1.8581      2.0378
 ==============================================================================
 </pre></div>
 </div>
@@ -1918,10 +1888,10 @@ X              1.9963     0.0477     41.876     0.0000      1.9026      2.0901
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      2.1061     0.1508     13.967     0.0000      1.8098      2.4023
-X              2.7941     0.0254     110.17     0.0000      2.7442      2.8439
+Intercept      2.0327     0.1621     12.538     0.0000      1.7142      2.3512
+X              2.7939     0.0272     102.60     0.0000      2.7404      2.8474
 ==============================================================================
-theta: [0.34140384]
+theta: [0.3836728]
 </pre></div>
 </div>
 </div>
@@ -1951,9 +1921,9 @@ theta: [0.34140384]
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.3044     0.1248     10.450     0.0000      1.0591      1.5496
-X              1.9963     0.0476     41.908     0.0000      1.9028      2.0899
-X_mean         0.9600     0.0523     18.358     0.0000      0.8572      1.0627
+Intercept      1.0362     0.1291     8.0277     0.0000      0.7826      1.2898
+X              1.9479     0.0457     42.650     0.0000      1.8582      2.0377
+X_mean         1.0469     0.0508     20.590     0.0000      0.9470      1.1468
 ==============================================================================
 </pre></div>
 </div>
@@ -1975,8 +1945,8 @@ X_mean         0.9600     0.0523     18.358     0.0000      0.8572      1.0627
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.6889     0.1125     15.011     0.0000      1.4679      1.9100
-X              2.8785     0.0192     149.84     0.0000      2.8407      2.9162
+Intercept      1.4658     0.1162     12.617     0.0000      1.2376      1.6941
+X              2.9082     0.0199     146.30     0.0000      2.8691      2.9473
 ==============================================================================
 </pre></div>
 </div>
@@ -2119,8 +2089,9 @@ X              2.8785     0.0192     149.84     0.0000      2.8407      2.9162
 </ul>
 </li>
 </ul>
-<p>検定に使う式
-<span class="math notranslate nohighlight">\($\hat{u}^2=\beta_0+\beta_1\hat{y}+\beta_2\hat{y}^2+e\)</span>$</p>
+<p>検定に使う式</p>
+<div class="math notranslate nohighlight">
+\[\hat{u}^2=\beta_0+\beta_1\hat{y}+\beta_2\hat{y}^2+e\]</div>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\text{H}_0：\beta_1=\beta_2=0\)</span>（均一分散）</p></li>
 <li><p><span class="math notranslate nohighlight">\(\text{H}_A：\)</span>帰無仮説は成立しない</p></li>

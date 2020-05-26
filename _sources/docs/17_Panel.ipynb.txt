@@ -1405,7 +1405,9 @@
     "* REモデルと同じ構造となっており，違いは$\\bar{x}_i$が追加されている。\n",
     "    * `linearmodels`の`RandomEffects`モジュールが使える。\n",
     "* 次の結果が成立する。\n",
+    "\n",
     "    $$\\hat{\\beta}_{FE}=\\hat{\\beta}_{CRE}$$\n",
+    "    \n",
     "    * $\\hat{\\beta}_{FE}$：固定効果推定量\n",
     "    * $\\hat{\\beta}_{CRE}$：相関ランダム効果推定量\n",
     "    * この結果は，時間に対して不変な変数（例えば，`black`）を**含めても**成立する"
@@ -2625,18 +2627,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## 標準誤差の問題"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "(式３)の固定効果モデルを考えよう。パネル・データの場合，次の2つの問題が発生する場合がある。\n",
     "* 残差の不均一分散\n",
@@ -2647,19 +2645,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "### 分散の確認"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "`linearmodels`には残差の均一分散を調べるBreusch-Pagan検定やWhite検定をおこなうメソッドは用意されていない。ここでは`statsmodels`を使いWooldridge (2016,p.253)で説明されているWhite検定に基づく検定をおこなう。次に必要な変数を作成する。"
    ]
@@ -2667,9 +2660,7 @@
   {
    "cell_type": "code",
    "execution_count": 44,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [],
    "source": [
     "# 残差\n",
@@ -2684,9 +2675,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "（上のコードの説明）\n",
     "* `resids`は残差を`DataFrame`として取得する属性\n",
@@ -2698,11 +2687,10 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "検定に使う式\n",
+    "\n",
     "$$\\hat{u}^2=\\beta_0+\\beta_1\\hat{y}+\\beta_2\\hat{y}^2+e$$\n",
     "\n",
     "* $\\text{H}_0：\\beta_1=\\beta_2=0$（均一分散）\n",
@@ -2712,9 +2700,7 @@
   {
    "cell_type": "code",
    "execution_count": 45,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "name": "stdout",
@@ -2740,9 +2726,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "帰無仮説は棄却できない。\n",
     "\n",
@@ -2752,9 +2736,7 @@
   {
    "cell_type": "code",
    "execution_count": 46,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -2786,9 +2768,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "（解説）\n",
     "* 上の検定で推定した式は赤い線である。殆ど平行になっているため帰無仮説を棄却できなかった。\n",
@@ -2798,8 +2778,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### 対処方法"

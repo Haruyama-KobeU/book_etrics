@@ -83,29 +83,6 @@
   <ul class="nav sidenav_l1">
   <li class="">
     <a href="part_1.html">１. Pythonの基礎</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="0_Preparations.html">ツールのインストールと説明</a>
-    </li>
-    <li class="">
-      <a href="1_Python_Basics.html">Pythonの基礎</a>
-    </li>
-    <li class="">
-      <a href="2_NumPy.html">NumPy</a>
-    </li>
-    <li class="">
-      <a href="3_Pandas.html">Pandas</a>
-    </li>
-    <li class="">
-      <a href="4_Matplotlib.html">Matplotlib</a>
-    </li>
-    <li class="">
-      <a href="5_SciPy_stats.html">SciPy.stats</a>
-    </li>
-    <li class="">
-      <a href="6_things_to_note.html">Tipsと注意点</a>
-    </li>
-  </ul>
   </li>
   <li class="active">
     <a href="part_2.html">２. Pythonを使った計量経済分析</a>
@@ -159,14 +136,6 @@
   </li>
   <li class="">
     <a href="part_3.html">３. 番外編</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="Gapminder.html">Gapminder</a>
-    </li>
-    <li class="">
-      <a href="Descriptive_stats_vs_Graphs.html">記述統計とグラフ</a>
-    </li>
-  </ul>
   </li>
 </ul>
 </nav>
@@ -731,9 +700,10 @@
 <div class="section" id="id3">
 <h3>要素，行，列の抽出<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>のまま要素・列・行の抽出およぼスライシングには様々な方法があり，複雑である。特に，スライシングをしたい場合，一番簡単なのは<code class="docutils literal notranslate"><span class="pre">reset_index()</span></code>で通常の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>に戻し，スライシングし新たな<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作成するだけでも十分であろう。</p>
-<p>以下では，<code class="docutils literal notranslate"><span class="pre">.loc[]</span></code>を使い<code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>のままでの抽出方法について簡単に説明する。その際，以下のルールは変わらない。
-<span class="math notranslate nohighlight">\($.\text{loc}\left[\text{行の指定},\text{列の指定}\right]\)</span>$
-ただ，<code class="docutils literal notranslate"><span class="pre">行の指定</span></code>にリストやタプルを使うことになる（<code class="docutils literal notranslate"><span class="pre">列の指定</span></code>も同じ）。</p>
+<p>以下では，<code class="docutils literal notranslate"><span class="pre">.loc[]</span></code>を使い<code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>のままでの抽出方法について簡単に説明する。その際，以下のルールは変わらない。</p>
+<div class="math notranslate nohighlight">
+\[.\text{loc}\left[\text{行の指定},\text{列の指定}\right]\]</div>
+<p>ただ，<code class="docutils literal notranslate"><span class="pre">行の指定</span></code>にリストやタプルを使うことになる（<code class="docutils literal notranslate"><span class="pre">列の指定</span></code>も同じ）。</p>
 <p>他の方法については<a class="reference external" href="https://note.nkmk.me/python-pandas-multiindex-indexing/">このサイト</a>と<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html">このサイト</a>が参考になる。</p>
 <div class="section" id="id4">
 <h4>１つの観察単位の抽出<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>

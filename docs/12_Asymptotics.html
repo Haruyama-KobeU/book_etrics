@@ -83,29 +83,6 @@
   <ul class="nav sidenav_l1">
   <li class="">
     <a href="part_1.html">１. Pythonの基礎</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="0_Preparations.html">ツールのインストールと説明</a>
-    </li>
-    <li class="">
-      <a href="1_Python_Basics.html">Pythonの基礎</a>
-    </li>
-    <li class="">
-      <a href="2_NumPy.html">NumPy</a>
-    </li>
-    <li class="">
-      <a href="3_Pandas.html">Pandas</a>
-    </li>
-    <li class="">
-      <a href="4_Matplotlib.html">Matplotlib</a>
-    </li>
-    <li class="">
-      <a href="5_SciPy_stats.html">SciPy.stats</a>
-    </li>
-    <li class="">
-      <a href="6_things_to_note.html">Tipsと注意点</a>
-    </li>
-  </ul>
   </li>
   <li class="active">
     <a href="part_2.html">２. Pythonを使った計量経済分析</a>
@@ -159,14 +136,6 @@
   </li>
   <li class="">
     <a href="part_3.html">３. 番外編</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="Gapminder.html">Gapminder</a>
-    </li>
-    <li class="">
-      <a href="Descriptive_stats_vs_Graphs.html">記述統計とグラフ</a>
-    </li>
-  </ul>
   </li>
 </ul>
 </nav>
@@ -375,11 +344,13 @@
 </div>
 <div class="section" id="id3">
 <h3>シミュレーション：一致性<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>シミュレーションを使い一致性の分布収束を確かめる。仮定１〜４には誤差項の正規性や均一性は含まれていない。この点を捉えるために，誤差項は２つの異なる分布から確率的に発生すると仮定する。具体的には，確率<span class="math notranslate nohighlight">\(p\)</span>で誤差項は正規分布
-<span class="math notranslate nohighlight">\($u_N\sim\text{Normal(0,0.25)}\)</span>$
-で発生し，<span class="math notranslate nohighlight">\(1-p\)</span>で
-<span class="math notranslate nohighlight">\($u_c=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)\)</span>$
-が発生する。<span class="math notranslate nohighlight">\(\chi^2(1)\)</span>は自由度１のカイ二乗分布で，平均は1，標準偏差は<span class="math notranslate nohighlight">\(\sqrt{2}\)</span>。誤差項の確率密度関数は２つの確率密度関数の「加重平均」</p>
+<p>シミュレーションを使い一致性の分布収束を確かめる。仮定１〜４には誤差項の正規性や均一性は含まれていない。この点を捉えるために，誤差項は２つの異なる分布から確率的に発生すると仮定する。具体的には，確率<span class="math notranslate nohighlight">\(p\)</span>で誤差項は正規分布</p>
+<div class="math notranslate nohighlight">
+\[u_N\sim\text{Normal(0,0.25)}\]</div>
+<p>で発生し，<span class="math notranslate nohighlight">\(1-p\)</span>で</p>
+<div class="math notranslate nohighlight">
+\[u_c=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)\]</div>
+<p>が発生する。<span class="math notranslate nohighlight">\(\chi^2(1)\)</span>は自由度１のカイ二乗分布で，平均は1，標準偏差は<span class="math notranslate nohighlight">\(\sqrt{2}\)</span>。誤差項の確率密度関数は２つの確率密度関数の「加重平均」</p>
 <div class="math notranslate nohighlight">
 \[
 u = pu_N+(1-p)u_c
@@ -454,8 +425,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([-0.1536567 ,  2.94998175, -0.35054729, -0.03027225,  0.2239677 ,
-        1.17587043,  1.98011685,  0.05449391,  1.38796242, -0.3210599 ])
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([-0.14759176, -0.5166494 , -0.29491513, -0.65789108, -0.66636607,
+       -0.59141648, -0.18832888, -0.6520939 , -0.61212419, -0.40582907])
 </pre></div>
 </div>
 </div>
@@ -483,7 +454,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.007079747240852991
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.00018542635572272025
 </pre></div>
 </div>
 </div>
@@ -595,8 +566,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([0.59705352, 0.38019107, 0.73012302, ..., 1.03424304, 0.57187501,
-       0.30063029])
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([0.9807135 , 0.40575139, 0.13030278, ..., 0.8694328 , 0.24045034,
+       0.65534274])
 </pre></div>
 </div>
 </div>
@@ -1107,10 +1078,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(4.983310816775088,
- 0.08277283026071285,
- 0.18325365017910042,
- 2.6761615866063018)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.1404508746399233,
+ 0.9321836472333119,
+ 0.026970311284687597,
+ 2.9380964361321213)
 </pre></div>
 </div>
 </div>
@@ -1133,10 +1104,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(30.497047434722155,
- 2.3858893158400826e-07,
- 0.13029251192988744,
- 1.818495145076981)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(31.364134819703743,
+ 1.5465524704855947e-07,
+ -0.017700402758496735,
+ 1.7735313887773043)
 </pre></div>
 </div>
 </div>
@@ -1218,7 +1189,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=5.502816964839877, pvalue=0.06383788331906516)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=0.08147197586304977, pvalue=0.9600825698759068)
 </pre></div>
 </div>
 </div>
@@ -1234,7 +1205,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=279.8919544619343, pvalue=1.6681470202177302e-61)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=385.29933069057483, pvalue=2.1543358078015364e-84)
 </pre></div>
 </div>
 </div>
