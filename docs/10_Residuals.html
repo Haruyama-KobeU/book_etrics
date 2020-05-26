@@ -83,29 +83,6 @@
   <ul class="nav sidenav_l1">
   <li class="">
     <a href="part_1.html">１. Pythonの基礎</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="0_Preparations.html">ツールのインストールと説明</a>
-    </li>
-    <li class="">
-      <a href="1_Python_Basics.html">Pythonの基礎</a>
-    </li>
-    <li class="">
-      <a href="2_NumPy.html">NumPy</a>
-    </li>
-    <li class="">
-      <a href="3_Pandas.html">Pandas</a>
-    </li>
-    <li class="">
-      <a href="4_Matplotlib.html">Matplotlib</a>
-    </li>
-    <li class="">
-      <a href="5_SciPy_stats.html">SciPy.stats</a>
-    </li>
-    <li class="">
-      <a href="6_things_to_note.html">Tipsと注意点</a>
-    </li>
-  </ul>
   </li>
   <li class="active">
     <a href="part_2.html">２. Pythonを使った計量経済分析</a>
@@ -159,14 +136,6 @@
   </li>
   <li class="">
     <a href="part_3.html">３. 番外編</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="Gapminder.html">Gapminder</a>
-    </li>
-    <li class="">
-      <a href="Descriptive_stats_vs_Graphs.html">記述統計とグラフ</a>
-    </li>
-  </ul>
   </li>
 </ul>
 </nav>
@@ -296,13 +265,7 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#qq-again" class="nav-link">qqプロット（again）</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#statsmodels" class="nav-link">statsmodels</a>
-        </li>
-    
-            </ul>
+            <a href="#qq-again" class="nav-link">qqプロット（again）</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -397,7 +360,7 @@
 <p>回帰分析のシミュレーションをおこない残差の分布と<span class="math notranslate nohighlight">\(R^2\)</span>の関係を図を使っておさらいする。</p>
 <hr class="docutils" />
 <p>単回帰のシミュレーション用の関数<code class="docutils literal notranslate"><span class="pre">ols_sim</span></code>を定義する。</p>
-<ul>
+<ul class="simple">
 <li><p>引き数</p>
 <ol class="simple">
 <li><p>標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code></p></li>
@@ -405,22 +368,16 @@
 </ol>
 </li>
 <li><p>返り値</p>
-<ol>
+<ol class="simple">
 <li><p>説明変数 <span class="math notranslate nohighlight">\(x\)</span></p></li>
 <li><p>被説明変数 <span class="math notranslate nohighlight">\(y\)</span></p></li>
 <li><p>予測値 <span class="math notranslate nohighlight">\(\hat{y}\)</span></p></li>
 <li><p>残差 <span class="math notranslate nohighlight">\(u\)</span></p></li>
-<li><p>標準化残差 <span class="math notranslate nohighlight">\(z\)</span></p>
-<div class="math notranslate nohighlight">
-\[
-        z = \frac{u-\mu_u}{\sigma_u}
-        \]</div>
-<p>ここで<span class="math notranslate nohighlight">\(\mu_u\)</span>と<span class="math notranslate nohighlight">\(\sigma_u\)</span>は<span class="math notranslate nohighlight">\(u\)</span>の平均と標準偏差。</p>
-<ul class="simple">
-<li><p>残差を標準偏差で除して平均<code class="docutils literal notranslate"><span class="pre">0</span></code>，分散<code class="docutils literal notranslate"><span class="pre">1</span></code>に変換した残差</p></li>
-<li><p>99.7%の確率で<code class="docutils literal notranslate"><span class="pre">(-3,3)</span></code>の間に入る</p></li>
-<li><p>95%の確率で<code class="docutils literal notranslate"><span class="pre">(-2,2)</span></code>の間に入る</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">OLS</span></code>の結果<code class="docutils literal notranslate"><span class="pre">res</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">get_influence()</span></code>を使い，その属性<code class="docutils literal notranslate"><span class="pre">.resid_studentized_internal</span></code>で取得する</p></li>
+<li><p>標準化残差</p>
+<ul>
+<li><p>残差<span class="math notranslate nohighlight">\(u\)</span>は母集団の誤差項の推定値であるが，<span class="math notranslate nohighlight">\(u\)</span>を使い誤差項の性質について調べるには限度があることが知られている。その代わりになるのが「標準化残差」である。<span class="math notranslate nohighlight">\(u\)</span>をある統計量で除して標準化した残差であり，観測できない誤差項についてより正確な情報が得られる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">OLS</span></code>の結果のメソッド<code class="docutils literal notranslate"><span class="pre">get_influence()</span></code>を使い，その属性<code class="docutils literal notranslate"><span class="pre">.resid_studentized_internal</span></code>で取得する</p></li>
+<li><p>英語では<strong>Internally Studentized Residuals</strong>もしくは<strong>Standardized Residuals</strong>と呼ばれる。</p></li>
 </ul>
 </li>
 <li><p><span class="math notranslate nohighlight">\(R^2\)</span></p></li>
@@ -475,8 +432,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>決定係数が高いケース: 0.929
-決定係数が高いケース: 0.606
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>決定係数が高いケース: 0.900
+決定係数が高いケース: 0.569
 </pre></div>
 </div>
 </div>
@@ -881,8 +838,6 @@
 </div>
 <div class="section" id="qq-again">
 <h2><code class="docutils literal notranslate"><span class="pre">qq</span></code>プロット（again）<a class="headerlink" href="#qq-again" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="statsmodels">
-<h3><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code><a class="headerlink" href="#statsmodels" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">qq</span></code>プロットを表示する代替方法として，<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">qqplot</span></code>モジュールがある。ここではその使い方を簡単に説明する。</p>
 <p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>自体を<code class="docutils literal notranslate"><span class="pre">sm</span></code>として読み込んでいる。</p>
 <p>＜の使い方＞</p>
@@ -902,8 +857,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_63_0.png" src="../_images/10_Residuals_63_0.png" />
-</div>
+<img alt="../_images/10_Residuals_62_0.png" src="../_images/10_Residuals_62_0.png" />
 </div>
 </div>
 </div>
@@ -942,7 +896,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_67_0.png" src="../_images/10_Residuals_67_0.png" />
+<img alt="../_images/10_Residuals_66_0.png" src="../_images/10_Residuals_66_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -964,7 +918,7 @@
   r = _umath_linalg.det(a, signature=signature)
 </pre>
 </div>
-<img alt="../_images/10_Residuals_69_1.png" src="../_images/10_Residuals_69_1.png" />
+<img alt="../_images/10_Residuals_68_1.png" src="../_images/10_Residuals_68_1.png" />
 </div>
 </div>
 </div>
@@ -1000,7 +954,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_72_0.png" src="../_images/10_Residuals_72_0.png" />
+<img alt="../_images/10_Residuals_71_0.png" src="../_images/10_Residuals_71_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1013,7 +967,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_74_0.png" src="../_images/10_Residuals_74_0.png" />
+<img alt="../_images/10_Residuals_73_0.png" src="../_images/10_Residuals_73_0.png" />
 </div>
 </div>
 </div>
@@ -1059,7 +1013,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_77_0.png" src="../_images/10_Residuals_77_0.png" />
+<img alt="../_images/10_Residuals_76_0.png" src="../_images/10_Residuals_76_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1072,7 +1026,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_79_0.png" src="../_images/10_Residuals_79_0.png" />
+<img alt="../_images/10_Residuals_78_0.png" src="../_images/10_Residuals_78_0.png" />
 </div>
 </div>
 </div>
@@ -1122,7 +1076,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_82_0.png" src="../_images/10_Residuals_82_0.png" />
+<img alt="../_images/10_Residuals_81_0.png" src="../_images/10_Residuals_81_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1135,7 +1089,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_84_0.png" src="../_images/10_Residuals_84_0.png" />
+<img alt="../_images/10_Residuals_83_0.png" src="../_images/10_Residuals_83_0.png" />
 </div>
 </div>
 </div>
@@ -1178,7 +1132,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_89_0.png" src="../_images/10_Residuals_89_0.png" />
+<img alt="../_images/10_Residuals_88_0.png" src="../_images/10_Residuals_88_0.png" />
 </div>
 </div>
 <p>外れ値（赤の観測値）がない場合の回帰診断</p>
@@ -1191,7 +1145,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_91_0.png" src="../_images/10_Residuals_91_0.png" />
+<img alt="../_images/10_Residuals_90_0.png" src="../_images/10_Residuals_90_0.png" />
 </div>
 </div>
 <p>外れ値（赤の観測値）がある場合の回帰診断</p>
@@ -1204,7 +1158,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/10_Residuals_93_0.png" src="../_images/10_Residuals_93_0.png" />
+<img alt="../_images/10_Residuals_92_0.png" src="../_images/10_Residuals_92_0.png" />
 </div>
 </div>
 <p>観測値<code class="docutils literal notranslate"><span class="pre">20</span></code>が非常に影響力が高いことが分かる。その観測値を取り出すには以下のようにする。</p>
