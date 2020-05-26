@@ -144,13 +144,13 @@
       <a href="17_Panel.html">パネル・データ分析</a>
     </li>
     <li class="">
-      <a href="18_dummy.html">GM仮定４が満たされない場合</a>
+      <a href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a>
     </li>
     <li class="">
       <a href="19_dummy.html">操作変数法と２段階OLS</a>
     </li>
     <li class="">
-      <a href="20_LogitProbit.html">離散選択モデル：LogitとProbit</a>
+      <a href="20_LogitProbit.html">離散選択モデル</a>
     </li>
     <li class="">
       <a href="21_TruncregTobitHeckit.html">制限従属変数モデル</a>
@@ -286,30 +286,34 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#id10" class="nav-link">シミュレーション：不偏性</a>
+            <a href="#id10" class="nav-link">「手計算」</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#id11" class="nav-link">シミュレーション：多重共線性</a><ul class="nav section-nav flex-column">
+            <a href="#id11" class="nav-link">シミュレーション：不偏性</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id12" class="nav-link">シミュレーション：多重共線性</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id12" class="nav-link">説明</a>
+            <a href="#id13" class="nav-link">説明</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id13" class="nav-link">方法１：手計算</a>
+            <a href="#id14" class="nav-link">方法１：手計算</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id14" class="nav-link">方法２：statsmodels</a>
+            <a href="#id15" class="nav-link">方法２：statsmodels</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id15" class="nav-link">シミュレーション</a>
+            <a href="#id16" class="nav-link">シミュレーション</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id16" class="nav-link">図を使ってチェック</a><ul class="nav section-nav flex-column">
+            <a href="#id17" class="nav-link">図を使ってチェック</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h4">
             <a href="#pandas" class="nav-link">pandasを使う方法</a>
@@ -346,6 +350,7 @@
 <span class="kn">from</span> <span class="nn">wooldridge</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jit</span><span class="p">,</span> <span class="n">njit</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">uniform</span><span class="p">,</span> <span class="n">gaussian_kde</span><span class="p">,</span> <span class="n">multivariate_normal</span>
 <span class="kn">from</span> <span class="nn">statsmodels.stats.outliers_influence</span> <span class="kn">import</span> <span class="n">variance_inflation_factor</span> <span class="k">as</span> <span class="n">vif</span>
 <span class="kn">from</span> <span class="nn">pandas.plotting</span> <span class="kn">import</span> <span class="n">scatter_matrix</span>
@@ -818,7 +823,9 @@ dtype: float64
 <ul>
 <li><p>母集団のモデルは次式のようにパラメータに関して線形である。</p>
 <div class="math notranslate nohighlight">
-\[y=\beta_0+\beta_1x_1+\beta_2x_2+\cdots+\beta_kx_k+u\]</div>
+\[
+        y=\beta_0+\beta_1x_1+\beta_2x_2+\cdots+\beta_kx_k+u
+        \]</div>
 </li>
 <li><p><span class="math notranslate nohighlight">\(y=\beta_0+\beta_1x_1+\beta_2x_1^2\)</span>は線形性を満たす。</p></li>
 <li><p><span class="math notranslate nohighlight">\(y=\beta_0+\dfrac{\beta_1}{1+\beta_2x_1}+\beta_3x_2\)</span>は線形性を満たさない。</p></li>
@@ -982,46 +989,204 @@ dtype: float64
 </div>
 </div>
 <div class="section" id="id10">
-<h2>シミュレーション：不偏性<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
-<p>不偏性をシミュレーションで考える。</p>
-<ul class="simple">
-<li><p>標本をランダム抽出するたびに<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>, <span class="math notranslate nohighlight">\(j=0,1\)</span>は異なる値を取るが，標本抽出を繰り返し<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>の平均を計算すると真の値と等しい。</p></li>
-</ul>
-<p>シミュレーションでは以下の回帰式を使う。
-<span class="math notranslate nohighlight">\($y=\beta_0+\beta_1x_1+\beta_2x_2+u\)</span>$</p>
-<p>シミュレーションの関数を作成する。</p>
+<h2>「手計算」<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>は非常に優れたパッケージであり，複雑な計算を簡単なコードで実行してくれる。しかし，ここでは<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数を使い，重回帰モデルの推定値をの「手計算」する。目的は２つある。第１に，<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の裏でどのような計算が行われているかを理解する。第２に，今後シミュレーションをおこなうが，「手計算」のコードを使うと<code class="docutils literal notranslate"><span class="pre">Numba</span></code>というパッケージを使い計算速度を格段とアップすることが可能となる。</p>
+<p>次の回帰式を考えよう。</p>
+<div class="math notranslate nohighlight">
+\[
+y_i=\beta_0+\beta_1x_{1i}+\beta_2x_{2i}+u_i,\quad
+i=1,2,...,n
+\]</div>
+<p>これを行列式で表すと次のようになる。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\begin{bmatrix}
+y_1 \\
+y_2 \\
+\vdots \\
+y_n
+\end{bmatrix}
+=&amp;
+\begin{bmatrix}
+1,x_{11},x_{21} \\
+1,x_{12},x_{22} \\
+\vdots\vdots\vdots \\
+1,x_{1n},x_{2n}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+\beta_0 \\
+\beta_1 \\
+\beta_2
+\end{bmatrix}
++
+\begin{bmatrix}
+u_1 \\
+u_2 \\
+\vdots \\
+u_n
+\end{bmatrix}
+\end{align*}
+\end{split}\]</div>
+<p>更に簡単に書くと</p>
+<div class="math notranslate nohighlight">
+\[Y=XB+U\]</div>
+<p>となる。これを使うと<span class="math notranslate nohighlight">\(B\)</span>の推定量は</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{B}=\left(X^T\cdot X\right)^{-1}\cdot X^T\cdot Y\qquad\qquad\text{(*)} 
+\]</div>
+<p>で与えられる。以下では式（*）を使い計算を進める。</p>
+<p>数値を設定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sim_unbias</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">b0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">b1</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">b2</span><span class="o">=</span><span class="mf">1.5</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ, N=標本数</span>
-    
-    <span class="c1"># 推定値を格納する空のリスト</span>
-    <span class="n">b0hat_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">b1hat_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">b2hat_list</span> <span class="o">=</span> <span class="p">[]</span>
-    
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N 回のループ</span>
-        <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 誤差項（標準正規分布）</span>
-        <span class="n">x1</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 説明変数（標準正規分布）</span>
-        <span class="n">x2</span> <span class="o">=</span> <span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 説明変数 (一様分布)</span>
-
-        <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="n">b2</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># 説明変数</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X1&#39;</span><span class="p">:</span><span class="n">x1</span><span class="p">,</span> <span class="s1">&#39;X2&#39;</span><span class="p">:</span><span class="n">x2</span><span class="p">})</span>  <span class="c1"># DataFrameの作成</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X1 + X2&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLS推定</span>
-
-        <span class="n">b0hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># b0の推定量</span>
-        <span class="n">b1hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># b1の推定量</span>
-        <span class="n">b2hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>  <span class="c1"># b2の推定量</span>
-
-    <span class="k">return</span> <span class="n">b0</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">b0hat_list</span><span class="p">,</span> <span class="n">b1hat_list</span><span class="p">,</span> <span class="n">b2hat_list</span>  <span class="c1"># 返り値の設定</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">30</span>  <span class="c1"># 標本の大きさ</span>
+<span class="n">b0</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 定数項</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># x1の係数</span>
+<span class="n">b2</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># x2の係数</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">n=30</span></code>でシミュレーションをおこない，結果を<code class="docutils literal notranslate"><span class="pre">b0hat</span></code>, <code class="docutils literal notranslate"><span class="pre">b1hat</span></code>, <code class="docutils literal notranslate"><span class="pre">b2hat</span></code>に代入。</p>
-<p>（注意）推定しようとする母集団のパラメータの真の値も返り値となっている。</p>
+<p>母集団からの観測値を生成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">b0hat</span><span class="p">,</span> <span class="n">b1hat</span><span class="p">,</span> <span class="n">b2hat</span> <span class="o">=</span> <span class="n">sim_unbias</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">2000</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># (1)の説明</span>
+
+<span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># (2)の説明</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># (1)の説明</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="n">b2</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="n">u</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># (3)の説明</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">numpy</span></code>には乱数用のモジュール<code class="docutils literal notranslate"><span class="pre">random</span></code>があり，<code class="docutils literal notranslate"><span class="pre">normal</span></code>は標準正規分布からの乱数を発生させる関数である。引数の設定方法は<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>の<code class="docutils literal notranslate"><span class="pre">norm.rvs()</span></code>と同じである。<code class="docutils literal notranslate"><span class="pre">x1</span></code>は平均<code class="docutils literal notranslate"><span class="pre">4.0</span></code>と標準偏差<code class="docutils literal notranslate"><span class="pre">2.0</span></code>の正規分布に従うことがわかる。</p></li>
+<li><p>同じ<code class="docutils literal notranslate"><span class="pre">np.random</span></code>にある<code class="docutils literal notranslate"><span class="pre">uniform</span></code>は<code class="docutils literal notranslate"><span class="pre">[0,1)</span></code>の一様分布から乱数を発生させる関数である。<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>の<code class="docutils literal notranslate"><span class="pre">uniform.rvs</span></code>と同じ役割を果たすが，引数の設定が異なる。<code class="docutils literal notranslate"><span class="pre">low</span></code>は最小値，<code class="docutils literal notranslate"><span class="pre">high</span></code>は最大値を指定する。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数である<code class="docutils literal notranslate"><span class="pre">ones()</span></code>は全ての要素が<code class="docutils literal notranslate"><span class="pre">1</span></code>になる<span class="math notranslate nohighlight">\((n\times 1)\)</span>の<code class="docutils literal notranslate"><span class="pre">array</span></code>を生成する。</p></li>
+</ol>
+<p>ここで<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数を使う理由は，計算の高速化に役立つ<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使えるコードを書くためである。</p>
+<hr class="docutils" />
+<p>式（*）を使い推定値を計算しよう。まず<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数<code class="docutils literal notranslate"><span class="pre">stack</span></code>を使い<code class="docutils literal notranslate"><span class="pre">X</span></code>を作成する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">c</span><span class="p">,</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(30, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<p>ここでの引数<code class="docutils literal notranslate"><span class="pre">axis=1</span></code>は<code class="docutils literal notranslate"><span class="pre">c</span></code>，<code class="docutils literal notranslate"><span class="pre">x1</span></code>，<code class="docutils literal notranslate"><span class="pre">x2</span></code>を縦ベクトルとして横方向につなぎあわせることを指定している。<code class="docutils literal notranslate"><span class="pre">X</span></code>は<span class="math notranslate nohighlight">\((30\times 3)\)</span>の行列<code class="docutils literal notranslate"><span class="pre">array</span></code>である。式（*）は次のコードで計算できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@X</span><span class="p">)</span><span class="o">@</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@y</span>
+<span class="n">bhat</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([2.01772605, 1.90372238, 2.86901887])
+</pre></div>
+</div>
+</div>
+</div>
+<p>左から<code class="docutils literal notranslate"><span class="pre">b0</span></code>，<code class="docutils literal notranslate"><span class="pre">b1</span></code>，<code class="docutils literal notranslate"><span class="pre">b2</span></code>の推定値となる。上のコードを簡単に説明する。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">linalg</span></code>は<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の線形代数のパッケージであり，<code class="docutils literal notranslate"><span class="pre">inv</span></code>は逆行列を計算するための関数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">T</span></code>は転置行列の属性</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;</span></code>は行列の積</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">bhat</span></code>を計算した１行コードは定数項以外に2つの説明変数を前提として説明したが，実は，定数項以外の説明変数の数には依存しない。1つでも20つでも使えるコードなので覚えておこう。もちろん，<code class="docutils literal notranslate"><span class="pre">X</span></code>は説明変数に合わせて作成する必要がある。</p>
+<p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使い推定値を確認する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_check</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;X1&#39;</span><span class="p">:</span><span class="n">x1</span><span class="p">,</span><span class="s1">&#39;X2&#39;</span><span class="p">:</span><span class="n">x2</span><span class="p">})</span>
+<span class="n">ols</span><span class="p">(</span><span class="s1">&#39;Y ~ X1 + X2&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_check</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">params</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    2.017726
+X1           1.903722
+X2           2.869019
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h2>シミュレーション：不偏性<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<p>不偏性をシミュレーションで考える。</p>
+<ul class="simple">
+<li><p>標本をランダム抽出するたびに<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>, <span class="math notranslate nohighlight">\(j=0,1\)</span>は異なる値を取るが，標本抽出を繰り返し<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>の平均を計算すると真の値と等しい。</p></li>
+</ul>
+<p>シミュレーションでは上で使った同じ回帰式を使う。</p>
+<div class="math notranslate nohighlight">
+\[y=\beta_0+\beta_1x_1+\beta_2x_2+u\]</div>
+<p>シミュレーションの回数<code class="docutils literal notranslate"><span class="pre">N</span></code>と係数の真の値を以下のように設定する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100_000</span>
+<span class="n">b0</span><span class="o">=</span><span class="mf">1.0</span>
+<span class="n">b1</span><span class="o">=</span><span class="mf">2.0</span>
+<span class="n">b2</span><span class="o">=</span><span class="mf">3.0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>シミュレーションの関数を作成するが，パラメータの推定値の計算には<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使わずに，<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数を使い「手計算」としている。これにより計算を高速化するパッケージ<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使うことが可能となる。使い方は簡単でデコレーターと呼ばれる<code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>（又は<code class="docutils literal notranslate"><span class="pre">&#64;jit</span></code>）を関数の上に加えるだけである。これだけで計算速度が数十倍早くなる場合もある。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>  <span class="c1"># 計算の高速化</span>
+<span class="k">def</span> <span class="nf">sim_unbias</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ</span>
+
+    <span class="c1"># 推定値を格納する空のlist</span>
+    <span class="n">b0hat_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">b1hat_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">b2hat_list</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 定数項</span>
+    
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N 回のループ</span>
+        
+        <span class="c1"># 標準正規分布</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+        
+        <span class="c1"># 平均4.0,標準偏差2.0の正規分布</span>
+        <span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+        
+        <span class="c1"># [1,10)の一様分布。`low=`，`high=`を付け加えるとエラーが発生する。</span>
+        <span class="n">x</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+        
+        <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="n">b2</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># 説明変数</span>
+        
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">c</span><span class="p">,</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 説明変数の行列</span>
+        <span class="n">bhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@X</span><span class="p">)</span><span class="o">@</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@y</span>  <span class="c1"># OLS推定</span>
+        
+        <span class="n">b0hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bhat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">b1hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bhat</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">b2hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bhat</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        
+    <span class="k">return</span> <span class="n">b0hat_list</span><span class="p">,</span> <span class="n">b1hat_list</span><span class="p">,</span> <span class="n">b2hat_list</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>この関数の引数<code class="docutils literal notranslate"><span class="pre">n</span></code>は標本の大きさであり，返り値は3つの推定値のリストである。結果は<code class="docutils literal notranslate"><span class="pre">b0hat</span></code>, <code class="docutils literal notranslate"><span class="pre">b1hat</span></code>, <code class="docutils literal notranslate"><span class="pre">b2hat</span></code>に割り当てる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b0hat</span><span class="p">,</span> <span class="n">b1hat</span><span class="p">,</span> <span class="n">b2hat</span> <span class="o">=</span> <span class="n">sim_unbias</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1036,15 +1201,15 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>b0: 0.988280104023501 
-b1: 0.5025612392570256 
-b1: 1.50087844793462
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>b0: 1.0008543738641573 
+b1: 1.9996742118730422 
+b1: 3.0001577473108756
 </pre></div>
 </div>
 </div>
 </div>
 <p>平均は真の値と全く同じではないが，十分に近い値である。即ち，不偏性が満たされている。標本数<code class="docutils literal notranslate"><span class="pre">N</span></code>を増加させるとより真の値に近づくことになる。</p>
-<p>OLS推定量<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布。</p>
+<p>OLS推定量<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布を図示しよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">b1hat</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
@@ -1054,14 +1219,14 @@ b1: 1.50087844793462
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_82_0.png" src="../_images/9_Multiple_Regression_82_0.png" />
+<img alt="../_images/9_Multiple_Regression_95_0.png" src="../_images/9_Multiple_Regression_95_0.png" />
 </div>
 </div>
-<p>概ね<code class="docutils literal notranslate"><span class="pre">b1</span></code>の真の値<code class="docutils literal notranslate"><span class="pre">0.5</span></code>を中心に左右対象に分布している。</p>
+<p><code class="docutils literal notranslate"><span class="pre">b1</span></code>の真の値<code class="docutils literal notranslate"><span class="pre">2.0</span></code>を中心に左右対象に分布している。</p>
 <p>次に分布（ヒストグラム）のカーネル密度推定をおこなうために，<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>にある<code class="docutils literal notranslate"><span class="pre">gaussian_kde</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために-0.5から1.5までの横軸の値を設定</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span><span class="mf">2.5</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために-0.5から1.5までの横軸の値を設定</span>
 <span class="n">kde_model</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1hat</span><span class="p">)</span>  <span class="c1"># bhatのカーネル密度推定を設定</span>
 <span class="n">ufunc</span> <span class="o">=</span> <span class="n">kde_model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># カーネル密度推定を使いb1hatの分布を推定</span>
 
@@ -1072,14 +1237,14 @@ b1: 1.50087844793462
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_85_0.png" src="../_images/9_Multiple_Regression_85_0.png" />
+<img alt="../_images/9_Multiple_Regression_98_0.png" src="../_images/9_Multiple_Regression_98_0.png" />
 </div>
 </div>
 <p>２つの図を重ねる。</p>
 <p>（注意）ヒストグラムの縦軸は頻度である。一方，カーネル密度推定の場合，曲線の下の面積が１になるように縦軸が設定されている。ヒストグラムの縦軸をカーネル密度推定に合わせるために<code class="docutils literal notranslate"><span class="pre">density=True</span></code>のオプションを加える。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span><span class="mf">2.5</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
 <span class="n">kde_model</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1hat</span><span class="p">)</span>
 <span class="n">ufunc</span> <span class="o">=</span> <span class="n">kde_model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
@@ -1091,7 +1256,7 @@ b1: 1.50087844793462
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_87_0.png" src="../_images/9_Multiple_Regression_87_0.png" />
+<img alt="../_images/9_Multiple_Regression_100_0.png" src="../_images/9_Multiple_Regression_100_0.png" />
 </div>
 </div>
 <p>＜Give it a try!＞</p>
@@ -1102,10 +1267,10 @@ b1: 1.50087844793462
 <li><p><code class="docutils literal notranslate"><span class="pre">N</span></code>を変化させて違いを確かめなさい。</p></li>
 </ul>
 </div>
-<div class="section" id="id11">
-<h2>シミュレーション：多重共線性<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id12">
-<h3>説明<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<h2>シミュレーション：多重共線性<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id13">
+<h3>説明<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>多重共線性高まると，パラメータの推定値の正確性が低下する（即ち、パラメータの標準誤差<span class="math notranslate nohighlight">\(\text{se}\left(\hat{\beta}_j\right)\)</span>が大きくなる）。この点を確認するためにパラメータの分散の推定値にある</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1114,8 +1279,8 @@ b1: 1.50087844793462
 <p>を利用する。これは**分散拡大因子（variance inflation factor）**と呼ばれる。この値が１０以上になる説明変数どうしを使うと多重共線性の可能性が高いといわれる。</p>
 <p>例として回帰分析<code class="docutils literal notranslate"><span class="pre">res_1</span></code>を考える。</p>
 </div>
-<div class="section" id="id13">
-<h3>方法１：手計算<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h3>方法１：手計算<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p>説明変数だけから構成される<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1133,7 +1298,7 @@ b1: 1.50087844793462
 </div>
 </div>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">linalg.inv()</span></code>は<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>にある<code class="docutils literal notranslate"><span class="pre">linalg</span></code>サブパッケージの<code class="docutils literal notranslate"><span class="pre">inv()</span></code>（逆行列を返す関数）を使い逆関数を計算する。</p></li>
+<li><p>上でも使ったが<code class="docutils literal notranslate"><span class="pre">linalg.inv()</span></code>は<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>にある<code class="docutils literal notranslate"><span class="pre">linalg</span></code>サブパッケージの<code class="docutils literal notranslate"><span class="pre">inv()</span></code>（逆行列を返す関数）を使い逆関数を計算する。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">diagonal()</span></code>は関数の対角成分を返すメソッドであり，それが<code class="docutils literal notranslate"><span class="pre">vif</span></code>。</p></li>
 </ul>
 <div class="cell docutils container">
@@ -1187,8 +1352,8 @@ dtype: float64
 </div>
 </div>
 </div>
-<div class="section" id="id14">
-<h3>方法２：<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id15">
+<h3>方法２：<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>にある<code class="docutils literal notranslate"><span class="pre">variance_inflation_factor</span></code>を使う。</p>
 <p>必ず<strong>定数項を含む</strong>説明変数だけから構成される<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作成する。</p>
 <div class="cell docutils container">
@@ -1216,16 +1381,31 @@ exper 	 1.4776177726317783
 <p>定数項は考えなくて良い。</p>
 <p>（コメント）上のコードにある<code class="docutils literal notranslate"><span class="pre">\t</span></code>は文字列の中でタブを入れる場合に使う。</p>
 </div>
-<div class="section" id="id15">
-<h3>シミュレーション<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id16">
+<h3>シミュレーション<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
 <p>多重共線性により，<code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定量の標準誤差が上昇し推定量の正確性が損なわれることを確認する。</p>
 <p>シミュレーションでは以下の回帰式を使う。</p>
 <div class="math notranslate nohighlight">
 \[y=\beta_0+\beta_1x_1+\beta_2x_2+u\]</div>
 <p>シミュレーションの関数を作成する。</p>
+<ul class="simple">
+<li><p>引数</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>：標本の大きさ`</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">N</span></code>：標本数（ループの回数）の</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">m</span></code>：２つの説明変数の共分散</p></li>
+</ul>
+</li>
+<li><p>返り値</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\hat{\beta}_i\)</span>，<span class="math notranslate nohighlight">\(i=0,1,2\)</span>の推定値のリスト</p></li>
+</ul>
+</li>
+</ul>
+<p>（コメント）<code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>を使いたいところだが，<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の<code class="docutils literal notranslate"><span class="pre">random.multivariate_normal()</span></code>が<code class="docutils literal notranslate"><span class="pre">Numba</span></code>に対応していないため<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>の <code class="docutils literal notranslate"><span class="pre">multivariate_normal.rvs()</span></code>を使っている。<code class="docutils literal notranslate"><span class="pre">np.random.normal()</span></code>を使って二変量正規分布から値とする方法もあるが，ここでは簡単化を重視する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sim_multi</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">b0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">b1</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">b2</span><span class="o">=</span><span class="mf">1.5</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ, N=標本数, m=共分散</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sim_multi</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ, N=標本数, m=共分散</span>
     
     <span class="c1"># ２つのx1,x2の共分散を設定</span>
     <span class="n">rv_mean</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># x1, x2の平均</span>
@@ -1245,16 +1425,17 @@ exper 	 1.4776177726317783
         <span class="n">x1</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 説明変数</span>
         <span class="n">x2</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 説明変数</span>
 
-        <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 誤差項（標準正規分布）</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 標準正規分布</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="n">b2</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># 説明変数</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X1&#39;</span><span class="p">:</span><span class="n">x1</span><span class="p">,</span> <span class="s1">&#39;X2&#39;</span><span class="p">:</span><span class="n">x2</span><span class="p">})</span>  <span class="c1"># DataFrameの作成</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X1 + X2&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLS推定</span>
+        
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">c</span><span class="p">,</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 説明変数の行列</span>
+        <span class="n">bhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@X</span><span class="p">)</span><span class="o">@</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@y</span>  <span class="c1"># OLS推定</span>
+        
+        <span class="n">b0hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bhat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># b0hat_listへの追加</span>
+        <span class="n">b1hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bhat</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># b1hat_listへの追加</span>
+        <span class="n">b2hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bhat</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>  <span class="c1"># b2hat_listへの追加</span>
 
-        <span class="n">b0hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># b0の推定値</span>
-        <span class="n">b1hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># b1の推定値</span>
-        <span class="n">b2hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>  <span class="c1"># b2の推定値</span>
-
-    <span class="k">return</span> <span class="n">b0</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">b0hat_list</span><span class="p">,</span> <span class="n">b1hat_list</span><span class="p">,</span> <span class="n">b2hat_list</span> <span class="c1"># 返り値の設定</span>
+    <span class="k">return</span> <span class="n">b0hat_list</span><span class="p">,</span> <span class="n">b1hat_list</span><span class="p">,</span> <span class="n">b2hat_list</span> <span class="c1"># 返り値の設定</span>
 </pre></div>
 </div>
 </div>
@@ -1263,10 +1444,10 @@ exper 	 1.4776177726317783
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 多重共線性が弱いケース </span>
-<span class="n">b0</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">b0hat_weak</span><span class="p">,</span> <span class="n">b1hat_weak</span><span class="p">,</span> <span class="n">b2hat_weak</span> <span class="o">=</span> <span class="n">sim_multi</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">b0hat_weak</span><span class="p">,</span> <span class="n">b1hat_weak</span><span class="p">,</span> <span class="n">b2hat_weak</span> <span class="o">=</span> <span class="n">sim_multi</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 
 <span class="c1"># 多重共線性が強いケース </span>
-<span class="n">b0</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">b0hat_strong</span><span class="p">,</span> <span class="n">b1hat_strong</span><span class="p">,</span> <span class="n">b2hat_strong</span> <span class="o">=</span> <span class="n">sim_multi</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">b0hat_strong</span><span class="p">,</span> <span class="n">b1hat_strong</span><span class="p">,</span> <span class="n">b2hat_strong</span> <span class="o">=</span> <span class="n">sim_multi</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1274,18 +1455,16 @@ exper 	 1.4776177726317783
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布の図示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">3.5</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
 
 <span class="c1"># 多重共線性が弱いケース</span>
-<span class="n">kde_model_weak</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1hat_weak</span><span class="p">)</span>  <span class="c1"># OLS推定量のカーネル密度推定を設定</span>
-<span class="n">b1_weak_dist</span> <span class="o">=</span> <span class="n">kde_model_weak</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>  <span class="c1"># OLS推定量のカーネル密度関数を計算</span>
+<span class="n">kde_model_weak</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1hat_weak</span><span class="p">)</span>  <span class="c1"># OLS推定量のカーネル密度関数を計算</span>
 
 <span class="c1"># 多重共線性が強いケース</span>
 <span class="n">kde_model_strong</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1hat_strong</span><span class="p">)</span>
-<span class="n">b1_strong_dist</span> <span class="o">=</span> <span class="n">kde_model_strong</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">b1_weak_dist</span><span class="p">,</span> <span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Low VIF&#39;</span><span class="p">)</span>  <span class="c1"># OLS推定量の分布プロット</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">b1_strong_dist</span><span class="p">,</span><span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;High VIF&#39;</span><span class="p">)</span>  <span class="c1"># IV推定量の分布プロット</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_weak</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Low VIF&#39;</span><span class="p">)</span>  <span class="c1"># OLS推定量の分布プロット</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_strong</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span><span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;High VIF&#39;</span><span class="p">)</span>  <span class="c1"># IV推定量の分布プロット</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Kernel Density&#39;</span><span class="p">)</span>  <span class="c1"># 縦軸のラベル</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>  <span class="c1"># 凡例</span>
@@ -1294,7 +1473,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_116_0.png" src="../_images/9_Multiple_Regression_116_0.png" />
+<img alt="../_images/9_Multiple_Regression_129_0.png" src="../_images/9_Multiple_Regression_129_0.png" />
 </div>
 </div>
 <p>多重共線性が高いと推定値の分布は，真の値（<span class="math notranslate nohighlight">\(\beta_1=\)</span>
@@ -1306,7 +1485,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.037177463085661645, 0.10857096757480511)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.03754619939767145, 0.1063578732348017)
 </pre></div>
 </div>
 </div>
@@ -1350,10 +1529,10 @@ exper 	 1.4776177726317783
 
 
 <span class="c1"># 多重共線性が弱いケース </span>
-<span class="n">se_x1_weak</span><span class="p">,</span> <span class="n">se_x1_weak</span> <span class="o">=</span> <span class="n">sim_se</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">se_x1_weak</span><span class="p">,</span> <span class="n">se_x1_weak</span> <span class="o">=</span> <span class="n">sim_se</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 
 <span class="c1"># 多重共線性が強いケース </span>
-<span class="n">se_x1_strong</span><span class="p">,</span> <span class="n">se_x1_strong</span> <span class="o">=</span> <span class="n">sim_se</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">se_x1_strong</span><span class="p">,</span> <span class="n">se_x1_strong</span> <span class="o">=</span> <span class="n">sim_se</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
 
 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">se_x1_weak</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Weak VIF&#39;</span><span class="p">)</span>
@@ -1366,7 +1545,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_121_0.png" src="../_images/9_Multiple_Regression_121_0.png" />
+<img alt="../_images/9_Multiple_Regression_134_0.png" src="../_images/9_Multiple_Regression_134_0.png" />
 </div>
 </div>
 <p>問5の答え：<span class="math notranslate nohighlight">\(+\)</span>を押すと答えが表示される。</p>
@@ -1380,14 +1559,14 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.2081667001581144, 0.42312684797565925)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.17371142693220132, 0.32066909607435073)
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="section" id="id16">
-<h3>図を使ってチェック<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id17">
+<h3>図を使ってチェック<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <p>多重共線性は説明変数間の相関が高いと発生するが，ここでは相関度を図を使ってチェックする。色々な方法があるが，以下では２つ紹介する。</p>
 <ol class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">pandas</span></code>の関数<code class="docutils literal notranslate"><span class="pre">scatter_matrix</span></code>を使う方法</p></li>
@@ -1404,7 +1583,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_128_0.png" src="../_images/9_Multiple_Regression_128_0.png" />
+<img alt="../_images/9_Multiple_Regression_141_0.png" src="../_images/9_Multiple_Regression_141_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">pandas</span></code>の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>や<code class="docutils literal notranslate"><span class="pre">Series</span></code>には図を作成するメソッド<code class="docutils literal notranslate"><span class="pre">plot()</span></code>が用意されている（裏では<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>が動いている）。例えば，<code class="docutils literal notranslate"><span class="pre">wage1</span></code>にある<code class="docutils literal notranslate"><span class="pre">educ</span></code>のヒストグラムであれば次のコードで図示することができる。</p>
@@ -1434,7 +1613,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_130_0.png" src="../_images/9_Multiple_Regression_130_0.png" />
+<img alt="../_images/9_Multiple_Regression_143_0.png" src="../_images/9_Multiple_Regression_143_0.png" />
 </div>
 </div>
 <p>横軸と縦軸のラベルを確認すること。対角線上はそれぞれの変数のヒストグラム，対角線以外の図はそれぞれのペアの変数の散布図となっており，相関度をある程度目で確認できる。</p>
@@ -1452,7 +1631,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_132_0.png" src="../_images/9_Multiple_Regression_132_0.png" />
+<img alt="../_images/9_Multiple_Regression_145_0.png" src="../_images/9_Multiple_Regression_145_0.png" />
 </div>
 </div>
 <p>次に相関係数を簡単に計算する方法を紹介する。<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">corr()</span></code>を使うと変数の相関係数を自動的に表示される。</p>
@@ -1535,7 +1714,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_139_0.png" src="../_images/9_Multiple_Regression_139_0.png" />
+<img alt="../_images/9_Multiple_Regression_152_0.png" src="../_images/9_Multiple_Regression_152_0.png" />
 </div>
 </div>
 <p>赤はプラス，青はマイナスを示し，色の濃淡は絶対値に連動している。ここで使った３つのオプション（設定しなくても良い）の説明する。</p>
@@ -1557,7 +1736,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9_Multiple_Regression_142_0.png" src="../_images/9_Multiple_Regression_142_0.png" />
+<img alt="../_images/9_Multiple_Regression_155_0.png" src="../_images/9_Multiple_Regression_155_0.png" />
 </div>
 </div>
 <p>図の解釈は<code class="docutils literal notranslate"><span class="pre">pandas</span></code>の場合と同じである。</p>

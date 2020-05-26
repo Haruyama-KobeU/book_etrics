@@ -31,7 +31,7 @@
     <link rel="canonical" href="https://haruyama-kobeu.github.io/book_etrics/docs/17_Panel.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="GM仮定４が満たされない場合" href="18_dummy.html" />
+    <link rel="next" title="GM仮定４が満たされない場合" href="18_Zero_Conditional_Mean.html" />
     <link rel="prev" title="linearmodels" href="16_linearmodels.html" />
 
 
@@ -144,13 +144,13 @@
       <a href="">パネル・データ分析</a>
     </li>
     <li class="">
-      <a href="18_dummy.html">GM仮定４が満たされない場合</a>
+      <a href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a>
     </li>
     <li class="">
       <a href="19_dummy.html">操作変数法と２段階OLS</a>
     </li>
     <li class="">
-      <a href="20_LogitProbit.html">離散選択モデル：LogitとProbit</a>
+      <a href="20_LogitProbit.html">離散選択モデル</a>
     </li>
     <li class="">
       <a href="21_TruncregTobitHeckit.html">制限従属変数モデル</a>
@@ -939,8 +939,8 @@ memory usage: 1.5 MB
 Dep. Variable:                  lwage   R-squared:                        0.1806
 Estimator:                   PanelOLS   R-squared (Between):              0.2386
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Sun, May 24 2020   R-squared (Overall):              0.2361
-Time:                        17:34:31   Log-likelihood                   -1324.8
+Date:                Tue, May 26 2020   R-squared (Overall):              0.2361
+Time:                        11:44:34   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      83.851
 Entities:                         545   P-value                           0.0000
@@ -982,8 +982,8 @@ Max Obs:                       545.00
 Dep. Variable:                  lwage   R-squared:                        0.0216
 Estimator:                   PanelOLS   R-squared (Between):             -0.2717
 No. Observations:                4360   R-squared (Within):              -0.4809
-Date:                Sun, May 24 2020   R-squared (Overall):             -0.2808
-Time:                        17:34:31   Log-likelihood                   -1324.8
+Date:                Tue, May 26 2020   R-squared (Overall):             -0.2808
+Time:                        11:44:35   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      27.959
 Entities:                         545   P-value                           0.0000
@@ -1356,8 +1356,8 @@ Name: Variance Decomposition, dtype: float64
 Dep. Variable:                  lwage   R-squared:                        0.1711
 Estimator:              RandomEffects   R-squared (Between):              0.0967
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Sun, May 24 2020   R-squared (Overall):              0.1355
-Time:                        17:34:32   Log-likelihood                   -1609.8
+Date:                Tue, May 26 2020   R-squared (Overall):              0.1355
+Time:                        11:44:35   Log-likelihood                   -1609.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      69.027
 Entities:                         545   P-value                           0.0000
@@ -1431,7 +1431,7 @@ H0: Linear equality constraint is valid
 Statistic: 35.6454
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x106b82040
+WaldTestStatistic, id: 0x10a08a760
 </pre></div>
 </div>
 </div>
@@ -1514,7 +1514,7 @@ H0: Linear equality constraint is valid
 Statistic: 26.0233
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x11be506a0
+WaldTestStatistic, id: 0x11b7c40d0
 </pre></div>
 </div>
 </div>
@@ -1847,32 +1847,32 @@ T-stats reported in parentheses
     <tr>
       <th rowspan="5" valign="top">0</th>
       <th>2000</th>
-      <td>-1.438921</td>
-      <td>-0.697874</td>
+      <td>-0.331141</td>
+      <td>-0.978716</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2001</th>
-      <td>3.920026</td>
-      <td>0.824124</td>
+      <td>2.335925</td>
+      <td>0.535328</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2002</th>
-      <td>-0.714756</td>
-      <td>-1.251907</td>
+      <td>-2.313412</td>
+      <td>-1.207482</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2003</th>
-      <td>1.589203</td>
-      <td>0.311722</td>
+      <td>-0.064104</td>
+      <td>-1.025829</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2004</th>
-      <td>2.692773</td>
-      <td>1.604525</td>
+      <td>0.280802</td>
+      <td>0.321526</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -1895,7 +1895,7 @@ T-stats reported in parentheses
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-X              1.9960     0.0494     40.421     0.0000      1.8989      2.0931
+X              1.9963     0.0477     41.876     0.0000      1.9026      2.0901
 ==============================================================================
 </pre></div>
 </div>
@@ -1918,10 +1918,10 @@ X              1.9960     0.0494     40.421     0.0000      1.8989      2.0931
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.7341     0.1504     11.528     0.0000      1.4386      2.0297
-X              2.8399     0.0254     112.00     0.0000      2.7900      2.8897
+Intercept      2.1061     0.1508     13.967     0.0000      1.8098      2.4023
+X              2.7941     0.0254     110.17     0.0000      2.7442      2.8439
 ==============================================================================
-theta: [0.28474531]
+theta: [0.34140384]
 </pre></div>
 </div>
 </div>
@@ -1951,9 +1951,9 @@ theta: [0.28474531]
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      0.9528     0.1234     7.7209     0.0000      0.7104      1.1953
-X              1.9960     0.0493     40.452     0.0000      1.8991      2.0930
-X_mean         0.9996     0.0537     18.601     0.0000      0.8940      1.1051
+Intercept      1.3044     0.1248     10.450     0.0000      1.0591      1.5496
+X              1.9963     0.0476     41.908     0.0000      1.9028      2.0899
+X_mean         0.9600     0.0523     18.358     0.0000      0.8572      1.0627
 ==============================================================================
 </pre></div>
 </div>
@@ -1975,8 +1975,8 @@ X_mean         0.9996     0.0537     18.601     0.0000      0.8940      1.1051
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.3854     0.1185     11.695     0.0000      1.1527      1.6182
-X              2.9094     0.0202     144.11     0.0000      2.8697      2.9490
+Intercept      1.6889     0.1125     15.011     0.0000      1.4679      1.9100
+X              2.8785     0.0192     149.84     0.0000      2.8407      2.9162
 ==============================================================================
 </pre></div>
 </div>
@@ -2269,7 +2269,7 @@ d87            0.9250     0.0776     11.913     0.0000      0.7728      1.0773
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="16_linearmodels.html" title="previous page"><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code></a>
-    <a class='right-next' id="next-link" href="18_dummy.html" title="next page">GM仮定４が満たされない場合</a>
+    <a class='right-next' id="next-link" href="18_Zero_Conditional_Mean.html" title="next page">GM仮定４が満たされない場合</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

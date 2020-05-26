@@ -144,13 +144,13 @@
       <a href="17_Panel.html">パネル・データ分析</a>
     </li>
     <li class="">
-      <a href="18_dummy.html">GM仮定４が満たされない場合</a>
+      <a href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a>
     </li>
     <li class="">
       <a href="19_dummy.html">操作変数法と２段階OLS</a>
     </li>
     <li class="">
-      <a href="20_LogitProbit.html">離散選択モデル：LogitとProbit</a>
+      <a href="20_LogitProbit.html">離散選択モデル</a>
     </li>
     <li class="">
       <a href="21_TruncregTobitHeckit.html">制限従属変数モデル</a>
@@ -454,8 +454,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([ 1.44181488, -0.59188757,  0.15245241, -0.5094768 ,  0.66380424,
-       -0.63420724,  1.6076327 , -0.38371   ,  0.1346585 , -0.41602327])
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([-0.1536567 ,  2.94998175, -0.35054729, -0.03027225,  0.2239677 ,
+        1.17587043,  1.98011685,  0.05449391,  1.38796242, -0.3210599 ])
 </pre></div>
 </div>
 </div>
@@ -483,7 +483,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>-0.0057239310932809115
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.007079747240852991
 </pre></div>
 </div>
 </div>
@@ -522,10 +522,6 @@ u = pu_N+(1-p)u_c
 <ul class="simple">
 <li><p>引数：標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code></p></li>
 <li><p>返り値：<code class="docutils literal notranslate"><span class="pre">b1</span></code>の推定値の<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の<code class="docutils literal notranslate"><span class="pre">array</span></code></p></li>
-</ul>
-<p>＜コメント＞</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">b1</span></code>の推定値の計算には<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使わずに，<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数を使い「手計算」とする。これにより計算を高速化するパッケージ<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使うことが可能となる。使い方は簡単でデコレーターと呼ばれる<code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>（又は<code class="docutils literal notranslate"><span class="pre">&#64;jit</span></code>）を関数の上に加えるだけである。これだけで計算速度が数十倍早くなる場合もある。</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -599,8 +595,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([0.22980357, 0.67255537, 0.22511226, ..., 0.50333717, 0.31227646,
-       0.4076026 ])
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([0.59705352, 0.38019107, 0.73012302, ..., 1.03424304, 0.57187501,
+       0.30063029])
 </pre></div>
 </div>
 </div>
@@ -1111,10 +1107,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(1.0479957284978334,
- 0.592148480287889,
- 0.11160210667348294,
- 3.0219925922086994)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(4.983310816775088,
+ 0.08277283026071285,
+ 0.18325365017910042,
+ 2.6761615866063018)
 </pre></div>
 </div>
 </div>
@@ -1137,10 +1133,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(30.877650542124215,
- 1.9724380766192973e-07,
- -0.06540267058729267,
- 1.7896210557258678)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(30.497047434722155,
+ 2.3858893158400826e-07,
+ 0.13029251192988744,
+ 1.818495145076981)
 </pre></div>
 </div>
 </div>
@@ -1222,7 +1218,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=1.1294794981274534, pvalue=0.568508082267217)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=5.502816964839877, pvalue=0.06383788331906516)
 </pre></div>
 </div>
 </div>
@@ -1238,7 +1234,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=341.4360040725684, pvalue=7.212963825075911e-75)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=279.8919544619343, pvalue=1.6681470202177302e-61)
 </pre></div>
 </div>
 </div>

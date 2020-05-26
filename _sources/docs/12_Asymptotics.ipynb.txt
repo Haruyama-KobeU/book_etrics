@@ -37,9 +37,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## 一致性（Consistency）"
    ]
@@ -47,8 +45,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### 説明"
@@ -108,19 +105,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "### シミュレーション：一致性"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "シミュレーションを使い一致性の分布収束を確かめる。仮定１〜４には誤差項の正規性や均一性は含まれていない。この点を捉えるために，誤差項は２つの異なる分布から確率的に発生すると仮定する。具体的には，確率$p$で誤差項は正規分布\n",
     "$$u_N\\sim\\text{Normal(0,0.25)}$$\n",
@@ -141,8 +133,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "#### 誤差項のプロット"
@@ -358,19 +349,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "#### 一致性"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "＜シミュレーションの内容＞\n",
     "* 母集団のパラメータを決める。\n",
@@ -384,9 +370,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "母集団のパラメータ"
    ]
@@ -394,9 +378,7 @@
   {
    "cell_type": "code",
    "execution_count": 9,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [],
    "source": [
     "b0 = 1  # 定数項\n",
@@ -405,9 +387,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "標本数（シミュレーションの回数）"
    ]
@@ -415,9 +395,7 @@
   {
    "cell_type": "code",
    "execution_count": 10,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [],
    "source": [
     "N = 10000"
@@ -425,24 +403,17 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "シミュレーションをおこなう関数を以下で定義する。\n",
     "* 引数：標本の大きさ`n`\n",
-    "* 返り値：`b1`の推定値の`numpy`の`array`\n",
-    "\n",
-    "＜コメント＞\n",
-    "* `b1`の推定値の計算には`statsmodels`を使わずに，`numpy`の関数を使い「手計算」とする。これにより計算を高速化するパッケージ`Numba`を使うことが可能となる。使い方は簡単でデコレーターと呼ばれる`@njit`（又は`@jit`）を関数の上に加えるだけである。これだけで計算速度が数十倍早くなる場合もある。"
+    "* 返り値：`b1`の推定値の`numpy`の`array`"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 11,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [],
    "source": [
     "@njit  # 計算の高速化\n",
@@ -478,9 +449,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "$n=30,\\;100,\\;250,\\;500$の４パターンのシミュレーションをおこなう。次のようなコードを書くことも可能である。\n",
     "\n",
@@ -503,9 +472,7 @@
   {
    "cell_type": "code",
    "execution_count": 12,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [],
    "source": [
     "data_consistency = {}  # 空の辞書の作成\n",
@@ -516,9 +483,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "最後の行の右辺は`sim_consistency()`の返り値である`array`であり，それをキー`'30'`や`'100'`とのペアにに設定し，それらから構成される辞書`data_consistency`を作成している。イメージとしては次のような辞書となっている。\n",
     "```\n",
@@ -530,9 +495,7 @@
   {
    "cell_type": "code",
    "execution_count": 13,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -552,9 +515,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "とする。次に図をプロットしよう。"
    ]
@@ -562,9 +523,7 @@
   {
    "cell_type": "code",
    "execution_count": 14,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -610,9 +569,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "上のコードには同じような行が複数あり，単純な間違いの可能性が高くなる。。`for`ループを使うとよりコンパクトに書くことが可能となり，間違いも少なくなる。"
    ]
@@ -620,9 +577,7 @@
   {
    "cell_type": "code",
    "execution_count": 15,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -664,9 +619,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "1. `zip()`はループによく使われる便利な関数である。以下の単純な`for`ループ\n",
     "    ```\n",
@@ -679,9 +632,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "図から$n$が増加すると分布の分散が小さくなるのが視覚的に確認できる。これが一致性である。`n`の増加により推定量$\\hat{\\beta}_1$の正確性が増すことが理解できる。また4つの分布は真の値$b_1=0.5$を中心に左右対象であることもわかる。即ち，推定量$\\hat{\\beta}_1$は不偏性も満たしていることがわかる。"

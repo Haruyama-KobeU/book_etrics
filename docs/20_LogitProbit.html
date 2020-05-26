@@ -83,6 +83,29 @@
   <ul class="nav sidenav_l1">
   <li class="">
     <a href="part_1.html">１. Pythonの基礎</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="0_Preparations.html">ツールのインストールと説明</a>
+    </li>
+    <li class="">
+      <a href="1_Python_Basics.html">Pythonの基礎</a>
+    </li>
+    <li class="">
+      <a href="2_NumPy.html">NumPy</a>
+    </li>
+    <li class="">
+      <a href="3_Pandas.html">Pandas</a>
+    </li>
+    <li class="">
+      <a href="4_Matplotlib.html">Matplotlib</a>
+    </li>
+    <li class="">
+      <a href="5_SciPy_stats.html">SciPy.stats</a>
+    </li>
+    <li class="">
+      <a href="6_things_to_note.html">Tipsと注意点</a>
+    </li>
+  </ul>
   </li>
   <li class="active">
     <a href="part_2.html">２. Pythonを使った計量経済分析</a>
@@ -121,7 +144,7 @@
       <a href="17_Panel.html">パネル・データ分析</a>
     </li>
     <li class="">
-      <a href="18_dummy.html">GM仮定４が満たされない場合</a>
+      <a href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a>
     </li>
     <li class="">
       <a href="19_dummy.html">操作変数法と２段階OLS</a>
@@ -136,6 +159,14 @@
   </li>
   <li class="">
     <a href="part_3.html">３. 番外編</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="Gapminder.html">Gapminder</a>
+    </li>
+    <li class="">
+      <a href="Descriptive_stats_vs_Graphs.html">記述統計とグラフ</a>
+    </li>
+  </ul>
   </li>
 </ul>
 </nav>
@@ -550,8 +581,8 @@ provided the data, which he obtained from Professor Mroz.
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                          Logit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Sun, 24 May 2020   Pseudo R-squ.:                  0.2197
-Time:                        17:17:56   Log-Likelihood:                -401.77
+Date:                Tue, 26 May 2020   Pseudo R-squ.:                  0.2197
+Time:                        11:42:36   Log-Likelihood:                -401.77
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
 ==============================================================================
@@ -693,8 +724,8 @@ df freedom:  7.
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                         Probit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Sun, 24 May 2020   Pseudo R-squ.:                  0.2206
-Time:                        17:17:56   Log-Likelihood:                -401.30
+Date:                Tue, 26 May 2020   Pseudo R-squ.:                  0.2206
+Time:                        11:42:36   Log-Likelihood:                -401.30
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 ==============================================================================
@@ -904,9 +935,7 @@ age           -0.0159      0.002     -6.739      0.000      -0.021      -0.011
 kidslt6       -0.2612      0.032     -8.197      0.000      -0.324      -0.199
 kidsge6        0.0108      0.013      0.829      0.407      -0.015       0.036
 ==============================================================================
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>       Probit Marginal Effects       
+       Probit Marginal Effects       
 =====================================
 Dep. Variable:                   inlf
 Method:                          dydx
@@ -956,8 +985,8 @@ kidsge6        0.0141      0.017      0.828      0.408      -0.019       0.047
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                          Logit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Sun, 24 May 2020   Pseudo R-squ.:                  0.2197
-Time:                        17:17:56   Log-Likelihood:                -401.77
+Date:                Tue, 26 May 2020   Pseudo R-squ.:                  0.2197
+Time:                        11:42:36   Log-Likelihood:                -401.77
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
 ==============================================================================
@@ -1125,8 +1154,8 @@ G(z) = z
 Dep. Variable:                   inlf   R-squared:                       0.264
 Model:                            OLS   Adj. R-squared:                  0.257
 Method:                 Least Squares   F-statistic:                     62.48
-Date:                Sun, 24 May 2020   Prob (F-statistic):           1.30e-70
-Time:                        17:17:57   Log-Likelihood:                -423.89
+Date:                Tue, 26 May 2020   Prob (F-statistic):           1.30e-70
+Time:                        11:42:36   Log-Likelihood:                -423.89
 No. Observations:                 753   AIC:                             863.8
 Df Residuals:                     745   BIC:                             900.8
 Df Model:                           7                                         
