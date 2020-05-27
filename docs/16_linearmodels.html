@@ -83,6 +83,29 @@
   <ul class="nav sidenav_l1">
   <li class="">
     <a href="part_1.html">１. Pythonの基礎</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="0_Preparations.html">ツールのインストールと説明</a>
+    </li>
+    <li class="">
+      <a href="1_Python_Basics.html">Pythonの基礎</a>
+    </li>
+    <li class="">
+      <a href="2_NumPy.html">NumPy</a>
+    </li>
+    <li class="">
+      <a href="3_Pandas.html">Pandas</a>
+    </li>
+    <li class="">
+      <a href="4_Matplotlib.html">Matplotlib</a>
+    </li>
+    <li class="">
+      <a href="5_SciPy_stats.html">SciPy.stats</a>
+    </li>
+    <li class="">
+      <a href="6_things_to_note.html">Tipsと注意点</a>
+    </li>
+  </ul>
   </li>
   <li class="active">
     <a href="part_2.html">２. Pythonを使った計量経済分析</a>
@@ -136,6 +159,14 @@
   </li>
   <li class="">
     <a href="part_3.html">３. 番外編</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="Gapminder.html">Gapminder</a>
+    </li>
+    <li class="">
+      <a href="Descriptive_stats_vs_Graphs.html">記述統計とグラフ</a>
+    </li>
+  </ul>
   </li>
 </ul>
 </nav>
@@ -281,14 +312,27 @@
 <ul class="simple">
 <li><p>推定結果などのメソッドや属性が共通化されているわけではない。次の表に３つの例を挙げる。</p></li>
 </ul>
-<pre>
-    |                      | 推定結果を     | 残差を    | 標準誤差を  |
-    |                      | 表示する        | 取得する | 取得する     |
-    |                      | メソッド 　　 | 属性 　　| 属性 　       |
-    |-------------------|-------------------|-------------|----------------|
-    | statsmodels  | .summary()   | .resid     | .bse           |
-    | linearmodes  | .summary     | .resids    | .std_erros  |
-</pre>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:right head"><p></p></th>
+<th class="text-align:center head"><p>推定結果の<br> 表を表示</p></th>
+<th class="text-align:center head"><p>残差を<br> 表示する<br> メソッド</p></th>
+<th class="text-align:center head"><p>標準誤差を<br> 取得する<br> 属性</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:right"><p>statsmodels</p></td>
+<td class="text-align:center"><p>.summary()</p></td>
+<td class="text-align:center"><p>.resid</p></td>
+<td class="text-align:center"><p>.bse</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:right"><p>linearmodels</p></td>
+<td class="text-align:center"><p>.summary()</p></td>
+<td class="text-align:center"><p>.resids</p></td>
+<td class="text-align:center"><p>.std_errors</p></td>
+</tr>
+</tbody>
+</table>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>も<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>も回帰式を文字列で指定できるが，定数項の指定する方法が異なる。</p>
 <ul class="simple">

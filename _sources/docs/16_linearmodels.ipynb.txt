@@ -21,29 +21,25 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## 説明"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "`linearmodels`は`statsmodels`を補完する目的として開発されている。主に，パネルデータ，操作変数法を使った推定法やGMMを扱う場合には非常に重宝するパッケージである。しかし，`linearmodels`は`statsmodels`の両方を使う上で以下の点に注意する必要がある。\n",
     "* 推定結果などのメソッドや属性が共通化されているわけではない。次の表に３つの例を挙げる。\n",
-    "<pre>\n",
-    "    |                      | 推定結果を     | 残差を    | 標準誤差を  |\n",
-    "    |                      | 表示する        | 取得する | 取得する     |\n",
-    "    |                      | メソッド 　　 | 属性 　　| 属性 　       |\n",
-    "    |-------------------|-------------------|-------------|----------------|\n",
-    "    | statsmodels  | .summary()   | .resid     | .bse           |\n",
-    "    | linearmodes  | .summary     | .resids    | .std_erros  |\n",
-    "</pre>\n",
+    "\n",
+    "\n",
+    "|              | 推定結果の<br> 表を表示 | 残差を<br> 表示する<br> メソッド | 標準誤差を<br> 取得する<br> 属性 |\n",
+    "|-------------:|:-----------------------:|:--------------------------------:|:--------------------------------:|\n",
+    "| statsmodels  | .summary()              | .resid                           | .bse                             |\n",
+    "| linearmodels | .summary()              | .resids                          | .std_errors                      |\n",
+    "\n",
+    "\n",
     "* `statsmodels`も`linearmodels`も回帰式を文字列で指定できるが，定数項の指定する方法が異なる。\n",
     "    * `statsmodels`では，定数項は自動的に追加される，定数項を省く場合は`-1`を追加する。\n",
     "    * `linearmodels`では，定数項は自動的に追加されない。定数項を入れる場合は`1`を追加する。\n",
@@ -64,9 +60,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "---\n",
     "以下では`linearmodels`を使うが，そのためには`DataFrame`を`MultiIndex`に変換する必要がある。以下では，まず`MultiIndex`について説明し，その後に`linearmodel`にある`PanelData`関数について説明する\n",
@@ -76,7 +70,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "heading_collapsed": true
+   },
    "source": [
     "## `Pandas`の`MultiIndex`"
    ]
@@ -84,7 +80,8 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true
+    "heading_collapsed": true,
+    "hidden": true
    },
    "source": [
     "### 説明"
@@ -563,14 +560,18 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "### 要素，行，列の抽出"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "`MultiIndex`のまま要素・列・行の抽出およぼスライシングには様々な方法があり，複雑である。特に，スライシングをしたい場合，一番簡単なのは`reset_index()`で通常の`DataFrame`に戻し，スライシングし新たな`DataFrame`を作成するだけでも十分であろう。\n",
     "\n",
@@ -585,14 +586,18 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "#### １つの観察単位の抽出"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "１つの要素を抽出する場合は，タプルを使う。例えば，日本の2001年の`gdp`を抽出したい場合。"
    ]
@@ -600,7 +605,9 @@
   {
    "cell_type": "code",
    "execution_count": 5,
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -620,7 +627,8 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true
+    "heading_collapsed": true,
+    "hidden": true
    },
    "source": [
     "#### 行の抽出"
@@ -836,7 +844,8 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true
+    "heading_collapsed": true,
+    "hidden": true
    },
    "source": [
     "#### 第０インデックスの観察単位の全て"
@@ -1034,7 +1043,8 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true
+    "heading_collapsed": true,
+    "hidden": true
    },
    "source": [
     "#### 列の抽出"
@@ -1456,7 +1466,8 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true
+    "heading_collapsed": true,
+    "hidden": true
    },
    "source": [
     "#### 第１インデックスのある年だけの抽出"
