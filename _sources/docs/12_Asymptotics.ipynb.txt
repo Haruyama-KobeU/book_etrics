@@ -37,7 +37,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "heading_collapsed": true
+   },
    "source": [
     "## 一致性（Consistency）"
    ]
@@ -45,7 +47,8 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true
+    "heading_collapsed": true,
+    "hidden": true
    },
    "source": [
     "### 説明"
@@ -105,14 +108,18 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "### シミュレーション：一致性"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "シミュレーションを使い一致性の分布収束を確かめる。仮定１〜４には誤差項の正規性や均一性は含まれていない。この点を捉えるために，誤差項は２つの異なる分布から確率的に発生すると仮定する。具体的には，確率$p$で誤差項は正規分布\n",
     "\n",
@@ -137,7 +144,8 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true
+    "heading_collapsed": true,
+    "hidden": true
    },
    "source": [
     "#### 誤差項のプロット"
@@ -354,7 +362,8 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true
+    "heading_collapsed": true,
+    "hidden": true
    },
    "source": [
     "#### 一致性"
@@ -1070,7 +1079,6 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
     "hidden": true
    },
    "source": [
@@ -1141,37 +1149,6 @@
     "        q1_arr[j] = q1  # t値をarrayに追加\n",
     "    \n",
     "    return q1_arr  # 返り値の設定"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "```\n",
-    "def sim_non_norm(n):\n",
-    "    \n",
-    "    q1_list = []\n",
-    "    \n",
-    "    x = norm.rvs(loc=4, scale=1, size=n)\n",
-    "\n",
-    "    for j in range(N):\n",
-    "        \n",
-    "        # 非正規分布の誤差項（次の行だけが異なる）\n",
-    "        u = (chi2.rvs(1, size=n) - 1) / np.sqrt(2)\n",
-    "        y = b0 + b1 * x + u\n",
-    "        \n",
-    "        df = pd.DataFrame({'Y': y, 'X': x})\n",
-    "        \n",
-    "        res = ols(formula='Y ~ X', data=df).fit()\n",
-    "        b1hat = res.params[1]\n",
-    "        q1 = (b1hat - b1)/res.bse[1]\n",
-    "    \n",
-    "        q1_list.append(q1)\n",
-    "    \n",
-    "    return q1_list\n",
-    "```"
    ]
   },
   {
