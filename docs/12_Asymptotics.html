@@ -147,7 +147,7 @@
       <a href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a>
     </li>
     <li class="">
-      <a href="19_dummy.html">操作変数法と２段階OLS</a>
+      <a href="19_IV2SLS.html">操作変数法と２段階OLS</a>
     </li>
     <li class="">
       <a href="20_LogitProbit.html">離散選択モデル</a>
@@ -456,8 +456,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([-0.52187207,  0.06641149, -0.17277584, -0.36664682,  0.53605186,
-       -0.36640764, -0.2299174 , -0.07229131, -0.38594051, -0.67671116])
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([ 0.23897566, -0.65401206, -0.31761337,  0.23149933,  0.32457259,
+       -0.40693785, -0.67412693,  0.73962039, -0.42518811, -0.25028446])
 </pre></div>
 </div>
 </div>
@@ -485,7 +485,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.0013436707185839878
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>-0.0023302429840772626
 </pre></div>
 </div>
 </div>
@@ -597,8 +597,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([ 0.92563238,  1.05319313,  0.34833458, ..., -0.60508319,
-        0.76203275,  0.50639443])
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([0.58431104, 0.38795389, 0.28423946, ..., 0.59859989, 0.62014483,
+       0.49720375])
 </pre></div>
 </div>
 </div>
@@ -1086,10 +1086,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(2.132664591721195,
- 0.34426888108553966,
- 0.13657803398202195,
- 2.8334056935635554)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(1.1204010947067389,
+ 0.5710945208688689,
+ 0.10499087613405282,
+ 2.9015778670199666)
 </pre></div>
 </div>
 </div>
@@ -1112,10 +1112,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(23.526141197589126,
- 7.786877609372287e-06,
- 0.02073698681742006,
- 1.9381456375777257)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(30.461146489986756,
+ 2.4291038564104006e-07,
+ 0.014204264823090151,
+ 1.7911460026278168)
 </pre></div>
 </div>
 </div>
@@ -1197,7 +1197,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=2.0544090943488205, pvalue=0.3580063529120829)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=1.0442201746018678, pvalue=0.593267380323321)
 </pre></div>
 </div>
 </div>
@@ -1213,7 +1213,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=137.3645721762784, pvalue=1.4847801314782859e-30)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=337.2918007439331, pvalue=5.728172300456205e-74)
 </pre></div>
 </div>
 </div>

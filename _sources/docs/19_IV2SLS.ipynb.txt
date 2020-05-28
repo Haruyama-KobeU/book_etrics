@@ -1,0 +1,2480 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# 操作変数法と２段階OLS"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "import pandas as pd\n",
+    "from linearmodels.iv import IV2SLS\n",
+    "from wooldridge import * \n",
+    "from scipy.stats import gaussian_kde, multivariate_normal, norm, uniform\n",
+    "import matplotlib.pyplot as plt\n",
+    "from scipy.stats import chi2"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**＜仮定４が満たされない場合＞**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## 説明"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 基本的な考え方"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "仮定４：Zero Conditional Mean $\\text{E}(u|x)=0$\n",
+    "\n",
+    "仮定４a：$\\text{Cov}(x,u)=0$\n",
+    "\n",
+    "この仮定が満たされない理由に次の３つがあり（他にもある），その対処法となる推定方法について説明する。\n",
+    "* 欠落変数\n",
+    "* 同時方程式\n",
+    "* 測定誤差\n",
+    "\n",
+    "この仮定４もしくは４aが満たされている場合，$x$はは**外生的説明変数**という。一方，この仮定が満たされない場合，OLS推定量は不偏性も一致性も満たさない。その場合の説明変数は**内生的説明変数**とよばれる。説明変数の内生性は経済問題に多く存在すると考えられる。例えば，既出の賃金関数を考えよう。賃金は教育や経験などに依存しているが，労働者の内在的な能力にも依存していると考えられる。能力を捉える変数が回帰式にない場合（欠落変数），その効果は誤差項$u$に入ることになる。もちろん，能力が労働者の中でランダムに存在し，仮定４もしくは４aを満たしているのであれば問題がない。しかし説明変数である教育が誤差項に含まれる能力と何らかの関係がある場合（例えば，能力の高い人がより高い教育水準を選択する），仮定４もしくは４aは満たされないことになり，OLS推定量は不偏性を満たさない（**欠落変数バイアス**がある）。\n",
+    "\n",
+    "このような場合に役に立つのが**操作変数法**（`I`nstrumental `V`ariable Estimation）と呼ばれる手法である。この推定法では，ある条件を満たす内生的説明変数の代わりになる**操作変数**（外生的説明変数）を使うことにより，一致性を満たす推定量を得ることが可能となる。\n",
+    "\n",
+    "（注意点）\n",
+    "* IV推定量は**一致性**を満たすが，この特性を活かすためには十分に大きな標本が必要である。\n",
+    "* 標本の大きさが小さい場合，IV推定量は不偏性を失う。\n",
+    "* OLS推定量と比べてIV推定量の標準誤差は大きくなる（効率性が低い）。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "基本的なアイデアを整理するために次の単回帰式を考えよう。\n",
+    "\n",
+    "$$y=\\beta_0+\\beta_1w+u$$\n",
+    "\n",
+    "* $w$は説明変数\n",
+    "* $\\text{Cov}(w,u)\\neq 0$（即ち，$w$は内生的説明変数）\n",
+    "\n",
+    "**＜操作変数の３つの条件＞**\n",
+    "\n",
+    "更に，$w$に以下の条件を満たす**操作変数**（instruments）$z$があるとしよう。\n",
+    "1. $z$は回帰式に含まれない（除外条件）\n",
+    "1. $\\text{Cov}(z,w)\\neq 0$（高い関係性; $w$と高い相関関係がある）\n",
+    "1. $\\text{Cov}(z,u)=0$（操作変数の外生性; 回帰式の誤差項と無相関）\n",
+    "\n",
+    "この場合，操作変数法を用いて（大標本のもとで）一致性を満たす$\\hat{\\beta}_1$を得ることが可能となる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "＜推定方法の考え方＞\n",
+    "\n",
+    "操作変数（IV）推定方は**２段階最小２乗法**の特殊なケースとして理解できる。\n",
+    "* 操作変数の数と内生変数の数が等しい場合の推定法を操作変数（IV）推定法\n",
+    "* 操作変数の数が内生変数の数を上回る場合の推定法を２段階最小二乗法（2 Stage Least Squares; 2SLS）\n",
+    "\n",
+    "**第１段階OLS**\n",
+    "* 次式をOLS推定する。\n",
+    "\n",
+    "$$w=\\pi_0+\\pi_1z+v$$\n",
+    "\n",
+    "* これにより$w$を２つの要素（$\\hat{w}$と$v$）に分解\n",
+    "\n",
+    "    $$w=\\hat{w}+v,\\qquad\\hat{w}=\\hat{\\pi}_0+\\hat{\\pi}_1z$$\n",
+    "\n",
+    "    1. $\\hat{w}$（予測値）：外生変数で説明できる$w$の部分（$z$と相関する部分）\n",
+    "    1. $v$（残差）：残り全て（$u$と相関する$w$の部分は吸収される）\n",
+    "    \n",
+    "* $\\hat{\\pi}_1$の優位性の確認\n",
+    "    * 一般的に有効な操作変数は以下を満たす\n",
+    "        * 操作変数の$t$値の絶対値 $>3.2$\n",
+    "    * この目安を満たさなければ弱操作変数の可能性\n",
+    "        * 推定量は不偏性・一致性を満たさない\n",
+    "    * 帰無仮説$\\text{H}_0:\\;\\hat{\\pi}_1=0$が棄却され，上の基準をクリアすれば次のステップへ\n",
+    "\n",
+    "**第２段階OLS**\n",
+    "* 予測値$\\hat{w}$を使い次式をOLS推定する。\n",
+    "\n",
+    "    $$y=\\gamma_0+\\gamma_1\\hat{w}+e$$\n",
+    "    \n",
+    "* IV（instrumentala variable）推定量：$\\hat{\\gamma}_1$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "（注意点）\n",
+    "\n",
+    "* 「手計算」で第１・２段階を別々にOLS推定すると，$\\hat{\\gamma}_j$を得ることができるが，推定量の標準誤差，検定統計量，決定係数$R^2$は有効ではない。\n",
+    "* `Python`の専用パッケージを使と，\n",
+    "    * 大標本のもとで推定量と$t$値は有効となる。\n",
+    "    * $R^2$は特に有用な情報を提供しない（マイナスになり得る）。従って，パラメータ制約を検定する$F$検定をする場合は「手計算」ではなくパッケージで提供されたコマンドを使うこと。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### `linearmodels`"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "**＜`linearmodels`の使い方＞**\n",
+    "\n",
+    "回帰式を文字列で表し操作変数法を使うためにはサブパッケージ`IV2SLS`の`from_formula`をインポートする。回帰式の文字列に関して上述した定数項についての違い以外は`statsmodels`と同じである。ただ，下の回帰式の一般型に沿って内生的変数と操作変数を`~`で挟んで`[ ]`の中に入れる。\n",
+    "\n",
+    "**＜`IV2SLS`回帰式の一般形＞**\n",
+    "```\n",
+    "被説明変数 ~ 定数項 + 外生的説明変数 + [内生的説明変数 ~ 操作変数]\n",
+    "```\n",
+    "* 定数項，外生的説明変数がない場合は，省いても良い。\n",
+    "* `[ ]`がない場合は通常のOLSとして計算される。その際，以前説明したメソッド`fit()`のオプションに要注意。\n",
+    "* 外生的説明変数，操作変数は複数でも可"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## ケース１：単純な`IV`推定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### データ"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "既婚女性の教育の収益率に関するデータ`mroz`を利用して使い方を説明する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "hidden": true,
+    "tags": [
+     "output_scroll"
+    ]
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "name of dataset: mroz\n",
+      "no of variables: 22\n",
+      "no of observations: 753\n",
+      "\n",
+      "+----------+---------------------------------+\n",
+      "| variable | label                           |\n",
+      "+----------+---------------------------------+\n",
+      "| inlf     | =1 if in lab frce, 1975         |\n",
+      "| hours    | hours worked, 1975              |\n",
+      "| kidslt6  | # kids < 6 years                |\n",
+      "| kidsge6  | # kids 6-18                     |\n",
+      "| age      | woman's age in yrs              |\n",
+      "| educ     | years of schooling              |\n",
+      "| wage     | est. wage from earn, hrs        |\n",
+      "| repwage  | rep. wage at interview in 1976  |\n",
+      "| hushrs   | hours worked by husband, 1975   |\n",
+      "| husage   | husband's age                   |\n",
+      "| huseduc  | husband's years of schooling    |\n",
+      "| huswage  | husband's hourly wage, 1975     |\n",
+      "| faminc   | family income, 1975             |\n",
+      "| mtr      | fed. marg. tax rte facing woman |\n",
+      "| motheduc | mother's years of schooling     |\n",
+      "| fatheduc | father's years of schooling     |\n",
+      "| unem     | unem. rate in county of resid.  |\n",
+      "| city     | =1 if live in SMSA              |\n",
+      "| exper    | actual labor mkt exper          |\n",
+      "| nwifeinc | (faminc - wage*hours)/1000      |\n",
+      "| lwage    | log(wage)                       |\n",
+      "| expersq  | exper^2                         |\n",
+      "+----------+---------------------------------+\n",
+      "\n",
+      "T.A. Mroz (1987), “The Sensitivity of an Empirical Model of Married\n",
+      "Women’s Hours of Work to Economic and Statistical Assumptions,”\n",
+      "Econometrica 55, 765-799. Professor Ernst R. Berndt, of MIT, kindly\n",
+      "provided the data, which he obtained from Professor Mroz.\n"
+     ]
+    }
+   ],
+   "source": [
+    "mroz = dataWoo('mroz').dropna(subset=['lwage'])  # 列'lwage'にNaNがある行は削除する\n",
+    "\n",
+    "dataWoo('mroz',description=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "ケース１では以下の場合を考える。\n",
+    "* 被説明変数：`lwage`（既婚女性の賃金; 対数）\n",
+    "* 内生的説明変数：`educ`（既婚女性の教育年数）\n",
+    "* 操作変数：`fatheduc`（父親の教育年数）\n",
+    "* 外生的説明変数：なし\n",
+    "\n",
+    "（考え方）\n",
+    "\n",
+    "誤差項に既婚女性の能力が含まれている可能性があるため`educ`は内生変数の疑いがある。父親の教育年数`fatheduc`は既婚女性の教育年数`educ`と正の相関性があると思われる一方，能力自体とは無相関と仮定。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 「自動計算」"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "IV推定法は2SLSの特殊なケースとして２ステップで推定することを説明したが，ここでは自動的に２ステップを計算する場合を紹介する。\n",
+    "\n",
+    "まず回帰式を決める。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "form_1 = 'lwage ~ 1 + [educ ~ fatheduc]'"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`IV2SLS`モジュールの`from_formula`を使うことにより，`statsmodels`の`ols`のように回帰式を文字列で指定できる。次式では推定するモデルを設定する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "mod_1 = IV2SLS.from_formula(form_1, data=mroz)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`statsmodels`の`ols`のようにメソッド`.fit()`を使い推定する。（以前説明したオプションについての説明を参照）"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "res_1 = mod_1.fit(cov_type='unadjusted')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`res_1`の属性`.summary`，さらに`summary`の属性`tables`を使ってパラメータの部分だけを表示する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "Intercept      0.4411     0.4451     0.9911     0.3216     -0.4312      1.3134\n",
+      "educ           0.0592     0.0351     1.6878     0.0914     -0.0095      0.1279\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(res_1.summary.tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`educ`の推定値などは，上で説明したように`fatheduc`を操作変数として計算した結果である。$p$値は`0.1`よりも低いため，`10%`有意水準では係数`0`の帰無仮説を棄却できないが，`5%`水準では棄却される。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 「手動計算」"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "第１・２段階のOLS推定を別々に試みる。\n",
+    "\n",
+    "---\n",
+    "**第１段階のOLS**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "stage_1 = 'educ ~ 1 + fatheduc'  # 回帰式\n",
+    "\n",
+    "res_stage_1 =IV2SLS.from_formula(stage_1, data=mroz).fit(cov_type='unadjusted')  # OLS推定\n",
+    "\n",
+    "educ_fit = res_stage_1.fitted_values  # educの予測値を取得"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "上の３行目のでは`res_stage_1`の属性`.fitted_values`を使い予測値を取得している。`statsmodels`を使いOLS推定した際に使った`.fittedvalues`と異なるメソッド名になっていることに注意しよう。\n",
+    "\n",
+    "---\n",
+    "**第２段階のOLS**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "Intercept      0.4411     0.4660     0.9465     0.3439     -0.4723      1.3545\n",
+      "educ_fit       0.0592     0.0367     1.6119     0.1070     -0.0128      0.1311\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "stage_2 = 'lwage ~ 1 + educ_fit'\n",
+    "\n",
+    "res_stage_2 =IV2SLS.from_formula(stage_2, data=mroz).fit(cov_type='unadjusted')  # OLS推定\n",
+    "\n",
+    "print(res_stage_2.summary.tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "「自動計算」の場合と比べると，`Parameter`は同じことが確認できる。しかし`Std. Err.`は異なり，それに基づく他の推定値も異なることに注意。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### $OLS$推定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "確認のために，操作変数法を使わずに直接OLS推定をおこなうとどうなるかを確認しよう。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "Intercept     -0.1852     0.1703    -1.0872     0.2770     -0.5191      0.1487\n",
+      "educ           0.1086     0.0134     8.1178     0.0000      0.0824      0.1349\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "form_ols = 'lwage ~ 1 + educ'\n",
+    "\n",
+    "res_ols =IV2SLS.from_formula(form_ols, data=mroz).fit()  # OLS推定\n",
+    "\n",
+    "print(res_ols.summary.tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "操作変数法の推定量と大きく異なることが分かる。操作変数法と比べて`educ`の$OLS$推定量は約２倍になり，既婚女性の教育の収益率を過大評価している。`educ`と誤差項に相関性がると推測できる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## ケース２：より複雑な`IV`推定（2SLS）"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "### 説明"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "ケース１を以下のように拡張する。\n",
+    "* 複数の外生的説明変数の導入（`exper`，`expersq`）\n",
+    "* 複数の操作変数の導入（`fatheduc`，`motheduc`）\n",
+    "\n",
+    "このように複雑化しても基本的な考え方は同じである。\n",
+    "\n",
+    "$$y=\\beta_0+\\beta_1x_1+\\beta_2x_2+\\beta_3w+u\\qquad\\quad\\text{(*)}$$\n",
+    "    \n",
+    "* $\\text{Cov}(w,u)\\neq 0$（$w$は内生的説明変数）\n",
+    "* $\\text{Cov}(x_k,u)=0,\\;k=1,2$（$x_k$は外生的説明変数）\n",
+    "\n",
+    "$w$の操作変数$z_j,\\;j=1,2$は次の条件を満たす必要がある。\n",
+    "* $\\text{Cov}(z_j,w)\\neq 0$\n",
+    "* $\\text{Cov}(z_j,u)=0$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "＜2SLSの考え方＞\n",
+    "\n",
+    "**第１段階OLS**\n",
+    "* 次式をOLS推定する。\n",
+    "\n",
+    "    $$w=\\pi_0+\\pi_1z_1+\\pi_2z_2+\\pi_3x_1+\\pi_4x_2+v\\qquad\\quad\\text{(**)}$$\n",
+    "    \n",
+    "    * $x_1$と$x_2$が入る直感的な理由\n",
+    "        * 下で説明するように，式（\\*）の`w`の代わりに式（\\*\\*）を使って計算する`w`の予測値を代わりに使うことになる。その際，式（\\*\\*）に$x_1$と$x_2$が入っていないと，`w`に元々あった$x_1$と$x_2$との関係性を除外することになる。式（\\*\\*）に$x_1$と$x_2$を入れるのは$x_1$と$x_2$との相関を考慮した`w`の予測値にするためである。\n",
+    "* $w$を２つの要素（$\\hat{w}$と$v$）に分解\n",
+    "\n",
+    "    $$w=\\hat{w}+v,\\qquad\\hat{w}=\\hat{\\pi}_0+\\hat{\\pi}_1z_1+\\hat{\\pi}_2z_2+\\hat{\\pi}_3x_1+\\hat{\\pi}_4x_2$$\n",
+    "    \n",
+    "    1. $\\hat{w}$（予測値）：外生変数だけで説明される$w$の部分（$x_1$，$x_2$，$z_1$，$z_2$と相関する部分）\n",
+    "    1. $v$（残差）：残り全て（$u$と相関する$w$の部分はこれに吸収される）\n",
+    "    \n",
+    "* $\\hat{\\pi}_1$と$\\hat{\\pi}_2$の優位性の確認\n",
+    "    * 操作変数の$F$値 $>10$\n",
+    "    * この目安を満たさなければ弱操作変数の可能性\n",
+    "        * 推定量は不偏性・一致性を満たさない\n",
+    "    * $\\text{H}_0:\\;\\hat{\\pi}_1=\\hat{\\pi}_2=0$が棄却され，上の基準をクリアすれば次のステップへ\n",
+    "\n",
+    "**第２段階OLS**\n",
+    "* 予測値$\\hat{w}$を使い次式をOLS推定する。\n",
+    "\n",
+    "    $$y=\\gamma_0+\\gamma_1x_1+\\gamma_2x_2+\\gamma_3\\hat{w}+e$$\n",
+    "    \n",
+    "* IV（instrumentala variable）推定量：$\\hat{\\gamma}_3$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### `educ`と操作変数の相関性チェック"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "内生的説明変数と操作変数のOLS推定を使い，相関性の検定をおこなう。\n",
+    "\n",
+    "上述のとおり，一般的に有効な操作変数は以下を満たす。\n",
+    "* 操作変数が１つの場合\n",
+    "    * 操作変数の$t$値の絶対値 $>3.2$\n",
+    "* 複数の操作変数の場合\n",
+    "    * 操作変数の$F$値 $>10$"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                            OLS Estimation Summary                            \n",
+      "==============================================================================\n",
+      "Dep. Variable:                   educ   R-squared:                      0.2081\n",
+      "Estimator:                        OLS   Adj. R-squared:                 0.2043\n",
+      "No. Observations:                 428   F-statistic:                    112.45\n",
+      "Date:                Thu, May 28 2020   P-value (F-stat)                0.0000\n",
+      "Time:                        14:19:38   Distribution:                  chi2(2)\n",
+      "Cov. Estimator:            unadjusted                                         \n",
+      "                                                                              \n",
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "Intercept      9.4801     0.3200     29.627     0.0000      8.8530      10.107\n",
+      "fatheduc       0.1881     0.0335     5.6122     0.0000      0.1224      0.2538\n",
+      "motheduc       0.1564     0.0357     4.3805     0.0000      0.0864      0.2263\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "form_check = 'educ ~ 1 + fatheduc + motheduc'\n",
+    "\n",
+    "res_check =IV2SLS.from_formula(form_check, data=mroz).fit(cov_type='unadjusted')\n",
+    "\n",
+    "print(res_check.summary)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "* `fatheduc`と`motheduc`のそれぞれの係数\n",
+    "    * `T-stat`（$t$値）$>3.2$\n",
+    "    * `P-value`（$p$値）は約$0$\n",
+    "* ２つの操作変数の係数が同時に$0$という帰無仮説の検定\n",
+    "    * `F-statistic`（$F$値）$>10$\n",
+    "    * `P-value(F-stat)`（$t$値）も約$0$\n",
+    "\n",
+    "従って，`educ`と操作変数の相関性は高い。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### IV推定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "上述した`IV2SLS`回帰式の一般形に基づいて回帰式を設定する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "form_2 = 'lwage ~ 1 + exper + expersq +[educ ~ fatheduc + motheduc]'"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "操作変数法を使い推定"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "Intercept      0.0481     0.3985     0.1207     0.9039     -0.7329      0.8291\n",
+      "exper          0.0442     0.0134     3.3038     0.0010      0.0180      0.0704\n",
+      "expersq       -0.0009     0.0004    -2.2485     0.0245     -0.0017     -0.0001\n",
+      "educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "res_2 =IV2SLS.from_formula(form_2, data=mroz).fit(cov_type='unadjusted')\n",
+    "\n",
+    "print(res_2.summary.tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "IVが１つのケースと比べて`educ`の係数自体は大きく変わってはいないが，`5%`有意水準でも係数`0`の帰無仮説を棄却できるようになっている。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## シミュレーション：３つの特徴"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 一致性"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "（目的）\n",
+    "* `IV`推定量の一致性を確認する。\n",
+    "\n",
+    "＜シミュレーションの内容＞\n",
+    "\n",
+    "* 母集団の説明変数には`x1`と`x2`があり，`x2`を欠落変数とする単回帰分析。\n",
+    "\n",
+    "    $$ y=\\beta_0 + \\beta_1 x_1 + u$$\n",
+    "    \n",
+    "* `z`を`x1`操作変数とする。\n",
+    "* ２つの推定方法\n",
+    "    * 操作変数`z`を使いIV法による推定\n",
+    "    * OLSによる推定（この場合，欠落変数バイアスが発生する）\n",
+    "* 標本の大きさは$1000$，標本数（ループの回数）を10000として$\\hat{\\beta}_1$の分布を比べる"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "標本数（ループの回数）"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "N = 10_000"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "母集団のパラメータ"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "b0 = 0.5\n",
+    "b1 = 1\n",
+    "b2 = 0.5"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "シミュレーションの関数を設定する。\n",
+    "* 引数\n",
+    "    * `n`：標本の大きさ\n",
+    "    * `m`：`x1`と`z`の共分散 $\\text{Cov}(x1,z)=m$\n",
+    "    * `ols`（デフォルトは`False`）：OLS推定を一緒に行う場合は`True`\n",
+    "* 返り値\n",
+    "    * IV推定値のリスト（`ols=False`）\n",
+    "    * IV推定値のリストとOLS推定値のリスト（`ols=True`）\n",
+    "    \n",
+    "（コメント）\n",
+    "\n",
+    "計算の速度を早めるために下の関数の中では`IV2SLS`は使わず`numpy`の関数を使いIVとOLS推定値を計算している。`IV2SLS`は係数の推定値だけではなく他の多くの統計値も自動的に計算するために一回の計算に比較的に長い時間を要するためである。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "def sim_iv(n,m,ols=False):  # n=標本の大きさ, m=x1とｚの共分散\n",
+    "    \"\"\"\n",
+    "    n: 標本の大きさ\n",
+    "    m: 説明変数と対応する操作変数の相関性の度合い\n",
+    "    ols: Boolean（デフォルト：False） \n",
+    "        False: OLS推定とIV推定も一緒におこなう\n",
+    "            返り値：２つのリスト（OLSとIV推定量）\n",
+    "        True: IV推定のみ\n",
+    "            返り値：１つのリストのみ\n",
+    "    \"\"\"\n",
+    "    rv_mean = [0, 0, 0]  # x1, x2, z1の平均\n",
+    "    rv_cov = [[1.0, 0.3, m],  # x1, x2, z1の共分散行列\n",
+    "              [0.3, 1.0, 0.0],  # 全ての変数の分散は１（対角成分）\n",
+    "              [m,   0.0, 1.0]]  # Cov(x1,x2)=0.3,  Cov(x2,z)=0, Cov(x1,z)=m,\n",
+    "    rv = multivariate_normal.rvs(rv_mean, rv_cov, size=n)  # x1, x2, z1をnセット抽出\n",
+    "    x1 = rv[:,0]  # 説明変数\n",
+    "    x2 = rv[:,1]  # 欠落変数\n",
+    "    z = rv[:,2]  # 操作変数\n",
+    "\n",
+    "    b1_iv_list = []  # IV推定量を入れる空のリスト\n",
+    "    b1_ols_list = []  # OLS推定量を入れる空のリスト\n",
+    "    \n",
+    "    c = np.ones(n)\n",
+    "    \n",
+    "    for j in range(N):  # N回のループ\n",
+    "        \n",
+    "        u = norm.rvs(size=n)  # 母集団の誤差項\n",
+    "        y = b0 + b1*x1 + b2*x2 + u  # 母集団回帰式\n",
+    "        \n",
+    "        # IV 第１ステージ\n",
+    "        Xiv1 = np.stack([c,z],axis=1)\n",
+    "        pihat = np.linalg.inv((Xiv1.T)@Xiv1)@(Xiv1.T)@x1  # IV推定\n",
+    "        x1hat = Xiv1@pihat  # x1の予測値\n",
+    "        # IV 第２ステージ\n",
+    "        Xiv2 = np.stack([c,x1hat],axis=1)        \n",
+    "        beta_iv = np.linalg.inv((Xiv2.T)@Xiv2)@(Xiv2.T)@y  # IV推定\n",
+    "        b1_iv_list.append(beta_iv[1])  # IV推定量をリストに追加\n",
+    "\n",
+    "        if ols==True:  # オプションols=Trueの場合はOLS推定もおこなう\n",
+    "            \n",
+    "            X = np.stack([c,x1],axis=1)\n",
+    "            beta_ols = np.linalg.inv((X.T)@X)@(X.T)@y  # OLS推定\n",
+    "            b1_ols_list.append(beta_ols[1])  # OLS推定量をリストに追加\n",
+    "\n",
+    "        else:  # ols=Falseの場合はOLS推定をおこなわない\n",
+    "            pass\n",
+    "\n",
+    "    if ols==True:  # ols=True の場合の返り値の設定\n",
+    "        return b1_iv_list, b1_ols_list\n",
+    "    \n",
+    "    else:  # ols=False の場合の返り値の設定\n",
+    "        return b1_iv_list"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "シミュレーションの開始"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "b1hat_iv, b1hat_ols = sim_iv(1000,0.9,ols=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "図示"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "xx=np.linspace(0.8,1.3,num=100)  # 図を作成するために横軸の値を設定\n",
+    "\n",
+    "kde_model_ols=gaussian_kde(b1hat_ols)  # OLS推定量のカーネル密度関数を計算\n",
+    "\n",
+    "kde_model_iv=gaussian_kde(b1hat_iv)  # IV推定量のカーネル密度関数を計算\n",
+    "\n",
+    "plt.plot(xx, kde_model_ols(xx), 'g-', label='OLS')  # OLS推定量の分布プロット\n",
+    "plt.plot(xx, kde_model_iv(xx),'r-', label='IV')  # IV推定量の分布プロット\n",
+    "plt.axvline(x=b1,linestyle='dashed')\n",
+    "plt.ylabel('Kernel Density')  # 縦軸のラベル\n",
+    "plt.legend()  # 凡例\n",
+    "pass"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "* 欠落変数が発生しているため`OLS`推定量は一致性は満たさない。\n",
+    "* `IV`推定量は一致性を満たす。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 標本の大きさ"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "（目的）\n",
+    "* `IV`推定量の一致性は大標本特性である。ここでは標本の大きさの効果を確認する。\n",
+    "\n",
+    "＜シミュレーションの内容＞\n",
+    "\n",
+    "* 上と同じ設定\n",
+    "* `IV`法による単回帰分析のみを考える\n",
+    "* 標本の大きさを`30`，`100`，`1000`\n",
+    "* それぞれ`N=10000`回推定し$\\hat{\\beta}_1$の分布を比べる"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "上で使った関数`sim_iv()`をデフォルト（`ols=False`）で使う。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "b1hat_iv_30 = sim_iv(30,0.8)\n",
+    "b1hat_iv_100 = sim_iv(100,0.8)\n",
+    "b1hat_iv_1000 = sim_iv(1000,0.8)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "図示"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "xx=np.linspace(0.5,1.5,num=100)  # 図を作成するために横軸の値を設定\n",
+    "\n",
+    "b1hat_iv_n_list = [b1hat_iv_30, b1hat_iv_100, b1hat_iv_1000]\n",
+    "color_list = ['g-', 'r-', 'k-']\n",
+    "label_list = ['n=30', 'n=100', 'n=1000']\n",
+    "\n",
+    "for (i, j, k) in zip(b1hat_iv_n_list, color_list, label_list):\n",
+    "    kde_model_iv=gaussian_kde(i)  # IV推定量のカーネル密度推定を設定\n",
+    "    b1_dist = kde_model_iv(xx)  # IV推定量のカーネル密度関数を計算\n",
+    "    plt.plot(xx, b1_dist, j, label=k)  # IV推定量の分布プロット\n",
+    "\n",
+    "plt.axvline(x=b1,linestyle='dashed')\n",
+    "plt.ylabel('Kernel Density')  # 縦軸のラベル\n",
+    "plt.legend()  # 凡例\n",
+    "pass"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "* 標本の大きさが増加すると，分散は低下する。\n",
+    "* 標本の大きさが小さい場合，不偏性は満たされないこともわかる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 操作変数との相関性（弱操作変数）"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "（目的）\n",
+    "* IV推定法で必須となるのが内生的説明変数と操作変数の相関性である。相関性が高い場合は推定量の標準ごさは低くなるが，逆に相関性が低い場合は推定量の標準誤差が大きくなることを確認する。\n",
+    "\n",
+    "＜シミュレーションの内容＞\n",
+    "\n",
+    "* 上と同じ設定\n",
+    "* `IV`法による単回帰分析のみを考える\n",
+    "* 内生的説明変数と操作変数の共分散`m`を`0.1`，`0.4`，`0.8`の3つのケースを考える。\n",
+    "* 標本の大きさ$2000$に固定し，それぞれ`N=10000`回推定し$\\hat{\\beta}_1$の分布を比べる"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "上で使った関数`sim_iv()`を使う。\n",
+    "\n",
+    "シミュレーションの開始"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "b1hat_iv_weak = sim_iv(2000,0.1)\n",
+    "b1hat_iv_mid = sim_iv(2000,0.4)\n",
+    "b1hat_iv_strong = sim_iv(2000,0.8)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "図示"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "xx=np.linspace(0.5,1.5,num=100)  # 図を作成するために横軸の値を設定\n",
+    "\n",
+    "b1hat_iv_n_list = [b1hat_iv_weak, b1hat_iv_mid, b1hat_iv_strong]\n",
+    "color_list = ['g-', 'r-', 'k-']\n",
+    "label_list = ['Cov(x1,z)=0.1', 'Cov(x1,z)=0.4', 'Cov(x1,z)=0.8']\n",
+    "\n",
+    "for (i, j, k) in zip(b1hat_iv_n_list, color_list, label_list):\n",
+    "    kde_model_iv=gaussian_kde(i)  # OLS推定量のカーネル密度推定を設定\n",
+    "    b1_dist = kde_model_iv(xx)  # OLS推定量のカーネル密度関数を計算\n",
+    "    plt.plot(xx, b1_dist, j, label=k)  # OLS推定量の分布プロット\n",
+    "\n",
+    "plt.axvline(x=b1,linestyle='dashed')\n",
+    "plt.ylabel('Kernel Density')  # 縦軸のラベル\n",
+    "plt.legend()  # 凡例\n",
+    "pass"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "$\\text{Cov}(x,z)$が低くなると分散が大きくなり，一致性を失うことも確認できる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## 説明変数の外生性の検定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "### 説明"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "次式を考えよう。\n",
+    "\n",
+    "$$y=\\beta_0+\\beta_1w+u$$\n",
+    "\n",
+    "* $\\text{Cov}(w,u)=0$の場合，`OLS`がより良い推定量\n",
+    "    * `OLS`推定量は不偏性・一致性を満たす。\n",
+    "    * `IV-2SLS`推定量一致性を満たすが不偏性は欠き，標準誤差が大きくなり正確性を損なう。\n",
+    "* $\\text{Cov}(w,u)\\neq 0$の場合，`IV-2SLS`がより良い推定量\n",
+    "    * `OLS`推定量は不偏性・一致性を満たさない。\n",
+    "    * `IV-2SLS`推定量は一致性を満たす。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "このように説明変数が外生的か内生的かによって推定量の性質が大きく異なる。では`IV`推定法と`OLS`推定法のどちらを使うべきなのか。この問題は説明変数が外生的か（$\\text{Cov}(w,u)=0$）それとも内生的か（$\\text{Cov}(w,u)\\neq 0$）に依存しており，ここではその検定方法について説明する。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "上で考えたケース２を使って確かめる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 検定方法１：`Wu-Hausman`検定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "帰無仮説と対立仮説：\n",
+    "\n",
+    "$\\text{H}_0:\\;\\text{Cov}(w,u)=0$\n",
+    "\n",
+    "$\\text{H}_A:\\;\\text{Cov}(w,u)\\neq 0$\n",
+    "\n",
+    "---\n",
+    "（基本的な考え方）\n",
+    "\n",
+    "帰無仮説のもとでは，`IV`推定法も`OLS`推定法も一致性も満たすため\n",
+    "\n",
+    "$$\\left|\\hat{\\beta}_j^{\\text{OLS}}-\\hat{\\beta}_j^{\\text{IV}}\\right|$$\n",
+    "\n",
+    "の値は小さいはず。逆に，帰無仮説が成立しない場合，`OLS`推定量は不偏性も一致性も失うことになり，上の値は大きくなる。即ち，上の値が大きければ（小さければ），帰無仮説を棄却できる可能性が高くなる（低くなる）。この考えを利用したのが`Wu-Hausman`検定である。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "`res_2`のメソッド`.wu_hausman()`を使うと検定統計量と$p$値が表示される。\n",
+    "\n",
+    "（注意）`.wu_hauseman()`であって`.wu_hauseman`ではない。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Wu-Hausman test of exogeneity\n",
+       "H0: All endogenous variables are exogenous\n",
+       "Statistic: 2.8035\n",
+       "P-value: 0.0948\n",
+       "Distributed: F(1,423)\n",
+       "WaldTestStatistic, id: 0x10f8c9310"
+      ]
+     },
+     "execution_count": 22,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "res_2.wu_hausman()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "$p$値は0.0948。5%の有意水準では帰無仮説を棄却できない（外生性を棄却できない）が，10%では棄却できる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 検定方法２"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "まず検定方法について説明し，「考え方」については後述する。次の回帰式を考える。\n",
+    "\n",
+    "$$y=\\beta_0+\\beta_1x + \\beta_2w+u\\qquad\\qquad (\\text{式１})$$\n",
+    "\n",
+    "* $x$は外生的説明変数\n",
+    "* $w$は内生性が疑われる説明変数"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "２段階で検定する。\n",
+    "\n",
+    "**第１段階**\n",
+    "* （式１）のOLS残差$\\hat{u}$を計算する。\n",
+    "\n",
+    "**第２段階**\n",
+    "* （式１）に$\\hat{u}$を加えてOLS推定する。\n",
+    "\n",
+    "    $$y=\\gamma_0+\\gamma_1x + \\gamma_2w+\\gamma_u\\hat{u}+e\\qquad\\qquad (\\text{式２})$$\n",
+    "\n",
+    "* 次の検定をおこなう。\n",
+    "    * $\\text{H}_0:\\;\\hat{\\gamma}_u=0$（$w$は外生的である）\n",
+    "    * $\\text{H}_A:\\;\\hat{\\gamma}_u\\neq 0$\n",
+    "* $\\text{H}_0$が棄却されれば$w$は内生的説明変数と判断\n",
+    "\n",
+    "（コメント）計算上$\\hat{\\gamma}_i=\\hat{\\beta}_i,\\;i=0,1,2$が成り立つことになる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "**-------- 考え方 --------**\n",
+    "\n",
+    "＜第１段階＞\n",
+    "* (式１)を推定すると$y$を$\\hat{y}$と$\\hat{u}$に分解することができる。\n",
+    "\n",
+    "    $$y=\\hat{y}+\\hat{u}$$\n",
+    "    \n",
+    "    * $\\hat{y}$：説明変数で説明できる$y$の部分\n",
+    "    * $\\hat{u}$：$y$のその他の部分\n",
+    "* $u$が$w$と相関していれば，その相関する部分が$\\hat{u}$に含まれることになる。以下のようなイメージ。\n",
+    "\n",
+    "    $$\\hat{u}=f\\left(\\hat{u}_w,v\\right)$$\n",
+    "    \n",
+    "    * $\\hat{u}_w$：$w$と相関する部分\n",
+    "    * $v$：$w$と相関しない部分\n",
+    "\n",
+    "＜第２段階＞\n",
+    "* (式２)を推定すると，相関部分である$\\hat{u}_w$を$\\gamma_u\\hat{u}$として取り出すことができる。\n",
+    "* もし$\\gamma_u$が有意であれば，$\\text{H}_0$は棄却される。$\\hat{u}_w$は存在するということになり，$w$は内生的説明変数と判断できる。\n",
+    "* もし$\\gamma_u$が有意でなければ，$\\text{H}_0$は棄却できない。$\\hat{u}_w$は存在しないということになり，$w$は外生的説明変数と判断できる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "#### 「手計算」"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "**第１段階**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "form_2a = 'educ ~ 1 + exper + expersq + motheduc + fatheduc'\n",
+    "\n",
+    "mod_2a = IV2SLS.from_formula(form_2a, data=mroz)\n",
+    "\n",
+    "res_2a = mod_2a.fit(cov_type='unadjusted')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "**第２段階**\n",
+    "\n",
+    "回帰式に直接`res_2a.resids`を入れる。`resids`は`res_2a`の残差を取得する属性。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                               Parameter Estimates                               \n",
+      "=================================================================================\n",
+      "               Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "---------------------------------------------------------------------------------\n",
+      "Intercept         0.0481     0.3923     0.1226     0.9024     -0.7207      0.8169\n",
+      "educ              0.0614     0.0308     1.9932     0.0462      0.0010      0.1218\n",
+      "exper             0.0442     0.0132     3.3559     0.0008      0.0184      0.0700\n",
+      "expersq          -0.0009     0.0004    -2.2840     0.0224     -0.0017     -0.0001\n",
+      "res_2a.resids     0.0582     0.0346     1.6810     0.0928     -0.0097      0.1260\n",
+      "=================================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "form_2b = 'lwage ~ 1 + educ + exper + expersq + res_2a.resids'\n",
+    "\n",
+    "mod_2b = IV2SLS.from_formula(form_2b, data=mroz)\n",
+    "\n",
+    "res_2b = mod_2b.fit(cov_type='unadjusted')\n",
+    "\n",
+    "print(res_2b.summary.tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "$p$値は0.0928で，5%の有意水準では帰無仮説を棄却できない（内生性を棄却できない）。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "#### 自動計算"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`linearmodels`には上の計算を自動でおこなった結果を示すメソッドが用意されている。`res_2`の`.wooldridge_regression`である。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Wooldridge's regression test of exogeneity\n",
+       "H0: Endogenous variables are exogenous\n",
+       "Statistic: 2.8256\n",
+       "P-value: 0.0928\n",
+       "Distributed: chi2(1)\n",
+       "WaldTestStatistic, id: 0x124de3be0"
+      ]
+     },
+     "execution_count": 25,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "res_2.wooldridge_regression"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "（注意）「手計算」で使った`.fit()`のオプション`debiased=True`を使うと異なる数値になる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## 操作変数の有効性検定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 説明"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "次の回帰式を考えよう。\n",
+    "\n",
+    "$$y=\\beta_0+\\beta_1x+\\beta_2w+u\\qquad\\quad\\text{(*)}$$\n",
+    "\n",
+    "* $x$：外生的説明変数\n",
+    "* $w$：内生性が疑われる説明変数"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "**＜ケース１：１つの内生的説明変数に１つの操作変数がある場合＞**\n",
+    "* 操作変数$z$\n",
+    "\n",
+    "この場合，操作変数の外生性$\\text{Cov}(z,u)=0$が満たされないといけないが，これを検定できない。\n",
+    "\n",
+    "（理由）\n",
+    "* 式（\\*)の`w`は内生性が疑われるため，その式を使い計算したOLS残差$\\hat{u}$は真の誤差項を捉えていない可能性がある。従って，この$\\hat{u}$を使っても意味がある検定とはならない。\n",
+    "* 式（\\*）に$z$を使い残差を計算することも考えられるが，そもそも$z$の有効性が分からないため，これも真の誤差項を捉えていない可能性がある。\n",
+    "\n",
+    "この場合，経済理論に基づいて操作変数の外生性を正当化できるかが問題になる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "**＜ケース２：１つの内生的説明変数に複数の操作変数がある場合＞**\n",
+    "* 例えば，２つの操作変数$z_1$と$z_2$\n",
+    "\n",
+    "この場合，同時に$\\text{Cov}(z_1,u)=\\text{Cov}(z_2,u)=0$が成立するかを検定する方法があり，その１つがSargan検定と呼ばれる。\n",
+    "\n",
+    "（注意）\n",
+    "* Sargan検定は，全ての操作変数（上の例では２つ）が**同時**に有効かどうかを検定する。従って，どの操作変数が有効ではないかを調べることはできない。\n",
+    "\n",
+    "（コメント）\n",
+    "* 操作変数の数が内生的説明変数の数を上回っているケースは「過剰識別（overidentified）」と呼ばれる。\n",
+    "* 操作変数の数と内生的説明変数の数が等しい場合は「適度識別」（just identified）と呼ばれる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "**Sargan検定**\n",
+    "\n",
+    "２段階で検定する。\n",
+    "\n",
+    "**第１段階**\n",
+    "* IV/2SLS推定法で推定し，残差$\\hat{u}$を取得する。\n",
+    "\n",
+    "**第２段階**\n",
+    "* 帰無仮説と対立仮説の設定\n",
+    "    * $\\text{H}_0:\\;\\hat{u}$は全ての操作変数と相関性なし（全ての操作変数は外生的である）\n",
+    "    * $\\text{H}_A:$ 少なくとも１つの操作変数は$\\hat{u}$と相関する。\n",
+    "    * 上の例では，操作変数の数は`2`であり内生的説明変数の数は`1`であるため$q=2-1=1$の過剰識別制約があると考える。\n",
+    "* $\\hat{u}$を被説明変数として全ての外生的説明変数と操作変数に対してOLS推定し，決定係数$R^2$を計算する。\n",
+    "* $LM$統計量$=nR^2$\n",
+    "    * $nR^2\\sim\\chi(q)$\n",
+    "    * $q>1$は操作変数の数と内生的説明変数の差\n",
+    "    * $n$は標本の大きさ\n",
+    "\n",
+    "（帰無仮説棄却の意味）\n",
+    "\n",
+    "* 少なくとも１つの操作変数は誤差項と相関性があるということになる。（欠落変数とも解釈可能）\n",
+    "* しかしどの操作変数が内生的かは分からない。\n",
+    "\n",
+    "---\n",
+    "上で考えたケース２を使って確かめる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 「手計算」"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "第１段階の計算結果として`res_2`を使う。\n",
+    "\n",
+    "第２段階の計算のために`res_2`の属性`.resids`を使い回帰残差を取得し，直接以下の回帰式に入れる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "form_aux = 'res_2.resids ~ 1 + motheduc + fatheduc + exper + expersq' # 外生的説明変数を省いてもよい\n",
+    "\n",
+    "mod_aux = IV2SLS.from_formula(form_aux, data=mroz)\n",
+    "\n",
+    "res_aux = mod_aux.fit(cov_type='unadjusted')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "検定統計量の計算"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0.5386372330714875\n"
+     ]
+    }
+   ],
+   "source": [
+    "r2 = res_aux.rsquared  # 決定係数\n",
+    "n = res_aux.nobs    # 標本の大きさ\n",
+    "teststat = n * r2      # 検定統計量\n",
+    "pval = 1 - chi2.cdf(teststat, 1)  # p値の計算\n",
+    "print(pval)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "５％有意水準では帰無仮説を棄却できない。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 自動計算 "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`res_2`のメソッド`.sargan`を使うと上と同じ計算結果を表示できる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Sargan's test of overidentification\n",
+       "H0: The model is not overidentified.\n",
+       "Statistic: 0.3781\n",
+       "P-value: 0.5386\n",
+       "Distributed: chi2(1)\n",
+       "WaldTestStatistic, id: 0x124db7250"
+      ]
+     },
+     "execution_count": 28,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "res_2.sargan"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## 同時方程式モデルと`IV`推定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 同時性バイアス"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "同時方程式モデルとは，均衡メカニズムなどを通して複数の内生変数が複数の式によって同時決定されるモデルである。例として労働の需給モデルを考えよう。均衡では需要量（$L_d$）と供給量（$L_s$）は等しくなり（$L=L_d=L_s$），需要と供給はそれぞれ均衡賃金（$W$）に依存する。\n",
+    "* 供給関数\n",
+    "\n",
+    "    $$ L = s_0+s_1 W + s_2 X_s + u_s\\qquad\\qquad\\qquad\\text{(式A)}$$\n",
+    "\n",
+    "    * $s_1>0$\n",
+    "    * $X_s=$ 供給の「その他」の決定要因（例えば，限界費用）\n",
+    "    * $u_s=$ 供給の誤差項\n",
+    "\n",
+    "* 需要関数\n",
+    "\n",
+    "    $$ W = d_0+d_1 L + d_2 X_d + u_d\\qquad\\qquad\\qquad\\text{(式B)}$$\n",
+    "    \n",
+    "    * $d_1<0$\n",
+    "    * $X_d=$ 需要の「その他」の決定要因（例えば，所得）\n",
+    "    * $u_d=$ 需要の誤差項\n",
+    "\n",
+    "（相関性の仮定）\n",
+    "* $\\text{Cov}(X_s,u_s)=\\text{Cov}(X_s,u_d)=0$\n",
+    "* $\\text{Cov}(X_d,u_d)=\\text{Cov}(X_d,u_s)=0$\n",
+    "* $\\text{Cov}(u_s,u_d)=0$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### `IV`推定法の適用"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "同時性バイアスは`IV`推定法で対処可能である。考え方は簡単である。\n",
+    "\n",
+    "**供給曲線（式A）の推定**\n",
+    "* $W$の操作変数として$X_d$を使う。$X_d$は操作変数の３つの条件を満たす。\n",
+    "    * （式１）にない\n",
+    "    * $\\text{Cov}(X_d,u_s)=0$（相関性の仮定から）\n",
+    "    * $\\text{Cov}(X_d,W)\\neq 0$（式Bから）\n",
+    "\n",
+    "**供給曲線（式B）の推定**\n",
+    "* $L$の操作変数として$X_s$を使う。$X_s$は操作変数の３つの条件を満たす。\n",
+    "    * （式２）にない\n",
+    "    * $\\text{Cov}(X_s,u_d)=0$（相関性の仮定から）\n",
+    "    * $\\text{Cov}(X_s,L)\\neq 0$（式Aから）"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 例"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "#### データ"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "データセット`mroz`を使う。\n",
+    "* 労働供給曲線：労働市場に参加する既婚女性の労働供給関数\n",
+    "* 労働需要曲線：企業が提示（オファー）する賃金をその決定要因の関数として表す\n",
+    "\n",
+    "上の記号に対応する変数をリストアップする（1975年のデータ）。\n",
+    "* $L$：`hours`（労働時間）\n",
+    "* $W$：`lwage`（賃金時間額の対数）\n",
+    "* $X_s$：労働供給の外生的説明変数\n",
+    "    * `age`（年齢）\n",
+    "    * `kidslt6`（子どもが６歳未満）\n",
+    "    * `nwifeinc`：（(家計の所得 - 賃金\\*時間)/1000）\n",
+    "* $X_d$：賃金オファーの外生的説明変数\n",
+    "    * `exper`（雇用経験）\n",
+    "    * `expersq`（雇用経験の２乗）\n",
+    "* 両方に含まれる変数：`educ`（教育年数）"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "#### 供給曲線の推定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "**`IV`推定**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "Intercept      2225.7     570.52     3.9011     0.0001      1107.5      3343.9\n",
+      "educ          -183.75     58.684    -3.1312     0.0017     -298.77     -68.733\n",
+      "age           -7.8061     9.3120    -0.8383     0.4019     -26.057      10.445\n",
+      "kidslt6       -198.15     181.64    -1.0909     0.2753     -554.17      157.86\n",
+      "nwifeinc      -10.170     6.5682    -1.5483     0.1215     -23.043      2.7039\n",
+      "lwage          1639.6     467.27     3.5088     0.0005      723.73      2555.4\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "form_L = 'hours ~ 1 + educ + age + kidslt6 + nwifeinc + [lwage ~ exper + expersq]'\n",
+    "\n",
+    "mod_L = IV2SLS.from_formula(form_L, data=mroz)\n",
+    "\n",
+    "res_L = mod_L.fit(cov_type='unadjusted')\n",
+    "\n",
+    "print(res_L.summary.tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "**`OLS`推定**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "Intercept      1523.8     303.43     5.0219     0.0000      929.07      2118.5\n",
+      "educ          -6.6219     17.989    -0.3681     0.7128     -41.879      28.636\n",
+      "age            0.5623     5.1039     0.1102     0.9123     -9.4411      10.566\n",
+      "kidslt6       -328.86     100.74    -3.2643     0.0011     -526.31     -131.40\n",
+      "nwifeinc      -5.9185     3.6574    -1.6182     0.1056     -13.087      1.2500\n",
+      "lwage         -2.0468     54.494    -0.0376     0.9700     -108.85      104.76\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "form_L_ols = 'hours ~ 1 + educ + age + kidslt6 + nwifeinc + lwage '\n",
+    "\n",
+    "mod_L_ols = IV2SLS.from_formula(form_L_ols, data=mroz)\n",
+    "\n",
+    "res_L_ols = mod_L_ols.fit(cov_type='unadjusted')\n",
+    "\n",
+    "print(res_L_ols.summary.tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "２つの推定結果を比べると，推定値を含めて大きく異なることがわかる。２段回推定法により同時性バイアスを取り除いた結果と解釈できる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "#### 需要曲線の推定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "**`IV`推定**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 31,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "Intercept     -0.6557     0.3358    -1.9527     0.0509     -1.3139      0.0024\n",
+      "educ           0.1103     0.0154     7.1488     0.0000      0.0801      0.1406\n",
+      "exper          0.0346     0.0194     1.7847     0.0743     -0.0034      0.0726\n",
+      "expersq       -0.0007     0.0005    -1.5634     0.1179     -0.0016      0.0002\n",
+      "hours          0.0001     0.0003     0.4974     0.6189     -0.0004      0.0006\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "form_P = 'lwage ~ 1 + educ + exper + expersq + [hours ~ age + kidslt6 + nwifeinc]'\n",
+    "\n",
+    "mod_P = IV2SLS.from_formula(form_P, data=mroz)\n",
+    "\n",
+    "res_P = mod_P.fit(cov_type='unadjusted')\n",
+    "\n",
+    "print(res_P.summary.tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "**`OLS`推定**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 32,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "Intercept     -0.4620     0.2027    -2.2797     0.0226     -0.8592     -0.0648\n",
+      "educ           0.1062     0.0141     7.5400     0.0000      0.0786      0.1338\n",
+      "exper          0.0447     0.0133     3.3590     0.0008      0.0186      0.0708\n",
+      "expersq       -0.0009     0.0004    -2.1883     0.0286     -0.0016   -8.96e-05\n",
+      "hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "form_W_ols = 'lwage ~ 1 + educ + exper + expersq + hours'\n",
+    "\n",
+    "mod_W_ols = IV2SLS.from_formula(form_W_ols, data=mroz)\n",
+    "\n",
+    "res_W_ols = mod_W_ols.fit(cov_type='unadjusted')\n",
+    "\n",
+    "print(res_W_ols.summary.tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "労働供給の推定結果と比べて，パラメータの推定値の変化は大きくないが，統計的優位性は大きく変化している。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## 測定誤差と`IV`推定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 測定誤差によるバイアス"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "ここではシミュレーションを通して，測定誤差バイアスがある場合でもIV推定法を使うことで一致性を満たす推定量を得ることが可能であることを示す。\n",
+    "\n",
+    "次の母集団回帰式を考えよう。\n",
+    "\n",
+    "$$y=\\beta_0+\\beta_1 x^* + \\eta$$\n",
+    "\n",
+    "ここで，被説明変数$y$は正確に測定できるが，説明変数$x^*$は以下の式に従って測定される仮定する。\n",
+    "\n",
+    "$$x=x^*+e$$\n",
+    "\n",
+    "* $x$：測定値\n",
+    "* $e$：測定誤差\n",
+    "\n",
+    "（仮定）\n",
+    "\n",
+    "* 測定誤差$e$は真の値と無関係。即ち，$\\text{Cov}(x^*,e)=0$\n",
+    "\n",
+    "（結果）\n",
+    "\n",
+    "* 次式をOLS推定する場合，$\\hat{\\beta}_1$は不偏性・一致性を満たさない。\n",
+    "\n",
+    "$$y=\\beta_0+\\beta_1 x + u,\\qquad u=\\eta-\\beta e$$\n",
+    "\n",
+    "（理由）\n",
+    "\n",
+    "仮定４：$\\text{Cov}(x,u)=0$が満たされない。\n",
+    "\n",
+    "$$\n",
+    "\\text{Cov}(x,u)=\\text{E}[xu]\n",
+    "=\\text{E}\\left[(x^*+e)(\\eta-\\beta e)\\right]\n",
+    "=-\\beta\\cdot\\text{E}(e^2)>0\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### `IV`推定法の適用"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`IV`推定法での対処方法を考える。$x^*$を測定する変数$z$があるとする。\n",
+    "\n",
+    "$$z=x^*+v$$\n",
+    "\n",
+    "$v\\sim\\text{iid}(0,\\sigma)$は誤差であり，$\\text{iid}$は独立同一分布を意味する。\n",
+    "\n",
+    "**`IV`推定**\n",
+    "* $x$の操作変数として$z$を使う\n",
+    "* 以下の条件を満たすと仮定する。\n",
+    "    1. もとの式に含まれていない。\n",
+    "    1. $\\text{Cov}(v,u)=0\\;\\;\\Rightarrow\\;\\;\\text{Cov}(z,u)=0$\n",
+    "    1. $\\text{Cov}(z,x)\\neq 0$（$z$も$x$も$x^*$を測定する変数）"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### シミュレーション"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "（目的）\n",
+    "* 測定誤差によるバイアスを示す。\n",
+    "* `IV`推定法により一致性が成立することを示す。\n",
+    "\n",
+    "＜シミュレーションの内容＞\n",
+    "\n",
+    "* 単回帰分析\n",
+    "\n",
+    "    $$ y=\\beta_0 + \\beta_1 x + u$$\n",
+    "    \n",
+    "* ２つのケース\n",
+    "    1. $OLS$推定\n",
+    "    2. $IV$推定\n",
+    "* それぞれのケースで標本の大きさ$n=100$\n",
+    "* 1000回推定し$\\hat{\\beta}_1$の分布を比べる"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "標本の大きさと標本数（ループの回数）"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 33,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "n = 1000\n",
+    "N = 10_000"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "母集団のパラメータの真の値"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 34,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "b0 = 1.0\n",
+    "b1 = 1.0"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "x_pop = uniform.rvs(1,10,size=n)  # 母集団の説明変数\n",
+    "u = norm.rvs(scale=1, size=n)  # 母集団の誤差項\n",
+    "y = b0 + b1*x_pop + u  # 母集団回帰式"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "測定誤差の標準偏差"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 36,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "error_sd = 3"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "シミュレーション開始"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 37,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "# シミュレーションで計算した推定量を入れる空のリストの作成\n",
+    "b1_ols_list = []  # OLS推定量\n",
+    "b1_iv_list = []  # IV推定量\n",
+    "\n",
+    "for j in range(N):  # N回のループ\n",
+    "    x = x_pop + norm.rvs(scale=error_sd, size=n)  # 測定誤差\n",
+    "    z = x_pop + norm.rvs(scale=error_sd, size=n)  # 操作変数\n",
+    "    \n",
+    "    c = np.ones(n)  # 定数項\n",
+    "    \n",
+    "    # IV 第１ステージ\n",
+    "    Xiv1 = np.stack([c,z],axis=1)\n",
+    "    pihat = np.linalg.inv((Xiv1.T)@Xiv1)@(Xiv1.T)@x  # IV推定\n",
+    "    xhat = Xiv1@pihat  # x1の予測値\n",
+    "    # IV 第２ステージ\n",
+    "    Xiv2 = np.stack([c,xhat],axis=1)        \n",
+    "    beta_iv = np.linalg.inv((Xiv2.T)@Xiv2)@(Xiv2.T)@y  # IV推定\n",
+    "    b1_iv_list.append(beta_iv[1])  # b1のIV推定量をリストに追加\n",
+    "\n",
+    "    # OLS\n",
+    "    X = np.stack([c,x],axis=1)        \n",
+    "    beta_ols = np.linalg.inv((X.T)@X)@(X.T)@y  # OLS推定\n",
+    "    b1_ols_list.append(beta_ols[1])  # b1のOLS推定量"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "結果の図示"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "image/png": "iVBORw0KGgoAAAANSUhEUgAAAX4AAAD4CAYAAADrRI2NAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADh0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uMy4xLjMsIGh0dHA6Ly9tYXRwbG90bGliLm9yZy+AADFEAAAgAElEQVR4nO3deXxU5fX48c9JyMoeNkFEkCKKJAQJ1l1Ufkpr3bCK1Kq44Yq4Vmz9VqutVVywigtIKWptRVCrorUFlOKCS1BABSWioBEMiBDIJCGT5Pz+uDMxhCwzk5m5dzLn3VeazJ27HCCePDn3uecRVcUYY0zySHE7AGOMMfFlid8YY5KMJX5jjEkylviNMSbJWOI3xpgk087tAELRvXt37d+/v9thGGNa4cstPgD269He5UiSx/Lly79X1R4NtydE4u/fvz+FhYVuh2GMaYVxM5YBMPfSw1yOJHmIyIbGtlupxxhjkkxCjPiNMYlv0nGD3A7BBFjiN8bExZGDursdggmwxG/iwu/3U1xcTGVlpduhmBZkZmbSt29f0tLSonreTzeWAnBQn85RPa8JnyV+ExfFxcV07NiR/v37IyJuh2OaoKps3bqV4uJiBgwYENVz3/7yasBu7nqB3dw1cVFZWUm3bt0s6XuciNCtWzf7zayNs8Rv4saSfmKwf6e2zxJ/jCz+cjEfl3zsdhjGGLOHmCV+EckUkfdFZKWIfCoifwhsHyAi74lIkYjMFZH0WMXglh27dnDqM6dy+9Lb3Q7F1FNcXMypp57KoEGDGDhwIJMnT6aqqgqAJUuW8Itf/GKPYxYsWMDw4cMZNmwYQ4YMYcaMGXvsM2fOHHr06EF+fn7dx+rVq5uM484779zt9eGHH97KP5ljyZIlvPPOO1E5l2nbYjni3wUcp6rDgHxgjIgcCtwNTFPVQcA24KIYxuCKp1c9jc/vY1vFNrdDMQGqytixYznttNMoKipi7dq1lJWV8bvf/a7JY/x+PxMnTuTll19m5cqVfPTRR4waNarRfceNG8eKFSvqPoYMGdLkeRsm/mgla68n/t+MGcxvxgx2OwxDDBO/OsoCL9MCHwocB8wPbH8COC1WMbhBVZmx3BkVlu4qdTkaE/T666+TmZnJBRdcAEBqairTpk1j9uzZlJeXN3rMzp07qa6uplu3bgBkZGQweHDoiWvTpk0cffTR5OfnM3ToUN58802mTJlCRUUF+fn5nHPOOQB06NABcBL3Mcccw1lnncX+++/PlClTePrppznkkEPIzc1l3bp1ALz88sv89Kc/Zfjw4YwePZqSkhLWr1/PY489xrRp08jPz+fNN99ky5YtnHHGGYwcOZKRI0fy9ttvA/C///2v7jeT4cOHs3Pnzsj+UsM0Yt8cRuybE5drmebFdDqniKQCy4GfAA8D64Dtqlod2KUY2DuWMcTbe9++x8qSlWSkZlBaaYm/Mde8dg0rvlsR1XPm75XPA2MeaPL9Tz/9lBEjRuy2rVOnTvTr148vvvii0WNycnI45ZRT2HfffTn++OP5xS9+wfjx40lJ2XO8NHfuXN56662618uWLeMf//gHJ554Ir/73e+oqamhvLyco446iunTp7NiReN//pUrV7JmzRpycnLYb7/9uPjii3n//ff5y1/+wkMPPcQDDzzAkUceybvvvouIMGvWLKZOncp9993HZZddRocOHbjhhhsA+NWvfsW1117LkUceyddff82JJ57ImjVruPfee3n44Yc54ogjKCsrIzMzs8W/32hYvuEHAEv+HhDTxK+qNUC+iHQBXgAObGy3xo4VkYnARIB+/frFLMZom7F8Bh3SO3Dy/ifz+levux2OCVDVRmerNLU9aNasWXz88ccsWrSIe++9l4ULFzJnzpw99hs3bhzTp0/fbdvIkSO58MIL8fv9nHbaaeTn57cY58iRI+nduzcAAwcO5IQTTgAgNzeXN954A3DuVYwbN45NmzZRVVXV5Hz7RYsW7XavYceOHezcuZMjjjiC6667jnPOOYexY8fSt2/fFuOKhqmvfQ7YPH4viMsDXKq6XUSWAIcCXUSkXWDU3xfY2MQxM4GZAAUFBQmxIvy2im0888kznD/sfDpldLJSTxOaG5nHykEHHcRzzz2327YdO3bwzTffMHDgQLZu3drksbm5ueTm5nLuuecyYMCARhN/Y44++miWLl3KK6+8wrnnnsuNN97Ieeed1+wxGRkZdV+npKTUvU5JSaG62vlFedKkSVx33XWccsopLFmyhNtuu63Rc9XW1rJs2TKysrJ22z5lyhROOukkXn31VQ499FAWLVrEAQccENKfybQNsZzV0yMw0kdEsoDRwBrgDeCXgd3OB16MVQzx9tSqp6isruTSEZfSOaMz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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "xx=np.linspace(0.4,1.2,num=100)  # 図を作成するために横軸の値を設定\n",
+    "\n",
+    "kde_model_ols=gaussian_kde(b1_ols_list)  # t値のカーネル密度推定を設定\n",
+    "b1_ols_dist = kde_model_ols(xx)\n",
+    "\n",
+    "kde_model_iv=gaussian_kde(b1_iv_list)  # t値のカーネル密度推定を設定\n",
+    "b1_iv_dist = kde_model_iv(xx)\n",
+    "\n",
+    "plt.plot(xx, b1_ols_dist, 'g-', label='OLS Estimates')  # t値の分布プロット\n",
+    "plt.plot(xx, b1_iv_dist,'r-', label='IV Estimates')  # t分布\n",
+    "plt.axvline(x=b1,linestyle='dashed')\n",
+    "plt.ylabel('Kernel Density')  # 縦軸のラベル\n",
+    "plt.legend()\n",
+    "pass"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "* OLS推定量は不偏性も一致性も満たさない。\n",
+    "* IV推定量は一致性を満たす。"
+   ]
+  }
+ ],
+ "metadata": {
+  "celltoolbar": "Tags",
+  "kernelspec": {
+   "display_name": "latest",
+   "language": "python",
+   "name": "latest"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.2"
+  },
+  "toc": {
+   "base_numbering": 1,
+   "nav_menu": {},
+   "number_sections": true,
+   "sideBar": true,
+   "skip_h1_title": false,
+   "title_cell": "Table of Contents",
+   "title_sidebar": "Contents",
+   "toc_cell": false,
+   "toc_position": {},
+   "toc_section_display": true,
+   "toc_window_display": false
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

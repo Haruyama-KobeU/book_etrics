@@ -32,7 +32,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="制限従属変数モデル" href="21_TruncregTobitHeckit.html" />
-    <link rel="prev" title="操作変数法と２段階OLS" href="19_dummy.html" />
+    <link rel="prev" title="操作変数法と２段階OLS" href="19_IV2SLS.html" />
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -147,7 +147,7 @@
       <a href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a>
     </li>
     <li class="">
-      <a href="19_dummy.html">操作変数法と２段階OLS</a>
+      <a href="19_IV2SLS.html">操作変数法と２段階OLS</a>
     </li>
     <li class="active">
       <a href="">離散選択モデル</a>
@@ -581,8 +581,8 @@ provided the data, which he obtained from Professor Mroz.
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                          Logit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Wed, 27 May 2020   Pseudo R-squ.:                  0.2197
-Time:                        15:22:53   Log-Likelihood:                -401.77
+Date:                Thu, 28 May 2020   Pseudo R-squ.:                  0.2197
+Time:                        14:22:08   Log-Likelihood:                -401.77
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
 ==============================================================================
@@ -686,9 +686,6 @@ dtype: float64
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>H0: homoscedasticity
 HA: heteroscedasticity
  
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>
 Wald test: 9.547 
 p-value:   0.216 
 df freedom:  7.
@@ -727,8 +724,8 @@ df freedom:  7.
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                         Probit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Wed, 27 May 2020   Pseudo R-squ.:                  0.2206
-Time:                        15:22:53   Log-Likelihood:                -401.30
+Date:                Thu, 28 May 2020   Pseudo R-squ.:                  0.2206
+Time:                        14:22:08   Log-Likelihood:                -401.30
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 ==============================================================================
@@ -988,8 +985,8 @@ kidsge6        0.0141      0.017      0.828      0.408      -0.019       0.047
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                          Logit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Wed, 27 May 2020   Pseudo R-squ.:                  0.2197
-Time:                        15:22:53   Log-Likelihood:                -401.77
+Date:                Thu, 28 May 2020   Pseudo R-squ.:                  0.2197
+Time:                        14:22:09   Log-Likelihood:                -401.77
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
 ==============================================================================
@@ -1157,8 +1154,8 @@ G(z) = z
 Dep. Variable:                   inlf   R-squared:                       0.264
 Model:                            OLS   Adj. R-squared:                  0.257
 Method:                 Least Squares   F-statistic:                     62.48
-Date:                Wed, 27 May 2020   Prob (F-statistic):           1.30e-70
-Time:                        15:22:54   Log-Likelihood:                -423.89
+Date:                Thu, 28 May 2020   Prob (F-statistic):           1.30e-70
+Time:                        14:22:09   Log-Likelihood:                -423.89
 No. Observations:                 753   AIC:                             863.8
 Df Residuals:                     745   BIC:                             900.8
 Df Model:                           7                                         
@@ -1278,7 +1275,7 @@ strong multicollinearity or other numerical problems.
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="19_dummy.html" title="previous page">操作変数法と２段階OLS</a>
+    <a class='left-prev' id="prev-link" href="19_IV2SLS.html" title="previous page">操作変数法と２段階OLS</a>
     <a class='right-next' id="next-link" href="21_TruncregTobitHeckit.html" title="next page">制限従属変数モデル</a>
 
     </div>
