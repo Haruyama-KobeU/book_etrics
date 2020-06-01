@@ -51,7 +51,7 @@
     "\n",
     "日本の統計の例に[労働力調査](http://www.stat.go.jp/data/roudou/index.html)がある。\n",
     "\n",
-    "＜プーリング・データを使う意義＞\n",
+    "＜プーリング・データを使う利点＞\n",
     "* 横断データと比べるとデータ数が増えるため，より正確な推定量や検定統計量を得ることが可能となる。\n",
     "* 時間軸にそって独立した分布から標本を抽出するため，誤差項に自己相関はない。"
    ]
@@ -207,6 +207,7 @@
     "formula = 'lwage ~ y85 + educ + female + \\\n",
     "                   y85:educ + y85:female + \\\n",
     "                   exper + I((exper**2)/100) + union'\n",
+    "\n",
     "result = ols(formula, cps).fit()"
    ]
   },
@@ -339,28 +340,37 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "heading_collapsed": true
+   },
    "source": [
     "## プーリング・データの応用：差分の差分析"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
    "source": [
     "### 説明"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "差分の差分析（Difference-in-Differences; DiD）を使うとプーリング・データを使い政策の効果を検証できる。"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "＜基本的な考え＞\n",
     "* 例として，ゴミ焼却場の建築が近隣住宅価格に与える影響を考える。\n",
@@ -397,7 +407,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "---\n",
     "＜`DiD`推定方法＞\n",
@@ -413,7 +425,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "＜ダミー変数の値により4つのケースがある＞\n",
     "1. `T`=`D`=0の場合\n",
@@ -454,17 +468,22 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
-    "この定義を使うと次式が成立することが容易に確認できる。\n",
+    "ここでの関心事は$\\hat{\\delta}_1$の推定値（負かどうか）であり，その統計的優位性である。この定義を使うと次式が成立することが確認できる。\n",
     "\n",
-    "$$\\hat{\\delta}_1=\\left(\\hat{y}_1^{\\text{近}}-\\hat{y}_1^{\\text{遠}}\\right)-\\left(\\hat{y}_0^{\\text{近}}-\\hat{y}_0^{\\text{遠}}\\right)$$"
+    "$$\\hat{\\delta}_1=\\left(\\hat{y}_1^{\\text{近}}-\\hat{y}_1^{\\text{遠}}\\right)-\\left(\\hat{y}_0^{\\text{近}}-\\hat{y}_0^{\\text{遠}}\\right)$$\n",
+    "\n",
+    "これは上で導出した式にある$\\hat{\\gamma}_1^{\\text{}}-\\hat{\\gamma}_0$と同じである。"
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true
+    "heading_collapsed": true,
+    "hidden": true
    },
    "source": [
     "### `DiD`推定\n",
@@ -530,6 +549,7 @@
    ],
    "source": [
     "kielmc = dataWoo('kielmc')\n",
+    "\n",
     "dataWoo('kielmc', description=True)"
    ]
   },
@@ -542,6 +562,7 @@
    "outputs": [],
    "source": [
     "formula = 'rprice ~ nearinc + y81 + nearinc:y81'\n",
+    "\n",
     "result = ols(formula, data=kielmc).fit()"
    ]
   },
@@ -643,39 +664,26 @@
    },
    "outputs": [
     {
-     "data": {
-      "text/html": [
-       "<table class=\"simpletable\">\n",
-       "<tr>\n",
-       "       <td></td>          <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  \n",
-       "</tr>\n",
-       "<tr>\n",
-       "  <th>Intercept</th>   <td>   11.2854</td> <td>    0.031</td> <td>  369.839</td> <td> 0.000</td> <td>   11.225</td> <td>   11.345</td>\n",
-       "</tr>\n",
-       "<tr>\n",
-       "  <th>nearinc</th>     <td>   -0.3399</td> <td>    0.055</td> <td>   -6.231</td> <td> 0.000</td> <td>   -0.447</td> <td>   -0.233</td>\n",
-       "</tr>\n",
-       "<tr>\n",
-       "  <th>y81</th>         <td>    0.1931</td> <td>    0.045</td> <td>    4.261</td> <td> 0.000</td> <td>    0.104</td> <td>    0.282</td>\n",
-       "</tr>\n",
-       "<tr>\n",
-       "  <th>nearinc:y81</th> <td>   -0.0626</td> <td>    0.083</td> <td>   -0.751</td> <td> 0.453</td> <td>   -0.227</td> <td>    0.102</td>\n",
-       "</tr>\n",
-       "</table>"
-      ],
-      "text/plain": [
-       "<class 'statsmodels.iolib.table.SimpleTable'>"
-      ]
-     },
-     "execution_count": 12,
-     "metadata": {},
-     "output_type": "execute_result"
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "===============================================================================\n",
+      "                  coef    std err          t      P>|t|      [0.025      0.975]\n",
+      "-------------------------------------------------------------------------------\n",
+      "Intercept      11.2854      0.031    369.839      0.000      11.225      11.345\n",
+      "nearinc        -0.3399      0.055     -6.231      0.000      -0.447      -0.233\n",
+      "y81             0.1931      0.045      4.261      0.000       0.104       0.282\n",
+      "nearinc:y81    -0.0626      0.083     -0.751      0.453      -0.227       0.102\n",
+      "===============================================================================\n"
+     ]
     }
    ],
    "source": [
     "formula_1 = 'np.log(rprice) ~ nearinc * y81'\n",
+    "\n",
     "result_1 = ols(formula_1, data=kielmc).fit()\n",
-    "result_1.summary().tables[1]"
+    "\n",
+    "print(result_1.summary().tables[1])"
    ]
   },
   {
@@ -722,7 +730,9 @@
    "source": [
     "formula_2 = 'np.log(rprice) ~ nearinc * y81 + age + I(age**2) + \\\n",
     "            np.log(intst) + np.log(land) + np.log(area) + rooms + baths'\n",
+    "\n",
     "result_2 = ols(formula_2, data=kielmc).fit()\n",
+    "\n",
     "print(result_2.summary().tables[1])"
    ]
   },
@@ -786,7 +796,7 @@
     "        * $\\delta_0D_t$：時間による切片の変化を捉えており，$D_t$は時間ダミー変数\n",
     "            * $D_0=0$\n",
     "            * $D_1=1$\n",
-    "* $u_{it}$：時間によって変化する観測不可能な誤差項（idiosyncratic errorsと呼ばれることがある）\n",
+    "* $u_{it}$：時間によって変化する観測不可能な誤差項（$i$と$t$に依存する誤差項であり，idiosyncratic errorsと呼ばれることがある）\n",
     "    * 仮定：$\\text{Cov}(x_{it},u_{it})=0$"
    ]
   },
@@ -820,8 +830,7 @@
     "    $$\n",
     "\n",
     "  即ち，$\\hat{\\beta}_1$は不偏性と一致性を失うことになる。\n",
-    "* 「異質性バイアス」と呼ばれる。\n",
-    "    * 本質的には$a_i$の欠落変数バイアスである。"
+    "* 「異質性バイアス」と呼ばれるが，本質的には$a_i$の欠落変数バイアスである。"
    ]
   },
   {
@@ -839,7 +848,7 @@
     "hidden": true
    },
    "source": [
-    "パネル・データを使った推定方法として１階差分推定（First Differenced Estimator）があり，次の節で説明する。その前準備として変数の差分の作成方法について説明する。\n",
+    "パネル・データを使った推定方法として１階差分推定（First Differenced Estimator）があり，それを使い推定する。その前準備として変数の差分の作成方法について説明する。\n",
     "\n",
     "`DataFrame`にはメソッド`groupby`があり，これを使うとカテゴリー変数がある列に従って行をグループ分けしグループ毎の様々な計算が可能となる。具体的な例としては[Gapminder](https://github.com/Haruyama-KobeU/Py4Etrics/blob/master/Gapminder.ipynb)を参照。ここでは`groupby`を使い差分の変数の作り方を説明する。\n",
     "\n",
@@ -989,8 +998,10 @@
    "source": [
     "# url の設定\n",
     "url = 'https://raw.githubusercontent.com/Haruyama-KobeU/Haruyama-KobeU.github.io/master/data/data4.csv'\n",
+    "\n",
     "# 読み込み\n",
     "df = pd.read_csv(url)\n",
+    "\n",
     "df"
    ]
   },
@@ -1006,7 +1017,7 @@
     "\n",
     "（コメント）\n",
     "\n",
-    "以下のコードには`.reset_index(drop=True)`が追加されているが，これは行のインデックスを0,1,2,..と振り直すメソッドである。引数`drop=True`がなければ，元々あったインデックスが新たな列として追加される。試しに，最初からdf読み直して`.reset_index(drop=True)`を省いて下のコードを実行してみよう。"
+    "以下のコードには`.reset_index(drop=True)`が追加されているが，これは行のインデックスを0,1,2,..と振り直すメソッドである。引数`drop=True`がなければ，元々あったインデックスが新たな列として追加される。試しに，最初から`df`を読み直して`.reset_index(drop=True)`を省いて下のコードを実行してみよう。"
    ]
   },
   {
@@ -1151,6 +1162,7 @@
    ],
    "source": [
     "df = df.sort_values(['country','year']).reset_index(drop=True)\n",
+    "\n",
     "df"
    ]
   },
@@ -1173,7 +1185,7 @@
     {
      "data": {
       "text/plain": [
-       "<pandas.core.groupby.generic.DataFrameGroupBy object at 0x11e10c3a0>"
+       "<pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f8661379c40>"
       ]
      },
      "execution_count": 16,
@@ -1183,6 +1195,7 @@
    ],
    "source": [
     "df_group = df.groupby('country')\n",
+    "\n",
     "df_group"
    ]
   },
@@ -1336,7 +1349,9 @@
    ],
    "source": [
     "var = ['gdp', 'inv']\n",
+    "\n",
     "df_diff = df_group[var].diff()\n",
+    "\n",
     "df_diff"
    ]
   },
@@ -1462,6 +1477,7 @@
    ],
    "source": [
     "df_diff_1 = df_diff.rename(columns={'gdp':'gdp_diff','inv':'inv_diff'})\n",
+    "\n",
     "df_diff_1"
    ]
   },
@@ -1648,12 +1664,12 @@
     "\n",
     "`df`と`df_diff`を使い、方法１の２つのステップを１行で済ませる。次のコードでは3つの引数を指定している。\n",
     "* `left_index=True`\n",
-    "    * `df`の行のインデックスを使って結合する。\n",
+    "    * `df`の行のインデックスに合わせて結合する。\n",
     "* `right_index=True`\n",
-    "    * `df_diff`の行のインデックスを使って結合する。\n",
+    "    * `df_diff`の行のインデックスに合わせて結合する。\n",
     "* `suffixes=('', '_diff')`\n",
-    "    * 左の引数`''`：結合後，重複する左の列につける接尾辞（空の接尾辞）\n",
-    "    * 右の引数`'_diff'`：結合後，重複する右の列につける接尾辞"
+    "    * 左の引数`''`：結合後，重複する左の`DataFrame`の列につける接尾辞（空の接尾辞）\n",
+    "    * 右の引数`'_diff'`：結合後，重複する右の`DataFrame`の列につける接尾辞"
    ]
   },
   {
@@ -1826,7 +1842,7 @@
     "hidden": true
    },
    "source": [
-    "dfを上書きしたい場合は，`df=`を付け加える。"
+    "`df`を上書きしたい場合は，`df=`を付け加える。"
    ]
   },
   {
@@ -1871,7 +1887,7 @@
     "    * （仮定により）$\\Delta x_{i}$と$\\Delta u_{i}$は相関しないため，GM仮定４は満たされることになる。\n",
     "* 悪い点\n",
     "    * $t=0$のデータを使えなくなるため，標本の大きさが小さくなる。\n",
-    "    * 期間内の説明変数の変化が少ないと，不正確な推定になる（極端な場合，変化がないと推定不可能となる）。"
+    "    * 期間内の説明変数$\\Delta x_i$の変化が小さいと，不正確な推定になる（極端な場合，変化がないと推定不可能となる）。"
    ]
   },
   {
@@ -1883,7 +1899,7 @@
     "---\n",
     "＜推定方法＞\n",
     "\n",
-    "データから１階差分を計算し，`statsmodels`を使いOLS推定すれば良い。しかし`linearmodels`パッケージを使えばより簡単に計算できる。そのためには，まず`DataFrame`を`MultiIndex`にする必要がある。"
+    "データから１階差分を計算し，`statsmodels`を使いOLS推定すれば良い。以下ではパッケージ`wooldridge`にあるデータを使う。"
    ]
   },
   {
@@ -2441,9 +2457,11 @@
    ],
    "source": [
     "var = ['unem', 'crmrte']  # groupbyで差分を取る列の指定\n",
+    "\n",
     "names = {'unem':'unem_diff', 'crmrte':'crmrte_diff'}  # 差分の列のラベル\n",
     "\n",
     "crime2_diff = crime2.groupby('county')[var].diff().rename(columns=names)\n",
+    "\n",
     "crime2_diff.head()"
    ]
   },
@@ -2482,7 +2500,9 @@
    ],
    "source": [
     "formula_1 = 'crmrte_diff ~ unem_diff'\n",
+    "\n",
     "result_1 = ols(formula_1, crime2_diff).fit()\n",
+    "\n",
     "print(result_1.summary().tables[1])"
    ]
   },
@@ -2571,7 +2591,9 @@
    ],
    "source": [
     "formula_ols_1 = 'crmrte ~ d87 + unem'\n",
+    "\n",
     "result_ols_1 = ols(formula_ols_1, crime2).fit()\n",
+    "\n",
     "print(result_ols_1.summary().tables[1])"
    ]
   },
@@ -2613,7 +2635,9 @@
    ],
    "source": [
     "formula_ols_2 = 'crmrte ~ unem'\n",
+    "\n",
     "result_ols_2 = ols(formula_ols_2, crime2).fit()\n",
+    "\n",
     "print(result_ols_2.summary().tables[1])"
    ]
   },
@@ -3040,6 +3064,7 @@
    ],
    "source": [
     "result_2 = ols(formula_2, crime4).fit()\n",
+    "\n",
     "print(result_2.summary().tables[1])"
    ]
   },

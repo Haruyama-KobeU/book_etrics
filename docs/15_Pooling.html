@@ -83,29 +83,6 @@
   <ul class="nav sidenav_l1">
   <li class="">
     <a href="part_1.html">１. Pythonの基礎</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="0_Preparations.html">ツールのインストールと説明</a>
-    </li>
-    <li class="">
-      <a href="1_Python_Basics.html">Pythonの基礎</a>
-    </li>
-    <li class="">
-      <a href="2_NumPy.html">NumPy</a>
-    </li>
-    <li class="">
-      <a href="3_Pandas.html">Pandas</a>
-    </li>
-    <li class="">
-      <a href="4_Matplotlib.html">Matplotlib</a>
-    </li>
-    <li class="">
-      <a href="5_SciPy_stats.html">SciPy.stats</a>
-    </li>
-    <li class="">
-      <a href="6_things_to_note.html">Tipsと注意点</a>
-    </li>
-  </ul>
   </li>
   <li class="active">
     <a href="part_2.html">２. Pythonを使った計量経済分析</a>
@@ -159,14 +136,6 @@
   </li>
   <li class="">
     <a href="part_3.html">３. 番外編</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="Gapminder.html">Gapminder</a>
-    </li>
-    <li class="">
-      <a href="Descriptive_stats_vs_Graphs.html">記述統計とグラフ</a>
-    </li>
-  </ul>
   </li>
 </ul>
 </nav>
@@ -327,7 +296,7 @@
 <li><p>時間の変化により必ずしも<strong>同一分布</strong>とはならない（即ち，分布は時間によって変化するかも知れない）。</p></li>
 </ul>
 <p>日本の統計の例に<a class="reference external" href="http://www.stat.go.jp/data/roudou/index.html">労働力調査</a>がある。</p>
-<p>＜プーリング・データを使う意義＞</p>
+<p>＜プーリング・データを使う利点＞</p>
 <ul class="simple">
 <li><p>横断データと比べるとデータ数が増えるため，より正確な推定量や検定統計量を得ることが可能となる。</p></li>
 <li><p>時間軸にそって独立した分布から標本を抽出するため，誤差項に自己相関はない。</p></li>
@@ -429,6 +398,7 @@ Farber kindly provided these data when we were colleagues at MIT.
 <span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ y85 + educ + female + </span><span class="se">\</span>
 <span class="s1">                   y85:educ + y85:female + </span><span class="se">\</span>
 <span class="s1">                   exper + I((exper**2)/100) + union&#39;</span>
+
 <span class="n">result</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">cps</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -610,9 +580,10 @@ union                     0.2021      0.030      6.672      0.000       0.143   
 <p><span class="math notranslate nohighlight">\(\hat{y}_{1}^{\text{近}}\equiv\hat{\beta}_0+\hat{\delta}_0+\hat{\beta}_1+\hat{\delta}_1\)</span>：政策実施後の近くに立地する住宅の平均価格</p>
 </li>
 </ol>
-<p>この定義を使うと次式が成立することが容易に確認できる。</p>
+<p>ここでの関心事は<span class="math notranslate nohighlight">\(\hat{\delta}_1\)</span>の推定値（負かどうか）であり，その統計的優位性である。この定義を使うと次式が成立することが確認できる。</p>
 <div class="math notranslate nohighlight">
 \[\hat{\delta}_1=\left(\hat{y}_1^{\text{近}}-\hat{y}_1^{\text{遠}}\right)-\left(\hat{y}_0^{\text{近}}-\hat{y}_0^{\text{遠}}\right)\]</div>
+<p>これは上で導出した式にある<span class="math notranslate nohighlight">\(\hat{\gamma}_1^{\text{}}-\hat{\gamma}_0\)</span>と同じである。</p>
 </div>
 <div class="section" id="did">
 <h3><code class="docutils literal notranslate"><span class="pre">DiD</span></code>推定<a class="headerlink" href="#did" title="Permalink to this headline">¶</a></h3>
@@ -620,6 +591,7 @@ union                     0.2021      0.030      6.672      0.000       0.143   
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kielmc</span> <span class="o">=</span> <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;kielmc&#39;</span><span class="p">)</span>
+
 <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;kielmc&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -671,6 +643,7 @@ only a subset.
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;rprice ~ nearinc + y81 + nearinc:y81&#39;</span>
+
 <span class="n">result</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">kielmc</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -735,29 +708,25 @@ nearinc:y81 -1.186e+04   7456.646     -1.591      0.113   -2.65e+04    2806.867
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1</span> <span class="o">=</span> <span class="s1">&#39;np.log(rprice) ~ nearinc * y81&#39;</span>
+
 <span class="n">result_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">kielmc</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-<span class="n">result_1</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result_1</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><table class="simpletable">
-<tr>
-       <td></td>          <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
-</tr>
-<tr>
-  <th>Intercept</th>   <td>   11.2854</td> <td>    0.031</td> <td>  369.839</td> <td> 0.000</td> <td>   11.225</td> <td>   11.345</td>
-</tr>
-<tr>
-  <th>nearinc</th>     <td>   -0.3399</td> <td>    0.055</td> <td>   -6.231</td> <td> 0.000</td> <td>   -0.447</td> <td>   -0.233</td>
-</tr>
-<tr>
-  <th>y81</th>         <td>    0.1931</td> <td>    0.045</td> <td>    4.261</td> <td> 0.000</td> <td>    0.104</td> <td>    0.282</td>
-</tr>
-<tr>
-  <th>nearinc:y81</th> <td>   -0.0626</td> <td>    0.083</td> <td>   -0.751</td> <td> 0.453</td> <td>   -0.227</td> <td>    0.102</td>
-</tr>
-</table></div></div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>===============================================================================
+                  coef    std err          t      P&gt;|t|      [0.025      0.975]
+-------------------------------------------------------------------------------
+Intercept      11.2854      0.031    369.839      0.000      11.225      11.345
+nearinc        -0.3399      0.055     -6.231      0.000      -0.447      -0.233
+y81             0.1931      0.045      4.261      0.000       0.104       0.282
+nearinc:y81    -0.0626      0.083     -0.751      0.453      -0.227       0.102
+===============================================================================
+</pre></div>
+</div>
+</div>
 </div>
 <p>（結果）</p>
 <ul class="simple">
@@ -768,7 +737,9 @@ nearinc:y81 -1.186e+04   7456.646     -1.591      0.113   -2.65e+04    2806.867
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_2</span> <span class="o">=</span> <span class="s1">&#39;np.log(rprice) ~ nearinc * y81 + age + I(age**2) + </span><span class="se">\</span>
 <span class="s1">            np.log(intst) + np.log(land) + np.log(area) + rooms + baths&#39;</span>
+
 <span class="n">result_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">kielmc</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">result_2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -839,7 +810,7 @@ y_{it}= \alpha_{it} +\beta_1x_{it}+u_{it}\qquad i=1,2,...,n\quad t=1,2
 </li>
 </ul>
 </li>
-<li><p><span class="math notranslate nohighlight">\(u_{it}\)</span>：時間によって変化する観測不可能な誤差項（idiosyncratic errorsと呼ばれることがある）</p>
+<li><p><span class="math notranslate nohighlight">\(u_{it}\)</span>：時間によって変化する観測不可能な誤差項（<span class="math notranslate nohighlight">\(i\)</span>と<span class="math notranslate nohighlight">\(t\)</span>に依存する誤差項であり，idiosyncratic errorsと呼ばれることがある）</p>
 <ul>
 <li><p>仮定：<span class="math notranslate nohighlight">\(\text{Cov}(x_{it},u_{it})=0\)</span></p></li>
 </ul>
@@ -862,25 +833,23 @@ y_{it}= \beta_0 + \delta_0D_t + \beta_1x_{it}+e_{it}\qquad e_{it}=a_i+u_{it}
     \]</div>
 <p>即ち，<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>は不偏性と一致性を失うことになる。</p>
 </li>
-<li><p>「異質性バイアス」と呼ばれる。</p>
-<ul class="simple">
-<li><p>本質的には<span class="math notranslate nohighlight">\(a_i\)</span>の欠落変数バイアスである。</p></li>
-</ul>
-</li>
+<li><p>「異質性バイアス」と呼ばれるが，本質的には<span class="math notranslate nohighlight">\(a_i\)</span>の欠落変数バイアスである。</p></li>
 </ul>
 </div>
 </div>
 <div class="section" id="groupby">
 <h2>１階差分推定の準備：<code class="docutils literal notranslate"><span class="pre">groupby</span></code><a class="headerlink" href="#groupby" title="Permalink to this headline">¶</a></h2>
-<p>パネル・データを使った推定方法として１階差分推定（First Differenced Estimator）があり，次の節で説明する。その前準備として変数の差分の作成方法について説明する。</p>
+<p>パネル・データを使った推定方法として１階差分推定（First Differenced Estimator）があり，それを使い推定する。その前準備として変数の差分の作成方法について説明する。</p>
 <p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>にはメソッド<code class="docutils literal notranslate"><span class="pre">groupby</span></code>があり，これを使うとカテゴリー変数がある列に従って行をグループ分けしグループ毎の様々な計算が可能となる。具体的な例としては<a class="reference external" href="https://github.com/Haruyama-KobeU/Py4Etrics/blob/master/Gapminder.ipynb">Gapminder</a>を参照。ここでは<code class="docutils literal notranslate"><span class="pre">groupby</span></code>を使い差分の変数の作り方を説明する。</p>
 <p>例として使うデータを読み込む。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># url の設定</span>
 <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/Haruyama-KobeU/Haruyama-KobeU.github.io/master/data/data4.csv&#39;</span>
+
 <span class="c1"># 読み込み</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
 <span class="n">df</span>
 </pre></div>
 </div>
@@ -1001,10 +970,11 @@ y_{it}= \beta_0 + \delta_0D_t + \beta_1x_{it}+e_{it}\qquad e_{it}=a_i+u_{it}
 <p>列<code class="docutils literal notranslate"><span class="pre">country</span></code>がカテゴリー変数であり，3つの国がある。この列を使いグループ分けする。</p>
 <p>まず前準備として，メソッド<code class="docutils literal notranslate"><span class="pre">.sort_values()</span></code>を使い列<code class="docutils literal notranslate"><span class="pre">country</span></code>で昇順に並び替え，その後，列<code class="docutils literal notranslate"><span class="pre">year</span></code>で昇順に並び替える。</p>
 <p>（コメント）</p>
-<p>以下のコードには<code class="docutils literal notranslate"><span class="pre">.reset_index(drop=True)</span></code>が追加されているが，これは行のインデックスを0,1,2,..と振り直すメソッドである。引数<code class="docutils literal notranslate"><span class="pre">drop=True</span></code>がなければ，元々あったインデックスが新たな列として追加される。試しに，最初からdf読み直して<code class="docutils literal notranslate"><span class="pre">.reset_index(drop=True)</span></code>を省いて下のコードを実行してみよう。</p>
+<p>以下のコードには<code class="docutils literal notranslate"><span class="pre">.reset_index(drop=True)</span></code>が追加されているが，これは行のインデックスを0,1,2,..と振り直すメソッドである。引数<code class="docutils literal notranslate"><span class="pre">drop=True</span></code>がなければ，元々あったインデックスが新たな列として追加される。試しに，最初から<code class="docutils literal notranslate"><span class="pre">df</span></code>を読み直して<code class="docutils literal notranslate"><span class="pre">.reset_index(drop=True)</span></code>を省いて下のコードを実行してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;country&#39;</span><span class="p">,</span><span class="s1">&#39;year&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
 <span class="n">df</span>
 </pre></div>
 </div>
@@ -1126,12 +1096,13 @@ y_{it}= \beta_0 + \delta_0D_t + \beta_1x_{it}+e_{it}\qquad e_{it}=a_i+u_{it}
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;country&#39;</span><span class="p">)</span>
+
 <span class="n">df_group</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x124d591c0&gt;
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7fb98b27b1f0&gt;
 </pre></div>
 </div>
 </div>
@@ -1159,7 +1130,9 @@ Name: gdp, dtype: float64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="s1">&#39;inv&#39;</span><span class="p">]</span>
+
 <span class="n">df_diff</span> <span class="o">=</span> <span class="n">df_group</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
+
 <span class="n">df_diff</span>
 </pre></div>
 </div>
@@ -1246,6 +1219,7 @@ Name: gdp, dtype: float64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_diff_1</span> <span class="o">=</span> <span class="n">df_diff</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;gdp&#39;</span><span class="p">:</span><span class="s1">&#39;gdp_diff&#39;</span><span class="p">,</span><span class="s1">&#39;inv&#39;</span><span class="p">:</span><span class="s1">&#39;inv_diff&#39;</span><span class="p">})</span>
+
 <span class="n">df_diff_1</span>
 </pre></div>
 </div>
@@ -1468,18 +1442,18 @@ Name: gdp, dtype: float64
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">left_index=True</span></code></p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">df</span></code>の行のインデックスを使って結合する。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df</span></code>の行のインデックスに合わせて結合する。</p></li>
 </ul>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">right_index=True</span></code></p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">df_diff</span></code>の行のインデックスを使って結合する。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df_diff</span></code>の行のインデックスに合わせて結合する。</p></li>
 </ul>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">suffixes=('',</span> <span class="pre">'_diff')</span></code></p>
 <ul>
-<li><p>左の引数<code class="docutils literal notranslate"><span class="pre">''</span></code>：結合後，重複する左の列につける接尾辞（空の接尾辞）</p></li>
-<li><p>右の引数<code class="docutils literal notranslate"><span class="pre">'_diff'</span></code>：結合後，重複する右の列につける接尾辞</p></li>
+<li><p>左の引数<code class="docutils literal notranslate"><span class="pre">''</span></code>：結合後，重複する左の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の列につける接尾辞（空の接尾辞）</p></li>
+<li><p>右の引数<code class="docutils literal notranslate"><span class="pre">'_diff'</span></code>：結合後，重複する右の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の列につける接尾辞</p></li>
 </ul>
 </li>
 </ul>
@@ -1622,7 +1596,7 @@ Name: gdp, dtype: float64
 </table>
 </div></div></div>
 </div>
-<p>dfを上書きしたい場合は，<code class="docutils literal notranslate"><span class="pre">df=</span></code>を付け加える。</p>
+<p><code class="docutils literal notranslate"><span class="pre">df</span></code>を上書きしたい場合は，<code class="docutils literal notranslate"><span class="pre">df=</span></code>を付け加える。</p>
 </div>
 <div class="section" id="first-differenced-estimator">
 <h2>１階差分推定（First Differenced Estimator）<a class="headerlink" href="#first-differenced-estimator" title="Permalink to this headline">¶</a></h2>
@@ -1653,13 +1627,13 @@ Name: gdp, dtype: float64
 <li><p>悪い点</p>
 <ul>
 <li><p><span class="math notranslate nohighlight">\(t=0\)</span>のデータを使えなくなるため，標本の大きさが小さくなる。</p></li>
-<li><p>期間内の説明変数の変化が少ないと，不正確な推定になる（極端な場合，変化がないと推定不可能となる）。</p></li>
+<li><p>期間内の説明変数<span class="math notranslate nohighlight">\(\Delta x_i\)</span>の変化が小さいと，不正確な推定になる（極端な場合，変化がないと推定不可能となる）。</p></li>
 </ul>
 </li>
 </ul>
 <hr class="docutils" />
 <p>＜推定方法＞</p>
-<p>データから１階差分を計算し，<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使いOLS推定すれば良い。しかし<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>パッケージを使えばより簡単に計算できる。そのためには，まず<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を<code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>にする必要がある。</p>
+<p>データから１階差分を計算し，<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使いOLS推定すれば良い。以下ではパッケージ<code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>にあるデータを使う。</p>
 </div>
 <div class="section" id="id9">
 <h3>推定：２期間の場合<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
@@ -2001,9 +1975,11 @@ Unfortunately, I do not have the list of cities.
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;unem&#39;</span><span class="p">,</span> <span class="s1">&#39;crmrte&#39;</span><span class="p">]</span>  <span class="c1"># groupbyで差分を取る列の指定</span>
+
 <span class="n">names</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;unem&#39;</span><span class="p">:</span><span class="s1">&#39;unem_diff&#39;</span><span class="p">,</span> <span class="s1">&#39;crmrte&#39;</span><span class="p">:</span><span class="s1">&#39;crmrte_diff&#39;</span><span class="p">}</span>  <span class="c1"># 差分の列のラベル</span>
 
 <span class="n">crime2_diff</span> <span class="o">=</span> <span class="n">crime2</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">)[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
+
 <span class="n">crime2_diff</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2067,7 +2043,9 @@ Unfortunately, I do not have the list of cities.
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1</span> <span class="o">=</span> <span class="s1">&#39;crmrte_diff ~ unem_diff&#39;</span>
+
 <span class="n">result_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_1</span><span class="p">,</span> <span class="n">crime2_diff</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">result_1</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -2121,7 +2099,9 @@ unem_diff      2.2180      0.878      2.527      0.015       0.449       3.987
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_ols_1</span> <span class="o">=</span> <span class="s1">&#39;crmrte ~ d87 + unem&#39;</span>
+
 <span class="n">result_ols_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_ols_1</span><span class="p">,</span> <span class="n">crime2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">result_ols_1</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -2152,7 +2132,9 @@ unem           0.4265      1.188      0.359      0.720      -1.935       2.788
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_ols_2</span> <span class="o">=</span> <span class="s1">&#39;crmrte ~ unem&#39;</span>
+
 <span class="n">result_ols_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_ols_2</span><span class="p">,</span> <span class="n">crime2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">result_ols_2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -2481,6 +2463,7 @@ Model of Crime with Panel Data,” Review of Economics and Statistics
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_2</span><span class="p">,</span> <span class="n">crime4</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">result_2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
