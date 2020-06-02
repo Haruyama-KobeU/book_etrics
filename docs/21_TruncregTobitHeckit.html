@@ -26,7 +26,8 @@
     <script src="../_static/mystnb.js"></script>
     <script src="../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="canonical" href="https://haruyama-kobeu.github.io/book_etrics/docs/21_TruncregTobitHeckit.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -484,8 +485,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.909137
-X            1.176059
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.690939
+X            1.228931
 dtype: float64
 </pre></div>
 </div>
@@ -505,8 +506,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    2.271771
-X            0.600251
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    2.592029
+X            0.869933
 dtype: float64
 </pre></div>
 </div>
@@ -874,8 +875,8 @@ Log(Sigma)    -0.5433      0.039    -14.053      0.000      -0.619      -0.468
 Dep. Variable:                      y   Pseudo R-squ:                    0.000
 Model:                       Truncreg   Log-Likelihood:                 -619.9
 Method:            Maximum Likelihood   LL-Null:                        -619.9
-Date:                Thu, 28 May 2020   LL-Ratio:                         -0.0
-Time:                        14:23:36   LLR p-value:                       nan
+Date:                Tue, 02 Jun 2020   LL-Ratio:                         -0.0
+Time:                        12:30:07   LLR p-value:                       nan
 No. Observations:                1066   AIC:                            1241.8
 Df Residuals:                    1065   BIC:                            1246.7
 Df Model:                           0   Covariance Type:             nonrobust
@@ -1130,8 +1131,8 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept   -0.180425
-X            1.004520
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.316469
+X            1.006211
 dtype: float64
 </pre></div>
 </div>
@@ -1151,8 +1152,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.693366
-X            0.486945
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.904283
+X            0.571141
 dtype: float64
 </pre></div>
 </div>
@@ -1662,8 +1663,8 @@ kidsge6   -24.61  -16.65  -17.98   0.3388
 Dep. Variable:                    lwage   R-squared:                       0.156
 Model:                           Heckit   Adj. R-squared:                  0.150
 Method:                Heckman Two-Step   F-statistics:                   26.148
-Date:                  Thu, 28 May 2020   Prob (F-statistic):              0.000
-Time:                          14:24:00   Cov in 1st Stage:            nonrobust
+Date:                  Tue, 02 Jun 2020   Prob (F-statistic):              0.000
+Time:                          12:30:45   Cov in 1st Stage:            nonrobust
 No. Total Obs.:                     753   Cov in 2nd Stage:                  HC1
 No. Censored Obs.:                  325                                         
 No. Uncensored Obs.:                428                                         
@@ -1787,8 +1788,8 @@ Third table is the estimate for the coef of the inverse Mills ratio (Heckman&#39
 Dep. Variable:                      y   No. Observations:                  753
 Model:                         Probit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Thu, 28 May 2020   Pseudo R-squ.:                  0.2206
-Time:                        14:24:01   Log-Likelihood:                -401.30
+Date:                Tue, 02 Jun 2020   Pseudo R-squ.:                  0.2206
+Time:                        12:30:45   Log-Likelihood:                -401.30
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 ==============================================================================
@@ -1857,7 +1858,9 @@ expersq       -0.0008      0.000     -1.931      0.053      -0.002    1.21e-05
          Current function value: 1.008409
          Iterations: 68
          Function evaluations: 122
-==============================================================================
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>==============================================================================
                  coef    std err          z      P&gt;|z|      [0.025      0.975]
 ------------------------------------------------------------------------------
 Intercept     -0.5220      0.202     -2.589      0.010      -0.917      -0.127

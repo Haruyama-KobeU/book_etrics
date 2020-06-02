@@ -26,7 +26,8 @@
     <script src="../_static/mystnb.js"></script>
     <script src="../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="canonical" href="https://haruyama-kobeu.github.io/book_etrics/docs/15_Pooling.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -83,6 +84,29 @@
   <ul class="nav sidenav_l1">
   <li class="">
     <a href="part_1.html">１. Pythonの基礎</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="0_Preparations.html">ツールのインストールと説明</a>
+    </li>
+    <li class="">
+      <a href="1_Python_Basics.html">Pythonの基礎</a>
+    </li>
+    <li class="">
+      <a href="2_NumPy.html">NumPy</a>
+    </li>
+    <li class="">
+      <a href="3_Pandas.html">Pandas</a>
+    </li>
+    <li class="">
+      <a href="4_Matplotlib.html">Matplotlib</a>
+    </li>
+    <li class="">
+      <a href="5_SciPy_stats.html">SciPy.stats</a>
+    </li>
+    <li class="">
+      <a href="6_things_to_note.html">Tipsと注意点</a>
+    </li>
+  </ul>
   </li>
   <li class="active">
     <a href="part_2.html">２. Pythonを使った計量経済分析</a>
@@ -136,6 +160,14 @@
   </li>
   <li class="">
     <a href="part_3.html">３. 番外編</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="Gapminder.html">Gapminder</a>
+    </li>
+    <li class="">
+      <a href="Descriptive_stats_vs_Graphs.html">記述統計とグラフ</a>
+    </li>
+  </ul>
   </li>
 </ul>
 </nav>
@@ -492,6 +524,7 @@ union                     0.2021      0.030      6.672      0.000       0.143   
 <li><p><code class="docutils literal notranslate"><span class="pre">t</span></code>=1：政策実施後の年</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">D</span></code>：住宅がゴミ焼却場の近くであれば１，そうでなければ０（距離のダミー変数）</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>：住宅価格</p></li>
+<li><p>仮定：ゴミ焼却場が建設されなかったとしたら，データにある全ての住宅価格は同じ率で増加していただろう。</p></li>
 <li><p>次式を使って政策実施前と後それぞれで推定</p>
 <div class="math notranslate nohighlight">
 \[y_t = \alpha_t + \gamma_t D + u\qquad t=0,1\]</div>
@@ -510,14 +543,18 @@ union                     0.2021      0.030      6.672      0.000       0.143   
 </li>
 </ul>
 </li>
-<li><p>住宅価格の変化の間違った計算：</p>
+<li><p>解釈（下の図を参考に）：</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\hat{y}_1^{\text{近}}-\hat{y}_0^{\text{近}}=\left(\hat{\alpha}_1-\hat{\alpha}_0\right)+\left(\hat{\gamma}_1-\hat{\gamma}_0\right)\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\left(\hat{\alpha}_1-\hat{\alpha}_0\right)\)</span>は，ゴミ焼却場建設から影響を「受けない（仮定）」遠
-い場所に立地する住宅価格が時間と共に変化する部分を捉えており，ゴミ焼却場建設と関係なく発生する価格変化である。この部分を取り除かなければ，ゴミ焼却場建設の効果の推定量にバイアスが発生する。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{\gamma}_0\)</span>は政策実施前の住宅価格の差を示す。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{\gamma}_1\)</span>は政策実施後の住宅価格の差を示す。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\left(\hat{\gamma}_1-\hat{\gamma}_0\right)\)</span>は政策実施後と前の住宅価格の差の差を示す。この「差の差」の変化で近くに立地する住宅価格の変化を考えることができる。もしこの差の差が<code class="docutils literal notranslate"><span class="pre">0</span></code>であれば（即ち，差は同じだった），住宅価格は影響を受けなかったと解釈できる。もしこの差がマイナスであれば（即ち，差に違いが生じた）近くに立地する住宅の価格は減少してしたと考えられる。</p></li>
 </ul>
 </li>
-<li><p>住宅価格の変化の正しい計算（上の式から）：</p>
+</ul>
+<a class="reference internal image-reference" href="../_images/did.png"><img alt="../_images/did.png" class="align-center" src="../_images/did.png" style="width: 397.5px; height: 298.5px;" /></a>
+<p>上の議論から次のことが分かる。</p>
+<ul>
+<li><p>住宅価格の変化は上の図で示しているように次の「差の差」で捉えることができる。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
     \begin{align*}
@@ -526,8 +563,12 @@ union                     0.2021      0.030      6.672      0.000       0.143   
     &amp;=\left(\hat{y}_1^{\text{近}}-\hat{y}_1^{\text{遠}}\right)-\left(\hat{y}_0^{\text{近}}-\hat{y}_0^{\text{遠}}\right)
     \end{align*}
     \end{split}\]</div>
+</li>
+<li><p>住宅価格の変化の間違った計算：</p>
 <ul class="simple">
-<li><p>「差分の差」となっている。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y}_1^{\text{近}}-\hat{y}_0^{\text{近}}=\left(\hat{\alpha}_1-\hat{\alpha}_0\right)+\left(\hat{\gamma}_1-\hat{\gamma}_0\right)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\left(\hat{\alpha}_1-\hat{\alpha}_0\right)\)</span>は，ゴミ焼却場建設から影響を「受けない（仮定）」遠
+い場所に立地する住宅価格が時間と共に変化する部分を捉えており，ゴミ焼却場建設と関係なく発生する価格変化である。この部分を取り除かなければ，ゴミ焼却場建設の効果の推定量にバイアスが発生する。</p></li>
 </ul>
 </li>
 </ul>
@@ -1102,7 +1143,7 @@ y_{it}= \beta_0 + \delta_0D_t + \beta_1x_{it}+e_{it}\qquad e_{it}=a_i+u_{it}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7fb98b27b1f0&gt;
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f9747290e80&gt;
 </pre></div>
 </div>
 </div>

@@ -26,7 +26,8 @@
     <script src="../_static/mystnb.js"></script>
     <script src="../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="canonical" href="https://haruyama-kobeu.github.io/book_etrics/docs/17_Panel.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -939,8 +940,8 @@ memory usage: 1.5 MB
 Dep. Variable:                  lwage   R-squared:                        0.1806
 Estimator:                   PanelOLS   R-squared (Between):              0.2386
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Thu, May 28 2020   R-squared (Overall):              0.2361
-Time:                        14:22:43   Log-likelihood                   -1324.8
+Date:                Tue, Jun 02 2020   R-squared (Overall):              0.2361
+Time:                        12:56:24   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      83.851
 Entities:                         545   P-value                           0.0000
@@ -982,8 +983,8 @@ Max Obs:                       545.00
 Dep. Variable:                  lwage   R-squared:                        0.0216
 Estimator:                   PanelOLS   R-squared (Between):             -0.2717
 No. Observations:                4360   R-squared (Within):              -0.4809
-Date:                Thu, May 28 2020   R-squared (Overall):             -0.2808
-Time:                        14:22:43   Log-likelihood                   -1324.8
+Date:                Tue, Jun 02 2020   R-squared (Overall):             -0.2808
+Time:                        12:56:24   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      27.959
 Entities:                         545   P-value                           0.0000
@@ -1357,8 +1358,8 @@ Name: Variance Decomposition, dtype: float64
 Dep. Variable:                  lwage   R-squared:                        0.1711
 Estimator:              RandomEffects   R-squared (Between):              0.0967
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Thu, May 28 2020   R-squared (Overall):              0.1355
-Time:                        14:22:44   Log-likelihood                   -1609.8
+Date:                Tue, Jun 02 2020   R-squared (Overall):              0.1355
+Time:                        12:56:25   Log-likelihood                   -1609.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      69.027
 Entities:                         545   P-value                           0.0000
@@ -1432,7 +1433,7 @@ H0: Linear equality constraint is valid
 Statistic: 35.6454
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x11cdd17f0
+WaldTestStatistic, id: 0x7ff7b7292ac0
 </pre></div>
 </div>
 </div>
@@ -1515,7 +1516,7 @@ H0: Linear equality constraint is valid
 Statistic: 26.0233
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x108b0deb0
+WaldTestStatistic, id: 0x7ff7b75b2a60
 </pre></div>
 </div>
 </div>
@@ -1848,32 +1849,32 @@ T-stats reported in parentheses
     <tr>
       <th rowspan="5" valign="top">0</th>
       <th>2000</th>
-      <td>-0.367750</td>
-      <td>-0.499486</td>
+      <td>-4.321098</td>
+      <td>-1.261549</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2001</th>
-      <td>3.857604</td>
-      <td>1.208035</td>
+      <td>3.077770</td>
+      <td>1.281015</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2002</th>
-      <td>-2.510258</td>
-      <td>-1.618088</td>
+      <td>3.399126</td>
+      <td>0.948155</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2003</th>
-      <td>1.062190</td>
-      <td>0.247415</td>
+      <td>3.417415</td>
+      <td>0.268820</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2004</th>
-      <td>3.222203</td>
-      <td>-0.234533</td>
+      <td>-0.292157</td>
+      <td>-0.681311</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -1896,7 +1897,7 @@ T-stats reported in parentheses
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-X              1.9975     0.0487     40.993     0.0000      1.9017      2.0933
+X              1.9682     0.0489     40.219     0.0000      1.8720      2.0644
 ==============================================================================
 </pre></div>
 </div>
@@ -1919,10 +1920,10 @@ X              1.9975     0.0487     40.993     0.0000      1.9017      2.0933
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.8088     0.1559     11.600     0.0000      1.5024      2.1152
-X              2.8452     0.0264     107.86     0.0000      2.7934      2.8970
+Intercept      1.7736     0.1370     12.950     0.0000      1.5045      2.0427
+X              2.8587     0.0234     122.10     0.0000      2.8127      2.9047
 ==============================================================================
-theta: [0.29648287]
+theta: [0.20906821]
 </pre></div>
 </div>
 </div>
@@ -1952,9 +1953,9 @@ theta: [0.29648287]
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      0.9480     0.1272     7.4508     0.0000      0.6981      1.1980
-X              1.9975     0.0487     41.024     0.0000      1.9018      2.0932
-X_mean         1.0206     0.0535     19.090     0.0000      0.9156      1.1257
+Intercept      1.1157     0.1089     10.247     0.0000      0.9017      1.3296
+X              1.9682     0.0489     40.250     0.0000      1.8721      2.0642
+X_mean         1.0234     0.0524     19.513     0.0000      0.9204      1.1265
 ==============================================================================
 </pre></div>
 </div>
@@ -1976,8 +1977,8 @@ X_mean         1.0206     0.0535     19.090     0.0000      0.9156      1.1257
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.4139     0.1218     11.611     0.0000      1.1747      1.6532
-X              2.9245     0.0209     140.18     0.0000      2.8835      2.9655
+Intercept      1.5483     0.1151     13.453     0.0000      1.3222      1.7744
+X              2.9042     0.0198     146.59     0.0000      2.8653      2.9431
 ==============================================================================
 </pre></div>
 </div>
@@ -1991,7 +1992,7 @@ X              2.9245     0.0209     140.18     0.0000      2.8835      2.9655
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># 観察単位数</span>
 <span class="n">T</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># 年数</span>
-<span class="n">R</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># シミュレーションの回数</span>
+<span class="n">R</span> <span class="o">=</span> <span class="mi">70</span>  <span class="c1"># シミュレーションの回数</span>
 <span class="n">ai</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># 観察単位の異質性</span>
 </pre></div>
 </div>
