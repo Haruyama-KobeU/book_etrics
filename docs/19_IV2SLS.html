@@ -35,15 +35,8 @@
     <link rel="next" title="離散選択モデル" href="20_LogitProbit.html" />
     <link rel="prev" title="GM仮定４が満たされない場合" href="18_Zero_Conditional_Mean.html" />
 
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<!-- Put requirejs at the end so it's always after bootstrap -->
-<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
 
 
 <!-- Opengraph tags -->
@@ -63,9 +56,9 @@
     <div class="container-xl">
       <div class="row">
           
-
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    <div class="navbar-brand-box">
+    
+        <div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="../index.html">
   
   
@@ -171,7 +164,13 @@
   </li>
 </ul>
 </nav>
-<p class="navbar_footer"><a  href="https://github.com/Haruyama-KobeU/book_etrics/tree/gh-pages">&#128200;&#127891;&#128202;</a><!-- Default Statcounter code for Py4Etrics https://haruyama-kobeu.github.io/book_etrics/docs/index.html --> <script type="text/javascript"> var sc_project=12254979; var sc_invisible=1; var sc_security="cd13e4c6"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="web statistics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12254979/0/cd13e4c6/1/" alt="web statistics"></a></div></noscript> <!-- End of Statcounter Code --></p>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  <a  href="https://github.com/Haruyama-KobeU/book_etrics/tree/gh-pages">&#128200;&#127891;&#128202;</a><!-- Default Statcounter code for Py4Etrics https://haruyama-kobeu.github.io/book_etrics/docs/index.html --> <script type="text/javascript"> var sc_project=12254979; var sc_invisible=1; var sc_security="cd13e4c6"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="web statistics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12254979/0/cd13e4c6/1/" alt="web statistics"></a></div></noscript> <!-- End of Statcounter Code -->
+</div>
+
 </div>
 
 
@@ -191,6 +190,7 @@
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
+        
         <div class="dropdown-buttons-trigger">
             <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
 
@@ -206,7 +206,16 @@
             
         </div>
 
-        <!-- Edit this page -->
+        <!-- Source interaction buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+            <div class="dropdown-buttons sourcebuttons">
+                <a class="repository-button" href="https://github.com/Haruyama-KobeU/book_etrics/"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left" title="Source repository"><i class="fab fa-github"></i>repository</button></a>
+                <a class="issues-button" href="https://github.com/Haruyama-KobeU/book_etrics//issues/new?title=Issue%20on%20page%20%2Fdocs/19_IV2SLS.html&body=Your%20issue%20content%20here."><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left" title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+                
+            </div>
+        </div>
         
 
         <!-- Full screen (wrap in <a> to have style consistency -->
@@ -224,8 +233,6 @@
                 
             </div>
         </div>
-        
-
         
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
@@ -411,7 +418,7 @@
     </div>
 </div>
     <div id="main-content" class="row">
-        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
         
               <div>
                 
@@ -818,8 +825,8 @@ educ           0.1086     0.0134     8.1178     0.0000      0.0824      0.1349
 Dep. Variable:                   educ   R-squared:                      0.2081
 Estimator:                        OLS   Adj. R-squared:                 0.2043
 No. Observations:                 428   F-statistic:                    112.45
-Date:                Tue, Jun 02 2020   P-value (F-stat)                0.0000
-Time:                        12:19:29   Distribution:                  chi2(2)
+Date:                Wed, Jun 03 2020   P-value (F-stat)                0.0000
+Time:                        13:48:23   Distribution:                  chi2(2)
 Cov. Estimator:            unadjusted                                         
                                                                               
                              Parameter Estimates                              
@@ -1194,7 +1201,7 @@ H0: All endogenous variables are exogenous
 Statistic: 2.8035
 P-value: 0.0948
 Distributed: F(1,423)
-WaldTestStatistic, id: 0x7fb5a4f485b0
+WaldTestStatistic, id: 0x7fcaff7c41f0
 </pre></div>
 </div>
 </div>
@@ -1318,7 +1325,7 @@ H0: Endogenous variables are exogenous
 Statistic: 2.8256
 P-value: 0.0928
 Distributed: chi2(1)
-WaldTestStatistic, id: 0x7fb5a5fcbc10
+WaldTestStatistic, id: 0x7fcb06bddc10
 </pre></div>
 </div>
 </div>
@@ -1447,7 +1454,7 @@ H0: The model is not overidentified.
 Statistic: 0.3781
 P-value: 0.5386
 Distributed: chi2(1)
-WaldTestStatistic, id: 0x7fb5a10ef910
+WaldTestStatistic, id: 0x7fcb06af5850
 </pre></div>
 </div>
 </div>
@@ -1848,13 +1855,15 @@ hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
 
     </div>
     <footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    <p>
-          &copy; Copyright 2020 Tetsugen Haruyama.<br/>
-        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.<br/>
-    </p>
-  </div>
-</footer>
+    <div class="container">
+      <p>
+        
+          By 春山 鉄源<br/>
+        
+            &copy; Copyright 2020 Tetsugen Haruyama.<br/>
+      </p>
+    </div>
+  </footer>
 </main>
 
 

@@ -111,17 +111,7 @@
     "hidden": true
    },
    "source": [
-    "### Estimation"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
-   "source": [
-    "#### EntityEffects"
+    "### 「手計算」による推定"
    ]
   },
   {
@@ -130,19 +120,7 @@
     "hidden": true
    },
    "source": [
-    "`linearmodels`には`PanelOLS`モジュールがあり，その関数`from_formula()`を使うことにより，`statsmodels`同様，回帰式を`y ~ x`の文字列で書くことが可能となる。その際，次の点に注意すること。\n",
-    "* 固定効果推定をする場合，回帰式に`+ EntityEffect`を含める。\n",
-    "    * このオプションにより変数の平均からの乖離は自動で計算されることになる。\n",
-    "    * `+ EntityEffect`を含めないと`PooledOLS`（通常のOLS）と等しくなる。"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "以下では，`wagepan`というデータセットを使い，賃金に対する労働組合などの変数の効果を推定する。"
+    "`wagepan`というデータセットを使い，賃金に対する労働組合などの変数の効果を推定する。"
    ]
   },
   {
@@ -232,24 +210,164 @@
     "hidden": true
    },
    "source": [
-    "（使う変数）\n",
+    "被説明変数\n",
     "* `lwage`：賃金（対数）\n",
+    "\n",
+    "説明変数\n",
     "* `union`：労働組合参加（ダミー変数）\n",
     "* `married`：未・既婚（ダミー変数）\n",
     "* `exper`：労働市場参加年数\n",
+    "*  `d81`：1981年のダミー変数\n",
+    "*  `d82`：1982年のダミー変数\n",
+    "*  `d83`：1983年のダミー変数\n",
+    "*  `d84`：1984年のダミー変数\n",
+    "*  `d85`：1985年のダミー変数\n",
+    "*  `d86`：1986年のダミー変数\n",
+    "*  `d87`：1987年のダミー変数\n",
     "\n",
-    "（注意）時間に対して変化しない変数使えない。例えば，\n",
+    "`DataFrame`の`groupby`を使って変数をグループ化する際に使う変数\n",
+    "* `nr`：労働者のID"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "```{admonition} コメント\n",
+    ":class: tip\n",
+    "時間に対して変化しない変数使えない。例えば，\n",
     "* `educ`（説明変数に入れば教育の収益率が推定可能である。）\n",
     "* `black`，`hisp`（を使うと人種間の賃金格差も推定できる。）\n",
     "\n",
     "は固定効果モデル回帰式には入れることができない。\n",
-    "\n",
-    "次に`wagepan`を`MultiIndex`化する。これにより`linearmodels`を使いFD推定可能となる。"
+    "```"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 3,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "married: 0.04668\n",
+      "union: 0.08\n",
+      "expersq: -0.005185\n",
+      "d81: 0.1512\n",
+      "d82: 0.253\n",
+      "d83: 0.3544\n",
+      "d84: 0.4901\n",
+      "d85: 0.6175\n",
+      "d86: 0.7655\n",
+      "d87: 0.925\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 説明変数のリスト\n",
+    "exog = ['married','union','expersq','d81','d82','d83','d84','d85','d86','d87']\n",
+    "\n",
+    "# 全ての変数のリスト\n",
+    "var = ['lwage']+exog\n",
+    "\n",
+    "# 使う変数だけで構成されるDataFrame\n",
+    "df = wagepan.loc[:,['nr']+var]\n",
+    "\n",
+    "# varの平均からの乖離を計算（下の説明（１）を参照）\n",
+    "df_g = df.groupby('nr')\n",
+    "df_mean = df_g[var].transform('mean')\n",
+    "df_md = df.loc[:,var]-df_mean\n",
+    "\n",
+    "# 説明変数の行列（下の説明（２）を参照）\n",
+    "X = df_md.loc[:,exog].values\n",
+    "\n",
+    "# 被説明変数のベクトル\n",
+    "Y = df_md.loc[:,'lwage'].values\n",
+    "\n",
+    "# OLSの計算\n",
+    "params = np.linalg.inv((X.T)@X)@(X.T)@Y\n",
+    "\n",
+    "# 結果の表示（下の説明（３）を参照）\n",
+    "for idx, name in enumerate(exog):\n",
+    "    print(f'{name}: {params[idx]:.4}')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "説明（１）\n",
+    "* `df.groupby('nr')`：`nr`でグループ化したオブジェクトを作成する（番外編のGapminderを参照）。\n",
+    "* `df_g[var].transform('mean')`\n",
+    "    * `df_g[var]`：グループ化計算のために`var`の変数だけを使うことを指定する。\n",
+    "    * `.transform('mean')`：指定された変数（`var`）のグループ内平均（それぞれの`nr`内での平均）を計算し，その平均で構成される`DataFrame`を作成する。作成された`DataFrame`の行数は`df`と同じになり，グループ内平均が同じ列内でリピートされることになる。\n",
+    "* `df.loc[:,var]-df_mean`：`var`のそれぞれの変数の平均からの乖離を計算する。\n",
+    "\n",
+    "説明（２）\n",
+    "* `.values`は`DataFrame`を`numpy`の`array`として返す。\n",
+    "\n",
+    "説明（３）\n",
+    "* `enumerate(exog)`は`exog`の変数のインデックスと変数名の両方をタプルとして返す。\n",
+    "    * `for`ループで`enumerate()`は，引数にリストや`array`を入れると2つの値を返す。\n",
+    "    * 1つ目の返り値：要素のインデックス\n",
+    "    * 2つ目の返り値：要素自体\n",
+    "    * 例えば，`enumerate(['A','B','C'])`であれば，返り値は`(0,'A')`，`(1,'B')`，`(2,'C')`となる。\n",
+    "* `f'{name}: {params[idx]:.4}'`\n",
+    "    * `f`：以前説明したf-string\n",
+    "    * `{name}`：`exog`の変数名を代入する。\n",
+    "    * `{params[idx]:.4}`\n",
+    "        * `params[idx]`：`idx`番目の`params`を代入する。\n",
+    "        * `:.4`：小数点第4位までを表示する。\n",
+    "\n",
+    "---\n",
+    "「手計算」の結果は`linearmodels`を使う結果と同じになることを下で確認する。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### `linearmodels`を使う計算"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "#### EntityEffects"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`linearmodels`には`PanelOLS`モジュールがあり，その関数`from_formula()`を使うことにより，`statsmodels`同様，回帰式を`y ~ x`の文字列で書くことが可能となる。その際，次の点に注意すること。\n",
+    "* 固定効果推定をする場合，回帰式に`+ EntityEffect`を含める。\n",
+    "    * このオプションにより変数の平均からの乖離は自動で計算されることになる。\n",
+    "    * `+ EntityEffect`を含めないと`PooledOLS`（通常のOLS）と等しくなる。\n",
+    "\n",
+    "\n",
+    "まず`wagepan`を`MultiIndex`化する。これにより`linearmodels`を使いFD推定可能となる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
    "metadata": {
     "hidden": true
    },
@@ -260,7 +378,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
+   "execution_count": 5,
    "metadata": {
     "hidden": true,
     "tags": [
@@ -485,7 +603,7 @@
        "[5 rows x 44 columns]"
       ]
      },
-     "execution_count": 4,
+     "execution_count": 5,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -496,7 +614,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
+   "execution_count": 6,
    "metadata": {
     "hidden": true,
     "tags": [
@@ -577,7 +695,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
+   "execution_count": 7,
    "metadata": {
     "hidden": true
    },
@@ -588,7 +706,7 @@
        "(44, 8, 545)"
       ]
      },
-     "execution_count": 6,
+     "execution_count": 7,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -620,7 +738,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 8,
    "metadata": {
     "hidden": true
    },
@@ -631,7 +749,7 @@
        "True"
       ]
      },
-     "execution_count": 7,
+     "execution_count": 8,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -669,7 +787,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
+   "execution_count": 9,
    "metadata": {
     "hidden": true
    },
@@ -690,7 +808,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
+   "execution_count": 10,
    "metadata": {
     "hidden": true
    },
@@ -710,7 +828,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
+   "execution_count": 11,
    "metadata": {
     "hidden": true
    },
@@ -736,62 +854,35 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
+   "execution_count": 12,
    "metadata": {
     "hidden": true
    },
    "outputs": [
     {
-     "data": {
-      "text/html": [
-       "<table class=\"simpletable\">\n",
-       "<caption>Parameter Estimates</caption>\n",
-       "<tr>\n",
-       "     <td></td>     <th>Parameter</th> <th>Std. Err.</th> <th>T-stat</th>  <th>P-value</th> <th>Lower CI</th> <th>Upper CI</th>\n",
-       "</tr>\n",
-       "<tr>\n",
-       "  <th>married</th>  <td>0.0467</td>    <td>0.0183</td>   <td>2.5494</td>  <td>0.0108</td>   <td>0.0108</td>   <td>0.0826</td> \n",
-       "</tr>\n",
-       "<tr>\n",
-       "  <th>union</th>    <td>0.0800</td>    <td>0.0193</td>   <td>4.1430</td>  <td>0.0000</td>   <td>0.0421</td>   <td>0.1179</td> \n",
-       "</tr>\n",
-       "<tr>\n",
-       "  <th>expersq</th>  <td>-0.0052</td>   <td>0.0007</td>   <td>-7.3612</td> <td>0.0000</td>   <td>-0.0066</td>  <td>-0.0038</td>\n",
-       "</tr>\n",
-       "<tr>\n",
-       "  <th>d81</th>      <td>0.1512</td>    <td>0.0219</td>   <td>6.8883</td>  <td>0.0000</td>   <td>0.1082</td>   <td>0.1942</td> \n",
-       "</tr>\n",
-       "<tr>\n",
-       "  <th>d82</th>      <td>0.2530</td>    <td>0.0244</td>   <td>10.360</td>  <td>0.0000</td>   <td>0.2051</td>   <td>0.3008</td> \n",
-       "</tr>\n",
-       "<tr>\n",
-       "  <th>d83</th>      <td>0.3544</td>    <td>0.0292</td>   <td>12.121</td>  <td>0.0000</td>   <td>0.2971</td>   <td>0.4118</td> \n",
-       "</tr>\n",
-       "<tr>\n",
-       "  <th>d84</th>      <td>0.4901</td>    <td>0.0362</td>   <td>13.529</td>  <td>0.0000</td>   <td>0.4191</td>   <td>0.5611</td> \n",
-       "</tr>\n",
-       "<tr>\n",
-       "  <th>d85</th>      <td>0.6175</td>    <td>0.0452</td>   <td>13.648</td>  <td>0.0000</td>   <td>0.5288</td>   <td>0.7062</td> \n",
-       "</tr>\n",
-       "<tr>\n",
-       "  <th>d86</th>      <td>0.7655</td>    <td>0.0561</td>   <td>13.638</td>  <td>0.0000</td>   <td>0.6555</td>   <td>0.8755</td> \n",
-       "</tr>\n",
-       "<tr>\n",
-       "  <th>d87</th>      <td>0.9250</td>    <td>0.0688</td>   <td>13.450</td>  <td>0.0000</td>   <td>0.7902</td>   <td>1.0599</td> \n",
-       "</tr>\n",
-       "</table>"
-      ],
-      "text/plain": [
-       "<class 'statsmodels.iolib.table.SimpleTable'>"
-      ]
-     },
-     "execution_count": 11,
-     "metadata": {},
-     "output_type": "execute_result"
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "married        0.0467     0.0183     2.5494     0.0108      0.0108      0.0826\n",
+      "union          0.0800     0.0193     4.1430     0.0000      0.0421      0.1179\n",
+      "expersq       -0.0052     0.0007    -7.3612     0.0000     -0.0066     -0.0038\n",
+      "d81            0.1512     0.0219     6.8883     0.0000      0.1082      0.1942\n",
+      "d82            0.2530     0.0244     10.360     0.0000      0.2051      0.3008\n",
+      "d83            0.3544     0.0292     12.121     0.0000      0.2971      0.4118\n",
+      "d84            0.4901     0.0362     13.529     0.0000      0.4191      0.5611\n",
+      "d85            0.6175     0.0452     13.648     0.0000      0.5288      0.7062\n",
+      "d86            0.7655     0.0561     13.638     0.0000      0.6555      0.8755\n",
+      "d87            0.9250     0.0688     13.450     0.0000      0.7902      1.0599\n",
+      "==============================================================================\n"
+     ]
     }
    ],
    "source": [
-    "result_fe.summary.tables[1]"
+    "print(result_fe.summary.tables[1])"
    ]
   },
   {
@@ -817,7 +908,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
+   "execution_count": 13,
    "metadata": {
     "hidden": true
    },
@@ -831,8 +922,8 @@
       "Dep. Variable:                  lwage   R-squared:                        0.1806\n",
       "Estimator:                   PanelOLS   R-squared (Between):              0.2386\n",
       "No. Observations:                4360   R-squared (Within):               0.1806\n",
-      "Date:                Tue, Jun 02 2020   R-squared (Overall):              0.2361\n",
-      "Time:                        12:55:14   Log-likelihood                   -1324.8\n",
+      "Date:                Wed, Jun 03 2020   R-squared (Overall):              0.2361\n",
+      "Time:                        13:24:59   Log-likelihood                   -1324.8\n",
       "Cov. Estimator:            Unadjusted                                           \n",
       "                                        F-statistic:                      83.851\n",
       "Entities:                         545   P-value                           0.0000\n",
@@ -886,7 +977,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
+   "execution_count": 14,
    "metadata": {
     "hidden": true
    },
@@ -900,8 +991,8 @@
       "Dep. Variable:                  lwage   R-squared:                        0.0216\n",
       "Estimator:                   PanelOLS   R-squared (Between):             -0.2717\n",
       "No. Observations:                4360   R-squared (Within):              -0.4809\n",
-      "Date:                Tue, Jun 02 2020   R-squared (Overall):             -0.2808\n",
-      "Time:                        12:55:14   Log-likelihood                   -1324.8\n",
+      "Date:                Wed, Jun 03 2020   R-squared (Overall):             -0.2808\n",
+      "Time:                        13:24:59   Log-likelihood                   -1324.8\n",
       "Cov. Estimator:            Unadjusted                                           \n",
       "                                        F-statistic:                      27.959\n",
       "Entities:                         545   P-value                           0.0000\n",
@@ -968,7 +1059,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 14,
+   "execution_count": 15,
    "metadata": {
     "hidden": true
    },
@@ -989,7 +1080,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 15,
+   "execution_count": 16,
    "metadata": {
     "hidden": true
    },
@@ -1015,7 +1106,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 16,
+   "execution_count": 17,
    "metadata": {
     "hidden": true
    },
@@ -1037,7 +1128,7 @@
        "Name: parameter, dtype: float64"
       ]
      },
-     "execution_count": 16,
+     "execution_count": 17,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1201,7 +1292,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 17,
+   "execution_count": 18,
    "metadata": {
     "hidden": true
    },
@@ -1223,7 +1314,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 18,
+   "execution_count": 19,
    "metadata": {
     "hidden": true
    },
@@ -1243,7 +1334,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 19,
+   "execution_count": 20,
    "metadata": {
     "hidden": true
    },
@@ -1294,7 +1385,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 20,
+   "execution_count": 21,
    "metadata": {
     "hidden": true
    },
@@ -1306,7 +1397,7 @@
        "Name: 13, dtype: float64"
       ]
      },
-     "execution_count": 20,
+     "execution_count": 21,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1329,7 +1420,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 21,
+   "execution_count": 22,
    "metadata": {
     "hidden": true
    },
@@ -1343,7 +1434,7 @@
        "Name: Variance Decomposition, dtype: float64"
       ]
      },
-     "execution_count": 21,
+     "execution_count": 22,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1452,7 +1543,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 22,
+   "execution_count": 23,
    "metadata": {
     "hidden": true
    },
@@ -1480,7 +1571,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 23,
+   "execution_count": 24,
    "metadata": {
     "hidden": true
    },
@@ -1502,7 +1593,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 24,
+   "execution_count": 25,
    "metadata": {
     "hidden": true
    },
@@ -1516,8 +1607,8 @@
       "Dep. Variable:                  lwage   R-squared:                        0.1711\n",
       "Estimator:              RandomEffects   R-squared (Between):              0.0967\n",
       "No. Observations:                4360   R-squared (Within):               0.1806\n",
-      "Date:                Tue, Jun 02 2020   R-squared (Overall):              0.1355\n",
-      "Time:                        12:55:15   Log-likelihood                   -1609.8\n",
+      "Date:                Wed, Jun 03 2020   R-squared (Overall):              0.1355\n",
+      "Time:                        13:25:00   Log-likelihood                   -1609.8\n",
       "Cov. Estimator:            Unadjusted                                           \n",
       "                                        F-statistic:                      69.027\n",
       "Entities:                         545   P-value                           0.0000\n",
@@ -1621,7 +1712,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 25,
+   "execution_count": 26,
    "metadata": {
     "hidden": true
    },
@@ -1634,10 +1725,10 @@
        "Statistic: 35.6454\n",
        "P-value: 0.0000\n",
        "Distributed: chi2(3)\n",
-       "WaldTestStatistic, id: 0x7fca367d5ee0"
+       "WaldTestStatistic, id: 0x7faea06f9790"
       ]
      },
-     "execution_count": 25,
+     "execution_count": 26,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1700,7 +1791,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 26,
+   "execution_count": 27,
    "metadata": {
     "hidden": true
    },
@@ -1757,7 +1848,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 27,
+   "execution_count": 28,
    "metadata": {
     "hidden": true
    },
@@ -1770,10 +1861,10 @@
        "Statistic: 26.0233\n",
        "P-value: 0.0000\n",
        "Distributed: chi2(3)\n",
-       "WaldTestStatistic, id: 0x7fca322e3a60"
+       "WaldTestStatistic, id: 0x7faea06f95e0"
       ]
      },
-     "execution_count": 27,
+     "execution_count": 28,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1825,7 +1916,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 28,
+   "execution_count": 29,
    "metadata": {
     "hidden": true
    },
@@ -1892,7 +1983,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 29,
+   "execution_count": 30,
    "metadata": {
     "hidden": true
    },
@@ -1918,7 +2009,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 30,
+   "execution_count": 31,
    "metadata": {
     "hidden": true
    },
@@ -2076,18 +2167,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## シミュレーション"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "（目的）真のモデルでは観察単位の固定効果がある場合を考え，FE推定量とRE推定量を比較する。\n",
     "\n",
@@ -2096,10 +2183,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 31,
-   "metadata": {
-    "hidden": true
-   },
+   "execution_count": 54,
+   "metadata": {},
    "outputs": [],
    "source": [
     "b0 = 1  # 定数項\n",
@@ -2108,29 +2193,22 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "### 推定値の計算"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "シミュレーションの基本パラメータ等の設定"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 32,
-   "metadata": {
-    "hidden": true
-   },
+   "execution_count": 55,
+   "metadata": {},
    "outputs": [],
    "source": [
     "N = 100  # 観察単位の数\n",
@@ -2140,24 +2218,15 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
-    "`for`ループによる`DataFrame`の作成。\n",
-    "\n",
-    "（注意）`for`ループで`enumerate()`は，引数にリストや`array`を入れると2つの値を返す。\n",
-    "* 1つ目の返り値：要素のインデックス\n",
-    "* 2つ目の返り値：要素自体\n",
-    "* 例えば，`['A','B','C']`であれば，返り値は`(0,'A')`，`(1,'B')`，`(2,'C')`となる。"
+    "`for`ループによる`DataFrame`の作成。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 33,
-   "metadata": {
-    "hidden": true
-   },
+   "execution_count": 56,
+   "metadata": {},
    "outputs": [],
    "source": [
     "df_sim = pd.DataFrame()  # 空のDataFrame\n",
@@ -2167,7 +2236,7 @@
     "    x = norm.rvs(a,1,size=T)  # T個のaが平均となるランダムな数\n",
     "    u = norm.rvs(0,1,size=T)  # 誤差項\n",
     "    y = b0 + b1*x + a + u  # 被説明変数\n",
-    "    df_idx = pd.DataFrame({'id':[idx]*T,      # DataFrameへ表の追加\n",
+    "    df_idx = pd.DataFrame({'id':[idx]*T,    # 観察個体のID\n",
     "                         'time':np.array(range(T))+2000,\n",
     "                         'Y':y,\n",
     "                         'X':x,\n",
@@ -2177,19 +2246,15 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "`DataFrame`の微調整。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 34,
-   "metadata": {
-    "hidden": true
-   },
+   "execution_count": 57,
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -2229,32 +2294,32 @@
        "    <tr>\n",
        "      <th rowspan=\"5\" valign=\"top\">0</th>\n",
        "      <th>2000</th>\n",
-       "      <td>4.058044</td>\n",
-       "      <td>1.003072</td>\n",
+       "      <td>-1.043240</td>\n",
+       "      <td>-0.962023</td>\n",
        "      <td>0.0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>2001</th>\n",
-       "      <td>-0.170851</td>\n",
-       "      <td>-1.044577</td>\n",
+       "      <td>0.377331</td>\n",
+       "      <td>0.021839</td>\n",
        "      <td>0.0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>2002</th>\n",
-       "      <td>0.811499</td>\n",
-       "      <td>0.371996</td>\n",
+       "      <td>1.307478</td>\n",
+       "      <td>-0.068423</td>\n",
        "      <td>0.0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>2003</th>\n",
-       "      <td>-0.893292</td>\n",
-       "      <td>-0.297188</td>\n",
+       "      <td>3.110157</td>\n",
+       "      <td>0.653636</td>\n",
        "      <td>0.0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>2004</th>\n",
-       "      <td>4.138368</td>\n",
-       "      <td>0.551871</td>\n",
+       "      <td>3.087825</td>\n",
+       "      <td>0.240360</td>\n",
        "      <td>0.0</td>\n",
        "    </tr>\n",
        "  </tbody>\n",
@@ -2264,14 +2329,14 @@
       "text/plain": [
        "                Y         X   ai\n",
        "id time                         \n",
-       "0  2000  4.058044  1.003072  0.0\n",
-       "   2001 -0.170851 -1.044577  0.0\n",
-       "   2002  0.811499  0.371996  0.0\n",
-       "   2003 -0.893292 -0.297188  0.0\n",
-       "   2004  4.138368  0.551871  0.0"
+       "0  2000 -1.043240 -0.962023  0.0\n",
+       "   2001  0.377331  0.021839  0.0\n",
+       "   2002  1.307478 -0.068423  0.0\n",
+       "   2003  3.110157  0.653636  0.0\n",
+       "   2004  3.087825  0.240360  0.0"
       ]
      },
-     "execution_count": 34,
+     "execution_count": 57,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -2289,19 +2354,15 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "固定効果モデルによる推定。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 35,
-   "metadata": {
-    "hidden": true
-   },
+   "execution_count": 58,
+   "metadata": {},
    "outputs": [
     {
      "name": "stdout",
@@ -2311,7 +2372,7 @@
       "==============================================================================\n",
       "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
       "------------------------------------------------------------------------------\n",
-      "X              2.0215     0.0541     37.381     0.0000      1.9152      2.1278\n",
+      "X              2.0329     0.0490     41.512     0.0000      1.9366      2.1291\n",
       "==============================================================================\n"
      ]
     }
@@ -2326,19 +2387,15 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "ランダム効果モデルによる推定。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 36,
-   "metadata": {
-    "hidden": true
-   },
+   "execution_count": 59,
+   "metadata": {},
    "outputs": [
     {
      "name": "stdout",
@@ -2348,10 +2405,10 @@
       "==============================================================================\n",
       "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
       "------------------------------------------------------------------------------\n",
-      "Intercept      1.6884     0.1375     12.278     0.0000      1.4182      1.9585\n",
-      "X              2.8666     0.0233     122.98     0.0000      2.8208      2.9124\n",
+      "Intercept      1.9329     0.1528     12.648     0.0000      1.6326      2.2332\n",
+      "X              2.8246     0.0257     109.80     0.0000      2.7741      2.8751\n",
       "==============================================================================\n",
-      "theta: [0.21900353]\n"
+      "theta: [0.30361117]\n"
      ]
     }
    ],
@@ -2366,18 +2423,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "$\\text{Cov}\\left(a_i,x_{it}\\right)>0$により上方バイアスが発生している。"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "相関ランダム効果モデルによる推定。\n",
     "\n",
@@ -2386,10 +2439,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 37,
-   "metadata": {
-    "hidden": true
-   },
+   "execution_count": 60,
+   "metadata": {},
    "outputs": [],
    "source": [
     "df_sim = add_col_mean(df_sim, 'X', 'X_mean')"
@@ -2397,10 +2448,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 38,
-   "metadata": {
-    "hidden": true
-   },
+   "execution_count": 61,
+   "metadata": {},
    "outputs": [
     {
      "name": "stdout",
@@ -2410,9 +2459,9 @@
       "==============================================================================\n",
       "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
       "------------------------------------------------------------------------------\n",
-      "Intercept      1.1156     0.1159     9.6271     0.0000      0.8879      1.3432\n",
-      "X              2.0215     0.0540     37.409     0.0000      1.9153      2.1276\n",
-      "X_mean         0.9598     0.0576     16.659     0.0000      0.8466      1.0730\n",
+      "Intercept      1.1266     0.1284     8.7712     0.0000      0.8743      1.3790\n",
+      "X              2.0329     0.0489     41.544     0.0000      1.9367      2.1290\n",
+      "X_mean         0.9531     0.0537     17.741     0.0000      0.8476      1.0587\n",
       "==============================================================================\n"
      ]
     }
@@ -2427,19 +2476,15 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "通常のOLS（Pooled OLS）による推定はバイアスが発生する。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 39,
-   "metadata": {
-    "hidden": true
-   },
+   "execution_count": 62,
+   "metadata": {},
    "outputs": [
     {
      "name": "stdout",
@@ -2449,8 +2494,8 @@
       "==============================================================================\n",
       "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
       "------------------------------------------------------------------------------\n",
-      "Intercept      1.4820     0.1145     12.942     0.0000      1.2570      1.7070\n",
-      "X              2.9079     0.0195     148.81     0.0000      2.8695      2.9463\n",
+      "Intercept      1.5550     0.1187     13.100     0.0000      1.3218      1.7882\n",
+      "X              2.9002     0.0202     143.29     0.0000      2.8605      2.9400\n",
       "==============================================================================\n"
      ]
     }
@@ -2465,79 +2510,59 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "### 推定値の分布"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "基本的に上のシミュレーションのコードを応用する。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 40,
-   "metadata": {
-    "hidden": true
-   },
+   "execution_count": 63,
+   "metadata": {},
    "outputs": [],
    "source": [
     "N = 100  # 観察単位数\n",
     "T = 5  # 年数\n",
-    "R = 70  # シミュレーションの回数\n",
+    "R = 100  # シミュレーションの回数\n",
     "ai = np.linspace(0,10,N)  # 観察単位の異質性"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
-    "１セットの説明変数の値`X`を作り，それを全てのシミュレーションで使用する。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 41,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [],
-   "source": [
+    "```\n",
+    "１セットの説明変数の値`X`を作り，それを全てのシミュレーションで使用する。\n",
     "X = []  # 説明変数を入れる空のリスト\n",
     "\n",
     "# 上のリストに np.array を追加する\n",
     "for a in ai:\n",
-    "    X.append(norm.rvs(a,1,size=T))"
+    "    X.append(norm.rvs(a,1,size=T))\n",
+    "```"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "（上のコードについての解説）\n",
     "* `norm.rvs(a,1,size=T)`は`T`個のランダム変数からなる`array`となる\n",
-    "* `X`は`N`個の`array`からなるリスト"
+    "* `X`は`N`個の`array`からなるリスト\n",
+    "\n",
+    "（下のコードについて）\n",
+    "* ランダム効果モデルの推定には`linearmodels`を使っている。固定効果モデルと通常のOLS推定にも`linearmodels`を使うと必要がない統計量も計算するため計算に時間が掛かる。少しでも計算時間を縮めるために「手計算」をする。"
    ]
   },
   {
-   "cell_type": "code",
-   "execution_count": 42,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [],
+   "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "bhat_fe = []  # FE推定値を入れるための空のリスト\n",
     "bhat_re = []  # RE推定値を入れるための空のリスト\n",
@@ -2576,24 +2601,68 @@
    ]
   },
   {
+   "cell_type": "code",
+   "execution_count": 67,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bhat_fe_list = []  # FE推定値を入れるための空のリスト\n",
+    "bhat_re_list = []  # RE推定値を入れるための空のリスト\n",
+    "bhat_pool_list = []  # Pooled OLS推定値を入れるための空のリスト\n",
+    "\n",
+    "for _ in range(R):  # Rの値は下のコードで使わないので\"_\"に設定する\n",
+    "    \n",
+    "    df = pd.DataFrame()  # 空のDataFrame\n",
+    "\n",
+    "    # データの生成\n",
+    "    for (idx,a) in enumerate(ai):\n",
+    "#         x = X[idx]  # T個のaが平均となるランダムな数\n",
+    "        x = norm.rvs(a,1,size=T)  # T個のaが平均となるランダムな数\n",
+    "        u = norm.rvs(0,1,size=T)  # T個の誤差項\n",
+    "        y = b0 + b1*x + a + u  # T個の被説明変数\n",
+    "        df_idx = pd.DataFrame({'id':[idx]*T,      # DataFrameへ表の追加\n",
+    "                             'time':np.array(range(T))+2000,\n",
+    "                             'Y':y,\n",
+    "                             'X':x,\n",
+    "                             'ai':[a]*T})\n",
+    "        df = pd.concat([df,df_idx])\n",
+    "        \n",
+    "    # RE推定\n",
+    "    df_re = df.set_index(['id','time'])  # MultiIndex化\n",
+    "    form_sim_re = 'Y ~ 1 + X'\n",
+    "    sim_re = RandomEffects.from_formula(form_sim_re, data=df_re).fit()\n",
+    "    bhat_re_list.append(sim_re.params[1])\n",
+    "\n",
+    "    # FE推定\n",
+    "    df_fe = df.loc[:,['Y','X']] - df.groupby('id')[['Y','X']].transform('mean')\n",
+    "    Yfe = df_fe.loc[:,'Y'].values\n",
+    "    Xfe = df_fe.loc[:,'X'].values[:,None]  # [:,None]は(N*T,1)の行列に変換\n",
+    "    bhat_fe = (np.linalg.inv(Xfe.T@Xfe)@Xfe.T@Yfe)[0]\n",
+    "    bhat_fe_list.append(bhat_fe)\n",
+    "    \n",
+    "    # Pooled OLS推定\n",
+    "    c = np.ones(N*T)\n",
+    "    Xpool = np.stack([c, df.loc[:,'X'].values], axis=1)\n",
+    "    Ypool = df.loc[:,'Y'].values\n",
+    "    bhat_pool = (np.linalg.inv(Xpool.T@Xpool)@Xpool.T@Ypool)[1]\n",
+    "    bhat_pool_list.append(bhat_pool)"
+   ]
+  },
+  {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "分布の図示"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 43,
-   "metadata": {
-    "hidden": true
-   },
+   "execution_count": 68,
+   "metadata": {},
    "outputs": [
     {
      "data": {
-      "image/png": "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++676du3LyNHjuSrr74K+tp7772X+++/n44dnfWOBw4cWL1OQCibNm2ia9eDS1z07duXzMzM6P/DW7Cawe/z+aiqqnK5IvfYcE4T1vQrByX8mBMnTmzymTDz8vJChnNdPp+Pd999l3POOYeCggKefvppFi1ahKpy8sknc/rpp1NVVRV0+4ABB6enev/99ykqKmLx4sWoKhdccAHz5s2jVatWvPjiiyxduhSfz8fAgQMZNKj+93nVqlX1tufn5zNr1qyQtV977bWcffbZvPzyy5x11lmMHTuWPn36RPldatlqBj84c/d49ZeiBb8J65BWGW6XkDCBaZnBafFfd911TJ8+nYsvvphWrVoBMHr0aObPn4+qBt1eN/jff//96m379u2jqKiIvXv3cvHFF5OTkwPABRdcEHWNqoqIhHw+Ly+PdevW8f777zNnzhxOOukkFi5cyLHHBlsDyVvqBn95ebkFvzHB/GvJ9wBcmt89YceMtmXe1GouvRigGnzxt1Db6+4zefJkbrjhhlrbH3roobDhHdCvXz8KCgo488wzq7d98cUX9OvXL+zrWrduzejRoxk9ejQpKSm88847Fvw4J77T0tKqf1l7uZ/f+vhNWC8XFPNyQbHbZbjmtNNO47XXXqOkpIT9+/cze/Zshg8fHnJ7TT/60Y+YOXNm9aiaDRs2sHXrVk477TRmz55NaWkpe/furTUZXE233norkyZNYseOHQAsW7aMZ555hgkTJoSs99NPP2XXrl2AE2yrV6/miCOOaIpvRbNXWlpKdnY2GRnOX7FeDn5r8RsTxsCBAxk3bhyDBztLSPziF7+o7roJtT3g7LPPprCwkCFDhgBOS/z5559n4MCBjBkzhry8PI444oiQSzhecMEFbNiwgVNPPRURoU2bNjz//PN06dKlep9zzz23etTOkCFDOP/887nxxhtRVaqqqjj33HP56U9/2rTflGbKgv8gieZPVrfl5+dr3fHKJjHGPL4QgJduGBLX4xQWFlp3RAJ58fs9duxYPvnkE+6++26uvPJKvv766xZ/4ltEClQ1v+526+oxxniCtfgPsuA3xniCBf9B1sdvwnrmmsQtjxxpqKJpGs2hezceSktLycnJseDHWvwmguyMVLIzUuN+nKysLHbs2OHZUEoUVWXHjh1kZWW5XUrClZSUWIvfL24tfhHpDjwLHAZUATNU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\n",
+      "image/png": "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\n",
       "text/plain": [
        "<Figure size 432x288 with 1 Axes>"
       ]
@@ -2607,18 +2676,15 @@
    "source": [
     "xx=np.linspace(1.6,3.1,num=100)  # 図を作成するために横軸の値を設定\n",
     "\n",
-    "kde_model_fe=gaussian_kde(bhat_fe)  # FE推定量のカーネル密度推定を設定\n",
-    "bhat_fe_dist = kde_model_fe(xx)  # FE推定量のカーネル密度関数を計算\n",
+    "kde_model_fe=gaussian_kde(bhat_fe_list)  # FE推定量のカーネル密度関数を計算\n",
     "\n",
-    "kde_model_re=gaussian_kde(bhat_re)  # RE推定量のカーネル密度推定を設定\n",
-    "bhat_re_dist = kde_model_re(xx)  # RE推定量のカーネル密度関数を計算\n",
+    "kde_model_re=gaussian_kde(bhat_re_list)  # RE推定量のカーネル密度関数を計算\n",
     "\n",
-    "kde_model_pool=gaussian_kde(bhat_pool)  # Pooled OLS推定量のカーネル密度推定を設定\n",
-    "bhat_pool_dist = kde_model_pool(xx)  # Pooled OLS推定量のカーネル密度関数を計算\n",
+    "kde_model_pool=gaussian_kde(bhat_pool_list)  # Pooled OLS推定量のカーネル密度関数を計算\n",
     "\n",
-    "plt.plot(xx, bhat_fe_dist, 'g-', label='FE')  # FE推定量の分布プロット\n",
-    "plt.plot(xx, bhat_re_dist,'r-', label='RE')  # RE推定量の分布プロット\n",
-    "plt.plot(xx, bhat_pool_dist,'k-', label='Pooled OLS')  # RE推定量の分布プロット\n",
+    "plt.plot(xx, kde_model_fe(xx), 'g-', label='FE')  # FE推定量の分布プロット\n",
+    "plt.plot(xx, kde_model_re(xx),'r-', label='RE')  # RE推定量の分布プロット\n",
+    "plt.plot(xx, kde_model_pool(xx),'k-', label='Pooled OLS')  # RE推定量の分布プロット\n",
     "plt.axvline(x=b1,linestyle='dashed')  # 真の値での垂直線\n",
     "plt.ylabel('Kernel Density')  # 縦軸のラベル\n",
     "plt.legend()  # 凡例\n",
@@ -2627,18 +2693,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## 標準誤差の問題"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "(式３)の固定効果モデルを考えよう。パネル・データの場合，次の2つの問題が発生する場合がある。\n",
     "* 残差の不均一分散\n",
@@ -2650,8 +2712,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### 分散の確認"
@@ -2800,19 +2861,14 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "### 対処方法"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "＜使い方＞\n",
     "* メソッド`fit()`に以下の引数を指定する。\n",
@@ -2833,9 +2889,7 @@
   {
    "cell_type": "code",
    "execution_count": 47,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "name": "stdout",
@@ -2869,9 +2923,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "＜不均一分散と系列相関の場合＞"
    ]
@@ -2879,9 +2931,7 @@
   {
    "cell_type": "code",
    "execution_count": 48,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "name": "stdout",
