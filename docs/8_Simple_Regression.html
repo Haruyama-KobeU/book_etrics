@@ -43,7 +43,7 @@
 <meta property="og:url"         content="https://haruyama-kobeu.github.io/book_etrics/docs/8_Simple_Regression.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="単回帰分析" />
-<meta property="og:description" content="単回帰分析  import numpy as np import pandas as pd from scipy.stats import norm import matplotlib.pyplot as plt from wooldridge import *  # wooldridgeのデータ・パッケージ from" />
+<meta property="og:description" content="単回帰分析  import numpy as np import pandas as pd from scipy.stats import norm import matplotlib.pyplot as plt import wooldridge  # wooldridgeのデータ・パッケージ from statsm" />
 
 
 <meta name="twitter:card" content="summary">
@@ -330,9 +330,9 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">wooldridge</span> <span class="kn">import</span> <span class="o">*</span>  <span class="c1"># wooldridgeのデータ・パッケージ</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>  <span class="c1"># wooldridgeのデータ・パッケージ</span>
 <span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>  <span class="c1"># 回帰分析のパッケージ</span>
-<span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>  <span class="c1"># 属性を調べるパッケージ</span>
 </pre></div>
 </div>
 </div>
@@ -506,10 +506,10 @@
 </div>
 <div class="section" id="id4">
 <h2>データ<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<p>データの読み込みには<code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>のパッケージを使う。使う関数は<code class="docutils literal notranslate"><span class="pre">dataWoo()</span></code>であり，引数なしで実行するとデータセットのリストが表示される。</p>
+<p>データの読み込みには<code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>のパッケージを使う。使う関数は<code class="docutils literal notranslate"><span class="pre">data()</span></code>であり，引数なしで実行するとデータセットのリストが表示される。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dataWoo</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -547,7 +547,7 @@
 <p>以下では<code class="docutils literal notranslate"><span class="pre">wage1</span></code>を使う。データ・セットを読み込むには引数にはデータ・セット名を文字列として入力する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -555,7 +555,7 @@
 <p>オプション<code class="docutils literal notranslate"><span class="pre">description=True</span></code>を追加するとデータの説明を表示することができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1001,8 +1001,8 @@ dtype: float64
 Dep. Variable:                   wage   R-squared:                       0.165
 Model:                            OLS   Adj. R-squared:                  0.163
 Method:                 Least Squares   F-statistic:                     103.4
-Date:                Wed, 03 Jun 2020   Prob (F-statistic):           2.78e-22
-Time:                        16:11:52   Log-Likelihood:                -1385.7
+Date:                Fri, 05 Jun 2020   Prob (F-statistic):           2.78e-22
+Time:                        07:47:33   Log-Likelihood:                -1385.7
 No. Observations:                 526   AIC:                             2775.
 Df Residuals:                     524   BIC:                             2784.
 Df Model:                           1                                         
@@ -1445,8 +1445,8 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    3.226697
-Y            0.173075
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    2.279852
+Y            0.617928
 dtype: float64
 </pre></div>
 </div>
@@ -1482,8 +1482,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.896317
-X            0.531989
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.598167
+X            0.606326
 dtype: float64
 </pre></div>
 </div>

@@ -343,7 +343,7 @@
 <span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
 <span class="kn">from</span> <span class="nn">statsmodels.api</span> <span class="kn">import</span> <span class="n">qqplot</span>
 <span class="kn">from</span> <span class="nn">statsmodels.stats.stattools</span> <span class="kn">import</span> <span class="n">jarque_bera</span><span class="p">,</span> <span class="n">omni_normtest</span>
-<span class="kn">from</span> <span class="nn">wooldridge</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
 <span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>
 </pre></div>
 </div>
@@ -464,8 +464,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([-0.53235581, -0.31538891, -0.66311898, -0.14345388, -0.47825835,
-        1.93452973, -0.30920757, -0.43774248,  1.36517607, -0.15715693])
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([-0.38535638, -0.43984347, -0.50375243, -0.63590598,  1.30976827,
+       -0.58201802,  0.62694874, -0.68322776, -0.28978108, -0.18580947])
 </pre></div>
 </div>
 </div>
@@ -493,7 +493,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>-0.015644760002743428
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.008410071513968366
 </pre></div>
 </div>
 </div>
@@ -605,8 +605,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([ 0.56640416, -0.20840271,  0.30117148, ...,  0.72055102,
-        0.69186546,  0.33495556])
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([ 0.99900362,  0.66834375, -0.07003073, ...,  1.01510498,
+        0.38256625,  0.27084791])
 </pre></div>
 </div>
 </div>
@@ -1047,7 +1047,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 <p>誤差項は<code class="docutils literal notranslate"><span class="pre">res_wage</span></code>の属性である<code class="docutils literal notranslate"><span class="pre">.resid</span></code>から取得できるので，それを<code class="docutils literal notranslate"><span class="pre">qqplot()</span></code>に使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span> <span class="o">=</span> <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
 <span class="n">formula_wage</span> <span class="o">=</span> <span class="s1">&#39;wage ~ educ + exper+ tenure&#39;</span>
 <span class="n">res_wage</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_wage</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">qqplot</span><span class="p">(</span><span class="n">res_wage</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">,</span><span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1062,7 +1062,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 <p>被説明変数の<code class="docutils literal notranslate"><span class="pre">wage</span></code>に対数を取る。こちらの方が当てはまりが良い。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span> <span class="o">=</span> <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
 <span class="n">formula_wage_log</span> <span class="o">=</span> <span class="s1">&#39;np.log(wage) ~ educ + exper+ tenure&#39;</span>
 <span class="n">res_wage_log</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_wage_log</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">qqplot</span><span class="p">(</span><span class="n">res_wage_log</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">,</span><span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1094,10 +1094,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(4.9524103214409365,
- 0.08406162142247324,
- 0.24036540257035766,
- 3.0813239719758236)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(4.892987491866286, 0.08659668479727792, 0.2219399442720252, 2.805490246630913)
 </pre></div>
 </div>
 </div>
@@ -1120,10 +1117,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(32.31558073588793,
- 9.610827966247178e-08,
- -0.07518316083892301,
- 1.763659494868952)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(29.23650206873759,
+ 4.480992744305787e-07,
+ -0.01308912769739876,
+ 1.815657651587224)
 </pre></div>
 </div>
 </div>
@@ -1205,7 +1202,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=5.097554461451944, pvalue=0.07817720025947886)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=4.835603663146776, pvalue=0.08911729714098497)
 </pre></div>
 </div>
 </div>
@@ -1221,7 +1218,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=417.2526209017463, pvalue=2.481673203675975e-91)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=283.84834901240225, pvalue=2.307353644611931e-62)
 </pre></div>
 </div>
 </div>
@@ -1282,8 +1279,8 @@ Kurtosis:                       3.977   Cond. No.                         135.
 <p>大標本の場合，<span class="math notranslate nohighlight">\(F\)</span>検定の代わりに<span class="math notranslate nohighlight">\(LM\)</span>検定も使える。ここでは<code class="docutils literal notranslate"><span class="pre">crime1</span></code>のデータを使って<span class="math notranslate nohighlight">\(LM\)</span>検定について説明する。<code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">crime1</span></code>データを使おう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crime1</span> <span class="o">=</span> <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;crime1&#39;</span><span class="p">)</span>
-<span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;crime1&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crime1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime1&#39;</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime1&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

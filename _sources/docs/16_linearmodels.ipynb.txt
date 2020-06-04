@@ -16,19 +16,23 @@
     "import pandas as pd\n",
     "from linearmodels.panel.data import PanelData\n",
     "from linearmodels.panel import FirstDifferenceOLS\n",
-    "from wooldridge import *"
+    "import wooldridge"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "heading_collapsed": true
+   },
    "source": [
     "## 説明"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "`linearmodels`は`statsmodels`を補完する目的として開発されている。主に，パネルデータ，操作変数法を使った推定法やGMMを扱う場合には非常に重宝するパッケージである。しかし，`linearmodels`は`statsmodels`の両方を使う上で以下の点に注意する必要がある。\n",
     "* 推定結果などのメソッドや属性が共通化されているわけではない。次の表に３つの例を挙げる。\n",
@@ -60,7 +64,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "---\n",
     "以下では`linearmodels`を使うが，そのためには`DataFrame`を`MultiIndex`に変換する必要がある。以下では，まず`MultiIndex`について説明し，その後に`linearmodel`にある`PanelData`関数について説明する\n",
@@ -1959,7 +1965,7 @@
        "UK        2000  100.0  30.0  70.0  11.0\n",
        "          2001  110.0  39.0  71.0  12.0\n",
        "          2002  115.0  55.0   NaN  14.0\n",
-       "PanelData object, id: 0x1223667f0"
+       "PanelData object, id: 0x7f9e9485f0a0"
       ]
      },
      "execution_count": 19,
@@ -2612,7 +2618,7 @@
        "UK        2000  -8.333333 -11.333333  -0.500000 -1.333333\n",
        "          2001   1.666667  -2.333333   0.500000 -0.333333\n",
        "          2002   6.666667  13.666667        NaN  1.666667\n",
-       "PanelData object, id: 0x1223425b0"
+       "PanelData object, id: 0x7f9e9483c4f0"
       ]
      },
      "execution_count": 27,
@@ -2721,7 +2727,7 @@
        "Japan     2001  -5.0   5.0 -10.0  1.0\n",
        "          2002  -2.0  -4.0   2.0  1.0\n",
        "UK        2001  10.0   9.0   1.0  1.0\n",
-       "PanelData object, id: 0x122342df0"
+       "PanelData object, id: 0x7f9e923ccd30"
       ]
      },
      "execution_count": 28,
@@ -3060,7 +3066,7 @@
     }
    ],
    "source": [
-    "crime4 = dataWoo('crime4')\n",
+    "crime4 = wooldridge.data('crime4')\n",
     "crime4.head()"
    ]
   },

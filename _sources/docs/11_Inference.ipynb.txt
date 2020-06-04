@@ -18,19 +18,23 @@
     "import pandas as pd\n",
     "from statsmodels.formula.api import ols\n",
     "import matplotlib.pyplot as plt\n",
-    "from wooldridge import dataWoo"
+    "import wooldridge"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "heading_collapsed": true
+   },
    "source": [
     "## 説明：仮説検定"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "仮説検定は以下の手順でおこなう。\n",
     "1. 母集団のパラメータについて帰無仮説（Null Hypothesis）と対立仮説（Alternative Hypothesis）を設定する。\n",
@@ -45,7 +49,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "---\n",
     "検定をおこなう際には間違いが発生する。それをまとめたのが次の表である。"
@@ -53,7 +59,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "|                        | 帰無仮説は真 | 帰無仮説は偽 |   |\n",
     "|------------------------|--------------|--------------|---|\n",
@@ -63,7 +71,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "検定を警察の行動に例えて次のように考えることもできる。\n",
     "* 帰無仮説 $\\Rightarrow$ 「無罪」\n",
@@ -75,7 +85,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "|                        | 無実は真 | 無実は偽 |\n",
     "|------------------------|:------------:|:------------:|\n",
@@ -85,7 +97,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "* 統計的優位性とは，帰無仮説が正しい場合，帰無仮説の内容が発生した確率が非常に低い場合を指す。即ち，発生イベントが非常に起こりにくく，偶然のの可能性が非常に高い場合を指す。\n",
     "* 第一種過誤は，帰無仮説が正しい場合に棄却する場合に発生する。慣例でその確率を$\\alpha$で表す。$\\alpha=0.05$がよく使われるが，これを使う場合，間違って正しい帰無仮説を棄却する確率は最大5%まで許容するという意味になる。"
@@ -93,21 +107,27 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "heading_collapsed": true
+   },
    "source": [
     "## $t$検定"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "### 説明：$t$値と$p$値"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "新たな仮定を導入する。\n",
     "\n",
@@ -120,7 +140,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "---\n",
     "CLM仮定の下では：\n",
@@ -141,7 +163,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "---\n",
     "この関係を使うことによりOLS推定量の検定が可能となる。\n",
@@ -178,7 +202,9 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "---\n",
     "**＜$p$値＞**\n",
@@ -194,7 +220,8 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true
+    "heading_collapsed": true,
+    "hidden": true
    },
    "source": [
     "### $t$値と$p$値の例"
@@ -425,7 +452,8 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true
+    "heading_collapsed": true,
+    "hidden": true
    },
    "source": [
     "### 回帰分析と$t$検定"
@@ -498,8 +526,8 @@
     }
    ],
    "source": [
-    "gpa = dataWoo('gpa1')\n",
-    "dataWoo('gpa1',description=True)"
+    "gpa = wooldridge.data('gpa1')\n",
+    "wooldridge.data('gpa1',description=True)"
    ]
   },
   {
@@ -1101,8 +1129,8 @@
     }
    ],
    "source": [
-    "mlb1 = dataWoo('mlb1')\n",
-    "dataWoo('mlb1',description=True)"
+    "mlb1 = wooldridge.data('mlb1')\n",
+    "wooldridge.data('mlb1',description=True)"
    ]
   },
   {
@@ -1492,8 +1520,8 @@
       "Dep. Variable:         np.log(salary)   R-squared:                       0.628\n",
       "Model:                            OLS   Adj. R-squared:                  0.622\n",
       "Method:                 Least Squares   F-statistic:                     117.1\n",
-      "Date:                Wed, 20 May 2020   Prob (F-statistic):           2.94e-72\n",
-      "Time:                        16:43:55   Log-Likelihood:                -385.11\n",
+      "Date:                Thu, 04 Jun 2020   Prob (F-statistic):           2.94e-72\n",
+      "Time:                        21:54:10   Log-Likelihood:                -385.11\n",
       "No. Observations:                 353   AIC:                             782.2\n",
       "Df Residuals:                     347   BIC:                             805.4\n",
       "Df Model:                           5                                         \n",

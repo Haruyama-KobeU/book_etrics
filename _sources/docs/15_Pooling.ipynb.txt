@@ -16,7 +16,7 @@
     "import numpy as np\n",
     "import pandas as pd\n",
     "from statsmodels.formula.api import ols\n",
-    "from wooldridge import *\n",
+    "import wooldridge\n",
     "from scipy.stats import t"
    ]
   },
@@ -128,7 +128,7 @@
    "outputs": [],
    "source": [
     "# データの読み込み\n",
-    "cps = dataWoo('CPS78_85')"
+    "cps = wooldridge.data('CPS78_85')"
    ]
   },
   {
@@ -177,7 +177,7 @@
    ],
    "source": [
     "# データの内容の確認\n",
-    "dataWoo('CPS78_85', description=True)"
+    "wooldridge.data('CPS78_85', description=True)"
    ]
   },
   {
@@ -573,9 +573,9 @@
     }
    ],
    "source": [
-    "kielmc = dataWoo('kielmc')\n",
+    "kielmc = wooldridge.data('kielmc')\n",
     "\n",
-    "dataWoo('kielmc', description=True)"
+    "wooldridge.data('kielmc', description=True)"
    ]
   },
   {
@@ -1210,7 +1210,7 @@
     {
      "data": {
       "text/plain": [
-       "<pandas.core.groupby.generic.DataFrameGroupBy object at 0x7fad10b84ca0>"
+       "<pandas.core.groupby.generic.DataFrameGroupBy object at 0x7fb1eba880a0>"
       ]
      },
      "execution_count": 16,
@@ -1876,7 +1876,7 @@
     "heading_collapsed": true
    },
    "source": [
-    "## １階差分推定（First Differenced Estimator）"
+    "## １階差分推定"
    ]
   },
   {
@@ -1895,7 +1895,7 @@
     "hidden": true
    },
    "source": [
-    "異質性バイアスの一番簡単な解決方法が１階差分推定（FDE）である。考え方は非常に簡単である。次の１階差分を定義する。\n",
+    "異質性バイアスの一番簡単な解決方法が１階差分推定（First Differenced Estimator）である。考え方は非常に簡単である。次の１階差分を定義する。\n",
     "* $\\Delta y_{i}=y_{i1}-y_{i0}$\n",
     "* $\\Delta D = D_{1}-D_0 =1-0= 1$\n",
     "* $\\Delta x_{i}=x_{i1}-x_{i0}$\n",
@@ -1964,7 +1964,7 @@
    },
    "outputs": [],
    "source": [
-    "crime2 = dataWoo('crime2')"
+    "crime2 = wooldridge.data('crime2')"
    ]
   },
   {
@@ -2041,7 +2041,7 @@
     }
    ],
    "source": [
-    "dataWoo('crime2', description=True)"
+    "wooldridge.data('crime2', description=True)"
    ]
   },
   {
@@ -2896,7 +2896,7 @@
     }
    ],
    "source": [
-    "crime4 = dataWoo('crime4')\n",
+    "crime4 = wooldridge.data('crime4')\n",
     "crime4.head()"
    ]
   },
@@ -2989,7 +2989,7 @@
     }
    ],
    "source": [
-    "dataWoo('crime4', description=True)"
+    "wooldridge.data('crime4', description=True)"
    ]
   },
   {

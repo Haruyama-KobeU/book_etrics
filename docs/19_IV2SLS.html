@@ -43,7 +43,7 @@
 <meta property="og:url"         content="https://haruyama-kobeu.github.io/book_etrics/docs/19_IV2SLS.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="操作変数法と２段階OLS" />
-<meta property="og:description" content="操作変数法と２段階OLS  import numpy as np import pandas as pd from linearmodels.iv import IV2SLS from wooldridge import *  from scipy.stats import gaussian_kde, multivar" />
+<meta property="og:description" content="操作変数法と２段階OLS  import numpy as np import pandas as pd from linearmodels.iv import IV2SLS import wooldridge from scipy.stats import gaussian_kde, multivariate_nor" />
 
 
 <meta name="twitter:card" content="summary">
@@ -429,7 +429,7 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">linearmodels.iv</span> <span class="kn">import</span> <span class="n">IV2SLS</span>
-<span class="kn">from</span> <span class="nn">wooldridge</span> <span class="kn">import</span> <span class="o">*</span> 
+<span class="kn">import</span> <span class="nn">wooldridge</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">gaussian_kde</span><span class="p">,</span> <span class="n">multivariate_normal</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">uniform</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">chi2</span>
@@ -554,9 +554,9 @@
 <p>既婚女性の教育の収益率に関するデータ<code class="docutils literal notranslate"><span class="pre">mroz</span></code>を利用して使い方を説明する。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mroz</span> <span class="o">=</span> <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;mroz&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lwage&#39;</span><span class="p">])</span>  <span class="c1"># 列&#39;lwage&#39;にNaNがある行は削除する</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mroz</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mroz&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lwage&#39;</span><span class="p">])</span>  <span class="c1"># 列&#39;lwage&#39;にNaNがある行は削除する</span>
 
-<span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;mroz&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mroz&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -825,8 +825,8 @@ educ           0.1086     0.0134     8.1178     0.0000      0.0824      0.1349
 Dep. Variable:                   educ   R-squared:                      0.2081
 Estimator:                        OLS   Adj. R-squared:                 0.2043
 No. Observations:                 428   F-statistic:                    112.45
-Date:                Wed, Jun 03 2020   P-value (F-stat)                0.0000
-Time:                        16:09:52   Distribution:                  chi2(2)
+Date:                Fri, Jun 05 2020   P-value (F-stat)                0.0000
+Time:                        07:49:39   Distribution:                  chi2(2)
 Cov. Estimator:            unadjusted                                         
                                                                               
                              Parameter Estimates                              
@@ -886,9 +886,6 @@ exper          0.0442     0.0134     3.3038     0.0010      0.0180      0.0704
 expersq       -0.0009     0.0004    -2.2485     0.0245     -0.0017     -0.0001
 educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 ==============================================================================
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
@@ -1204,7 +1201,7 @@ H0: All endogenous variables are exogenous
 Statistic: 2.8035
 P-value: 0.0948
 Distributed: F(1,423)
-WaldTestStatistic, id: 0x7fc964a069a0
+WaldTestStatistic, id: 0x7f9da8909760
 </pre></div>
 </div>
 </div>
@@ -1328,7 +1325,7 @@ H0: Endogenous variables are exogenous
 Statistic: 2.8256
 P-value: 0.0928
 Distributed: chi2(1)
-WaldTestStatistic, id: 0x7fc9697cad90
+WaldTestStatistic, id: 0x7f9daa296cd0
 </pre></div>
 </div>
 </div>
@@ -1457,7 +1454,7 @@ H0: The model is not overidentified.
 Statistic: 0.3781
 P-value: 0.5386
 Distributed: chi2(1)
-WaldTestStatistic, id: 0x7fc9697c3970
+WaldTestStatistic, id: 0x7f9daa291700
 </pre></div>
 </div>
 </div>

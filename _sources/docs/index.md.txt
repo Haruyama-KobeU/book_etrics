@@ -56,7 +56,7 @@ import linearmodels, lmdiag, matplotlib, numba, numpy, pandas, py4etrics, scipy,
 from platform import python_version
 
 packages = ['Python','linearmodels', 'lmdiag','matplotlib', 'numba', 'numpy','pandas', 'py4etrics', 'scipy','see', 'statsmodels', 'wooldridge']
-versions = [python_version(),linearmodels.__version__, '0.3.7', matplotlib.__version__, numba.__version__, numpy.__version__, pandas.__version__, py4etrics.__version__, scipy.__version__, see.__version__, statsmodels.__version__, '0.3.0']
+versions = [python_version(),linearmodels.__version__, '0.3.7', matplotlib.__version__, numba.__version__, numpy.__version__, pandas.__version__, py4etrics.__version__, scipy.__version__, see.__version__, statsmodels.__version__, wooldridge.__version__]
 
 for pack, ver in zip(packages, versions):
     print('{0:14}{1}'.format(pack,ver))

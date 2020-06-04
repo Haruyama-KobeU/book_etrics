@@ -43,7 +43,7 @@
 <meta property="og:url"         content="https://haruyama-kobeu.github.io/book_etrics/docs/15_Pooling.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="プーリング・データとパネル・データ" />
-<meta property="og:description" content="プーリング・データとパネル・データ  import numpy as np import pandas as pd from statsmodels.formula.api import ols from wooldridge import * from scipy.stats import t  説明  独立に分布し" />
+<meta property="og:description" content="プーリング・データとパネル・データ  import numpy as np import pandas as pd from statsmodels.formula.api import ols import wooldridge from scipy.stats import t  説明  独立に分布したプーリング・" />
 
 
 <meta name="twitter:card" content="summary">
@@ -284,18 +284,18 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#first-differenced-estimator" class="nav-link">１階差分推定（First Differenced Estimator）</a><ul class="nav section-nav flex-column">
+            <a href="#id8" class="nav-link">１階差分推定</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id8" class="nav-link">説明</a>
+            <a href="#id9" class="nav-link">説明</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id9" class="nav-link">推定：２期間の場合</a>
+            <a href="#id10" class="nav-link">推定：２期間の場合</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id10" class="nav-link">推定：３期間以上の場合</a>
+            <a href="#id11" class="nav-link">推定：３期間以上の場合</a>
         </li>
     
             </ul>
@@ -319,7 +319,7 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
-<span class="kn">from</span> <span class="nn">wooldridge</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">t</span>
 </pre></div>
 </div>
@@ -379,7 +379,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># データの読み込み</span>
-<span class="n">cps</span> <span class="o">=</span> <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;CPS78_85&#39;</span><span class="p">)</span>
+<span class="n">cps</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;CPS78_85&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -387,7 +387,7 @@
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># データの内容の確認</span>
-<span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;CPS78_85&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;CPS78_85&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -638,9 +638,9 @@ union                     0.2021      0.030      6.672      0.000       0.143   
 <p><code class="docutils literal notranslate"><span class="pre">keilmc</span></code>のデータを使いゴミ焼却場建設の近隣住宅価格に対する効果を実際に推計する。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kielmc</span> <span class="o">=</span> <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;kielmc&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kielmc</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;kielmc&#39;</span><span class="p">)</span>
 
-<span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;kielmc&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;kielmc&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1150,7 +1150,7 @@ y_{it}= \beta_0 + \delta_0D_t + \beta_1x_{it}+e_{it}\qquad e_{it}=a_i+u_{it}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7fd23b2431f0&gt;
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7fea6da77310&gt;
 </pre></div>
 </div>
 </div>
@@ -1646,11 +1646,11 @@ Name: gdp, dtype: float64
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">df</span></code>を上書きしたい場合は，<code class="docutils literal notranslate"><span class="pre">df=</span></code>を付け加える。</p>
 </div>
-<div class="section" id="first-differenced-estimator">
-<h2>１階差分推定（First Differenced Estimator）<a class="headerlink" href="#first-differenced-estimator" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id8">
-<h3>説明<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
-<p>異質性バイアスの一番簡単な解決方法が１階差分推定（FDE）である。考え方は非常に簡単である。次の１階差分を定義する。</p>
+<h2>１階差分推定<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h3>説明<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>異質性バイアスの一番簡単な解決方法が１階差分推定（First Differenced Estimator）である。考え方は非常に簡単である。次の１階差分を定義する。</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\Delta y_{i}=y_{i1}-y_{i0}\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\Delta D = D_{1}-D_0 =1-0= 1\)</span></p></li>
@@ -1683,8 +1683,8 @@ Name: gdp, dtype: float64
 <p>＜推定方法＞</p>
 <p>データから１階差分を計算し，<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使いOLS推定すれば良い。以下ではパッケージ<code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>にあるデータを使う。</p>
 </div>
-<div class="section" id="id9">
-<h3>推定：２期間の場合<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h3>推定：２期間の場合<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>以下では<code class="docutils literal notranslate"><span class="pre">crime2</span></code>のデータを使い説明する。</p></li>
 <li><p>このデータを使い，失業率が犯罪に負の影響を与えるかどうかを検証する。</p></li>
@@ -1692,7 +1692,7 @@ Name: gdp, dtype: float64
 <p>データの読み込み。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crime2</span> <span class="o">=</span> <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;crime2&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crime2</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime2&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1700,7 +1700,7 @@ Name: gdp, dtype: float64
 <p>変数の説明。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;crime2&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime2&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2199,12 +2199,12 @@ unem          -0.3077      0.932     -0.330      0.742      -2.159       1.543
 </div>
 </div>
 </div>
-<div class="section" id="id10">
-<h3>推定：３期間以上の場合<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3>推定：３期間以上の場合<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">crime4</span></code>のデータセットを使い，犯罪の決定要因について推定する。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crime4</span> <span class="o">=</span> <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;crime4&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crime4</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime4&#39;</span><span class="p">)</span>
 <span class="n">crime4</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2379,7 +2379,7 @@ unem          -0.3077      0.932     -0.330      0.742      -2.159       1.543
 </div>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;crime4&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime4&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

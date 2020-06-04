@@ -43,7 +43,7 @@
 <meta property="og:url"         content="https://haruyama-kobeu.github.io/book_etrics/docs/9_Multiple_Regression.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="重回帰分析" />
-<meta property="og:description" content="重回帰分析  import numpy as np import pandas as pd from statsmodels.formula.api import ols from wooldridge import * from see import * import matplotlib.pyplot as plt" />
+<meta property="og:description" content="重回帰分析  import numpy as np import pandas as pd from statsmodels.formula.api import ols import wooldridge from see import see import matplotlib.pyplot as plt from" />
 
 
 <meta name="twitter:card" content="summary">
@@ -355,8 +355,8 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
-<span class="kn">from</span> <span class="nn">wooldridge</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
+<span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jit</span><span class="p">,</span> <span class="n">njit</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">uniform</span><span class="p">,</span> <span class="n">gaussian_kde</span><span class="p">,</span> <span class="n">multivariate_normal</span>
@@ -388,14 +388,14 @@
 <p>必要な変数だけを取り出し変数<code class="docutils literal notranslate"><span class="pre">wage1</span></code>に割り当てる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span> <span class="o">=</span> <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;wage&#39;</span><span class="p">,</span> <span class="s1">&#39;educ&#39;</span><span class="p">,</span> <span class="s1">&#39;tenure&#39;</span><span class="p">,</span> <span class="s1">&#39;exper&#39;</span><span class="p">]]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;wage&#39;</span><span class="p">,</span> <span class="s1">&#39;educ&#39;</span><span class="p">,</span> <span class="s1">&#39;tenure&#39;</span><span class="p">,</span> <span class="s1">&#39;exper&#39;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -778,17 +778,16 @@ dtype: float64
 に基づいた仮説を検証する。例として「消費は家計の所得<span class="math notranslate nohighlight">\(x_1\)</span>が高くなると増えるが，子どもの数<span class="math notranslate nohighlight">\(x_2\)</span>と反比例する」という仮説を考える。所得と子どもの数に依存する消費の部分だけを<span class="math notranslate nohighlight">\(y^*\)</span>と書くと，一般型の消費関数は<span class="math notranslate nohighlight">\(y^*=f\left(x_1,x_2\right)\)</span>となる。更に，線形を仮定すると次式となる。</p>
 <div class="math notranslate nohighlight">
 \[y^*=\beta_0+\beta_1x_1+\beta_2x_2\qquad{(式１)}\]</div>
-<p>例えば，所得30万円，子ども2人の家計の場合、消費は<span class="math notranslate nohighlight">\(\beta_0+\beta_1\cdot\left(\text{30万円}\right)+\beta_2\cdot\left(\text{2人}\right)\)</span>となる。所得 <span class="math notranslate nohighlight">\(x_1\)</span>が変化すると消費<span class="math notranslate nohighlight">\(y^*\)</span>も変化することが分かる。このことは<span class="math notranslate nohighlight">\(\beta_2=0\)</span>の単回帰の場合を考えればもっと分かりやすいだろう。その場合，(式１)は</p>
+<p>例えば，所得30万円，子ども2人の家計の場合、消費は<span class="math notranslate nohighlight">\(\beta_0+\beta_1\cdot\left(\text{30万円}\right)+\beta_2\cdot\left(\text{2人}\right)\)</span>となる。所得 <span class="math notranslate nohighlight">\(x_1\)</span>が変化すると消費<span class="math notranslate nohighlight">\(y^*\)</span>も変化することが分かる。このことは<span class="math notranslate nohighlight">\(\beta_2=0\)</span>の単回帰の場合（消費が子供の数に依存しない場合）を考えればもっと分かりやすいだろう。その場合，(式１)は</p>
 <div class="math notranslate nohighlight">
 \[y^*=\beta_0+\beta_1x_1\]</div>
 <p>となり，横軸に<span class="math notranslate nohighlight">\(x_1\)</span>，縦軸に<span class="math notranslate nohighlight">\(y^*\)</span>を置く図では右上がりの直線となる。</p>
-<p>一方で，同じ所得と子どもの数の家計でも好み等の要因が違ったりするため，消費に違いがでる。その違いを（平均ゼロの）誤差項<span class="math notranslate nohighlight">\(u\)</span>として捉えると，消費 <span class="math notranslate nohighlight">\(y\)</span>は次式で与えられる。</p>
+<p>(式１)は<strong>平均</strong>の家計の行動を表していると考えることができる。従って，同じ所得と子どもの数の家計でも好み等の要因が違うと消費に違いがでる。その違いを（平均ゼロの）誤差項<span class="math notranslate nohighlight">\(u\)</span>として捉えると，全ての家計の消費 <span class="math notranslate nohighlight">\(y\)</span>は次式で表すことができる。</p>
 <div class="math notranslate nohighlight">
 \[y=y^*+u\qquad{(式２)}\]</div>
-<p>となる。</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(y^*\)</span>：消費<span class="math notranslate nohighlight">\(y\)</span>の<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>に依存する部分</p></li>
-<li><p><span class="math notranslate nohighlight">\(u\)</span>：消費<span class="math notranslate nohighlight">\(y\)</span>のその他の部分</p></li>
+<li><p><span class="math notranslate nohighlight">\(y^*\)</span>：平均の家計の消費であり，<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>のみに依存する部分</p></li>
+<li><p><span class="math notranslate nohighlight">\(u\)</span>：平均の家計と異なる家計の消費であり，平均家計との違いを捉える部分</p></li>
 </ul>
 <p>(式１)を(式２)に代入すると</p>
 <div class="math notranslate nohighlight">
@@ -796,7 +795,7 @@ dtype: float64
 <p>となる。この式は仮説に基づいた関係式であり，<strong>母集団回帰式</strong>と呼ばれる。また(式３)を使い<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>を所与として期待値を計算すると次式を得る。</p>
 <div class="math notranslate nohighlight">
 \[\text{E}\left(y|x_1,x_2\right)=y^*\qquad\because\;\text{E}(u)=0\]</div>
-<p>これは「<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>を所与とする」という条件の下での期待値なので<strong>条件付き期待値</strong>（conditional expectations）と呼ばれる。この式は，<span class="math notranslate nohighlight">\(y\)</span>の条件付き期待値は母集団回帰式の<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>に依存する部分である<span class="math notranslate nohighlight">\(y^*\)</span>と等しいことを示している。換言すると，（式１）は母集団で平均として成立する<strong>母集団回帰線</strong>を表している。</p>
+<p>これは「<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>を所与とする」という条件の下での期待値なので<strong>条件付き期待値</strong>（conditional expectations）と呼ばれる。この式は，<span class="math notranslate nohighlight">\(y\)</span>の条件付き期待値は母集団回帰式の<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>に依存する部分である<span class="math notranslate nohighlight">\(y^*\)</span>と等しいことを示している。即ち，（式１）は母集団で平均として成立する<strong>母集団回帰線</strong>を表している。</p>
 <hr class="docutils" />
 <p>（注意点）</p>
 <ul class="simple">
@@ -1103,7 +1102,7 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([1.94966667, 1.89118659, 2.9276651 ])
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([-0.14432751,  2.12540678,  3.07728465])
 </pre></div>
 </div>
 </div>
@@ -1124,9 +1123,9 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.949667
-X1           1.891187
-X2           2.927665
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept   -0.144328
+X1           2.125407
+X2           3.077285
 dtype: float64
 </pre></div>
 </div>
@@ -1209,9 +1208,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>b0: 0.9990698181515887 
-b1: 2.000154741984484 
-b1: 2.9999834885052854
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>b0: 1.0000341866535931 
+b1: 2.0003692209811352 
+b1: 2.999658911867122
 </pre></div>
 </div>
 </div>
@@ -1410,7 +1409,11 @@ exper 	 1.4776177726317783
 </ul>
 </li>
 </ul>
-<p>（コメント）<code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>を使いたいところだが，<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の<code class="docutils literal notranslate"><span class="pre">random.multivariate_normal()</span></code>が<code class="docutils literal notranslate"><span class="pre">Numba</span></code>に対応していないため<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>の <code class="docutils literal notranslate"><span class="pre">multivariate_normal.rvs()</span></code>を使っている。<code class="docutils literal notranslate"><span class="pre">np.random.normal()</span></code>を使って二変量正規分布から値とする方法もあるが，ここでは簡単化を重視する。</p>
+<p>（コメント）</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>を使いたいところだが，<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の<code class="docutils literal notranslate"><span class="pre">random.multivariate_normal()</span></code>が<code class="docutils literal notranslate"><span class="pre">Numba</span></code>に対応していないため<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>の <code class="docutils literal notranslate"><span class="pre">multivariate_normal.rvs()</span></code>を使っている。<code class="docutils literal notranslate"><span class="pre">np.random.normal()</span></code>を使って二変量正規分布から値とする方法もあるが，ここでは簡単化を重視する。</p></li>
+<li><p>計算の速度を早めるために下の関数の中では<code class="docutils literal notranslate"><span class="pre">ols</span></code>は使わず<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数を使いIVとOLS推定値を計算している。<code class="docutils literal notranslate"><span class="pre">ols</span></code>は係数の推定値だけではなく他の多くの統計値も自動的に計算するために一回の計算に比較的に長い時間を要するためである。</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sim_multi</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ, N=標本数, m=共分散</span>
@@ -1493,7 +1496,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.03903177177860914, 0.10306899834331894)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.0387569098141741, 0.10622726998982542)
 </pre></div>
 </div>
 </div>
@@ -1577,7 +1580,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.19556785983686942, 0.324396842866282)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.19175582315076864, 0.3203197971705104)
 </pre></div>
 </div>
 </div>

@@ -43,7 +43,7 @@
 <meta property="og:url"         content="https://haruyama-kobeu.github.io/book_etrics/docs/13_Dummies.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="質的変数と回帰分析" />
-<meta property="og:description" content="質的変数と回帰分析  import numpy as np import pandas as pd from statsmodels.formula.api import ols from wooldridge import *  実証分析で使う変数を次の２種類に区別することができる。  量的変数（体重，賃金など）  " />
+<meta property="og:description" content="質的変数と回帰分析  import numpy as np import pandas as pd from statsmodels.formula.api import ols import wooldridge  実証分析で使う変数を次の２種類に区別することができる。  量的変数（体重，賃金など）  質的変数（性別" />
 
 
 <meta name="twitter:card" content="summary">
@@ -317,7 +317,7 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
-<span class="kn">from</span> <span class="nn">wooldridge</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
 </pre></div>
 </div>
 </div>
@@ -340,8 +340,8 @@
 <p>実は，この場合のOLS推定量<span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>は被説明変数<span class="math notranslate nohighlight">\(y\)</span>の平均と等しいことになる。この結果を確認するために以下では<code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">wage1</span></code>のデータを使う。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span> <span class="o">=</span> <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
-<span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1302,8 +1302,8 @@ dtype: float64
 </ul>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">discrim</span> <span class="o">=</span> <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;discrim&#39;</span><span class="p">)</span>
-<span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;discrim&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">discrim</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;discrim&#39;</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;discrim&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

@@ -18,7 +18,7 @@
     "import matplotlib.pyplot as plt\n",
     "from statsmodels.formula.api import ols\n",
     "import lmdiag\n",
-    "from wooldridge import *\n",
+    "import wooldridge\n",
     "from statsmodels.stats.api import het_breuschpagan, het_white\n",
     "from seaborn import residplot\n",
     "from statsmodels.stats.outliers_influence import reset_ramsey"
@@ -189,8 +189,8 @@
     }
    ],
    "source": [
-    "gpa3 = dataWoo('gpa3').query('spring == 1')  # 春学期だけを抽出\n",
-    "dataWoo('gpa3', description=True)"
+    "gpa3 = wooldridge.data('gpa3').query('spring == 1')  # 春学期だけを抽出\n",
+    "wooldridge.data('gpa3', description=True)"
    ]
   },
   {
@@ -245,7 +245,7 @@
     }
    ],
    "source": [
-    "dataWoo('gpa2', description=True)"
+    "wooldridge.data('gpa2', description=True)"
    ]
   },
   {
@@ -707,8 +707,8 @@
     }
    ],
    "source": [
-    "hprice1 = dataWoo('hprice1')\n",
-    "dataWoo('hprice1', description=True)"
+    "hprice1 = wooldridge.data('hprice1')\n",
+    "wooldridge.data('hprice1', description=True)"
    ]
   },
   {

@@ -43,7 +43,7 @@
 <meta property="og:url"         content="https://haruyama-kobeu.github.io/book_etrics/docs/21_TruncregTobitHeckit.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="制限従属変数モデル" />
-<meta property="og:description" content="制限従属変数モデル  import numpy as np import pandas as pd from scipy.stats import norm from statsmodels.formula.api import ols import matplotlib.pyplot as plt from wool" />
+<meta property="og:description" content="制限従属変数モデル  import numpy as np import pandas as pd from scipy.stats import norm from statsmodels.formula.api import ols import matplotlib.pyplot as plt import wo" />
 
 
 <meta name="twitter:card" content="summary">
@@ -363,7 +363,7 @@
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
 <span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">wooldridge</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
 <span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>
 <span class="kn">from</span> <span class="nn">py4etrics.truncreg</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">py4etrics.tobit</span> <span class="kn">import</span> <span class="o">*</span>
@@ -492,8 +492,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.571622
-X            0.923394
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.510810
+X            0.825534
 dtype: float64
 </pre></div>
 </div>
@@ -513,8 +513,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    2.349392
-X            0.504327
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    3.203466
+X            0.310364
 dtype: float64
 </pre></div>
 </div>
@@ -634,8 +634,8 @@ dtype: float64
 <p><code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>の<code class="docutils literal notranslate"><span class="pre">HTV</span></code>のデータを使い推定する。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">htv</span> <span class="o">=</span> <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;HTV&#39;</span><span class="p">)</span>
-<span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;HTV&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">htv</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;HTV&#39;</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;HTV&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -882,8 +882,8 @@ Log(Sigma)    -0.5433      0.039    -14.053      0.000      -0.619      -0.468
 Dep. Variable:                      y   Pseudo R-squ:                    0.000
 Model:                       Truncreg   Log-Likelihood:                 -619.9
 Method:            Maximum Likelihood   LL-Null:                        -619.9
-Date:                Wed, 03 Jun 2020   LL-Ratio:                         -0.0
-Time:                        16:13:44   LLR p-value:                       nan
+Date:                Fri, 05 Jun 2020   LL-Ratio:                         -0.0
+Time:                        07:48:34   LLR p-value:                       nan
 No. Observations:                1066   AIC:                            1241.8
 Df Residuals:                    1065   BIC:                            1246.7
 Df Model:                           0   Covariance Type:             nonrobust
@@ -1138,8 +1138,8 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept   -0.006365
-X            0.862042
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.091784
+X            0.948152
 dtype: float64
 </pre></div>
 </div>
@@ -1159,8 +1159,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.607453
-X            0.444444
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.761716
+X            0.504159
 dtype: float64
 </pre></div>
 </div>
@@ -1247,7 +1247,7 @@ dtype: float64
 <p>以前使った<code class="docutils literal notranslate"><span class="pre">mroz</span></code>のデータを使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mroz</span> <span class="o">=</span> <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;mroz&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mroz</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mroz&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1670,8 +1670,8 @@ kidsge6   -24.61  -16.65  -17.98   0.3388
 Dep. Variable:                    lwage   R-squared:                       0.156
 Model:                           Heckit   Adj. R-squared:                  0.150
 Method:                Heckman Two-Step   F-statistics:                   26.148
-Date:                  Wed, 03 Jun 2020   Prob (F-statistic):              0.000
-Time:                          16:14:07   Cov in 1st Stage:            nonrobust
+Date:                  Fri, 05 Jun 2020   Prob (F-statistic):              0.000
+Time:                          07:48:57   Cov in 1st Stage:            nonrobust
 No. Total Obs.:                     753   Cov in 2nd Stage:                  HC1
 No. Censored Obs.:                  325                                         
 No. Uncensored Obs.:                428                                         
@@ -1795,8 +1795,8 @@ Third table is the estimate for the coef of the inverse Mills ratio (Heckman&#39
 Dep. Variable:                      y   No. Observations:                  753
 Model:                         Probit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Wed, 03 Jun 2020   Pseudo R-squ.:                  0.2206
-Time:                        16:14:07   Log-Likelihood:                -401.30
+Date:                Fri, 05 Jun 2020   Pseudo R-squ.:                  0.2206
+Time:                        07:48:57   Log-Likelihood:                -401.30
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 ==============================================================================

@@ -43,7 +43,7 @@
 <meta property="og:url"         content="https://haruyama-kobeu.github.io/book_etrics/docs/16_linearmodels.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>" />
-<meta property="og:description" content="linearmodels  import pandas as pd from linearmodels.panel.data import PanelData from linearmodels.panel import FirstDifferenceOLS from wooldridge import *  説明  " />
+<meta property="og:description" content="linearmodels  import pandas as pd from linearmodels.panel.data import PanelData from linearmodels.panel import FirstDifferenceOLS import wooldridge  説明  linearm" />
 
 
 <meta name="twitter:card" content="summary">
@@ -309,7 +309,7 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">linearmodels.panel.data</span> <span class="kn">import</span> <span class="n">PanelData</span>
 <span class="kn">from</span> <span class="nn">linearmodels.panel</span> <span class="kn">import</span> <span class="n">FirstDifferenceOLS</span>
-<span class="kn">from</span> <span class="nn">wooldridge</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
 </pre></div>
 </div>
 </div>
@@ -2293,7 +2293,7 @@ dtype: bool
 <p>ここでは<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>を使い，以前行った１階差分推定を再考する。データ<code class="docutils literal notranslate"><span class="pre">crime4</span></code>を使う。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crime4</span> <span class="o">=</span> <span class="n">dataWoo</span><span class="p">(</span><span class="s1">&#39;crime4&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crime4</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime4&#39;</span><span class="p">)</span>
 <span class="n">crime4</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
