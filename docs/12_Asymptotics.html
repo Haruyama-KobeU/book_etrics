@@ -77,29 +77,6 @@
   <ul class="nav sidenav_l1">
   <li class="">
     <a href="part_1.html">１. Pythonの基礎</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="0_Preparations.html">ツールのインストールと説明</a>
-    </li>
-    <li class="">
-      <a href="1_Python_Basics.html">Pythonの基礎</a>
-    </li>
-    <li class="">
-      <a href="2_NumPy.html">NumPy</a>
-    </li>
-    <li class="">
-      <a href="3_Pandas.html">Pandas</a>
-    </li>
-    <li class="">
-      <a href="4_Matplotlib.html">Matplotlib</a>
-    </li>
-    <li class="">
-      <a href="5_SciPy_stats.html">SciPy.stats</a>
-    </li>
-    <li class="">
-      <a href="6_things_to_note.html">Tipsと注意点</a>
-    </li>
-  </ul>
   </li>
   <li class="active">
     <a href="part_2.html">２. Pythonを使った計量経済分析</a>
@@ -153,14 +130,6 @@
   </li>
   <li class="">
     <a href="part_3.html">３. 番外編</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="Gapminder.html">Gapminder</a>
-    </li>
-    <li class="">
-      <a href="Descriptive_stats_vs_Graphs.html">記述統計とグラフ</a>
-    </li>
-  </ul>
   </li>
 </ul>
 </nav>
@@ -464,8 +433,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([-0.38535638, -0.43984347, -0.50375243, -0.63590598,  1.30976827,
-       -0.58201802,  0.62694874, -0.68322776, -0.28978108, -0.18580947])
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([-0.35431348, -0.57495089,  0.44774045, -0.60920369,  0.49872659,
+       -0.5233612 , -0.68604937,  0.53908838, -0.19139275,  1.79913942])
 </pre></div>
 </div>
 </div>
@@ -493,7 +462,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.008410071513968366
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.0019200241722495527
 </pre></div>
 </div>
 </div>
@@ -605,8 +574,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([ 0.99900362,  0.66834375, -0.07003073, ...,  1.01510498,
-        0.38256625,  0.27084791])
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([0.64018873, 0.19503579, 0.61275411, ..., 1.09171565, 0.23416736,
+       0.02335577])
 </pre></div>
 </div>
 </div>
@@ -1094,7 +1063,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(4.892987491866286, 0.08659668479727792, 0.2219399442720252, 2.805490246630913)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(2.898146357878063,
+ 0.23478779355583226,
+ -0.1864879246878302,
+ 3.000202387380275)
 </pre></div>
 </div>
 </div>
@@ -1117,10 +1089,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(29.23650206873759,
- 4.480992744305787e-07,
- -0.01308912769739876,
- 1.815657651587224)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(26.835111723770776,
+ 1.4887765809626576e-06,
+ -0.012737997874455892,
+ 1.8653474820978897)
 </pre></div>
 </div>
 </div>
@@ -1202,7 +1174,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=4.835603663146776, pvalue=0.08911729714098497)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=2.9598600310111407, pvalue=0.22765362004982576)
 </pre></div>
 </div>
 </div>
@@ -1218,7 +1190,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=283.84834901240225, pvalue=2.307353644611931e-62)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=206.9069229656133, pvalue=1.1768809803009527e-45)
 </pre></div>
 </div>
 </div>
