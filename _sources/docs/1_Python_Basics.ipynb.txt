@@ -2745,7 +2745,6 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
     "hidden": true
    },
    "source": [
@@ -3404,7 +3403,6 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
     "hidden": true
    },
    "source": [
@@ -3542,7 +3540,7 @@
    "source": [
     "Pythonには「関数（functions）」と「メソッド（methods）」があり，基本的には同じ働きをする。ではどう異なるのか。これを理解するためには，数字の`1`を含めて「全てがオブジェクト」というPythonの根底にある考え方を思い出そう。簡単に説明すると，オブジェクトにもともと備わっているかどうかで「関数」と「メソッド」に区別されると思って十分である。\n",
     "\n",
-    "例えば、上で定義した`func_0()`や`func_7()`は関数であり，特定のオブジェクトに働きかけるものではない。単に引数から計算した返り値を出力している。一方，メソッドは元々オブジェクトに備わっている関数である。例として，数字の`1`を考えよう。`1`というオブジェクトには様々なメソッドが用意されており，そのリストを`dir()`という関数を使うことにより表示できる。"
+    "例えば、上で定義した`func_0()`や`func_7()`は関数であり，特定のオブジェクトに働きかけるものではない。単に引数から計算した返り値を出力しており，計算できる引数である限りどのようなオブジェクトでも構わない。一方，メソッドは元々オブジェクトに備わっている関数である。例として，文字列`I love 神戸!`を考えよう。`I love 神戸!`というオブジェクトには様々なメソッドが用意されており，そのリストを`dir()`という関数を使うことにより表示できる。"
    ]
   },
   {
@@ -3558,77 +3556,84 @@
     {
      "data": {
       "text/plain": [
-       "['__abs__',\n",
-       " '__add__',\n",
-       " '__and__',\n",
-       " '__bool__',\n",
-       " '__ceil__',\n",
+       "['__add__',\n",
        " '__class__',\n",
+       " '__contains__',\n",
        " '__delattr__',\n",
        " '__dir__',\n",
-       " '__divmod__',\n",
        " '__doc__',\n",
        " '__eq__',\n",
-       " '__float__',\n",
-       " '__floor__',\n",
-       " '__floordiv__',\n",
        " '__format__',\n",
        " '__ge__',\n",
        " '__getattribute__',\n",
+       " '__getitem__',\n",
        " '__getnewargs__',\n",
        " '__gt__',\n",
        " '__hash__',\n",
-       " '__index__',\n",
        " '__init__',\n",
        " '__init_subclass__',\n",
-       " '__int__',\n",
-       " '__invert__',\n",
+       " '__iter__',\n",
        " '__le__',\n",
-       " '__lshift__',\n",
+       " '__len__',\n",
        " '__lt__',\n",
        " '__mod__',\n",
        " '__mul__',\n",
        " '__ne__',\n",
-       " '__neg__',\n",
        " '__new__',\n",
-       " '__or__',\n",
-       " '__pos__',\n",
-       " '__pow__',\n",
-       " '__radd__',\n",
-       " '__rand__',\n",
-       " '__rdivmod__',\n",
        " '__reduce__',\n",
        " '__reduce_ex__',\n",
        " '__repr__',\n",
-       " '__rfloordiv__',\n",
-       " '__rlshift__',\n",
        " '__rmod__',\n",
        " '__rmul__',\n",
-       " '__ror__',\n",
-       " '__round__',\n",
-       " '__rpow__',\n",
-       " '__rrshift__',\n",
-       " '__rshift__',\n",
-       " '__rsub__',\n",
-       " '__rtruediv__',\n",
-       " '__rxor__',\n",
        " '__setattr__',\n",
        " '__sizeof__',\n",
        " '__str__',\n",
-       " '__sub__',\n",
        " '__subclasshook__',\n",
-       " '__truediv__',\n",
-       " '__trunc__',\n",
-       " '__xor__',\n",
-       " 'as_integer_ratio',\n",
-       " 'bit_length',\n",
-       " 'conjugate',\n",
-       " 'denominator',\n",
-       " 'from_bytes',\n",
-       " 'imag',\n",
-       " 'numerator',\n",
-       " 'real',\n",
-       " 'to_bytes']"
+       " 'capitalize',\n",
+       " 'casefold',\n",
+       " 'center',\n",
+       " 'count',\n",
+       " 'encode',\n",
+       " 'endswith',\n",
+       " 'expandtabs',\n",
+       " 'find',\n",
+       " 'format',\n",
+       " 'format_map',\n",
+       " 'index',\n",
+       " 'isalnum',\n",
+       " 'isalpha',\n",
+       " 'isascii',\n",
+       " 'isdecimal',\n",
+       " 'isdigit',\n",
+       " 'isidentifier',\n",
+       " 'islower',\n",
+       " 'isnumeric',\n",
+       " 'isprintable',\n",
+       " 'isspace',\n",
+       " 'istitle',\n",
+       " 'isupper',\n",
+       " 'join',\n",
+       " 'ljust',\n",
+       " 'lower',\n",
+       " 'lstrip',\n",
+       " 'maketrans',\n",
+       " 'partition',\n",
+       " 'replace',\n",
+       " 'rfind',\n",
+       " 'rindex',\n",
+       " 'rjust',\n",
+       " 'rpartition',\n",
+       " 'rsplit',\n",
+       " 'rstrip',\n",
+       " 'split',\n",
+       " 'splitlines',\n",
+       " 'startswith',\n",
+       " 'strip',\n",
+       " 'swapcase',\n",
+       " 'title',\n",
+       " 'translate',\n",
+       " 'upper',\n",
+       " 'zfill']"
       ]
      },
      "execution_count": 122,
@@ -3637,7 +3642,8 @@
     }
    ],
    "source": [
-    "dir(1)"
+    "moji = 'I love 神戸!'\n",
+    "dir(moji)"
    ]
   },
   {
@@ -3646,7 +3652,60 @@
     "hidden": true
    },
    "source": [
-    "この中の上の方に`__add__`とあるが，実は`1+10`とする場合に裏で使われるメソッドなのである。"
+    "アルファベット順に並んでいることが分かる。例として，`upper`を使ってみる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 123,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'I LOVE 神戸!'"
+      ]
+     },
+     "execution_count": 123,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "moji.upper()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`upper`はアルファベットを大文字に変換するメソッドであり，`moji`にもともと備わっている関数である。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "```{note}\n",
+    "* `moji`の後に`.upper()`が来ており`()`に引数がないように見えるが，実は先にある`moji`を引数として`upper()`を実行しているのである。\n",
+    "* `upper`はメソッドの名前であって，実行するには`()`が必要となる。つけ忘れるとオブジェクトの型が表示されることになる。これは関数と同じである。\n",
+    "\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`_`はアンダースコア（underscore）と呼ぶが，２つ連続した場合`__`となりダブル・アンダースコア（double underscore）と呼ぶ。長いのでダンダー（dunder）と省略する場合が多々ある。上のリストにはこのダンダーに挟まれたメソッドが含まれている（ダンダー・メソッドと呼ばれる）。これらは対応するコードを実行するとPythonが裏で使うメソッドであるため，直接コードに書く必要はない。例えば，次のコードを考えてみよう。"
    ]
   },
   {
@@ -3659,7 +3718,7 @@
     {
      "data": {
       "text/plain": [
-       "11"
+       "'I love 神戸! (^o^)/'"
       ]
      },
      "execution_count": 124,
@@ -3668,7 +3727,16 @@
     }
    ],
    "source": [
-    "1 + 10"
+    "moji + ' (^o^)/'"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`+`を使い文字列を結合しているが，この裏でPythonが使っているメソッドが`__add__`である。"
    ]
   },
   {
@@ -3681,7 +3749,7 @@
     {
      "data": {
       "text/plain": [
-       "11"
+       "'I love 神戸! (^o^)/'"
       ]
      },
      "execution_count": 125,
@@ -3690,7 +3758,7 @@
     }
    ],
    "source": [
-    "(1).__add__(10)"
+    "moji.__add__(' (^o^)/')"
    ]
   },
   {
@@ -3699,67 +3767,12 @@
     "hidden": true
    },
    "source": [
-    "（注意）通常，Double Underscore (もしくはdunderと呼ばれる）`__`がついているメソッドは直接使わないように。\n",
-    "\n",
-    "また`__str__`とあるが，これは整数`1`を文字列に変換するメソッドであり，関数`str()`は`__str__`を裏で呼び出している。"
+    "`+`は`__add__`の便利な省略形を考えれば良いだろう。「全てがオブジェクト」なのでリストもそうである。"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 126,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "'1'"
-      ]
-     },
-     "execution_count": 126,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "str(1)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 127,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "str"
-      ]
-     },
-     "execution_count": 127,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "type(str(1))"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "「全てがオブジェクト」なのでリストもそうである。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 128,
    "metadata": {
     "hidden": true
    },
@@ -3770,7 +3783,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 129,
+   "execution_count": 127,
    "metadata": {
     "hidden": true,
     "tags": [
@@ -3829,7 +3842,7 @@
        " 'sort']"
       ]
      },
-     "execution_count": 129,
+     "execution_count": 127,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -3849,7 +3862,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 130,
+   "execution_count": 128,
    "metadata": {
     "hidden": true
    },
@@ -3860,7 +3873,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 131,
+   "execution_count": 129,
    "metadata": {
     "hidden": true
    },
@@ -3871,7 +3884,7 @@
        "[4, 3, 9, 0, 1, 100]"
       ]
      },
-     "execution_count": 131,
+     "execution_count": 129,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -3886,14 +3899,12 @@
     "hidden": true
    },
    "source": [
-    "注意して欲しい点は，`list_0`の後に`.append(100)`が来ていることである。先に来る`list_0`を引数として`appned()`は関数の働きをしていると考えれば良いだろう。\n",
-    "\n",
     "他に`sort`とあるがこれは要素を昇順に並び替えるメソッドである。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 132,
+   "execution_count": 130,
    "metadata": {
     "hidden": true
    },
@@ -3904,7 +3915,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 133,
+   "execution_count": 131,
    "metadata": {
     "hidden": true
    },
@@ -3915,7 +3926,7 @@
        "[0, 1, 3, 4, 9, 100]"
       ]
      },
-     "execution_count": 133,
+     "execution_count": 131,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -3969,7 +3980,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 134,
+   "execution_count": 132,
    "metadata": {
     "hidden": true
    },
@@ -3980,7 +3991,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 135,
+   "execution_count": 133,
    "metadata": {
     "hidden": true
    },
@@ -3991,7 +4002,7 @@
        "2.0"
       ]
      },
-     "execution_count": 135,
+     "execution_count": 133,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -4013,7 +4024,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 136,
+   "execution_count": 134,
    "metadata": {
     "hidden": true
    },
@@ -4024,7 +4035,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 137,
+   "execution_count": 135,
    "metadata": {
     "hidden": true
    },
@@ -4035,7 +4046,7 @@
        "3.0"
       ]
      },
-     "execution_count": 137,
+     "execution_count": 135,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -4055,7 +4066,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 138,
+   "execution_count": 136,
    "metadata": {
     "hidden": true
    },
@@ -4075,7 +4086,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 139,
+   "execution_count": 137,
    "metadata": {
     "hidden": true
    },
@@ -4086,7 +4097,7 @@
        "3.1622776601683795"
       ]
      },
-     "execution_count": 139,
+     "execution_count": 137,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -4109,8 +4120,86 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true
+    "hidden": true
    },
+   "source": [
+    "前のセクションで`dir()`を使いオブジェクトの属性を調べたが，その際`see`を使うとリストが見やすくなると説明した。それを使ってみよう。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 138,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "from see import see  # seeモジュールから関数seeを導入"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 139,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "    []                 in                 +                  *\n",
+       "    %                  <                  <=                 ==\n",
+       "    !=                 >                  >=                 dir()\n",
+       "    hash()             help()             iter()             len()\n",
+       "    repr()             str()              .capitalize()      .casefold()\n",
+       "    .center()          .count()           .encode()          .endswith()\n",
+       "    .expandtabs()      .find()            .format()          .format_map()\n",
+       "    .index()           .isalnum()         .isalpha()         .isascii()\n",
+       "    .isdecimal()       .isdigit()         .isidentifier()    .islower()\n",
+       "    .isnumeric()       .isprintable()     .isspace()         .istitle()\n",
+       "    .isupper()         .join()            .ljust()           .lower()\n",
+       "    .lstrip()          .maketrans()       .partition()       .replace()\n",
+       "    .rfind()           .rindex()          .rjust()           .rpartition()\n",
+       "    .rsplit()          .rstrip()          .split()           .splitlines()\n",
+       "    .startswith()      .strip()           .swapcase()        .title()\n",
+       "    .translate()       .upper()           .zfill()"
+      ]
+     },
+     "execution_count": 139,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "see(moji)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "ダンダー・メソッドは省略され，メソッドには`()`が追加され見やすくなっている。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "````{note}\n",
+    "`see`モジュールはAnacondaに含まれていないので，TerminalもしくはGit Bashで以下を実行してインストールする必要がある。\n",
+    "```\n",
+    "$ pip install see\n",
+    "```\n",
+    "````"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "## よく使う組み込み関数"
    ]
@@ -4118,9 +4207,7 @@
   {
    "cell_type": "code",
    "execution_count": 140,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "name": "stdout",
@@ -4137,33 +4224,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 141,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "range(0, 10)"
-      ]
-     },
-     "execution_count": 141,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "# 0から9までの整数を用意する関数 \n",
-    "range(10)"
-   ]
-  },
-  {
-   "cell_type": "code",
    "execution_count": 142,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -4183,10 +4245,29 @@
   },
   {
    "cell_type": "code",
+   "execution_count": 141,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "range(0, 10)"
+      ]
+     },
+     "execution_count": 141,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# 0から9までの整数を用意する関数 \n",
+    "range(10)"
+   ]
+  },
+  {
+   "cell_type": "code",
    "execution_count": 143,
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "outputs": [
     {
      "data": {

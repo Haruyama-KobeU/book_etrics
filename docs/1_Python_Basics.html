@@ -2047,141 +2047,145 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="section" id="id12">
 <h2>関数とメソッド<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
 <p>Pythonには「関数（functions）」と「メソッド（methods）」があり，基本的には同じ働きをする。ではどう異なるのか。これを理解するためには，数字の<code class="docutils literal notranslate"><span class="pre">1</span></code>を含めて「全てがオブジェクト」というPythonの根底にある考え方を思い出そう。簡単に説明すると，オブジェクトにもともと備わっているかどうかで「関数」と「メソッド」に区別されると思って十分である。</p>
-<p>例えば、上で定義した<code class="docutils literal notranslate"><span class="pre">func_0()</span></code>や<code class="docutils literal notranslate"><span class="pre">func_7()</span></code>は関数であり，特定のオブジェクトに働きかけるものではない。単に引数から計算した返り値を出力している。一方，メソッドは元々オブジェクトに備わっている関数である。例として，数字の<code class="docutils literal notranslate"><span class="pre">1</span></code>を考えよう。<code class="docutils literal notranslate"><span class="pre">1</span></code>というオブジェクトには様々なメソッドが用意されており，そのリストを<code class="docutils literal notranslate"><span class="pre">dir()</span></code>という関数を使うことにより表示できる。</p>
+<p>例えば、上で定義した<code class="docutils literal notranslate"><span class="pre">func_0()</span></code>や<code class="docutils literal notranslate"><span class="pre">func_7()</span></code>は関数であり，特定のオブジェクトに働きかけるものではない。単に引数から計算した返り値を出力しており，計算できる引数である限りどのようなオブジェクトでも構わない。一方，メソッドは元々オブジェクトに備わっている関数である。例として，文字列<code class="docutils literal notranslate"><span class="pre">I</span> <span class="pre">love</span> <span class="pre">神戸!</span></code>を考えよう。<code class="docutils literal notranslate"><span class="pre">I</span> <span class="pre">love</span> <span class="pre">神戸!</span></code>というオブジェクトには様々なメソッドが用意されており，そのリストを<code class="docutils literal notranslate"><span class="pre">dir()</span></code>という関数を使うことにより表示できる。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">dir</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">moji</span> <span class="o">=</span> <span class="s1">&#39;I love 神戸!&#39;</span>
+<span class="nb">dir</span><span class="p">(</span><span class="n">moji</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;__abs__&#39;,
- &#39;__add__&#39;,
- &#39;__and__&#39;,
- &#39;__bool__&#39;,
- &#39;__ceil__&#39;,
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;__add__&#39;,
  &#39;__class__&#39;,
+ &#39;__contains__&#39;,
  &#39;__delattr__&#39;,
  &#39;__dir__&#39;,
- &#39;__divmod__&#39;,
  &#39;__doc__&#39;,
  &#39;__eq__&#39;,
- &#39;__float__&#39;,
- &#39;__floor__&#39;,
- &#39;__floordiv__&#39;,
  &#39;__format__&#39;,
  &#39;__ge__&#39;,
  &#39;__getattribute__&#39;,
+ &#39;__getitem__&#39;,
  &#39;__getnewargs__&#39;,
  &#39;__gt__&#39;,
  &#39;__hash__&#39;,
- &#39;__index__&#39;,
  &#39;__init__&#39;,
  &#39;__init_subclass__&#39;,
- &#39;__int__&#39;,
- &#39;__invert__&#39;,
+ &#39;__iter__&#39;,
  &#39;__le__&#39;,
- &#39;__lshift__&#39;,
+ &#39;__len__&#39;,
  &#39;__lt__&#39;,
  &#39;__mod__&#39;,
  &#39;__mul__&#39;,
  &#39;__ne__&#39;,
- &#39;__neg__&#39;,
  &#39;__new__&#39;,
- &#39;__or__&#39;,
- &#39;__pos__&#39;,
- &#39;__pow__&#39;,
- &#39;__radd__&#39;,
- &#39;__rand__&#39;,
- &#39;__rdivmod__&#39;,
  &#39;__reduce__&#39;,
  &#39;__reduce_ex__&#39;,
  &#39;__repr__&#39;,
- &#39;__rfloordiv__&#39;,
- &#39;__rlshift__&#39;,
  &#39;__rmod__&#39;,
  &#39;__rmul__&#39;,
- &#39;__ror__&#39;,
- &#39;__round__&#39;,
- &#39;__rpow__&#39;,
- &#39;__rrshift__&#39;,
- &#39;__rshift__&#39;,
- &#39;__rsub__&#39;,
- &#39;__rtruediv__&#39;,
- &#39;__rxor__&#39;,
  &#39;__setattr__&#39;,
  &#39;__sizeof__&#39;,
  &#39;__str__&#39;,
- &#39;__sub__&#39;,
  &#39;__subclasshook__&#39;,
- &#39;__truediv__&#39;,
- &#39;__trunc__&#39;,
- &#39;__xor__&#39;,
- &#39;as_integer_ratio&#39;,
- &#39;bit_length&#39;,
- &#39;conjugate&#39;,
- &#39;denominator&#39;,
- &#39;from_bytes&#39;,
- &#39;imag&#39;,
- &#39;numerator&#39;,
- &#39;real&#39;,
- &#39;to_bytes&#39;]
+ &#39;capitalize&#39;,
+ &#39;casefold&#39;,
+ &#39;center&#39;,
+ &#39;count&#39;,
+ &#39;encode&#39;,
+ &#39;endswith&#39;,
+ &#39;expandtabs&#39;,
+ &#39;find&#39;,
+ &#39;format&#39;,
+ &#39;format_map&#39;,
+ &#39;index&#39;,
+ &#39;isalnum&#39;,
+ &#39;isalpha&#39;,
+ &#39;isascii&#39;,
+ &#39;isdecimal&#39;,
+ &#39;isdigit&#39;,
+ &#39;isidentifier&#39;,
+ &#39;islower&#39;,
+ &#39;isnumeric&#39;,
+ &#39;isprintable&#39;,
+ &#39;isspace&#39;,
+ &#39;istitle&#39;,
+ &#39;isupper&#39;,
+ &#39;join&#39;,
+ &#39;ljust&#39;,
+ &#39;lower&#39;,
+ &#39;lstrip&#39;,
+ &#39;maketrans&#39;,
+ &#39;partition&#39;,
+ &#39;replace&#39;,
+ &#39;rfind&#39;,
+ &#39;rindex&#39;,
+ &#39;rjust&#39;,
+ &#39;rpartition&#39;,
+ &#39;rsplit&#39;,
+ &#39;rstrip&#39;,
+ &#39;split&#39;,
+ &#39;splitlines&#39;,
+ &#39;startswith&#39;,
+ &#39;strip&#39;,
+ &#39;swapcase&#39;,
+ &#39;title&#39;,
+ &#39;translate&#39;,
+ &#39;upper&#39;,
+ &#39;zfill&#39;]
 </pre></div>
 </div>
 </div>
 </div>
-<p>この中の上の方に<code class="docutils literal notranslate"><span class="pre">__add__</span></code>とあるが，実は<code class="docutils literal notranslate"><span class="pre">1+10</span></code>とする場合に裏で使われるメソッドなのである。</p>
+<p>アルファベット順に並んでいることが分かる。例として，<code class="docutils literal notranslate"><span class="pre">upper</span></code>を使ってみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="o">+</span> <span class="mi">10</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">moji</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>11
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;I LOVE 神戸!&#39;
 </pre></div>
 </div>
 </div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">upper</span></code>はアルファベットを大文字に変換するメソッドであり，<code class="docutils literal notranslate"><span class="pre">moji</span></code>にもともと備わっている関数である。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">moji</span></code>の後に<code class="docutils literal notranslate"><span class="pre">.upper()</span></code>が来ており<code class="docutils literal notranslate"><span class="pre">()</span></code>に引数がないように見えるが，実は先にある<code class="docutils literal notranslate"><span class="pre">moji</span></code>を引数として<code class="docutils literal notranslate"><span class="pre">upper()</span></code>を実行しているのである。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">upper</span></code>はメソッドの名前であって，実行するには<code class="docutils literal notranslate"><span class="pre">()</span></code>が必要となる。つけ忘れるとオブジェクトの型が表示されることになる。これは関数と同じである。</p></li>
+</ul>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">_</span></code>はアンダースコア（underscore）と呼ぶが，２つ連続した場合<code class="docutils literal notranslate"><span class="pre">__</span></code>となりダブル・アンダースコア（double underscore）と呼ぶ。長いのでダンダー（dunder）と省略する場合が多々ある。上のリストにはこのダンダーに挟まれたメソッドが含まれている（ダンダー・メソッドと呼ばれる）。これらは対応するコードを実行するとPythonが裏で使うメソッドであるため，直接コードに書く必要はない。例えば，次のコードを考えてみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">moji</span> <span class="o">+</span> <span class="s1">&#39; (^o^)/&#39;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>11
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;I love 神戸! (^o^)/&#39;
 </pre></div>
 </div>
 </div>
 </div>
-<p>（注意）通常，Double Underscore (もしくはdunderと呼ばれる）<code class="docutils literal notranslate"><span class="pre">__</span></code>がついているメソッドは直接使わないように。</p>
-<p>また<code class="docutils literal notranslate"><span class="pre">__str__</span></code>とあるが，これは整数<code class="docutils literal notranslate"><span class="pre">1</span></code>を文字列に変換するメソッドであり，関数<code class="docutils literal notranslate"><span class="pre">str()</span></code>は<code class="docutils literal notranslate"><span class="pre">__str__</span></code>を裏で呼び出している。</p>
+<p><code class="docutils literal notranslate"><span class="pre">+</span></code>を使い文字列を結合しているが，この裏でPythonが使っているメソッドが<code class="docutils literal notranslate"><span class="pre">__add__</span></code>である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">str</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">moji</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="s1">&#39; (^o^)/&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;1&#39;
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;I love 神戸! (^o^)/&#39;
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>str
-</pre></div>
-</div>
-</div>
-</div>
-<p>「全てがオブジェクト」なのでリストもそうである。</p>
+<p><code class="docutils literal notranslate"><span class="pre">+</span></code>は<code class="docutils literal notranslate"><span class="pre">__add__</span></code>の便利な省略形を考えれば良いだろう。「全てがオブジェクト」なのでリストもそうである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">list_0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
@@ -2266,7 +2270,6 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<p>注意して欲しい点は，<code class="docutils literal notranslate"><span class="pre">list_0</span></code>の後に<code class="docutils literal notranslate"><span class="pre">.append(100)</span></code>が来ていることである。先に来る<code class="docutils literal notranslate"><span class="pre">list_0</span></code>を引数として<code class="docutils literal notranslate"><span class="pre">appned()</span></code>は関数の働きをしていると考えれば良いだろう。</p>
 <p>他に<code class="docutils literal notranslate"><span class="pre">sort</span></code>とあるがこれは要素を昇順に並び替えるメソッドである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2362,6 +2365,49 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 <p>この読み込み方法の利点はモジュール名を省略できることである。しかし他のパッケージやモジュールと同じ関数がある場合は，後で<code class="docutils literal notranslate"><span class="pre">import</span></code>したものが優先されるので注意が必要だ。</p>
 <p><code class="docutils literal notranslate"><span class="pre">import</span></code>文はファイルの最初に書き，どのモジュールが導入されるかを明示的に示すとわかりやすいだろう。</p>
+<p>前のセクションで<code class="docutils literal notranslate"><span class="pre">dir()</span></code>を使いオブジェクトの属性を調べたが，その際<code class="docutils literal notranslate"><span class="pre">see</span></code>を使うとリストが見やすくなると説明した。それを使ってみよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>  <span class="c1"># seeモジュールから関数seeを導入</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">moji</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>    []                 in                 +                  *
+    %                  &lt;                  &lt;=                 ==
+    !=                 &gt;                  &gt;=                 dir()
+    hash()             help()             iter()             len()
+    repr()             str()              .capitalize()      .casefold()
+    .center()          .count()           .encode()          .endswith()
+    .expandtabs()      .find()            .format()          .format_map()
+    .index()           .isalnum()         .isalpha()         .isascii()
+    .isdecimal()       .isdigit()         .isidentifier()    .islower()
+    .isnumeric()       .isprintable()     .isspace()         .istitle()
+    .isupper()         .join()            .ljust()           .lower()
+    .lstrip()          .maketrans()       .partition()       .replace()
+    .rfind()           .rindex()          .rjust()           .rpartition()
+    .rsplit()          .rstrip()          .split()           .splitlines()
+    .startswith()      .strip()           .swapcase()        .title()
+    .translate()       .upper()           .zfill()
+</pre></div>
+</div>
+</div>
+</div>
+<p>ダンダー・メソッドは省略され，メソッドには<code class="docutils literal notranslate"><span class="pre">()</span></code>が追加され見やすくなっている。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">see</span></code>モジュールはAnacondaに含まれていないので，TerminalもしくはGit Bashで以下を実行してインストールする必要がある。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install see
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="id14">
 <h2>よく使う組み込み関数<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
@@ -2380,19 +2426,6 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 0から9までの整数を用意する関数 </span>
-<span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>range(0, 10)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 様々なものからリストを返す関数</span>
 <span class="nb">list</span><span class="p">()</span>  <span class="c1"># 空のリスト</span>
 </pre></div>
@@ -2400,6 +2433,19 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 0から9までの整数を用意する関数 </span>
+<span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>range(0, 10)
 </pre></div>
 </div>
 </div>
@@ -2453,7 +2499,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">143</span><span class="o">-</span><span class="n">ff852d311315</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="n">ff852d311315</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">primt</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
 
 <span class="ne">NameError</span>: name &#39;primt&#39; is not defined
@@ -2479,7 +2525,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-144-2a993c6acd9f&gt;&quot;</span><span class="gt">, line </span><span class="mi">3</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-145-2a993c6acd9f&gt;&quot;</span><span class="gt">, line </span><span class="mi">3</span>
 <span class="nn">    for i</span> in <span class="ni">range</span><span class="nt">(0,3)</span>
                        <span class="o">^</span>
 <span class="ne">SyntaxError</span>: invalid syntax
@@ -2502,7 +2548,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-145-9ebf21e104e8&gt;&quot;</span><span class="gt">, line </span><span class="mi">1</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-146-9ebf21e104e8&gt;&quot;</span><span class="gt">, line </span><span class="mi">1</span>
     <span class="p">(</span><span class="mf">2.1</span> <span class="o">+</span> <span class="mf">1.5</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">10.0</span> <span class="o">+</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">3.2</span>
                                   <span class="o">^</span>
 <span class="ne">SyntaxError</span>: unexpected EOF while parsing
@@ -2558,7 +2604,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ZeroDivisionError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">148</span><span class="o">-</span><span class="mf">150e437</span><span class="n">ad231</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">149</span><span class="o">-</span><span class="mf">150e437</span><span class="n">ad231</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
 
 <span class="ne">ZeroDivisionError</span>: division by zero
@@ -2579,7 +2625,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">149</span><span class="o">-</span><span class="mi">0</span><span class="n">a288a4fc67b</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">150</span><span class="o">-</span><span class="mi">0</span><span class="n">a288a4fc67b</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">xx</span> <span class="o">*</span> <span class="mi">2</span>
 
 <span class="ne">NameError</span>: name &#39;xx&#39; is not defined
@@ -2600,7 +2646,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">150</span><span class="o">-</span><span class="mi">9437</span><span class="n">dcf020b7</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">151</span><span class="o">-</span><span class="mi">9437</span><span class="n">dcf020b7</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="s1">&#39;3&#39;</span> <span class="o">+</span> <span class="mi">10</span>
 
 <span class="ne">TypeError</span>: can only concatenate str (not &quot;int&quot;) to str
