@@ -271,39 +271,39 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#errors" class="nav-link">エラー（Errors）</a><ul class="nav section-nav flex-column">
+            <a href="#id15" class="nav-link">エラー</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id15" class="nav-link">構文エラー</a><ul class="nav section-nav flex-column">
+            <a href="#id16" class="nav-link">構文エラー</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h4">
-            <a href="#id16" class="nav-link">例１</a>
+            <a href="#id17" class="nav-link">例１</a>
         </li>
     
         <li class="nav-item toc-entry toc-h4">
-            <a href="#id17" class="nav-link">例２</a>
+            <a href="#id18" class="nav-link">例２</a>
         </li>
     
         <li class="nav-item toc-entry toc-h4">
-            <a href="#id18" class="nav-link">例３</a>
+            <a href="#id19" class="nav-link">例３</a>
         </li>
     
             </ul>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#id19" class="nav-link">例外</a><ul class="nav section-nav flex-column">
+            <a href="#id20" class="nav-link">例外</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h4">
-            <a href="#id20" class="nav-link">例１</a>
+            <a href="#id21" class="nav-link">例１</a>
         </li>
     
         <li class="nav-item toc-entry toc-h4">
-            <a href="#id21" class="nav-link">例２</a>
+            <a href="#id22" class="nav-link">例２</a>
         </li>
     
         <li class="nav-item toc-entry toc-h4">
-            <a href="#id22" class="nav-link">例３</a>
+            <a href="#id23" class="nav-link">例３</a>
         </li>
     
             </ul>
@@ -313,7 +313,11 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#id23" class="nav-link">Pythonの基本のまとめ（日英対訳）</a>
+            <a href="#id24" class="nav-link">ヘルプ</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id25" class="nav-link">Pythonの基本のまとめ（日英対訳）</a>
         </li>
     
     </ul>
@@ -1490,7 +1494,7 @@ except
 <p>まず次のリストを定義する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1500,7 +1504,7 @@ except
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 1</span>
 
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">val_list</span><span class="p">:</span>  <span class="c1"># 2</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var_list</span><span class="p">:</span>  <span class="c1"># 2</span>
     <span class="n">my_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="p">)</span>  <span class="c1"># 3</span>
 </pre></div>
 </div>
@@ -1525,10 +1529,32 @@ except
 </div>
 </div>
 </div>
-<p>上の例では，3行のコードを書き<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使いリストを作成した。内包表記（list comprehension）を使うと同じ結果を1行のコード（one linerと呼ばれる）で得ることもできる。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>上の例では<code class="docutils literal notranslate"><span class="pre">for</span></code>ループの１行目に<strong>リスト</strong>を使って（<code class="docutils literal notranslate"><span class="pre">name_list</span></code>や<code class="docutils literal notranslate"><span class="pre">var_list</span></code>），<code class="docutils literal notranslate"><span class="pre">0</span></code>番目の要素から順に関数・メソッドを使った。これはリストが要素を１つずつ返すことができる反復可能なオブジェクトであるため可能となる。そのようなオブジェクトは**iterable<code class="docutils literal notranslate"><span class="pre">と呼ばれ，タプルや文字列，そして後で説明する</span></code>Numpy<code class="docutils literal notranslate"><span class="pre">の</span></code>array`も含まれる。</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">val_list</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_string</span> <span class="o">=</span> <span class="s1">&#39;Kobe&#39;</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">my_string</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>K
+o
+b
+e
+</pre></div>
+</div>
+</div>
+</div>
+<p>上で使った例では，3行のコードを書き<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使いリストを作成した。内包表記（list comprehension）を使うと同じ結果を1行のコード（one linerと呼ばれる）で得ることもできる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var_list</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1549,7 +1575,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </pre><p>内包表記に<code class="docutils literal notranslate"><span class="pre">if</span></code>文を加えることも可能である。次の例では，偶数の2倍だけをリストに追加している。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">val_list</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var_list</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1562,7 +1588,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <p>次の例では偶数を10倍にし，奇数を1/10にしている。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">10</span><span class="o">*</span><span class="n">i</span> <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">i</span><span class="o">/</span><span class="mi">10</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">val_list</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">10</span><span class="o">*</span><span class="n">i</span> <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">i</span><span class="o">/</span><span class="mi">10</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var_list</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1783,7 +1809,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">102</span><span class="o">-</span><span class="n">a68692af39a3</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">103</span><span class="o">-</span><span class="n">a68692af39a3</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">func_1</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="ne">TypeError</span>: func_1() got multiple values for argument &#39;a&#39;
@@ -2403,7 +2429,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <p>ダンダー・メソッドは省略され，メソッドには<code class="docutils literal notranslate"><span class="pre">()</span></code>が追加され見やすくなっている。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">see</span></code>モジュールはAnacondaに含まれていないので，TerminalもしくはGit Bashで以下を実行してインストールする必要がある。</p>
+<p><code class="docutils literal notranslate"><span class="pre">see</span></code>モジュールはAnacondaに含まれていないので，TerminalもしくはGit Bashで以下を実行して事前にインストールする必要がある。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install see
 </pre></div>
 </div>
@@ -2463,9 +2489,9 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<div class="section" id="errors">
-<h2>エラー（Errors）<a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h2>
-<p>エラーは以下の２つに分けられる。</p>
+<div class="section" id="id15">
+<h2>エラー<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
+<p>エラー（Errors）は以下の２つに分けられる。</p>
 <ol class="simple">
 <li><p>構文エラー（Syntax Errors）</p>
 <ul class="simple">
@@ -2484,10 +2510,10 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <li><p>エラーが発生するとエラー・メッセージが表示されるが，多くの場合，エラー・メッセージにエラーの理由のヒントがあるので確認することを強く推奨する。はじめは意味が分からないかも知れないが，パターンがあるので慣れると直ぐに理解できるケースも多くあるだろう。</p></li>
 <li><p>例外の場合，最初にエラーが発生するとそれに付随して他の場所でもエラーが誘発される場合がある。<code class="docutils literal notranslate"><span class="pre">Python</span></code>はエラーを追跡し，最後に確認したエラーをメッセージの一番最後に示すことになる。</p></li>
 </ul>
-<div class="section" id="id15">
-<h3>構文エラー<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id16">
-<h4>例１<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<h3>構文エラー<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id17">
+<h4>例１<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
 <p>（正）<code class="docutils literal notranslate"><span class="pre">print</span></code><br>
 （誤）<code class="docutils literal notranslate"><span class="pre">primt</span></code></p>
 <div class="cell tag_raises-exception docutils container">
@@ -2499,7 +2525,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="n">ff852d311315</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">145</span><span class="o">-</span><span class="n">ff852d311315</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">primt</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
 
 <span class="ne">NameError</span>: name &#39;primt&#39; is not defined
@@ -2512,8 +2538,8 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <li><p><code class="docutils literal notranslate"><span class="pre">NameError</span></code>として最終行にスペル間違いである<code class="docutils literal notranslate"><span class="pre">primt</span></code>が示されている。</p></li>
 </ul>
 </div>
-<div class="section" id="id17">
-<h4>例２<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id18">
+<h4>例２<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
 <p>次のセルの３行目の終わりに<code class="docutils literal notranslate"><span class="pre">:</span></code>が抜けている。</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
@@ -2525,7 +2551,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-145-2a993c6acd9f&gt;&quot;</span><span class="gt">, line </span><span class="mi">3</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-146-2a993c6acd9f&gt;&quot;</span><span class="gt">, line </span><span class="mi">3</span>
 <span class="nn">    for i</span> in <span class="ni">range</span><span class="nt">(0,3)</span>
                        <span class="o">^</span>
 <span class="ne">SyntaxError</span>: invalid syntax
@@ -2538,8 +2564,8 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <li><p><code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>として最後の行で<code class="docutils literal notranslate"><span class="pre">:</span></code>が足りない箇所を<code class="docutils literal notranslate"><span class="pre">^</span></code>で指し示している。</p></li>
 </ul>
 </div>
-<div class="section" id="id18">
-<h4>例３<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id19">
+<h4>例３<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
 <p>括弧を閉じていない。</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
@@ -2548,7 +2574,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-146-9ebf21e104e8&gt;&quot;</span><span class="gt">, line </span><span class="mi">1</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-147-9ebf21e104e8&gt;&quot;</span><span class="gt">, line </span><span class="mi">1</span>
     <span class="p">(</span><span class="mf">2.1</span> <span class="o">+</span> <span class="mf">1.5</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">10.0</span> <span class="o">+</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">3.2</span>
                                   <span class="o">^</span>
 <span class="ne">SyntaxError</span>: unexpected EOF while parsing
@@ -2590,10 +2616,10 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<div class="section" id="id19">
-<h3>例外<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id20">
-<h4>例１<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+<h3>例外<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id21">
+<h4>例１<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">0</span></code>が分母にある。</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
@@ -2604,7 +2630,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ZeroDivisionError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">149</span><span class="o">-</span><span class="mf">150e437</span><span class="n">ad231</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">150</span><span class="o">-</span><span class="mf">150e437</span><span class="n">ad231</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
 
 <span class="ne">ZeroDivisionError</span>: division by zero
@@ -2613,8 +2639,8 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<div class="section" id="id21">
-<h4>例２<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id22">
+<h4>例２<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
 <p>定義されていない変数<code class="docutils literal notranslate"><span class="pre">xx</span></code>が使われている。</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
@@ -2625,7 +2651,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">150</span><span class="o">-</span><span class="mi">0</span><span class="n">a288a4fc67b</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">151</span><span class="o">-</span><span class="mi">0</span><span class="n">a288a4fc67b</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">xx</span> <span class="o">*</span> <span class="mi">2</span>
 
 <span class="ne">NameError</span>: name &#39;xx&#39; is not defined
@@ -2634,8 +2660,8 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<div class="section" id="id22">
-<h4>例３<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id23">
+<h4>例３<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
 <p>文字列とfloatを足している。</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
@@ -2646,7 +2672,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">151</span><span class="o">-</span><span class="mi">9437</span><span class="n">dcf020b7</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">152</span><span class="o">-</span><span class="mi">9437</span><span class="n">dcf020b7</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="s1">&#39;3&#39;</span> <span class="o">+</span> <span class="mi">10</span>
 
 <span class="ne">TypeError</span>: can only concatenate str (not &quot;int&quot;) to str
@@ -2657,8 +2683,44 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<div class="section" id="id23">
-<h2>Pythonの基本のまとめ（日英対訳）<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id24">
+<h2>ヘルプ<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
+<p>組み込み関数<code class="docutils literal notranslate"><span class="pre">help()</span></code>を使うと関数やモジュールなどの<code class="docutils literal notranslate"><span class="pre">Docstring</span></code>と呼ばれる説明を表示させることができる。例えば，<code class="docutils literal notranslate"><span class="pre">print()</span></code>を例として挙げる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="nb">print</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Help on built-in function print in module builtins:
+
+print(...)
+    print(value, ..., sep=&#39; &#39;, end=&#39;\n&#39;, file=sys.stdout, flush=False)
+    
+    Prints the values to a stream, or to sys.stdout by default.
+    Optional keyword arguments:
+    file:  a file-like object (stream); defaults to the current sys.stdout.
+    sep:   string inserted between values, default a space.
+    end:   string appended after the last value, default a newline.
+    flush: whether to forcibly flush the stream.
+
+</pre></div>
+</div>
+</div>
+</div>
+<p>引数は関数名であり<code class="docutils literal notranslate"><span class="pre">()</span></code>は付いていないことに留意しよう。<code class="docutils literal notranslate"><span class="pre">()</span></code>を付けると<code class="docutils literal notranslate"><span class="pre">print()</span></code>を評価した結果に対しての説明が表示されることになる。英語での説明だがパターンを理解すればこれだけでも有用に感じることだろう。</p>
+<p><code class="docutils literal notranslate"><span class="pre">help()</span></code>の代わりに<code class="docutils literal notranslate"><span class="pre">?</span></code>を使うこともできる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>print?
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id25">
+<h2>Pythonの基本のまとめ（日英対訳）<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://learnxinyminutes.com/docs/ja-jp/python3-jp/">日本語</a></p>
 <p><a class="reference external" href="https://learnxinyminutes.com/docs/python3/">英語</a></p>
 </div>
