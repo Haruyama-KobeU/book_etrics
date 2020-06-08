@@ -460,6 +460,7 @@
 </div>
 <div class="section" id="id3">
 <h2>行列計算<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>まず２つの行列（２次元配列<code class="docutils literal notranslate"><span class="pre">array</span></code>）を作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
@@ -488,7 +489,8 @@
 </div>
 </div>
 </div>
-<p>行列の和と差</p>
+<p><strong>行列の和</strong></p>
+<p>要素ごとの和となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m2</span> <span class="o">+</span> <span class="n">m1</span>
@@ -502,6 +504,8 @@
 </div>
 </div>
 </div>
+<p><strong>行列の差</strong></p>
+<p>要素ごとの差となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m2</span> <span class="o">-</span> <span class="n">m1</span>
@@ -515,7 +519,8 @@
 </div>
 </div>
 </div>
-<p>行列のスカラー積</p>
+<p><strong>行列のスカラー積</strong></p>
+<p>与えられた定数とそれぞれの要素の積となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">10</span> <span class="o">*</span> <span class="n">m1</span>
@@ -542,7 +547,8 @@
 </div>
 </div>
 </div>
-<p>要素どうしの積</p>
+<p><strong>行列の積：バージョン１</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code>を使うと要素どうしの積となる。数学で学んだ行列の式とは異なるので注意すること。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m1</span><span class="o">*</span><span class="n">m2</span>
@@ -556,7 +562,8 @@
 </div>
 </div>
 </div>
-<p>行列の積</p>
+<p><strong>行列の積:バージョン２</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">&#64;</span></code>を使うと数学で学ぶ行列の積となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m1</span><span class="nd">@m2</span>
@@ -570,9 +577,10 @@
 </div>
 </div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数<code class="docutils literal notranslate"><span class="pre">dot()</span></code>は<code class="docutils literal notranslate"><span class="pre">&#64;</span></code>と同じとなる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span><span class="n">m2</span><span class="p">)</span>   <span class="c1"># @と同じ</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span><span class="n">m2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -583,7 +591,8 @@
 </div>
 </div>
 </div>
-<p>転置行列</p>
+<p><strong>転置行列</strong></p>
+<p>数学で学ぶ転置行列と同じ。<code class="docutils literal notranslate"><span class="pre">m3</span></code>を使って説明する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]])</span>
@@ -598,6 +607,7 @@
 </div>
 </div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">m3</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">transpose()</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m3</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
@@ -612,9 +622,10 @@
 </div>
 </div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">.transpose()</span></code>の省略形として<code class="docutils literal notranslate"><span class="pre">.T</span></code>を使うこともできる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m3</span><span class="o">.</span><span class="n">T</span>  <span class="c1"># .transpose() の省略形</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m3</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 </div>
 </div>
@@ -626,7 +637,8 @@
 </div>
 </div>
 </div>
-<p>逆行列を計算するために’NumPy’の’linalg’（linear algebra, 線形代数）というサブパッケージの中にある<code class="docutils literal notranslate"><span class="pre">inv</span></code>という関数を読み込む。</p>
+<p><strong>逆行列</strong></p>
+<p>数学で学ぶ逆行列である。<code class="docutils literal notranslate"><span class="pre">m4</span></code>を使い説明する。逆行列を計算するために<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の<code class="docutils literal notranslate"><span class="pre">linalg</span></code>（linear algebra, 線形代数）というサブパッケージの中にある<code class="docutils literal notranslate"><span class="pre">inv</span></code>という関数を読み込む。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy.linalg</span> <span class="kn">import</span> <span class="n">inv</span>
@@ -826,7 +838,7 @@
 </div>
 </div>
 </div>
-<p>行と列の数を確認する</p>
+<p>このリストの中に<code class="docutils literal notranslate"><span class="pre">transpose()</span></code>や<code class="docutils literal notranslate"><span class="pre">T</span></code>があるのが確認できる。この中でよく使うのが<code class="docutils literal notranslate"><span class="pre">shape</span></code>であり，行と列の数を確認する場合に有用なデータ属性である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m3</span><span class="o">.</span><span class="n">shape</span>
@@ -839,7 +851,7 @@
 </div>
 </div>
 </div>
-<p>属性の場合，<code class="docutils literal notranslate"><span class="pre">()</span></code>がない。一方，メソッドは<code class="docutils literal notranslate"><span class="pre">()</span></code>が必要となる。言い換えると，メソッドの<code class="docutils literal notranslate"><span class="pre">()</span></code>は「実行する」ということを意味する。</p>
+<p>データ属性には<code class="docutils literal notranslate"><span class="pre">()</span></code>がない。一方，メソッド属性は<code class="docutils literal notranslate"><span class="pre">()</span></code>が必要となる。言い換えると，メソッドの<code class="docutils literal notranslate"><span class="pre">()</span></code>は「実行する」ということを意味する。</p>
 <p>次に，抽出した行または列をリストに変換するメソッドについて説明する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -860,7 +872,7 @@
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">r0</span></code>はNumPyの<code class="docutils literal notranslate"><span class="pre">ndarray</span></code>というデータ型である。これをリストに変換するために<code class="docutils literal notranslate"><span class="pre">tolist()</span></code>というメソッドを使う。</p>
+<p><code class="docutils literal notranslate"><span class="pre">r0</span></code>のデータ型は<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>の<code class="docutils literal notranslate"><span class="pre">ndarray</span></code>である。これをリストに変換するために<code class="docutils literal notranslate"><span class="pre">tolist()</span></code>というメソッドを使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">r0_list</span> <span class="o">=</span> <span class="n">r0</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -1208,7 +1220,7 @@
 <p>この機能はベクトル演算（Vectorization）と呼ばれ、ループを使わずに個々の要素に直接働きかけ計算している（ブロードキャスト演算と呼ばれる場合もある）。上記のコードは次の計算を行っている。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="o">+</span><span class="mi">10</span><span class="p">,</span> <span class="mf">2.0</span><span class="o">+</span><span class="mi">10</span><span class="p">,</span> <span class="mf">3.0</span><span class="o">+</span><span class="mi">10</span><span class="p">,</span> <span class="mf">4.0</span><span class="o">+</span><span class="mi">10</span><span class="p">,</span> <span class="mf">5.0</span><span class="o">+</span><span class="mi">10</span><span class="p">])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">arr0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

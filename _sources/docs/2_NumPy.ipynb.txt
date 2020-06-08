@@ -513,6 +513,15 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "まず２つの行列（２次元配列`array`）を作成する。"
+   ]
+  },
+  {
    "cell_type": "code",
    "execution_count": 15,
    "metadata": {
@@ -566,7 +575,9 @@
     "hidden": true
    },
    "source": [
-    "行列の和と差"
+    "**行列の和**\n",
+    "\n",
+    "要素ごとの和となる。"
    ]
   },
   {
@@ -590,6 +601,17 @@
    ],
    "source": [
     "m2 + m1"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "**行列の差**\n",
+    "\n",
+    "要素ごとの差となる。"
    ]
   },
   {
@@ -621,7 +643,9 @@
     "hidden": true
    },
    "source": [
-    "行列のスカラー積"
+    "**行列のスカラー積**\n",
+    "\n",
+    "与えられた定数とそれぞれの要素の積となる。"
    ]
   },
   {
@@ -676,7 +700,9 @@
     "hidden": true
    },
    "source": [
-    "要素どうしの積"
+    "**行列の積：バージョン１**\n",
+    "\n",
+    "`*`を使うと要素どうしの積となる。数学で学んだ行列の式とは異なるので注意すること。"
    ]
   },
   {
@@ -708,7 +734,9 @@
     "hidden": true
    },
    "source": [
-    "行列の積"
+    "**行列の積:バージョン２**\n",
+    "\n",
+    "`@`を使うと数学で学ぶ行列の積となる。"
    ]
   },
   {
@@ -735,6 +763,15 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`numpy`の関数`dot()`は`@`と同じとなる。"
+   ]
+  },
+  {
    "cell_type": "code",
    "execution_count": 23,
    "metadata": {
@@ -754,7 +791,7 @@
     }
    ],
    "source": [
-    "np.dot(m1,m2)   # @と同じ"
+    "np.dot(m1,m2)"
    ]
   },
   {
@@ -763,7 +800,9 @@
     "hidden": true
    },
    "source": [
-    "転置行列"
+    "**転置行列**\n",
+    "\n",
+    "数学で学ぶ転置行列と同じ。`m3`を使って説明する。"
    ]
   },
   {
@@ -791,6 +830,15 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`m3`のメソッド`transpose()`を使う。"
+   ]
+  },
+  {
    "cell_type": "code",
    "execution_count": 25,
    "metadata": {
@@ -815,6 +863,15 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`.transpose()`の省略形として`.T`を使うこともできる。"
+   ]
+  },
+  {
    "cell_type": "code",
    "execution_count": 26,
    "metadata": {
@@ -835,7 +892,7 @@
     }
    ],
    "source": [
-    "m3.T  # .transpose() の省略形"
+    "m3.T"
    ]
   },
   {
@@ -844,7 +901,9 @@
     "hidden": true
    },
    "source": [
-    "逆行列を計算するために'NumPy'の'linalg'（linear algebra, 線形代数）というサブパッケージの中にある`inv`という関数を読み込む。"
+    "**逆行列**\n",
+    "\n",
+    "数学で学ぶ逆行列である。`m4`を使い説明する。逆行列を計算するために`numpy`の`linalg`（linear algebra, 線形代数）というサブパッケージの中にある`inv`という関数を読み込む。"
    ]
   },
   {
@@ -1093,7 +1152,7 @@
     "hidden": true
    },
    "source": [
-    "行と列の数を確認する"
+    "このリストの中に`transpose()`や`T`があるのが確認できる。この中でよく使うのが`shape`であり，行と列の数を確認する場合に有用なデータ属性である。"
    ]
   },
   {
@@ -1124,7 +1183,7 @@
     "hidden": true
    },
    "source": [
-    "属性の場合，`()`がない。一方，メソッドは`()`が必要となる。言い換えると，メソッドの`()`は「実行する」ということを意味する。\n",
+    "データ属性には`()`がない。一方，メソッド属性は`()`が必要となる。言い換えると，メソッドの`()`は「実行する」ということを意味する。\n",
     "\n",
     "次に，抽出した行または列をリストに変換するメソッドについて説明する。"
    ]
@@ -1168,7 +1227,7 @@
     "hidden": true
    },
    "source": [
-    "`r0`はNumPyの`ndarray`というデータ型である。これをリストに変換するために`tolist()`というメソッドを使う。"
+    "`r0`のデータ型は`NumPy`の`ndarray`である。これをリストに変換するために`tolist()`というメソッドを使う。"
    ]
   },
   {
@@ -1920,7 +1979,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 55,
+   "execution_count": 69,
    "metadata": {
     "hidden": true
    },
@@ -1931,13 +1990,13 @@
        "array([11., 12., 13., 14., 15.])"
       ]
      },
-     "execution_count": 55,
+     "execution_count": 69,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "np.array([1.0+10, 2.0+10, 3.0+10, 4.0+10, 5.0+10])"
+    "arr0 + np.array([10]*5)"
    ]
   },
   {

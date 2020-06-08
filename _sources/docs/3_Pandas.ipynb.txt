@@ -11,7 +11,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "PandasはNumPyの`array`のようにデータを扱うパッケージだが，Pandas特有のデータ構造を提供し複雑なデータを扱いやすくしている。例えば，行列にはラベルを使うことにより，インデックス番号だけではなくラベル名（例えば，GDP）を使って操作することが可能となる。Pandasには`DataFrame`（データフレーム）と`Series`（シリーズ）と呼ばれるオブジェクトがある。前者はエクセルのスプレッド・シートをイメージすれば良いだろう。後者は，スプレッド・シートから１つの行または列を取り出したようなデータと思えば良い。また，PandasはNumPyに基づいているため，ブロードキャスティングの機能が使える。\n",
+    "`Pandas`は`NumPy`の`array`のようにデータを扱うパッケージだが，Pandas特有のデータ構造を提供し複雑なデータを扱いやすくしている。例えば，行列にはラベルを使うことにより，インデックス番号だけではなくラベル名（例えば，GDP）を使って操作することが可能となる。Pandasには`DataFrame`（データフレーム）と`Series`（シリーズ）と呼ばれるオブジェクトがある。前者はエクセルのスプレッド・シートをイメージすれば良いだろう。後者は，スプレッド・シートから１つの行または列を取り出したようなデータと思えば良い。また，`Pandas`は`NumPy`に基づいているため，ベクトル演算（ブロードキャスティング）の機能が使える。\n",
     "\n",
     "ここで説明できない他の使い方については[このサイト](https://github.com/ysdyt/pandas_tutorial)と[このサイト](https://note.nkmk.me/python-pandas-post-summary/)が参考になる。\n",
     "\n",
@@ -55,6 +55,7 @@
    "source": [
     "# url の設定\n",
     "url = 'https://raw.githubusercontent.com/Haruyama-KobeU/Haruyama-KobeU.github.io/master/data/data1.csv'\n",
+    "\n",
     "# 読み込み\n",
     "df = pd.read_csv(url)"
    ]
@@ -240,8 +241,7 @@
    "source": [
     "行ラベルがインデックス（番号）のままなので，列`year`を行ラベルに設定する。\n",
     "\n",
-    "* `set_index()`：選択された列を行ラベルにするメソッド\n",
-    "* `.rename_axis('')`：`year`というラベルが残るのでそれを`\"\"`に設定するというメソッド（省いても可）"
+    "* `set_index()`：選択された列を行ラベルにするメソッド"
    ]
   },
   {
@@ -279,7 +279,7 @@
        "      <th>id</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -382,7 +382,7 @@
       ],
       "text/plain": [
        "      gdp   inv   con  pop id\n",
-       "                             \n",
+       "year                         \n",
        "2000  100  20.0  80.0    8  a\n",
        "2001   95  25.0  70.0    9  b\n",
        "2002   93  21.0  72.0   10  a\n",
@@ -402,7 +402,7 @@
     }
    ],
    "source": [
-    "df = df.set_index('year').rename_axis('')\n",
+    "df = df.set_index('year')\n",
     "df"
    ]
   },
@@ -412,10 +412,11 @@
     "hidden": true
    },
    "source": [
-    "**（注意）**\n",
-    "\n",
-    "* `df.set_index('year').rename_axis('')`は直接`df`に影響を与えない。単に，書き換えるとどうなるかを表示している。ここでは`df`に代入することにより`df`自体を書き換えている。\n",
-    "* 上の`df`の出力にある`NaN`（Not a Number）は欠損値を示す。"
+    "```{tip}\n",
+    "* `df.set_index('year')`は直接`df`に影響を与えない。単に，書き換えるとどうなるかを表示している。ここでは`df`に再度割り当てることにより`df`自体を上書きしている。\n",
+    "* 出力にある`NaN`（Not a Number）は欠損値を示す。\n",
+    "* 行ラベルに`year`という列名が残るが，それを消すにはメソッド`.rename_axis('')`を使う。ここで`''`は空の文字列である。\n",
+    "```"
    ]
   },
   {
@@ -426,7 +427,7 @@
    "source": [
     "行数が大きい場合（例えば，10000），全てを表示してもあまり意味がない。そこでよく使うメソッドに最初や最後の数行だけを表示すものがある。\n",
     "\n",
-    "`df`の最初の３行を表示させる。"
+    "`df`の最初の５行を表示させる。"
    ]
   },
   {
@@ -464,7 +465,7 @@
        "      <th>id</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -497,16 +498,34 @@
        "      <td>10</td>\n",
        "      <td>a</td>\n",
        "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2003</th>\n",
+       "      <td>100</td>\n",
+       "      <td>30.0</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>11</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2004</th>\n",
+       "      <td>110</td>\n",
+       "      <td>39.0</td>\n",
+       "      <td>71.0</td>\n",
+       "      <td>12</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
        "  </tbody>\n",
        "</table>\n",
        "</div>"
       ],
       "text/plain": [
        "      gdp   inv   con  pop id\n",
-       "                             \n",
+       "year                         \n",
        "2000  100  20.0  80.0    8  a\n",
        "2001   95  25.0  70.0    9  b\n",
-       "2002   93  21.0  72.0   10  a"
+       "2002   93  21.0  72.0   10  a\n",
+       "2003  100  30.0  70.0   11  b\n",
+       "2004  110  39.0  71.0   12  a"
       ]
      },
      "execution_count": 5,
@@ -515,7 +534,7 @@
     }
    ],
    "source": [
-    "df.head(3)   # 3を省略すると５行表示になる"
+    "df.head()"
    ]
   },
   {
@@ -524,7 +543,7 @@
     "hidden": true
    },
    "source": [
-    "最後の３行を表示させる。"
+    "引数に3を指定すると最初の3行のみ表示される。"
    ]
   },
   {
@@ -562,7 +581,7 @@
        "      <th>id</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -571,6 +590,111 @@
        "    </tr>\n",
        "  </thead>\n",
        "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2000</th>\n",
+       "      <td>100</td>\n",
+       "      <td>20.0</td>\n",
+       "      <td>80.0</td>\n",
+       "      <td>8</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2001</th>\n",
+       "      <td>95</td>\n",
+       "      <td>25.0</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>9</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      gdp   inv   con  pop id\n",
+       "year                         \n",
+       "2000  100  20.0  80.0    8  a\n",
+       "2001   95  25.0  70.0    9  b"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.head(2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "最後の5行を表示させる。引数に整数を入れて表示行数を指定することも可能。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>gdp</th>\n",
+       "      <th>inv</th>\n",
+       "      <th>con</th>\n",
+       "      <th>pop</th>\n",
+       "      <th>id</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>year</th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2006</th>\n",
+       "      <td>113</td>\n",
+       "      <td>50.0</td>\n",
+       "      <td>63.0</td>\n",
+       "      <td>15</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2007</th>\n",
+       "      <td>118</td>\n",
+       "      <td>53.0</td>\n",
+       "      <td>65.0</td>\n",
+       "      <td>17</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
        "    <tr>\n",
        "      <th>2008</th>\n",
        "      <td>119</td>\n",
@@ -601,19 +725,21 @@
       ],
       "text/plain": [
        "      gdp   inv   con  pop id\n",
-       "                             \n",
+       "year                         \n",
+       "2006  113  50.0  63.0   15  a\n",
+       "2007  118  53.0  65.0   17  b\n",
        "2008  119  60.0  59.0   18  a\n",
        "2009  200  62.0   NaN   20  b\n",
        "2010  210   NaN   NaN   21  a"
       ]
      },
-     "execution_count": 6,
+     "execution_count": 7,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "df.tail(3)"
+    "df.tail()"
    ]
   },
   {
@@ -627,7 +753,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 8,
    "metadata": {
     "hidden": true
    },
@@ -684,7 +810,7 @@
     "    * データ型は`int64`\n",
     "    * 11のデータがあり，欠損値数なし\n",
     "* `id   11 non-null object`\n",
-    "    * データ型は`object`（文字列）\n",
+    "    * データ型は`object`（文字列などの場合）\n",
     "    * 11のデータがあり，欠損値数なし\n",
     "* `dtypes: float64(2), int64(2), object(1)`\n",
     "    * `df`の列にどのようなのデータ型かを示す\n",
@@ -699,7 +825,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
+   "execution_count": 9,
    "metadata": {
     "hidden": true
    },
@@ -804,7 +930,7 @@
        "max    210.000000  62.000000  80.000000  21.000000"
       ]
      },
-     "execution_count": 8,
+     "execution_count": 9,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -830,12 +956,12 @@
     "* `max`：最大値\n",
     "\n",
     "\n",
-    "次の方法（属性）で`df`の行と列の長さを確認することができる。返値はタプルで，`(行の数，列の数)`と解釈する。"
+    "次のデータ属性を使って`df`の行と列の長さを確認することができる。返値はタプルで，`(行の数，列の数)`と解釈する。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
+   "execution_count": 10,
    "metadata": {
     "hidden": true
    },
@@ -846,7 +972,7 @@
        "(11, 5)"
       ]
      },
-     "execution_count": 9,
+     "execution_count": 10,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -862,37 +988,6 @@
    },
    "source": [
     "返値はタプルなので，行数は以下で取得できる。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 10,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "11"
-      ]
-     },
-     "execution_count": 10,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "df.shape[0]"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "以下でも行数を示すことができる。"
    ]
   },
   {
@@ -914,19 +1009,54 @@
     }
    ],
    "source": [
+    "df.shape[0]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "以下でも行数を示すことができる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "11"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
     "len(df)"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "heading_collapsed": true
+   },
    "source": [
     "## DataFrameの構成要素"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "`DataFrame`には様々な属性があるが，ここでは以下の３点について説明する。\n",
     "\n",
@@ -939,8 +1069,10 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
-   "metadata": {},
+   "execution_count": 13,
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -958,7 +1090,7 @@
        "       [210, nan, nan, 21, 'a']], dtype=object)"
       ]
      },
-     "execution_count": 12,
+     "execution_count": 13,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -969,8 +1101,10 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
-   "metadata": {},
+   "execution_count": 14,
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -978,7 +1112,7 @@
        "numpy.ndarray"
       ]
      },
-     "execution_count": 13,
+     "execution_count": 14,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -989,22 +1123,28 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "これで分かることは，メインのデータの部分は`NumPy`の`ndarray`（`n`次元`array`）であることが分かる。即ち，`Pandas`は`NumPy`に基づいて構築されており，データ値の計算などは`array`が裏で動いているということである。また行と列のラベルを追加し，より直感的に使えるように拡張しているのである。"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "次に列ラベルを取り出してみる。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 14,
-   "metadata": {},
+   "execution_count": 15,
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -1012,7 +1152,7 @@
        "Index(['gdp', 'inv', 'con', 'pop', 'id'], dtype='object')"
       ]
      },
-     "execution_count": 14,
+     "execution_count": 15,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1023,11 +1163,13 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "`dtype='object'`から列ラベルに使われているデータ型（`dtype`）はオブジェクト型（`object`）だとわかる。\n",
     "\n",
-    "* オブジェクト型とは文字型と理解すれば十分であろう\n",
+    "* オブジェクト型とは文字型を含む「その他」のデータ型と理解すれば良いだろう。\n",
     "* `dtype='object'`と`dtype=object`は同じ意味。\n",
     "\n",
     "列ラベル自体のクラスは次のコードで調べることができる。"
@@ -1035,8 +1177,10 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 15,
-   "metadata": {},
+   "execution_count": 16,
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -1044,7 +1188,7 @@
        "pandas.core.indexes.base.Index"
       ]
      },
-     "execution_count": 15,
+     "execution_count": 16,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1055,15 +1199,19 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "`dir()`もしくは`see()`で調べると多くのメソッドや属性が確認できるが，その中に`.tolist()`が含まれており，これを使うことにより列ラベルをリストに変換することができる。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 16,
-   "metadata": {},
+   "execution_count": 17,
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -1071,7 +1219,7 @@
        "['gdp', 'inv', 'con', 'pop', 'id']"
       ]
      },
-     "execution_count": 16,
+     "execution_count": 17,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1083,23 +1231,27 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "行ラベルについても同じことができる。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 17,
-   "metadata": {},
+   "execution_count": 18,
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "Int64Index([2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010], dtype='int64', name='')"
+       "Int64Index([2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010], dtype='int64', name='year')"
       ]
      },
-     "execution_count": 17,
+     "execution_count": 18,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1110,15 +1262,19 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
-    "行ラベルのデータ型`dtype`は整数である`int64`。元々`year`という列を使い行ラベルに使い，そのラベルを削除したため`name=''`（空）となっている。行ラベルのデータ型（クラス）は"
+    "行ラベルのデータ型`dtype`は整数である`int64`。列`year`を行ラベルに指定したため，`name='year'`はその列ラベルを表示している。行ラベルのデータ型（クラス）は"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 18,
-   "metadata": {},
+   "execution_count": 19,
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -1126,7 +1282,7 @@
        "pandas.core.indexes.numeric.Int64Index"
       ]
      },
-     "execution_count": 18,
+     "execution_count": 19,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1137,15 +1293,19 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "hidden": true
+   },
    "source": [
     "であり，ラベルをリストとして抽出することもできる。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 19,
-   "metadata": {},
+   "execution_count": 20,
+   "metadata": {
+    "hidden": true
+   },
    "outputs": [
     {
      "data": {
@@ -1153,7 +1313,7 @@
        "[2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010]"
       ]
      },
-     "execution_count": 19,
+     "execution_count": 20,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1178,7 +1338,7 @@
     "hidden": true
    },
    "source": [
-    "`NumPy`の`array`の場合，`[,]`を使い要素を抽出した。`Pandas`の場合，様々な抽出方法があるが，覚えやすく，少しでも間違いの可能性を減らすために，そして可読性向上のために`array`に対応する以下の２つの方法を使うことにする。\n",
+    "`NumPy`の`array`の場合，`[,]`を使い要素を抽出した。`Pandas`の場合，様々な抽出方法があるが，覚えやすく少しでも間違いの可能性を減らすために，そして可読性向上のために`array`に対応する以下の２つの方法を使うことにする。\n",
     "\n",
     "* ラベルを使う方法：`.loc[,]`\n",
     "* インデックスを使う方法：`.iloc[,]`（これは`array`の`[ ]`と同じと考えて良い）\n",
@@ -1203,6 +1363,18 @@
   {
    "cell_type": "markdown",
    "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "```{warning}\n",
+    "* `.loc[,]`の場合，`end`を含む。（要注意！）\n",
+    "* `.iloc[,]`の場合，`end`は含まず，その１つ前のインデックスまでが含まれる。\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
     "heading_collapsed": true,
     "hidden": true
    },
@@ -1221,7 +1393,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 20,
+   "execution_count": 21,
    "metadata": {
     "hidden": true
    },
@@ -1237,7 +1409,7 @@
        "Name: 2005, dtype: object"
       ]
      },
-     "execution_count": 20,
+     "execution_count": 21,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1253,86 +1425,6 @@
    },
    "source": [
     "**１つの行を`DataFrame`として抽出**"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 21,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>gdp</th>\n",
-       "      <th>inv</th>\n",
-       "      <th>con</th>\n",
-       "      <th>pop</th>\n",
-       "      <th>id</th>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>2005</th>\n",
-       "      <td>115</td>\n",
-       "      <td>55.0</td>\n",
-       "      <td>60.0</td>\n",
-       "      <td>14</td>\n",
-       "      <td>b</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "      gdp   inv   con  pop id\n",
-       "                             \n",
-       "2005  115  55.0  60.0   14  b"
-      ]
-     },
-     "execution_count": 21,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "df.loc[[2005],:]"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "**複数行を抽出**"
    ]
   },
   {
@@ -1370,7 +1462,7 @@
        "      <th>id</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -1387,23 +1479,14 @@
        "      <td>14</td>\n",
        "      <td>b</td>\n",
        "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2010</th>\n",
-       "      <td>210</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>21</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
        "  </tbody>\n",
        "</table>\n",
        "</div>"
       ],
       "text/plain": [
        "      gdp   inv   con  pop id\n",
-       "                             \n",
-       "2005  115  55.0  60.0   14  b\n",
-       "2010  210   NaN   NaN   21  a"
+       "year                         \n",
+       "2005  115  55.0  60.0   14  b"
       ]
      },
      "execution_count": 22,
@@ -1412,7 +1495,7 @@
     }
    ],
    "source": [
-    "df.loc[[2005, 2010],:]"
+    "df.loc[[2005],:]"
    ]
   },
   {
@@ -1421,7 +1504,7 @@
     "hidden": true
    },
    "source": [
-    "**複数行を連続抽出（slicing）**"
+    "**複数行を抽出**"
    ]
   },
   {
@@ -1459,7 +1542,96 @@
        "      <th>id</th>\n",
        "    </tr>\n",
        "    <tr>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2005</th>\n",
+       "      <td>115</td>\n",
+       "      <td>55.0</td>\n",
+       "      <td>60.0</td>\n",
+       "      <td>14</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2010</th>\n",
+       "      <td>210</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>21</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      gdp   inv   con  pop id\n",
+       "year                         \n",
+       "2005  115  55.0  60.0   14  b\n",
+       "2010  210   NaN   NaN   21  a"
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.loc[[2005, 2010],:]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "**複数行を連続抽出（slicing）**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>gdp</th>\n",
+       "      <th>inv</th>\n",
+       "      <th>con</th>\n",
+       "      <th>pop</th>\n",
+       "      <th>id</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -1506,14 +1678,14 @@
       ],
       "text/plain": [
        "      gdp   inv   con  pop id\n",
-       "                             \n",
+       "year                         \n",
        "2005  115  55.0  60.0   14  b\n",
        "2006  113  50.0  63.0   15  a\n",
        "2007  118  53.0  65.0   17  b\n",
        "2008  119  60.0  59.0   18  a"
       ]
      },
-     "execution_count": 23,
+     "execution_count": 24,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1533,7 +1705,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 24,
+   "execution_count": 25,
    "metadata": {
     "hidden": true
    },
@@ -1541,7 +1713,7 @@
     {
      "data": {
       "text/plain": [
-       "\n",
+       "year\n",
        "2000    100\n",
        "2001     95\n",
        "2002     93\n",
@@ -1556,7 +1728,7 @@
        "Name: gdp, dtype: int64"
       ]
      },
-     "execution_count": 24,
+     "execution_count": 25,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1576,7 +1748,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 25,
+   "execution_count": 26,
    "metadata": {
     "hidden": true
    },
@@ -1606,7 +1778,7 @@
        "      <th>pop</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "    </tr>\n",
@@ -1673,7 +1845,7 @@
       ],
       "text/plain": [
        "      gdp  pop\n",
-       "              \n",
+       "year          \n",
        "2000  100    8\n",
        "2001   95    9\n",
        "2002   93   10\n",
@@ -1687,7 +1859,7 @@
        "2010  210   21"
       ]
      },
-     "execution_count": 25,
+     "execution_count": 26,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1707,7 +1879,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 26,
+   "execution_count": 27,
    "metadata": {
     "hidden": true
    },
@@ -1738,7 +1910,7 @@
        "      <th>pop</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -1817,7 +1989,7 @@
       ],
       "text/plain": [
        "       inv   con  pop\n",
-       "                     \n",
+       "year                 \n",
        "2000  20.0  80.0    8\n",
        "2001  25.0  70.0    9\n",
        "2002  21.0  72.0   10\n",
@@ -1831,7 +2003,7 @@
        "2010   NaN   NaN   21"
       ]
      },
-     "execution_count": 26,
+     "execution_count": 27,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1861,7 +2033,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 27,
+   "execution_count": 28,
    "metadata": {
     "hidden": true
    },
@@ -1877,7 +2049,7 @@
        "Name: 2001, dtype: object"
       ]
      },
-     "execution_count": 27,
+     "execution_count": 28,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1893,95 +2065,6 @@
    },
    "source": [
     "**複数行を抽出**"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 28,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>gdp</th>\n",
-       "      <th>inv</th>\n",
-       "      <th>con</th>\n",
-       "      <th>pop</th>\n",
-       "      <th>id</th>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>2001</th>\n",
-       "      <td>95</td>\n",
-       "      <td>25.0</td>\n",
-       "      <td>70.0</td>\n",
-       "      <td>9</td>\n",
-       "      <td>b</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2004</th>\n",
-       "      <td>110</td>\n",
-       "      <td>39.0</td>\n",
-       "      <td>71.0</td>\n",
-       "      <td>12</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "      gdp   inv   con  pop id\n",
-       "                             \n",
-       "2001   95  25.0  70.0    9  b\n",
-       "2004  110  39.0  71.0   12  a"
-      ]
-     },
-     "execution_count": 28,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "df.iloc[[1,4],:]"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "**複数行を連続抽出（slicing）**"
    ]
   },
   {
@@ -2019,7 +2102,96 @@
        "      <th>id</th>\n",
        "    </tr>\n",
        "    <tr>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2001</th>\n",
+       "      <td>95</td>\n",
+       "      <td>25.0</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>9</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2004</th>\n",
+       "      <td>110</td>\n",
+       "      <td>39.0</td>\n",
+       "      <td>71.0</td>\n",
+       "      <td>12</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      gdp   inv   con  pop id\n",
+       "year                         \n",
+       "2001   95  25.0  70.0    9  b\n",
+       "2004  110  39.0  71.0   12  a"
+      ]
+     },
+     "execution_count": 29,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.iloc[[1,4],:]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "**複数行を連続抽出（slicing）**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>gdp</th>\n",
+       "      <th>inv</th>\n",
+       "      <th>con</th>\n",
+       "      <th>pop</th>\n",
+       "      <th>id</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -2058,13 +2230,13 @@
       ],
       "text/plain": [
        "      gdp   inv   con  pop id\n",
-       "                             \n",
+       "year                         \n",
        "2001   95  25.0  70.0    9  b\n",
        "2002   93  21.0  72.0   10  a\n",
        "2003  100  30.0  70.0   11  b"
       ]
      },
-     "execution_count": 29,
+     "execution_count": 30,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -2084,7 +2256,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 30,
+   "execution_count": 31,
    "metadata": {
     "hidden": true
    },
@@ -2092,7 +2264,7 @@
     {
      "data": {
       "text/plain": [
-       "\n",
+       "year\n",
        "2000    20.0\n",
        "2001    25.0\n",
        "2002    21.0\n",
@@ -2107,7 +2279,7 @@
        "Name: inv, dtype: float64"
       ]
      },
-     "execution_count": 30,
+     "execution_count": 31,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -2127,7 +2299,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 31,
+   "execution_count": 32,
    "metadata": {
     "hidden": true
    },
@@ -2156,7 +2328,7 @@
        "      <th>inv</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "    </tr>\n",
        "  </thead>\n",
@@ -2211,7 +2383,7 @@
       ],
       "text/plain": [
        "       inv\n",
-       "          \n",
+       "year      \n",
        "2000  20.0\n",
        "2001  25.0\n",
        "2002  21.0\n",
@@ -2225,7 +2397,7 @@
        "2010   NaN"
       ]
      },
-     "execution_count": 31,
+     "execution_count": 32,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -2245,7 +2417,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 32,
+   "execution_count": 33,
    "metadata": {
     "hidden": true
    },
@@ -2275,7 +2447,7 @@
        "      <th>pop</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "    </tr>\n",
@@ -2342,7 +2514,7 @@
       ],
       "text/plain": [
        "       inv  pop\n",
-       "               \n",
+       "year           \n",
        "2000  20.0    8\n",
        "2001  25.0    9\n",
        "2002  21.0   10\n",
@@ -2356,7 +2528,7 @@
        "2010   NaN   21"
       ]
      },
-     "execution_count": 32,
+     "execution_count": 33,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -2376,7 +2548,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 33,
+   "execution_count": 34,
    "metadata": {
     "hidden": true
    },
@@ -2406,7 +2578,7 @@
        "      <th>con</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "    </tr>\n",
@@ -2473,7 +2645,7 @@
       ],
       "text/plain": [
        "       inv   con\n",
-       "                \n",
+       "year            \n",
        "2000  20.0  80.0\n",
        "2001  25.0  70.0\n",
        "2002  21.0  72.0\n",
@@ -2487,7 +2659,7 @@
        "2010   NaN   NaN"
       ]
      },
-     "execution_count": 33,
+     "execution_count": 34,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -2517,7 +2689,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 34,
+   "execution_count": 35,
    "metadata": {
     "hidden": true
    },
@@ -2525,7 +2697,7 @@
     {
      "data": {
       "text/plain": [
-       "\n",
+       "year\n",
        "2000    100\n",
        "2001     95\n",
        "2002     93\n",
@@ -2540,7 +2712,7 @@
        "Name: gdp, dtype: int64"
       ]
      },
-     "execution_count": 34,
+     "execution_count": 35,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -2560,7 +2732,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 35,
+   "execution_count": 36,
    "metadata": {
     "hidden": true
    },
@@ -2589,7 +2761,7 @@
        "      <th>gdp</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "    </tr>\n",
        "  </thead>\n",
@@ -2644,7 +2816,7 @@
       ],
       "text/plain": [
        "      gdp\n",
-       "         \n",
+       "year     \n",
        "2000  100\n",
        "2001   95\n",
        "2002   93\n",
@@ -2658,7 +2830,7 @@
        "2010  210"
       ]
      },
-     "execution_count": 35,
+     "execution_count": 36,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -2678,7 +2850,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 36,
+   "execution_count": 37,
    "metadata": {
     "hidden": true
    },
@@ -2708,7 +2880,7 @@
        "      <th>pop</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "    </tr>\n",
@@ -2775,7 +2947,7 @@
       ],
       "text/plain": [
        "      gdp  pop\n",
-       "              \n",
+       "year          \n",
        "2000  100    8\n",
        "2001   95    9\n",
        "2002   93   10\n",
@@ -2789,7 +2961,7 @@
        "2010  210   21"
       ]
      },
-     "execution_count": 36,
+     "execution_count": 37,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -2838,7 +3010,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 37,
+   "execution_count": 38,
    "metadata": {
     "hidden": true
    },
@@ -2846,7 +3018,7 @@
     {
      "data": {
       "text/plain": [
-       "\n",
+       "year\n",
        "2000    False\n",
        "2001     True\n",
        "2002     True\n",
@@ -2861,7 +3033,7 @@
        "Name: gdp, dtype: bool"
       ]
      },
-     "execution_count": 37,
+     "execution_count": 38,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -2876,12 +3048,12 @@
     "hidden": true
    },
    "source": [
-    "この条件では，GDPが100未満の行は`True`，以上の行は`False`となる。この条件を`cond`というの変数に代入する。`()`を省いても良いが，ある方が最初は分かりやすいだろう。"
+    "この条件では，GDPが100未満の行は`True`，以上の行は`False`となる。この条件を`cond`というの変数に割り当てる。`()`を省いても良いが，ある方が分かりやすいだろう。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 38,
+   "execution_count": 39,
    "metadata": {
     "hidden": true
    },
@@ -2896,113 +3068,7 @@
     "hidden": true
    },
    "source": [
-    "`cond`を`.loc[,]`に代入することにより，`True`の行だけを抽出できる。（注意：`cond`を使って**行**を抽出しようとしているので`,`の左側に書く。）"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 39,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>gdp</th>\n",
-       "      <th>inv</th>\n",
-       "      <th>con</th>\n",
-       "      <th>pop</th>\n",
-       "      <th>id</th>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>2001</th>\n",
-       "      <td>95</td>\n",
-       "      <td>25.0</td>\n",
-       "      <td>70.0</td>\n",
-       "      <td>9</td>\n",
-       "      <td>b</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2002</th>\n",
-       "      <td>93</td>\n",
-       "      <td>21.0</td>\n",
-       "      <td>72.0</td>\n",
-       "      <td>10</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "      gdp   inv   con  pop id\n",
-       "                             \n",
-       "2001   95  25.0  70.0    9  b\n",
-       "2002   93  21.0  72.0   10  a"
-      ]
-     },
-     "execution_count": 39,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "df.loc[cond,:]"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "この条件の下で$inv$だけを抽出したい場合\n",
-    "\n",
-    "* `df.loc[cond,'inv']`\n",
-    "\n",
-    "とする。以下のように抽出を連続ですることも可能だが，避けるように！\n",
-    "\n",
-    "* `df.loc[cond,:]['inv']`\n",
-    "* `df.loc[cond,:].loc[:,'inv']`"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
-   "source": [
-    "#### 例２：`id`が`a`の行を抽出"
+    "`cond`を`.loc[,]`の引数とすることにより，`True`の行だけを抽出できる。（注意：`cond`を使って**行**を抽出しようとしているので`,`の左側に書く。）"
    ]
   },
   {
@@ -3040,7 +3106,123 @@
        "      <th>id</th>\n",
        "    </tr>\n",
        "    <tr>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2001</th>\n",
+       "      <td>95</td>\n",
+       "      <td>25.0</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>9</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2002</th>\n",
+       "      <td>93</td>\n",
+       "      <td>21.0</td>\n",
+       "      <td>72.0</td>\n",
+       "      <td>10</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      gdp   inv   con  pop id\n",
+       "year                         \n",
+       "2001   95  25.0  70.0    9  b\n",
+       "2002   93  21.0  72.0   10  a"
+      ]
+     },
+     "execution_count": 40,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.loc[cond,:]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "この条件の下で$inv$だけを抽出したい場合\n",
+    "\n",
+    "* `df.loc[cond,'inv']`\n",
+    "\n",
+    "とする。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "```{warning}\n",
+    "以下のように抽出を連続ですることも可能だが，避けるように！\n",
+    "* `df.loc[cond,:]['inv']`\n",
+    "* `df.loc[cond,:].loc[:,'inv']`\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "#### 例２：`id`が`a`の行を抽出"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 41,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>gdp</th>\n",
+       "      <th>inv</th>\n",
+       "      <th>con</th>\n",
+       "      <th>pop</th>\n",
+       "      <th>id</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -3103,7 +3285,7 @@
       ],
       "text/plain": [
        "      gdp   inv   con  pop id\n",
-       "                             \n",
+       "year                         \n",
        "2000  100  20.0  80.0    8  a\n",
        "2002   93  21.0  72.0   10  a\n",
        "2004  110  39.0  71.0   12  a\n",
@@ -3112,7 +3294,7 @@
        "2010  210   NaN   NaN   21  a"
       ]
      },
-     "execution_count": 40,
+     "execution_count": 41,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -3151,12 +3333,55 @@
     "以下の条件の**両方**が満たされる場合：\n",
     "\n",
     "* `gdp`が100以上\n",
-    "* `inv`が30以下"
+    "* `inv`が30以下\n",
+    "\n",
+    "それぞれの条件を作成する。"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 41,
+   "execution_count": 42,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "cond1 = (df['gdp'] >= 100)\n",
+    "cond2 = (df['inv'] <= 30)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "２つの条件が同時に満たされる条件を作成する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 43,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "cond = (cond1 & cond2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`cond`を引数に使い行を抽出する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 44,
    "metadata": {
     "hidden": true
    },
@@ -3189,7 +3414,7 @@
        "      <th>id</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -3220,20 +3445,18 @@
       ],
       "text/plain": [
        "      gdp   inv   con  pop id\n",
-       "                             \n",
+       "year                         \n",
        "2000  100  20.0  80.0    8  a\n",
        "2003  100  30.0  70.0   11  b"
       ]
      },
-     "execution_count": 41,
+     "execution_count": 44,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "cond1 = (df['gdp'] >= 100)\n",
-    "cond2 = (df['inv'] <= 30)\n",
-    "df.loc[(cond1 & cond2), :]"
+    "df.loc[cond, :]"
    ]
   },
   {
@@ -3259,7 +3482,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 42,
+   "execution_count": 45,
    "metadata": {
     "hidden": true
    },
@@ -3292,7 +3515,7 @@
        "      <th>id</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -3339,14 +3562,14 @@
       ],
       "text/plain": [
        "      gdp   inv   con  pop id\n",
-       "                             \n",
+       "year                         \n",
        "2005  115  55.0  60.0   14  b\n",
        "2008  119  60.0  59.0   18  a\n",
        "2009  200  62.0   NaN   20  b\n",
        "2010  210   NaN   NaN   21  a"
       ]
      },
-     "execution_count": 42,
+     "execution_count": 45,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -3354,7 +3577,9 @@
    "source": [
     "cond1 = (df['gdp'] >= 200)\n",
     "cond2 = (df['con'] <= 60)\n",
-    "df.loc[(cond1 | cond2), :]"
+    "cond = (cond1 | cond2)\n",
+    "\n",
+    "df.loc[cond, :]"
    ]
   },
   {
@@ -3383,7 +3608,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 43,
+   "execution_count": 46,
    "metadata": {
     "hidden": true
    },
@@ -3416,7 +3641,7 @@
        "      <th>id</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -3447,12 +3672,12 @@
       ],
       "text/plain": [
        "      gdp   inv   con  pop id\n",
-       "                             \n",
+       "year                         \n",
        "2008  119  60.0  59.0   18  a\n",
        "2010  210   NaN   NaN   21  a"
       ]
      },
-     "execution_count": 43,
+     "execution_count": 46,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -3461,7 +3686,9 @@
     "cond1 = (df['gdp'] >= 200)\n",
     "cond2 = (df['con'] <= 60)\n",
     "cond3 = (df['id'] == 'a')\n",
-    "df.loc[((cond1 | cond2) & cond3), :]"
+    "cond = ((cond1 | cond2) & cond3)\n",
+    "\n",
+    "df.loc[cond, :]"
    ]
   },
   {
@@ -3480,7 +3707,7 @@
     "hidden": true
    },
    "source": [
-    "`query()`というメソッドでは文字列を使い行の抽出コードをかく。これにより直感的なコード書くことが可能である。"
+    "`query()`というメソッドでは文字列を使い行の抽出コードを書くことができる。これにより直感的なコード書くことが可能である。"
    ]
   },
   {
@@ -3495,7 +3722,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 44,
+   "execution_count": 47,
    "metadata": {
     "hidden": true
    },
@@ -3528,7 +3755,7 @@
        "      <th>id</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -3559,12 +3786,12 @@
       ],
       "text/plain": [
        "      gdp   inv   con  pop id\n",
-       "                             \n",
+       "year                         \n",
        "2001   95  25.0  70.0    9  b\n",
        "2002   93  21.0  72.0   10  a"
       ]
      },
-     "execution_count": 44,
+     "execution_count": 47,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -3585,7 +3812,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 45,
+   "execution_count": 48,
    "metadata": {
     "hidden": true
    },
@@ -3618,7 +3845,7 @@
        "      <th>id</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -3681,7 +3908,7 @@
       ],
       "text/plain": [
        "      gdp   inv   con  pop id\n",
-       "                             \n",
+       "year                         \n",
        "2000  100  20.0  80.0    8  a\n",
        "2002   93  21.0  72.0   10  a\n",
        "2004  110  39.0  71.0   12  a\n",
@@ -3690,7 +3917,7 @@
        "2010  210   NaN   NaN   21  a"
       ]
      },
-     "execution_count": 45,
+     "execution_count": 48,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -3711,7 +3938,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 46,
+   "execution_count": 49,
    "metadata": {
     "hidden": true
    },
@@ -3744,7 +3971,7 @@
        "      <th>id</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -3775,12 +4002,12 @@
       ],
       "text/plain": [
        "      gdp   inv   con  pop id\n",
-       "                             \n",
+       "year                         \n",
        "2000  100  20.0  80.0    8  a\n",
        "2003  100  30.0  70.0   11  b"
       ]
      },
-     "execution_count": 46,
+     "execution_count": 49,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -3801,7 +4028,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 47,
+   "execution_count": 50,
    "metadata": {
     "hidden": true
    },
@@ -3834,7 +4061,7 @@
        "      <th>id</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -3881,14 +4108,14 @@
       ],
       "text/plain": [
        "      gdp   inv   con  pop id\n",
-       "                             \n",
+       "year                         \n",
        "2005  115  55.0  60.0   14  b\n",
        "2008  119  60.0  59.0   18  a\n",
        "2009  200  62.0   NaN   20  b\n",
        "2010  210   NaN   NaN   21  a"
       ]
      },
-     "execution_count": 47,
+     "execution_count": 50,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -3905,225 +4132,6 @@
    },
    "source": [
     "#### 例５の場合"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 48,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>gdp</th>\n",
-       "      <th>inv</th>\n",
-       "      <th>con</th>\n",
-       "      <th>pop</th>\n",
-       "      <th>id</th>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>2008</th>\n",
-       "      <td>119</td>\n",
-       "      <td>60.0</td>\n",
-       "      <td>59.0</td>\n",
-       "      <td>18</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2010</th>\n",
-       "      <td>210</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>21</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "      gdp   inv   con  pop id\n",
-       "                             \n",
-       "2008  119  60.0  59.0   18  a\n",
-       "2010  210   NaN   NaN   21  a"
-      ]
-     },
-     "execution_count": 48,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "df.query('(gdp >= 200 | con <= 60) & (id == \"a\")')"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
-   "source": [
-    "#### 注意"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "`df`以外にない変数で条件を設定する場合`@`が必要になる。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 49,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>gdp</th>\n",
-       "      <th>inv</th>\n",
-       "      <th>con</th>\n",
-       "      <th>pop</th>\n",
-       "      <th>id</th>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>2001</th>\n",
-       "      <td>95</td>\n",
-       "      <td>25.0</td>\n",
-       "      <td>70.0</td>\n",
-       "      <td>9</td>\n",
-       "      <td>b</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2002</th>\n",
-       "      <td>93</td>\n",
-       "      <td>21.0</td>\n",
-       "      <td>72.0</td>\n",
-       "      <td>10</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "      gdp   inv   con  pop id\n",
-       "                             \n",
-       "2001   95  25.0  70.0    9  b\n",
-       "2002   93  21.0  72.0   10  a"
-      ]
-     },
-     "execution_count": 49,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "X = 100\n",
-    "df.query('gdp < @X')"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
-   "source": [
-    "## 列と行の追加と削除"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
-   "source": [
-    "### 列の追加 `[ ]`"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "１つの列の抽出に使ったが，追加にも使える。定数を設定すると自動的に行数分作成することができる。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 50,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [],
-   "source": [
-    "df['Intercept'] = 1"
    ]
   },
   {
@@ -4159,11 +4167,9 @@
        "      <th>con</th>\n",
        "      <th>pop</th>\n",
        "      <th>id</th>\n",
-       "      <th>Intercept</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -4173,32 +4179,30 @@
        "  </thead>\n",
        "  <tbody>\n",
        "    <tr>\n",
-       "      <th>2000</th>\n",
-       "      <td>100</td>\n",
-       "      <td>20.0</td>\n",
-       "      <td>80.0</td>\n",
-       "      <td>8</td>\n",
+       "      <th>2008</th>\n",
+       "      <td>119</td>\n",
+       "      <td>60.0</td>\n",
+       "      <td>59.0</td>\n",
+       "      <td>18</td>\n",
        "      <td>a</td>\n",
-       "      <td>1</td>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th>2001</th>\n",
-       "      <td>95</td>\n",
-       "      <td>25.0</td>\n",
-       "      <td>70.0</td>\n",
-       "      <td>9</td>\n",
-       "      <td>b</td>\n",
-       "      <td>1</td>\n",
+       "      <th>2010</th>\n",
+       "      <td>210</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>21</td>\n",
+       "      <td>a</td>\n",
        "    </tr>\n",
        "  </tbody>\n",
        "</table>\n",
        "</div>"
       ],
       "text/plain": [
-       "      gdp   inv   con  pop id  Intercept\n",
-       "                                        \n",
-       "2000  100  20.0  80.0    8  a          1\n",
-       "2001   95  25.0  70.0    9  b          1"
+       "      gdp   inv   con  pop id\n",
+       "year                         \n",
+       "2008  119  60.0  59.0   18  a\n",
+       "2010  210   NaN   NaN   21  a"
       ]
      },
      "execution_count": 51,
@@ -4207,7 +4211,17 @@
     }
    ],
    "source": [
-    "df.head(2)"
+    "df.query('(gdp >= 200 | con <= 60) & (id == \"a\")')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "#### 注意"
    ]
   },
   {
@@ -4216,7 +4230,7 @@
     "hidden": true
    },
    "source": [
-    "既存の列から新たな列を作成する。"
+    "`df`以外にない変数で条件を設定する場合`@`が必要になる。例えば，変数`z`という変数があるとしよう。"
    ]
   },
   {
@@ -4227,11 +4241,16 @@
    },
    "outputs": [],
    "source": [
-    "# １人当たりGDPの計算\n",
-    "gdp_pc = df['gdp']/df['pop']\n",
-    "\n",
-    "# GDPpc を追加\n",
-    "df['gdp_pc'] = gdp_pc"
+    "z = 100"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "変数`z`の値に基づいて行の抽出をする場合は次のようにする。"
    ]
   },
   {
@@ -4267,11 +4286,238 @@
        "      <th>con</th>\n",
        "      <th>pop</th>\n",
        "      <th>id</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>year</th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2001</th>\n",
+       "      <td>95</td>\n",
+       "      <td>25.0</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>9</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2002</th>\n",
+       "      <td>93</td>\n",
+       "      <td>21.0</td>\n",
+       "      <td>72.0</td>\n",
+       "      <td>10</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      gdp   inv   con  pop id\n",
+       "year                         \n",
+       "2001   95  25.0  70.0    9  b\n",
+       "2002   93  21.0  72.0   10  a"
+      ]
+     },
+     "execution_count": 53,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.query('gdp < @z')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## 列と行の追加と削除"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 列の追加 `[ ]`"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`[]`は列の抽出に使うことができるが，追加にも使える。定数を設定すると自動的に行数分作成することができる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 54,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "df['Intercept'] = 1"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 55,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>gdp</th>\n",
+       "      <th>inv</th>\n",
+       "      <th>con</th>\n",
+       "      <th>pop</th>\n",
+       "      <th>id</th>\n",
+       "      <th>Intercept</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>year</th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2000</th>\n",
+       "      <td>100</td>\n",
+       "      <td>20.0</td>\n",
+       "      <td>80.0</td>\n",
+       "      <td>8</td>\n",
+       "      <td>a</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2001</th>\n",
+       "      <td>95</td>\n",
+       "      <td>25.0</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>9</td>\n",
+       "      <td>b</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      gdp   inv   con  pop id  Intercept\n",
+       "year                                    \n",
+       "2000  100  20.0  80.0    8  a          1\n",
+       "2001   95  25.0  70.0    9  b          1"
+      ]
+     },
+     "execution_count": 55,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.head(2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "既存の列から新たな列を作成する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 56,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "# １人当たりGDPの計算\n",
+    "gdp_pc = df['gdp']/df['pop']\n",
+    "\n",
+    "# GDPpc を追加\n",
+    "df['gdp_pc'] = gdp_pc"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 57,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>gdp</th>\n",
+       "      <th>inv</th>\n",
+       "      <th>con</th>\n",
+       "      <th>pop</th>\n",
+       "      <th>id</th>\n",
        "      <th>Intercept</th>\n",
        "      <th>gdp_pc</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -4308,12 +4554,12 @@
       ],
       "text/plain": [
        "      gdp   inv   con  pop id  Intercept     gdp_pc\n",
-       "                                                   \n",
+       "year                                               \n",
        "2000  100  20.0  80.0    8  a          1  12.500000\n",
        "2001   95  25.0  70.0    9  b          1  10.555556"
       ]
      },
-     "execution_count": 53,
+     "execution_count": 57,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -4343,7 +4589,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 54,
+   "execution_count": 58,
    "metadata": {
     "hidden": true
    },
@@ -4364,7 +4610,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 55,
+   "execution_count": 59,
    "metadata": {
     "hidden": true
    },
@@ -4397,7 +4643,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 56,
+   "execution_count": 60,
    "metadata": {
     "hidden": true
    },
@@ -4429,7 +4675,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 57,
+   "execution_count": 61,
    "metadata": {
     "hidden": true
    },
@@ -4440,7 +4686,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 58,
+   "execution_count": 62,
    "metadata": {
     "hidden": true
    },
@@ -4473,7 +4719,7 @@
        "      <th>id</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -4512,13 +4758,13 @@
       ],
       "text/plain": [
        "        gdp    inv    con   pop id\n",
-       "                                  \n",
+       "year                              \n",
        "2009  200.0   62.0    NaN  20.0  b\n",
        "2010  210.0    NaN    NaN  21.0  a\n",
        "2011  215.0  100.0  115.0  22.0  b"
       ]
      },
-     "execution_count": 58,
+     "execution_count": 62,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -4551,7 +4797,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 59,
+   "execution_count": 63,
    "metadata": {
     "hidden": true
    },
@@ -4577,7 +4823,7 @@
     "hidden": true
    },
    "source": [
-    "`Pandas`では欠損値は`NaN`と表示されますが，`na`もしくは`null`と呼んだりもします。"
+    "`Pandas`では欠損値は`NaN`と表示されるが，`na`もしくは`null`と呼んだりもする。"
    ]
   },
   {
@@ -4596,7 +4842,7 @@
     "hidden": true
    },
    "source": [
-    "欠損値があるかどうかの確認は，`df.info()`でもできましたが，以下のメソッドを組み合わせることでも可能です。\n",
+    "欠損値があるかどうかの確認は，`df.info()`でもできるが，以下のメソッドを組み合わせることでも可能である。\n",
     "\n",
     "* `isna()`：それぞれの要素について`NaN`の場合`True`を，そうでない場合は`False`を返す。（`DataFrame`の全ての要素が`True/False`となる。）\n",
     "* `sum(axis='rows')`：`df`の上から下に**行**（rows）を縦断して，それぞれの列の中にある`True`数える。\n",
@@ -4609,7 +4855,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 60,
+   "execution_count": 64,
    "metadata": {
     "hidden": true
    },
@@ -4625,7 +4871,7 @@
        "dtype: int64"
       ]
      },
-     "execution_count": 60,
+     "execution_count": 64,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -4658,569 +4904,6 @@
     "    * `columns`は複数！（1でも可）\n",
     "\n",
     "（注意）`any()`の`axis`は「行を縦断」か「列を横断」かを指定する。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 61,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>gdp</th>\n",
-       "      <th>inv</th>\n",
-       "      <th>con</th>\n",
-       "      <th>pop</th>\n",
-       "      <th>id</th>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>2009</th>\n",
-       "      <td>200.0</td>\n",
-       "      <td>62.0</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>20.0</td>\n",
-       "      <td>b</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2010</th>\n",
-       "      <td>210.0</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>21.0</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "        gdp   inv  con   pop id\n",
-       "                               \n",
-       "2009  200.0  62.0  NaN  20.0  b\n",
-       "2010  210.0   NaN  NaN  21.0  a"
-      ]
-     },
-     "execution_count": 61,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "filter = df.isna().any(axis='columns')\n",
-    "df.loc[filter,:]"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
-   "source": [
-    "### 欠損値がある行の削除"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "欠損値がある全ての行を削除する。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 62,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>gdp</th>\n",
-       "      <th>inv</th>\n",
-       "      <th>con</th>\n",
-       "      <th>pop</th>\n",
-       "      <th>id</th>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>2000</th>\n",
-       "      <td>100.0</td>\n",
-       "      <td>20.0</td>\n",
-       "      <td>80.0</td>\n",
-       "      <td>8.0</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2001</th>\n",
-       "      <td>95.0</td>\n",
-       "      <td>25.0</td>\n",
-       "      <td>70.0</td>\n",
-       "      <td>9.0</td>\n",
-       "      <td>b</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2002</th>\n",
-       "      <td>93.0</td>\n",
-       "      <td>21.0</td>\n",
-       "      <td>72.0</td>\n",
-       "      <td>10.0</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2003</th>\n",
-       "      <td>100.0</td>\n",
-       "      <td>30.0</td>\n",
-       "      <td>70.0</td>\n",
-       "      <td>11.0</td>\n",
-       "      <td>b</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2004</th>\n",
-       "      <td>110.0</td>\n",
-       "      <td>39.0</td>\n",
-       "      <td>71.0</td>\n",
-       "      <td>12.0</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2005</th>\n",
-       "      <td>115.0</td>\n",
-       "      <td>55.0</td>\n",
-       "      <td>60.0</td>\n",
-       "      <td>14.0</td>\n",
-       "      <td>b</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2006</th>\n",
-       "      <td>113.0</td>\n",
-       "      <td>50.0</td>\n",
-       "      <td>63.0</td>\n",
-       "      <td>15.0</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2007</th>\n",
-       "      <td>118.0</td>\n",
-       "      <td>53.0</td>\n",
-       "      <td>65.0</td>\n",
-       "      <td>17.0</td>\n",
-       "      <td>b</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2008</th>\n",
-       "      <td>119.0</td>\n",
-       "      <td>60.0</td>\n",
-       "      <td>59.0</td>\n",
-       "      <td>18.0</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "        gdp   inv   con   pop id\n",
-       "                                \n",
-       "2000  100.0  20.0  80.0   8.0  a\n",
-       "2001   95.0  25.0  70.0   9.0  b\n",
-       "2002   93.0  21.0  72.0  10.0  a\n",
-       "2003  100.0  30.0  70.0  11.0  b\n",
-       "2004  110.0  39.0  71.0  12.0  a\n",
-       "2005  115.0  55.0  60.0  14.0  b\n",
-       "2006  113.0  50.0  63.0  15.0  a\n",
-       "2007  118.0  53.0  65.0  17.0  b\n",
-       "2008  119.0  60.0  59.0  18.0  a"
-      ]
-     },
-     "execution_count": 62,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "df.dropna()"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "このメソッドは，欠損値を削除するとどうなるかを示すだけであり`df`自体は影響は受けない。`df`自体から`NaN`がある行を削除する場合は`inplace=True`のオプション（デフォルトでは`False`になっている）を加えて\n",
-    "```\n",
-    "df.dropna(inplace=True)\n",
-    "```\n",
-    "とするか，削除後の`df`を`df`自体に代入する。\n",
-    "```\n",
-    "df = df.dropna()\n",
-    "```"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "ある列で`NaN`がある場合のみ行を削除する。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 63,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>gdp</th>\n",
-       "      <th>inv</th>\n",
-       "      <th>con</th>\n",
-       "      <th>pop</th>\n",
-       "      <th>id</th>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>2000</th>\n",
-       "      <td>100.0</td>\n",
-       "      <td>20.0</td>\n",
-       "      <td>80.0</td>\n",
-       "      <td>8.0</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2001</th>\n",
-       "      <td>95.0</td>\n",
-       "      <td>25.0</td>\n",
-       "      <td>70.0</td>\n",
-       "      <td>9.0</td>\n",
-       "      <td>b</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2002</th>\n",
-       "      <td>93.0</td>\n",
-       "      <td>21.0</td>\n",
-       "      <td>72.0</td>\n",
-       "      <td>10.0</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2003</th>\n",
-       "      <td>100.0</td>\n",
-       "      <td>30.0</td>\n",
-       "      <td>70.0</td>\n",
-       "      <td>11.0</td>\n",
-       "      <td>b</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2004</th>\n",
-       "      <td>110.0</td>\n",
-       "      <td>39.0</td>\n",
-       "      <td>71.0</td>\n",
-       "      <td>12.0</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2005</th>\n",
-       "      <td>115.0</td>\n",
-       "      <td>55.0</td>\n",
-       "      <td>60.0</td>\n",
-       "      <td>14.0</td>\n",
-       "      <td>b</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2006</th>\n",
-       "      <td>113.0</td>\n",
-       "      <td>50.0</td>\n",
-       "      <td>63.0</td>\n",
-       "      <td>15.0</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2007</th>\n",
-       "      <td>118.0</td>\n",
-       "      <td>53.0</td>\n",
-       "      <td>65.0</td>\n",
-       "      <td>17.0</td>\n",
-       "      <td>b</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2008</th>\n",
-       "      <td>119.0</td>\n",
-       "      <td>60.0</td>\n",
-       "      <td>59.0</td>\n",
-       "      <td>18.0</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2009</th>\n",
-       "      <td>200.0</td>\n",
-       "      <td>62.0</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>20.0</td>\n",
-       "      <td>b</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "        gdp   inv   con   pop id\n",
-       "                                \n",
-       "2000  100.0  20.0  80.0   8.0  a\n",
-       "2001   95.0  25.0  70.0   9.0  b\n",
-       "2002   93.0  21.0  72.0  10.0  a\n",
-       "2003  100.0  30.0  70.0  11.0  b\n",
-       "2004  110.0  39.0  71.0  12.0  a\n",
-       "2005  115.0  55.0  60.0  14.0  b\n",
-       "2006  113.0  50.0  63.0  15.0  a\n",
-       "2007  118.0  53.0  65.0  17.0  b\n",
-       "2008  119.0  60.0  59.0  18.0  a\n",
-       "2009  200.0  62.0   NaN  20.0  b"
-      ]
-     },
-     "execution_count": 63,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "df.dropna(subset=['inv'])"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "（注意）オプション`subset=`にあは削除する列が一つであってもリスト`[]`で指定する。"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
-   "source": [
-    "## 並び替え"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "`df`を`gdp`の昇順に並び替える。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 64,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>gdp</th>\n",
-       "      <th>inv</th>\n",
-       "      <th>con</th>\n",
-       "      <th>pop</th>\n",
-       "      <th>id</th>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "      <th></th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>2002</th>\n",
-       "      <td>93.0</td>\n",
-       "      <td>21.0</td>\n",
-       "      <td>72.0</td>\n",
-       "      <td>10.0</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2001</th>\n",
-       "      <td>95.0</td>\n",
-       "      <td>25.0</td>\n",
-       "      <td>70.0</td>\n",
-       "      <td>9.0</td>\n",
-       "      <td>b</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2000</th>\n",
-       "      <td>100.0</td>\n",
-       "      <td>20.0</td>\n",
-       "      <td>80.0</td>\n",
-       "      <td>8.0</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2003</th>\n",
-       "      <td>100.0</td>\n",
-       "      <td>30.0</td>\n",
-       "      <td>70.0</td>\n",
-       "      <td>11.0</td>\n",
-       "      <td>b</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2004</th>\n",
-       "      <td>110.0</td>\n",
-       "      <td>39.0</td>\n",
-       "      <td>71.0</td>\n",
-       "      <td>12.0</td>\n",
-       "      <td>a</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "        gdp   inv   con   pop id\n",
-       "                                \n",
-       "2002   93.0  21.0  72.0  10.0  a\n",
-       "2001   95.0  25.0  70.0   9.0  b\n",
-       "2000  100.0  20.0  80.0   8.0  a\n",
-       "2003  100.0  30.0  70.0  11.0  b\n",
-       "2004  110.0  39.0  71.0  12.0  a"
-      ]
-     },
-     "execution_count": 64,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "df.sort_values('gdp').head()"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "降順の場合"
    ]
   },
   {
@@ -5258,7 +4941,579 @@
        "      <th>id</th>\n",
        "    </tr>\n",
        "    <tr>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2009</th>\n",
+       "      <td>200.0</td>\n",
+       "      <td>62.0</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>20.0</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2010</th>\n",
+       "      <td>210.0</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>21.0</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "        gdp   inv  con   pop id\n",
+       "year                           \n",
+       "2009  200.0  62.0  NaN  20.0  b\n",
+       "2010  210.0   NaN  NaN  21.0  a"
+      ]
+     },
+     "execution_count": 65,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "filter = df.isna().any(axis='columns')\n",
+    "df.loc[filter,:]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "これで`NaN`がある行を抽出することができる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 欠損値がある行の削除"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "欠損値がある全ての行を削除する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 66,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>gdp</th>\n",
+       "      <th>inv</th>\n",
+       "      <th>con</th>\n",
+       "      <th>pop</th>\n",
+       "      <th>id</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>year</th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2000</th>\n",
+       "      <td>100.0</td>\n",
+       "      <td>20.0</td>\n",
+       "      <td>80.0</td>\n",
+       "      <td>8.0</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2001</th>\n",
+       "      <td>95.0</td>\n",
+       "      <td>25.0</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>9.0</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2002</th>\n",
+       "      <td>93.0</td>\n",
+       "      <td>21.0</td>\n",
+       "      <td>72.0</td>\n",
+       "      <td>10.0</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2003</th>\n",
+       "      <td>100.0</td>\n",
+       "      <td>30.0</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>11.0</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2004</th>\n",
+       "      <td>110.0</td>\n",
+       "      <td>39.0</td>\n",
+       "      <td>71.0</td>\n",
+       "      <td>12.0</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2005</th>\n",
+       "      <td>115.0</td>\n",
+       "      <td>55.0</td>\n",
+       "      <td>60.0</td>\n",
+       "      <td>14.0</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2006</th>\n",
+       "      <td>113.0</td>\n",
+       "      <td>50.0</td>\n",
+       "      <td>63.0</td>\n",
+       "      <td>15.0</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2007</th>\n",
+       "      <td>118.0</td>\n",
+       "      <td>53.0</td>\n",
+       "      <td>65.0</td>\n",
+       "      <td>17.0</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2008</th>\n",
+       "      <td>119.0</td>\n",
+       "      <td>60.0</td>\n",
+       "      <td>59.0</td>\n",
+       "      <td>18.0</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "        gdp   inv   con   pop id\n",
+       "year                            \n",
+       "2000  100.0  20.0  80.0   8.0  a\n",
+       "2001   95.0  25.0  70.0   9.0  b\n",
+       "2002   93.0  21.0  72.0  10.0  a\n",
+       "2003  100.0  30.0  70.0  11.0  b\n",
+       "2004  110.0  39.0  71.0  12.0  a\n",
+       "2005  115.0  55.0  60.0  14.0  b\n",
+       "2006  113.0  50.0  63.0  15.0  a\n",
+       "2007  118.0  53.0  65.0  17.0  b\n",
+       "2008  119.0  60.0  59.0  18.0  a"
+      ]
+     },
+     "execution_count": 66,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.dropna()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "このメソッドは，欠損値を削除するとどうなるかを示すだけであり`df`自体は影響は受けない。`df`自体から`NaN`がある行を削除する場合は`inplace=True`のオプション（デフォルトでは`False`になっている）を加えて\n",
+    "```\n",
+    "df.dropna(inplace=True)\n",
+    "```\n",
+    "とするか，削除後の`df`を`df`自体に代入する。\n",
+    "```\n",
+    "df = df.dropna()\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "ある列で`NaN`がある場合のみ行を削除する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 67,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>gdp</th>\n",
+       "      <th>inv</th>\n",
+       "      <th>con</th>\n",
+       "      <th>pop</th>\n",
+       "      <th>id</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>year</th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2000</th>\n",
+       "      <td>100.0</td>\n",
+       "      <td>20.0</td>\n",
+       "      <td>80.0</td>\n",
+       "      <td>8.0</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2001</th>\n",
+       "      <td>95.0</td>\n",
+       "      <td>25.0</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>9.0</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2002</th>\n",
+       "      <td>93.0</td>\n",
+       "      <td>21.0</td>\n",
+       "      <td>72.0</td>\n",
+       "      <td>10.0</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2003</th>\n",
+       "      <td>100.0</td>\n",
+       "      <td>30.0</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>11.0</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2004</th>\n",
+       "      <td>110.0</td>\n",
+       "      <td>39.0</td>\n",
+       "      <td>71.0</td>\n",
+       "      <td>12.0</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2005</th>\n",
+       "      <td>115.0</td>\n",
+       "      <td>55.0</td>\n",
+       "      <td>60.0</td>\n",
+       "      <td>14.0</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2006</th>\n",
+       "      <td>113.0</td>\n",
+       "      <td>50.0</td>\n",
+       "      <td>63.0</td>\n",
+       "      <td>15.0</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2007</th>\n",
+       "      <td>118.0</td>\n",
+       "      <td>53.0</td>\n",
+       "      <td>65.0</td>\n",
+       "      <td>17.0</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2008</th>\n",
+       "      <td>119.0</td>\n",
+       "      <td>60.0</td>\n",
+       "      <td>59.0</td>\n",
+       "      <td>18.0</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2009</th>\n",
+       "      <td>200.0</td>\n",
+       "      <td>62.0</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>20.0</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "        gdp   inv   con   pop id\n",
+       "year                            \n",
+       "2000  100.0  20.0  80.0   8.0  a\n",
+       "2001   95.0  25.0  70.0   9.0  b\n",
+       "2002   93.0  21.0  72.0  10.0  a\n",
+       "2003  100.0  30.0  70.0  11.0  b\n",
+       "2004  110.0  39.0  71.0  12.0  a\n",
+       "2005  115.0  55.0  60.0  14.0  b\n",
+       "2006  113.0  50.0  63.0  15.0  a\n",
+       "2007  118.0  53.0  65.0  17.0  b\n",
+       "2008  119.0  60.0  59.0  18.0  a\n",
+       "2009  200.0  62.0   NaN  20.0  b"
+      ]
+     },
+     "execution_count": 67,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.dropna(subset=['inv'])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "（注意）オプション`subset=`には削除する列が１つであってもリスト`[]`で指定する。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## 並び替え"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`df`を`gdp`の昇順に並び替える。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 68,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>gdp</th>\n",
+       "      <th>inv</th>\n",
+       "      <th>con</th>\n",
+       "      <th>pop</th>\n",
+       "      <th>id</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>year</th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2002</th>\n",
+       "      <td>93.0</td>\n",
+       "      <td>21.0</td>\n",
+       "      <td>72.0</td>\n",
+       "      <td>10.0</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2001</th>\n",
+       "      <td>95.0</td>\n",
+       "      <td>25.0</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>9.0</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2000</th>\n",
+       "      <td>100.0</td>\n",
+       "      <td>20.0</td>\n",
+       "      <td>80.0</td>\n",
+       "      <td>8.0</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2003</th>\n",
+       "      <td>100.0</td>\n",
+       "      <td>30.0</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>11.0</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2004</th>\n",
+       "      <td>110.0</td>\n",
+       "      <td>39.0</td>\n",
+       "      <td>71.0</td>\n",
+       "      <td>12.0</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "        gdp   inv   con   pop id\n",
+       "year                            \n",
+       "2002   93.0  21.0  72.0  10.0  a\n",
+       "2001   95.0  25.0  70.0   9.0  b\n",
+       "2000  100.0  20.0  80.0   8.0  a\n",
+       "2003  100.0  30.0  70.0  11.0  b\n",
+       "2004  110.0  39.0  71.0  12.0  a"
+      ]
+     },
+     "execution_count": 68,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.sort_values('gdp').head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "降順の場合"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 69,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>gdp</th>\n",
+       "      <th>inv</th>\n",
+       "      <th>con</th>\n",
+       "      <th>pop</th>\n",
+       "      <th>id</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -5313,7 +5568,7 @@
       ],
       "text/plain": [
        "        gdp   inv   con   pop id\n",
-       "                                \n",
+       "year                            \n",
        "2010  210.0   NaN   NaN  21.0  a\n",
        "2009  200.0  62.0   NaN  20.0  b\n",
        "2008  119.0  60.0  59.0  18.0  a\n",
@@ -5321,7 +5576,7 @@
        "2005  115.0  55.0  60.0  14.0  b"
       ]
      },
-     "execution_count": 65,
+     "execution_count": 69,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -5341,7 +5596,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 66,
+   "execution_count": 70,
    "metadata": {
     "hidden": true
    },
@@ -5374,7 +5629,7 @@
        "      <th>id</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -5429,7 +5684,7 @@
       ],
       "text/plain": [
        "        gdp   inv   con   pop id\n",
-       "                                \n",
+       "year                            \n",
        "2002   93.0  21.0  72.0  10.0  a\n",
        "2000  100.0  20.0  80.0   8.0  a\n",
        "2004  110.0  39.0  71.0  12.0  a\n",
@@ -5437,7 +5692,7 @@
        "2008  119.0  60.0  59.0  18.0  a"
       ]
      },
-     "execution_count": 66,
+     "execution_count": 70,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -5449,15 +5704,24 @@
   {
    "cell_type": "markdown",
    "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "ここでは`id`に従って先に並び替えられ，その後に`gdp`に従って並び替えられている。`ascending`は昇順（`True`）か降順（`False`）かを指定する引数であり，`['id','gdp']`と`ascending=['True','False']`の順番が対応している。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
     "heading_collapsed": true
    },
    "source": [
-    "## `DataFrame`の結合"
+    "## DataFrameの結合"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 67,
+   "execution_count": 71,
    "metadata": {
     "hidden": true
    },
@@ -5471,7 +5735,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 68,
+   "execution_count": 72,
    "metadata": {
     "hidden": true
    },
@@ -5624,7 +5888,7 @@
        "10  2010  210   NaN   NaN   21  a"
       ]
      },
-     "execution_count": 68,
+     "execution_count": 72,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -5635,7 +5899,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 69,
+   "execution_count": 73,
    "metadata": {
     "hidden": true
    },
@@ -5731,7 +5995,7 @@
        "7  2004  110    0"
       ]
      },
-     "execution_count": 69,
+     "execution_count": 73,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -5742,7 +6006,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 70,
+   "execution_count": 74,
    "metadata": {
     "hidden": true
    },
@@ -5815,7 +6079,7 @@
        "2  2015  220   80  140   24  b"
       ]
      },
-     "execution_count": 70,
+     "execution_count": 74,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -5827,6 +6091,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
+    "heading_collapsed": true,
     "hidden": true
    },
    "source": [
@@ -5839,7 +6104,7 @@
     "hidden": true
    },
    "source": [
-    "`merge()`以外にも結合に使える関数はあるが，ここでは`merge()`のみを考える。また`merge()`を勧める。\n",
+    "`merge()`以外にも結合に使える関数はあるが，ここでは`merge()`のみを考える。\n",
     "\n",
     "`df1`を「左」，`df2`を「右」に横結合する。\n",
     "```\n",
@@ -5853,10 +6118,10 @@
     "    * 複数指定も可\n",
     "    * デフォルトは`None`\n",
     "* `how`は`on`で指定した基準列に基づいてどのように結合するかを指定\n",
-    "    * `inner`：`df1`と`df2`の両方の基準列ある行だけを残す（デフォルト）\n",
-    "    * `left`：`df1`の行は全て残し，`df2`のマッチする行のセルに値がない場合は`NaN`を入れる\n",
-    "    * `right`：`df2`の行は全て残し，`df1`のマッチする行のセルに値がない場合は`NaN`を入れる\n",
-    "    * `outer`：`df1`と`df2`の両方の行を残し，セルに値がない場合は`NaN`を入れる\n",
+    "    * `inner`：`df1`と`df2`の両方の基準列ある行だけを残す（デフォルト）。\n",
+    "    * `left`：`df1`の行は全て残し，`df2`にマッチする行がない場合は`NaN`を入れる。\n",
+    "    * `right`：`df2`の行は全て残し，`df1`にマッチする行がない場合は`NaN`を入れる。\n",
+    "    * `outer`：`df1`と`df2`の両方の行を残し，マッチする行がない場合は`NaN`を入れる。\n",
     "\n",
     "\n",
     "（コメント）\n",
@@ -5867,7 +6132,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 71,
+   "execution_count": 75,
    "metadata": {
     "hidden": true
    },
@@ -5972,7 +6237,7 @@
        "4  2004  110  39.0  71.0   12  a  110    0"
       ]
      },
-     "execution_count": 71,
+     "execution_count": 75,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -5983,7 +6248,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 72,
+   "execution_count": 76,
    "metadata": {
     "hidden": true
    },
@@ -6160,7 +6425,7 @@
        "10  2010  210   NaN   NaN   21  a    NaN  NaN"
       ]
      },
-     "execution_count": 72,
+     "execution_count": 76,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -6171,7 +6436,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 73,
+   "execution_count": 77,
    "metadata": {
     "hidden": true
    },
@@ -6312,7 +6577,7 @@
        "7  1997    NaN   NaN   NaN   NaN  NaN   96    1"
       ]
      },
-     "execution_count": 73,
+     "execution_count": 77,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -6323,7 +6588,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 74,
+   "execution_count": 78,
    "metadata": {
     "hidden": true
    },
@@ -6536,7 +6801,7 @@
        "13  1997    NaN   NaN   NaN   NaN  NaN   96.0  1.0"
       ]
      },
-     "execution_count": 74,
+     "execution_count": 78,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -6548,6 +6813,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
+    "heading_collapsed": true,
     "hidden": true
    },
    "source": [
@@ -6567,7 +6833,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 75,
+   "execution_count": 79,
    "metadata": {
     "hidden": true
    },
@@ -6578,7 +6844,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 76,
+   "execution_count": 80,
    "metadata": {
     "hidden": true
    },
@@ -6671,7 +6937,7 @@
        "2   2015  220  80.0  140.0   24  b"
       ]
      },
-     "execution_count": 76,
+     "execution_count": 80,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -6710,7 +6976,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 77,
+   "execution_count": 81,
    "metadata": {
     "hidden": true
    },
@@ -6908,7 +7174,7 @@
        "13      2  2015  220  80.0  140.0   24  b"
       ]
      },
-     "execution_count": 77,
+     "execution_count": 81,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -6928,7 +7194,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 78,
+   "execution_count": 82,
    "metadata": {
     "hidden": true
    },
@@ -7021,7 +7287,7 @@
        "4  2004  110  39.0  71.0   12  a"
       ]
      },
-     "execution_count": 78,
+     "execution_count": 82,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -7059,7 +7325,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 79,
+   "execution_count": 83,
    "metadata": {
     "hidden": true
    },
@@ -7152,7 +7418,7 @@
        "4  2004  110  39.0  71.0       12      a"
       ]
      },
-     "execution_count": 79,
+     "execution_count": 83,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -7194,7 +7460,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 80,
+   "execution_count": 84,
    "metadata": {
     "hidden": true
    },
@@ -7287,7 +7553,7 @@
        "4  71.0  110  a  39.0   12  2004"
       ]
      },
-     "execution_count": 80,
+     "execution_count": 84,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -7327,7 +7593,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 81,
+   "execution_count": 85,
    "metadata": {
     "hidden": true
    },
@@ -7420,13 +7686,14 @@
        "4  a  2004  110  71.0  39.0   12"
       ]
      },
-     "execution_count": 81,
+     "execution_count": 85,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
     "var = ['id','year','gdp','con','inv','pop']\n",
+    "\n",
     "df13.loc[:,var].head()"
    ]
   },
@@ -7451,7 +7718,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 82,
+   "execution_count": 86,
    "metadata": {
     "hidden": true
    },
@@ -7544,7 +7811,7 @@
        "4  a  2004  110  71.0  39.0   12"
       ]
      },
-     "execution_count": 82,
+     "execution_count": 86,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -7574,7 +7841,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 83,
+   "execution_count": 87,
    "metadata": {
     "hidden": true
    },
@@ -7667,7 +7934,7 @@
        "4  a  2004  110  71.0  39.0   12"
       ]
      },
-     "execution_count": 83,
+     "execution_count": 87,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -7683,7 +7950,7 @@
     "hidden": true
    },
    "source": [
-    "##### 方法４の応用"
+    "##### 方法３の応用"
    ]
   },
   {
@@ -7702,7 +7969,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 84,
+   "execution_count": 88,
    "metadata": {
     "hidden": true
    },
@@ -7735,7 +8002,7 @@
        "      <th>con</th>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th></th>\n",
+       "      <th>year</th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
        "      <th></th>\n",
@@ -7790,7 +8057,7 @@
       ],
       "text/plain": [
        "     id  year    gdp   inv   con\n",
-       "                                \n",
+       "year                            \n",
        "2000  a   NaN  100.0  20.0  80.0\n",
        "2001  b   NaN   95.0  25.0  70.0\n",
        "2002  a   NaN   93.0  21.0  72.0\n",
@@ -7798,25 +8065,18 @@
        "2004  a   NaN  110.0  39.0  71.0"
       ]
      },
-     "execution_count": 84,
+     "execution_count": 88,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
     "col = df13.columns.tolist()\n",
+    "\n",
     "new_col = [col[-1]]+col[0:-2]\n",
+    "\n",
     "df.reindex(columns=new_col).head()"
    ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [],
-   "source": []
   }
  ],
  "metadata": {
