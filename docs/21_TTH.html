@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>１. Pythonの基礎 &#8212; Pythonで学ぶ入門計量経済学</title>
+    <title>制限従属変数モデル &#8212; Pythonで学ぶ入門計量経済学</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
@@ -29,21 +29,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="canonical" href="https://haruyama-kobeu.github.io/book_etrics/docs/part_1.html" />
+    <link rel="canonical" href="https://haruyama-kobeu.github.io/book_etrics/docs/21_TTH.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ツールのインストールと説明" href="0_Preparations.html" />
-    <link rel="prev" title="Pythonで学ぶ入門計量経済学" href="index.html" />
+    <link rel="next" title="３. 番外編" href="part_3.html" />
+    <link rel="prev" title="離散選択モデル" href="20_LogitProbit.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
 
 
 <!-- Opengraph tags -->
-<meta property="og:url"         content="https://haruyama-kobeu.github.io/book_etrics/docs/part_1.html" />
+<meta property="og:url"         content="https://haruyama-kobeu.github.io/book_etrics/docs/21_TTH.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="１. <code class="docutils literal notranslate"><span class="pre">Python</span></code>の基礎" />
-<meta property="og:description" content="１. Pythonの基礎  内容  ツールのインストールと説明  PythonやGitなど使用するアプリのインストール及び使い方を簡単に説明する。  Pythonの基礎  基本となる概念や文法などについて解説する。  NumPy  数値計算には欠かせないパッケージ。  Pandas  データ分析で多用するパッケージ。 " />
+<meta property="og:title"       content="制限従属変数モデル" />
+<meta property="og:description" content="制限従属変数モデル" />
 
 
 <meta name="twitter:card" content="summary">
@@ -75,34 +75,58 @@
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   
   <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="part_1.html">１. Pythonの基礎</a>
+  </li>
   <li class="active">
-    <a href="">１. Pythonの基礎</a>
+    <a href="part_2.html">２. Pythonを使った計量経済分析</a>
   <ul class="nav sidenav_l2">
     <li class="">
-      <a href="0_Preparations.html">ツールのインストールと説明</a>
+      <a href="7_Review_of_Statistics.html">統計学の簡単な復習</a>
     </li>
     <li class="">
-      <a href="1_Python_Basics.html">Pythonの基礎</a>
+      <a href="8_Simple_Regression.html">単回帰分析</a>
     </li>
     <li class="">
-      <a href="2_NumPy.html">NumPy</a>
+      <a href="9_Multiple_Regression.html">重回帰分析</a>
     </li>
     <li class="">
-      <a href="3_Pandas.html">Pandas</a>
+      <a href="10_Residuals.html">残差診断</a>
     </li>
     <li class="">
-      <a href="4_Matplotlib.html">Matplotlib</a>
+      <a href="11_Inference.html">推論</a>
     </li>
     <li class="">
-      <a href="5_SciPy_stats.html">SciPy.stats</a>
+      <a href="12_Asymptotics.html">大標本特性</a>
     </li>
     <li class="">
-      <a href="6_things_to_note.html">Tipsと注意点</a>
+      <a href="13_Dummies.html">質的変数と回帰分析</a>
+    </li>
+    <li class="">
+      <a href="14_Heteroskedasticity.html">不均一分散</a>
+    </li>
+    <li class="">
+      <a href="15_Pooling.html">プーリング・データとパネル・データ</a>
+    </li>
+    <li class="">
+      <a href="16_linearmodels.html">linearmodels</a>
+    </li>
+    <li class="">
+      <a href="17_Panel.html">パネル・データ分析</a>
+    </li>
+    <li class="">
+      <a href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a>
+    </li>
+    <li class="">
+      <a href="19_IV2SLS.html">操作変数法と２段階OLS</a>
+    </li>
+    <li class="">
+      <a href="20_LogitProbit.html">離散選択モデル</a>
+    </li>
+    <li class="active">
+      <a href="">制限従属変数モデル</a>
     </li>
   </ul>
-  </li>
-  <li class="">
-    <a href="part_2.html">２. Pythonを使った計量経済分析</a>
   </li>
   <li class="">
     <a href="part_3.html">３. 番外編</a>
@@ -144,7 +168,7 @@
                 <!-- ipynb file if we had a myst markdown file -->
                 
                 <!-- Download raw file -->
-                <a class="dropdown-buttons" href="../_sources/docs/part_1.md.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.md</button></a>
+                <a class="dropdown-buttons" href="../_sources/docs/21_TTH.md.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.md</button></a>
                 <!-- Download PDF via print -->
                 <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
             </div>
@@ -157,7 +181,7 @@
             <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
             <div class="dropdown-buttons sourcebuttons">
                 <a class="repository-button" href="https://github.com/Haruyama-KobeU/book_etrics/"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left" title="Source repository"><i class="fab fa-github"></i>repository</button></a>
-                <a class="issues-button" href="https://github.com/Haruyama-KobeU/book_etrics//issues/new?title=Issue%20on%20page%20%2Fdocs/part_1.html&body=Your%20issue%20content%20here."><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left" title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+                <a class="issues-button" href="https://github.com/Haruyama-KobeU/book_etrics//issues/new?title=Issue%20on%20page%20%2Fdocs/21_TTH.html&body=Your%20issue%20content%20here."><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left" title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
                 
             </div>
         </div>
@@ -172,7 +196,7 @@
             <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
             <div class="dropdown-buttons">
                 
-                <a class="binder-button" href="https://mybinder.org/v2/gh/Haruyama-KobeU/book_etrics/master?urlpath=tree/docs/part_1.md"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                <a class="binder-button" href="https://mybinder.org/v2/gh/Haruyama-KobeU/book_etrics/master?urlpath=tree/docs/21_TTH.md"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
                 
                 
                 
@@ -196,48 +220,8 @@
         
               <div>
                 
-  <div class="section" id="python">
-<h1>１. <code class="docutils literal notranslate"><span class="pre">Python</span></code>の基礎<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h1>
-<p><strong>内容</strong></p>
-<ol class="simple">
-<li><p><a class="reference internal" href="0_Preparations.html"><span class="doc">ツールのインストールと説明</span></a></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">Python</span></code>や<code class="docutils literal notranslate"><span class="pre">Git</span></code>など使用するアプリのインストール及び使い方を簡単に説明する。</p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="1_Python_Basics.html"><span class="doc">Pythonの基礎</span></a></p>
-<ul class="simple">
-<li><p>基本となる概念や文法などについて解説する。</p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="2_NumPy.html"><span class="doc">NumPy</span></a></p>
-<ul class="simple">
-<li><p>数値計算には欠かせないパッケージ。</p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="3_Pandas.html"><span class="doc">Pandas</span></a></p>
-<ul class="simple">
-<li><p>データ分析で多用するパッケージ。</p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="4_Matplotlib.html"><span class="doc">Matplotlib</span></a></p>
-<ul class="simple">
-<li><p>データを様々な形で図示できるパッケージ。</p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="5_SciPy_stats.html"><span class="doc">SciPy.stats</span></a></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">scipy</span></code>は科学技術計算には必須なパッケージであり、そのサブパッケージである<code class="docutils literal notranslate"><span class="pre">stats</span></code>の使い方を説明する。</p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="6_things_to_note.html"><span class="doc">Tipsと注意点</span></a></p>
-<ul class="simple">
-<li><p>コードを書く上で役に立つ点をまとめる。</p></li>
-</ul>
-</li>
-</ol>
-<div class="toctree-wrapper compound">
-</div>
+  <div class="section" id="id1">
+<h1>制限従属変数モデル<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -249,8 +233,8 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="index.html" title="previous page">Pythonで学ぶ入門計量経済学</a>
-    <a class='right-next' id="next-link" href="0_Preparations.html" title="next page">ツールのインストールと説明</a>
+    <a class='left-prev' id="prev-link" href="20_LogitProbit.html" title="previous page">離散選択モデル</a>
+    <a class='right-next' id="next-link" href="part_3.html" title="next page">３. 番外編</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
