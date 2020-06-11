@@ -327,7 +327,7 @@
 <span class="kn">import</span> <span class="nn">wooldridge</span>
 <span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jit</span><span class="p">,</span> <span class="n">njit</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">uniform</span><span class="p">,</span> <span class="n">gaussian_kde</span><span class="p">,</span> <span class="n">multivariate_normal</span>
 <span class="kn">from</span> <span class="nn">statsmodels.stats.outliers_influence</span> <span class="kn">import</span> <span class="n">variance_inflation_factor</span> <span class="k">as</span> <span class="n">vif</span>
 <span class="kn">from</span> <span class="nn">pandas.plotting</span> <span class="kn">import</span> <span class="n">scatter_matrix</span>
@@ -1071,7 +1071,7 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([1.85346733, 1.89669428, 2.90064737])
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([1.74753321, 1.91128581, 2.96664531])
 </pre></div>
 </div>
 </div>
@@ -1092,9 +1092,9 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.853467
-X1           1.896694
-X2           2.900647
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.747533
+X1           1.911286
+X2           2.966645
 dtype: float64
 </pre></div>
 </div>
@@ -1127,14 +1127,14 @@ dtype: float64
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>  <span class="c1"># 計算の高速化</span>
 <span class="k">def</span> <span class="nf">sim_unbias</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ</span>
 
-    <span class="c1"># 推定値を格納する空のlist</span>
-    <span class="n">b0hat_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">b1hat_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">b2hat_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># 推定値を格納するarray</span>
+    <span class="n">b0hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">b1hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">b2hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
     
     <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 定数項</span>
     
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N 回のループ</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N 回のループ</span>
         
         <span class="c1"># 標準正規分布</span>
         <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
@@ -1143,18 +1143,18 @@ dtype: float64
         <span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
         
         <span class="c1"># [1,10)の一様分布。`low=`，`high=`を付け加えるとエラーが発生する。</span>
-        <span class="n">x</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">x2</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
         
         <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="n">b2</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># 説明変数</span>
         
         <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">c</span><span class="p">,</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 説明変数の行列</span>
         <span class="n">bhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@X</span><span class="p">)</span><span class="o">@</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@y</span>  <span class="c1"># OLS推定</span>
         
-        <span class="n">b0hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bhat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">b1hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bhat</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">b2hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bhat</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">b0hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bhat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">b1hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bhat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">b2hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bhat</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         
-    <span class="k">return</span> <span class="n">b0hat_list</span><span class="p">,</span> <span class="n">b1hat_list</span><span class="p">,</span> <span class="n">b2hat_list</span>
+    <span class="k">return</span> <span class="n">b0hat_arr</span><span class="p">,</span> <span class="n">b1hat_arr</span><span class="p">,</span> <span class="n">b2hat_arr</span>
 </pre></div>
 </div>
 </div>
@@ -1177,9 +1177,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>b0: 0.9991098417363278 
-b1: 2.0004881392269844 
-b1: 2.999931664956034
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>b0: 0.99865167580851 
+b1: 2.0001861012564506 
+b1: 3.0000992455163207
 </pre></div>
 </div>
 </div>
@@ -1394,11 +1394,13 @@ exper 	 1.4776177726317783
                <span class="p">[</span><span class="n">m</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]]</span>  <span class="c1"># Cov(x1,x2)=m</span>
     
     <span class="c1"># 推定値を入れる空のリスト</span>
-    <span class="n">b0hat_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">b1hat_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">b2hat_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">b0hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">b1hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">b2hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
     
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N 回のループ</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 定数項</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N 回のループ</span>
         
         <span class="c1"># x1, x2の値の抽出</span>
         <span class="n">rv</span> <span class="o">=</span> <span class="n">multivariate_normal</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">rv_mean</span><span class="p">,</span> <span class="n">rv_cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># x1, x2,をnセット抽出</span>
@@ -1411,11 +1413,11 @@ exper 	 1.4776177726317783
         <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">c</span><span class="p">,</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 説明変数の行列</span>
         <span class="n">bhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@X</span><span class="p">)</span><span class="o">@</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@y</span>  <span class="c1"># OLS推定</span>
         
-        <span class="n">b0hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bhat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># b0hat_listへの追加</span>
-        <span class="n">b1hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bhat</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># b1hat_listへの追加</span>
-        <span class="n">b2hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bhat</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>  <span class="c1"># b2hat_listへの追加</span>
+        <span class="n">b0hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bhat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># b0hat_listへの追加</span>
+        <span class="n">b1hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bhat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># b1hat_listへの追加</span>
+        <span class="n">b2hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bhat</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># b2hat_listへの追加</span>
 
-    <span class="k">return</span> <span class="n">b0hat_list</span><span class="p">,</span> <span class="n">b1hat_list</span><span class="p">,</span> <span class="n">b2hat_list</span> <span class="c1"># 返り値の設定</span>
+    <span class="k">return</span> <span class="n">b0hat_arr</span><span class="p">,</span> <span class="n">b1hat_arr</span><span class="p">,</span> <span class="n">b2hat_arr</span> <span class="c1"># 返り値の設定</span>
 </pre></div>
 </div>
 </div>
@@ -1424,10 +1426,10 @@ exper 	 1.4776177726317783
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 多重共線性が弱いケース </span>
-<span class="n">b0hat_weak</span><span class="p">,</span> <span class="n">b1hat_weak</span><span class="p">,</span> <span class="n">b2hat_weak</span> <span class="o">=</span> <span class="n">sim_multi</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">b0hat_weak</span><span class="p">,</span> <span class="n">b1hat_weak</span><span class="p">,</span> <span class="n">b2hat_weak</span> <span class="o">=</span> <span class="n">sim_multi</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 
 <span class="c1"># 多重共線性が強いケース </span>
-<span class="n">b0hat_strong</span><span class="p">,</span> <span class="n">b1hat_strong</span><span class="p">,</span> <span class="n">b2hat_strong</span> <span class="o">=</span> <span class="n">sim_multi</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">b0hat_strong</span><span class="p">,</span> <span class="n">b1hat_strong</span><span class="p">,</span> <span class="n">b2hat_strong</span> <span class="o">=</span> <span class="n">sim_multi</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1465,7 +1467,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.03935688682224268, 0.1046922186513592)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.04018021763791369, 0.20263208696210327)
 </pre></div>
 </div>
 </div>
@@ -1489,11 +1491,11 @@ exper 	 1.4776177726317783
     <span class="n">rv_cov</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">m</span><span class="p">],</span>    <span class="c1"># 全ての変数の分散は１（対角成分）</span>
               <span class="p">[</span><span class="n">m</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]]</span>  <span class="c1"># Cov(x1,x2)=m</span>
     
-    <span class="c1"># 推定値を入れる空のリスト</span>
-    <span class="n">se_x1_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">se_x2_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># 推定値を入れるarray</span>
+    <span class="n">se_x1_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">se_x2_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N 回のループ</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N 回のループ</span>
         
         <span class="n">rv</span> <span class="o">=</span> <span class="n">multivariate_normal</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">rv_mean</span><span class="p">,</span> <span class="n">rv_cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># x1, x2,をnセット抽出</span>
         <span class="n">x1</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 説明変数</span>
@@ -1512,21 +1514,21 @@ exper 	 1.4776177726317783
         <span class="n">variance</span> <span class="o">=</span> <span class="n">sigma2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">XTX_1</span><span class="p">)</span>  <span class="c1"># bの分散</span>
         <span class="n">se</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">variance</span><span class="p">)</span>  <span class="c1"># bの標準誤差</span>
         
-        <span class="n">se_x1_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">se</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># リストに追加</span>
-        <span class="n">se_x2_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">se</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>  <span class="c1"># リストに追加</span>
+        <span class="n">se_x1_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">se</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># arrayに追加</span>
+        <span class="n">se_x2_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">se</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># array追加</span>
         
-    <span class="k">return</span> <span class="n">se_x1_list</span><span class="p">,</span> <span class="n">se_x2_list</span> <span class="c1"># 返り値の設定</span>
+    <span class="k">return</span> <span class="n">se_x1_arr</span><span class="p">,</span> <span class="n">se_x2_arr</span> <span class="c1"># 返り値の設定</span>
 
 
 <span class="c1"># 多重共線性が弱いケース </span>
 <span class="n">se_x1_weak</span><span class="p">,</span> <span class="n">se_x1_weak</span> <span class="o">=</span> <span class="n">sim_se</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 
 <span class="c1"># 多重共線性が強いケース </span>
-<span class="n">se_x1_strong</span><span class="p">,</span> <span class="n">se_x1_strong</span> <span class="o">=</span> <span class="n">sim_se</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">se_x1_strong</span><span class="p">,</span> <span class="n">se_x1_strong</span> <span class="o">=</span> <span class="n">sim_se</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
 
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">se_x1_weak</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Weak VIF&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">se_x1_strong</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Strong VIF&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">se_x1_weak</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Low VIF&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">se_x1_strong</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;High VIF&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Standard Error of x1&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Simulation rounds&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
@@ -1549,7 +1551,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.1940807440458489, 0.3223605063328621)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.19315699844117387, 0.4389977434492876)
 </pre></div>
 </div>
 </div>

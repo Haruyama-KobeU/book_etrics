@@ -461,8 +461,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.698185
-X            0.918599
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.571829
+X            0.953295
 dtype: float64
 </pre></div>
 </div>
@@ -482,8 +482,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    2.750319
-X            0.458697
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    3.163695
+X            0.650873
 dtype: float64
 </pre></div>
 </div>
@@ -861,7 +861,7 @@ Dep. Variable:                      y   Pseudo R-squ:                    0.000
 Model:                       Truncreg   Log-Likelihood:                 -619.9
 Method:            Maximum Likelihood   LL-Null:                        -619.9
 Date:                Thu, 11 Jun 2020   LL-Ratio:                         -0.0
-Time:                        09:34:45   LLR p-value:                       nan
+Time:                        17:28:09   LLR p-value:                       nan
 No. Observations:                1066   AIC:                            1241.8
 Df Residuals:                    1065   BIC:                            1246.7
 Df Model:                           0   Covariance Type:             nonrobust
@@ -1117,8 +1117,8 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.280629
-X            1.093789
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept   -0.109875
+X            0.975824
 dtype: float64
 </pre></div>
 </div>
@@ -1138,8 +1138,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.929443
-X            0.507359
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.459330
+X            0.475691
 dtype: float64
 </pre></div>
 </div>
@@ -1452,7 +1452,7 @@ Log(Sigma)     7.0229      0.037    189.514      0.000       6.950       7.096
 <h2>Heckitモデル<a class="headerlink" href="#heckit" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id17">
 <h3>説明<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">Heckit</span></code>モデルは<code class="docutils literal notranslate"><span class="pre">Tobit</span></code>モデルの拡張版であり，選択バイアス問題が疑われる場合に威力を発揮する。例を使って選択バイアス問題を説明する。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Heckit</span></code>モデルは切断回帰モデルの拡張版であり，選択バイアス問題が疑われる場合に威力を発揮する。例を使って選択バイアス問題を説明する。</p>
 <p>＜選択バイアス問題：例１＞</p>
 <p>日本全国の大学４年生にある試験（単位取得できるが必須ではない）を受けさせ，その平均点を使って卒業生全体の学力を測るとしよう。しかし，勉強時間が短い学生は受験しない傾向にあるとしよう。</p>
 <p>２つのシナリオ</p>
@@ -1631,7 +1631,7 @@ Dep. Variable:                    lwage   R-squared:                       0.156
 Model:                           Heckit   Adj. R-squared:                  0.150
 Method:                Heckman Two-Step   F-statistics:                   26.148
 Date:                  Thu, 11 Jun 2020   Prob (F-statistic):              0.000
-Time:                          09:35:11   Cov in 1st Stage:            nonrobust
+Time:                          17:28:35   Cov in 1st Stage:            nonrobust
 No. Total Obs.:                     753   Cov in 2nd Stage:                  HC1
 No. Censored Obs.:                  325                                         
 No. Uncensored Obs.:                428                                         
@@ -1756,7 +1756,7 @@ Dep. Variable:                      y   No. Observations:                  753
 Model:                         Probit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
 Date:                Thu, 11 Jun 2020   Pseudo R-squ.:                  0.2206
-Time:                        09:35:11   Log-Likelihood:                -401.30
+Time:                        17:28:35   Log-Likelihood:                -401.30
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 ==============================================================================
@@ -1825,9 +1825,7 @@ expersq       -0.0008      0.000     -1.931      0.053      -0.002    1.21e-05
          Current function value: 1.008409
          Iterations: 68
          Function evaluations: 122
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>==============================================================================
+==============================================================================
                  coef    std err          z      P&gt;|z|      [0.025      0.975]
 ------------------------------------------------------------------------------
 Intercept     -0.5220      0.202     -2.589      0.010      -0.917      -0.127

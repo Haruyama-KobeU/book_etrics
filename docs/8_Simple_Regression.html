@@ -972,7 +972,7 @@ Dep. Variable:                   wage   R-squared:                       0.165
 Model:                            OLS   Adj. R-squared:                  0.163
 Method:                 Least Squares   F-statistic:                     103.4
 Date:                Thu, 11 Jun 2020   Prob (F-statistic):           2.78e-22
-Time:                        09:38:00   Log-Likelihood:                -1385.7
+Time:                        17:29:30   Log-Likelihood:                -1385.7
 No. Observations:                 526   AIC:                             2775.
 Df Residuals:                     524   BIC:                             2784.
 Df Model:                           1                                         
@@ -1416,8 +1416,8 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.705241
-Y            0.474799
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.511386
+Y            0.504489
 dtype: float64
 </pre></div>
 </div>
@@ -1468,21 +1468,22 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.615728
-X            0.611734
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.788012
+X            0.546457
 dtype: float64
 </pre></div>
 </div>
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">b0</span></code>，<code class="docutils literal notranslate"><span class="pre">b1</span></code>，<code class="docutils literal notranslate"><span class="pre">su</span></code>変えて計算してみよう。</p>
-<p>次に，上で使った「手計算」を使った関数を考えよう。</p>
+<hr class="docutils" />
+<p>シミュレーションで同じ計算を数十万回おこなう場合，１回のシミュレーションに時間がかかり，それをどのように高速化するかが問題になる。その際，役に立つパッケージが<code class="docutils literal notranslate"><span class="pre">Numba</span></code>であり，１行のコードを追加するだけで計算を驚く程高速化できる。しかし<code class="docutils literal notranslate"><span class="pre">Numba</span></code>には「相性」の問題がある。例えば，上の関数<code class="docutils literal notranslate"><span class="pre">my_sim()</span></code>で使った<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>，<code class="docutils literal notranslate"><span class="pre">pandas</span></code>，<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>は<code class="docutils literal notranslate"><span class="pre">Numba</span></code>と相性が悪いが，<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>は非常に相性が良いのである。また，<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使う際，リストよりも<code class="docutils literal notranslate"><span class="pre">array</span></code>を使う方が少しでも高速化を図ることができることも覚えておくと良いだろう。以下では，<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使うために<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>を使う「手計算」による関数も考えることにする。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_sim_manual</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">b0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">b1</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">su</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># nを指定する，　他はデフォルトを設定</span>
     
-    <span class="n">x</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-    <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">su</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">su</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">u</span>
     
     <span class="n">var_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># 分散共分散行列</span>
@@ -1500,6 +1501,7 @@ dtype: float64
 </div>
 </div>
 </div>
+<p>ここで使った<code class="docutils literal notranslate"><span class="pre">np.random.normal()</span></code>について簡単に説明する。<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>にはランダム変数を生成する<code class="docutils literal notranslate"><span class="pre">random</span></code>というサブパッケージがあり，その中の<code class="docutils literal notranslate"><span class="pre">normal()</span></code>を使う。これは<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>の<code class="docutils literal notranslate"><span class="pre">norm.rvs()</span></code>と同じ引数を取り，同じ返り値を返す。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_sim_manual</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
@@ -1507,7 +1509,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.997386607805901, 0.467363018555013)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(1.4117414219716256, 0.3897916073770731)
 </pre></div>
 </div>
 </div>
@@ -1526,10 +1528,10 @@ dtype: float64
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>
 <span class="k">def</span> <span class="nf">my_sim_loop</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">b0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">b1</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">su</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>  <span class="c1"># nとN以外はデフォルトを指定</span>
     
-    <span class="n">b0hat_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># OLS推定量を入れる空リスト    </span>
-    <span class="n">b1hat_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># OLS推定量を入れる空リスト    </span>
+    <span class="n">b0hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># OLS推定量を入れるarray（0がN個並んでいる）</span>
+    <span class="n">b1hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># OLS推定量を入れるarray（0がN個並んでいる）</span>
     
-    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 定数項</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 定数項（1.がn個並んでいる）</span>
     
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N 回のループ</span>
         
@@ -1544,13 +1546,13 @@ dtype: float64
         <span class="n">avr_y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>      <span class="c1"># yの平均</span>
         <span class="n">avr_x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>      <span class="c1"># xの平均</span>
         
-        <span class="n">b1hat</span> <span class="o">=</span> <span class="n">cov_yx</span> <span class="o">/</span> <span class="n">var_x</span>  <span class="c1"># スロープ係数        </span>
-        <span class="n">b0hat</span> <span class="o">=</span> <span class="n">avr_y</span> <span class="o">-</span> <span class="n">b1hat</span><span class="o">*</span><span class="n">avr_x</span>  <span class="c1"># 定数項</span>
+        <span class="n">b1hat</span> <span class="o">=</span> <span class="n">cov_yx</span> <span class="o">/</span> <span class="n">var_x</span>  <span class="c1"># スロープ係数の推定値</span>
+        <span class="n">b0hat</span> <span class="o">=</span> <span class="n">avr_y</span> <span class="o">-</span> <span class="n">b1hat</span><span class="o">*</span><span class="n">avr_x</span>  <span class="c1"># 定数項の推定値</span>
 
-        <span class="n">b0hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b0hat</span><span class="p">)</span>  <span class="c1"># 定数項の値をリストに追加</span>
-        <span class="n">b1hat_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b1hat</span><span class="p">)</span>  <span class="c1"># スロープ係数の値をリストに追加</span>
+        <span class="n">b0hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">b0hat</span>  <span class="c1"># i番目に定数項の推定値をarrに追加</span>
+        <span class="n">b1hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">b1hat</span>  <span class="c1"># i番目にスロープ係数の推定値をarrに追加</span>
         
-    <span class="k">return</span> <span class="n">b0hat_list</span><span class="p">,</span> <span class="n">b1hat_list</span>  <span class="c1"># N回ループ終了後にタプルとして返すオブジェクト</span>
+    <span class="k">return</span> <span class="n">b0hat_arr</span><span class="p">,</span> <span class="n">b1hat_arr</span>  <span class="c1"># N回ループ終了後にarrayをタプルとして返すオブジェクト</span>
 </pre></div>
 </div>
 </div>
@@ -1571,6 +1573,10 @@ dtype: float64
 </div>
 </div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>初めて<code class="docutils literal notranslate"><span class="pre">my_sim_loop()</span></code>を実行すると<code class="docutils literal notranslate"><span class="pre">Numba</span></code>はコンパイルと呼ばれる高速化準備プロセスを経るため，<code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>がない場合と比べて実行スピードは早くない。２回目の実行から<code class="docutils literal notranslate"><span class="pre">Numba</span></code>の効果が発揮されることになる。</p>
+</div>
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>の分布</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1580,7 +1586,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8_Simple_Regression_125_0.png" src="../_images/8_Simple_Regression_125_0.png" />
+<img alt="../_images/8_Simple_Regression_127_0.png" src="../_images/8_Simple_Regression_127_0.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布</p>
@@ -1592,7 +1598,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8_Simple_Regression_127_0.png" src="../_images/8_Simple_Regression_127_0.png" />
+<img alt="../_images/8_Simple_Regression_129_0.png" src="../_images/8_Simple_Regression_129_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">y</span></code>の理論値を図示するが，図示の時間短縮のために<code class="docutils literal notranslate"><span class="pre">N</span></code>回のシミュレーション中の最初の<code class="docutils literal notranslate"><span class="pre">r</span></code>回の回帰線だけを表示する。</p>
@@ -1621,7 +1627,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8_Simple_Regression_131_0.png" src="../_images/8_Simple_Regression_131_0.png" />
+<img alt="../_images/8_Simple_Regression_133_0.png" src="../_images/8_Simple_Regression_133_0.png" />
 </div>
 </div>
 <p>上のコード・ブロックの最後から２行目に<code class="docutils literal notranslate"><span class="pre">f'{r}</span> <span class="pre">rounds</span> <span class="pre">of</span> <span class="pre">OLS</span> <span class="pre">simulation'</span></code>とある。文字列の前に<code class="docutils literal notranslate"><span class="pre">f</span></code>を置き、文字列の中で変数を<code class="docutils literal notranslate"><span class="pre">{}</span></code>で囲むと変数の値を代入してくれるのである。これを<code class="docutils literal notranslate"><span class="pre">f-string</span></code>と呼ぶ。</p>

@@ -433,8 +433,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([ 0.26487725, -0.55799413, -0.63185739,  0.52685827,  0.2922136 ,
-       -0.60239928, -0.53107351,  0.18844706,  1.6052621 , -0.64393287])
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([ 0.23921901, -0.6003346 ,  0.29414412,  0.58617912, -0.39776934,
+       -0.30825292, -0.25138202, -0.64886296, -0.25970929, -0.09911667])
 </pre></div>
 </div>
 </div>
@@ -462,7 +462,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.012259245716276637
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.0020329515782923813
 </pre></div>
 </div>
 </div>
@@ -507,21 +507,21 @@ u = pu_N+(1-p)u_c
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>  <span class="c1"># 計算の高速化</span>
 <span class="k">def</span> <span class="nf">sim_consistency</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     
-    <span class="n">b1_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># b1の推定値を格納する空のarray</span>
+    <span class="n">b1_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># b1の推定値を格納するarray</span>
 
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1">#  forループで N回シミュレーション</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1">#  forループで N回シミュレーション</span>
         
         <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 説明変数</span>
         
         <span class="c1"># 残差の生成（上で説明したもの）</span>
         <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
         
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
             <span class="n">prob</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># 正規分布の確率</span>
             <span class="n">dist_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">)</span>
             <span class="n">dist_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">chisquare</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
             <span class="n">error</span> <span class="o">=</span> <span class="n">prob</span><span class="o">*</span><span class="p">(</span><span class="n">dist_1</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">prob</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">dist_2</span><span class="p">)</span>
-            <span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">error</span>
+            <span class="n">u</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">error</span>
             
         <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># yの抽出</span>
         
@@ -530,7 +530,7 @@ u = pu_N+(1-p)u_c
         <span class="n">var_y</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># yの分散</span>
         <span class="n">var_x</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># xの分散        </span>
         <span class="n">b1hat</span> <span class="o">=</span> <span class="n">cov_yx</span> <span class="o">/</span> <span class="n">var_x</span>  <span class="c1"># スロープ係数       </span>
-        <span class="n">b1_arr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">b1hat</span>  <span class="c1"># スロープ係数を b1_arrに格納</span>
+        <span class="n">b1_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">b1hat</span>  <span class="c1"># スロープ係数を b1_arrに格納</span>
 
     <span class="k">return</span> <span class="n">b1_arr</span>   <span class="c1"># 推定値のリストを返す</span>
 </pre></div>
@@ -574,8 +574,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([-0.1940052 ,  0.20962252,  0.4525705 , ...,  0.51301246,
-        0.86625048,  0.36850365])
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([ 0.66603445, -0.28301967,  0.33075552, ...,  0.45455141,
+        0.79683466,  0.60071733])
 </pre></div>
 </div>
 </div>
@@ -786,28 +786,6 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sim_norm</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ</span>
-    
-    <span class="n">q1_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># q1を入れる空リスト</span>
-    
-    <span class="n">x</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># N回の推定に同じ説明変数を使う</span>
-
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N 回のループ</span>
-        
-        <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 誤差項</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># 説明変数</span>
-        
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">})</span>  <span class="c1"># DataFrameの作成</span>
-        
-        <span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLS推定</span>
-        <span class="n">b1hat</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># b1の推定量</span>
-        <span class="n">q1</span> <span class="o">=</span> <span class="p">(</span><span class="n">b1hat</span> <span class="o">-</span> <span class="n">b1</span><span class="p">)</span><span class="o">/</span><span class="n">res</span><span class="o">.</span><span class="n">bse</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># q1の値</span>
-    
-        <span class="n">q1_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">q1</span><span class="p">)</span>  <span class="c1"># t値をリストに追加</span>
-    
-    <span class="k">return</span> <span class="n">q1_list</span>  <span class="c1"># 返り値の設定</span>
-</pre></div>
-</div>
 <p><span class="math notranslate nohighlight">\(n=5,\;10,\;30,\;100\)</span>のシミュレーション</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -867,7 +845,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/12_Asymptotics_67_0.png" src="../_images/12_Asymptotics_67_0.png" />
+<img alt="../_images/12_Asymptotics_66_0.png" src="../_images/12_Asymptotics_66_0.png" />
 </div>
 </div>
 <p>（結果：小標本特性）</p>
@@ -967,7 +945,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/12_Asymptotics_75_0.png" src="../_images/12_Asymptotics_75_0.png" />
+<img alt="../_images/12_Asymptotics_74_0.png" src="../_images/12_Asymptotics_74_0.png" />
 </div>
 </div>
 <p>（結果：大標本特性）</p>
@@ -996,7 +974,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/12_Asymptotics_81_0.png" src="../_images/12_Asymptotics_81_0.png" />
+<img alt="../_images/12_Asymptotics_80_0.png" src="../_images/12_Asymptotics_80_0.png" />
 </div>
 </div>
 <p><strong>一様分布</strong>から生成したデータのケース。</p>
@@ -1009,7 +987,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/12_Asymptotics_83_0.png" src="../_images/12_Asymptotics_83_0.png" />
+<img alt="../_images/12_Asymptotics_82_0.png" src="../_images/12_Asymptotics_82_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>パッケージにある<code class="docutils literal notranslate"><span class="pre">wage1</span></code>のデータを使ってみる。</p>
@@ -1025,7 +1003,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/12_Asymptotics_85_0.png" src="../_images/12_Asymptotics_85_0.png" />
+<img alt="../_images/12_Asymptotics_84_0.png" src="../_images/12_Asymptotics_84_0.png" />
 </div>
 </div>
 <p>被説明変数の<code class="docutils literal notranslate"><span class="pre">wage</span></code>に対数を取る。こちらの方が当てはまりが良い。</p>
@@ -1040,7 +1018,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/12_Asymptotics_87_0.png" src="../_images/12_Asymptotics_87_0.png" />
+<img alt="../_images/12_Asymptotics_86_0.png" src="../_images/12_Asymptotics_86_0.png" />
 </div>
 </div>
 </div>
@@ -1063,10 +1041,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(1.2978379765387105,
- 0.5226104195073584,
- 0.03803501086273715,
- 2.7622825739064467)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.1650891524533026,
+ 0.9207703924722785,
+ -0.03217515526263789,
+ 3.0615086729905556)
 </pre></div>
 </div>
 </div>
@@ -1089,10 +1067,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(31.611789794670724,
- 1.3664289810648627e-07,
- -0.0643255312238897,
- 1.7749225272354192)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(27.14914759669294,
+ 1.2724405631361755e-06,
+ 0.05736599593428918,
+ 1.8642202437606445)
 </pre></div>
 </div>
 </div>
@@ -1174,7 +1152,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=1.3173775732711983, pvalue=0.5175294813693574)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=0.2795253013370843, pvalue=0.8695646014842325)
 </pre></div>
 </div>
 </div>
@@ -1190,7 +1168,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=381.4776589368185, pvalue=1.4560586784512766e-83)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=208.58161912227217, pvalue=5.094210590479711e-46)
 </pre></div>
 </div>
 </div>
