@@ -40,5 +40,5 @@ kernelspec:
    - 残差の条件付き期待値がゼロでない場合の対処方法
 1. {doc}`20_LogitProbit`
    - ロジット・モデルとプロビット・モデルを使った分析方法
-1. 制限従属変数モデル
+1. {doc}`21_TruncregTobitHeckit`
    - 切断回帰、Tobit、Heckitモデルを考える

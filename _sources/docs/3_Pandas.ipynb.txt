@@ -4201,7 +4201,7 @@
    "metadata": {},
    "source": [
     "````{tip}\n",
-    "`df`以外にない変数で条件を設定する場合`@`が必要になる。例えば，変数`z`という変数があるとしよう。\n",
+    "`df`にない変数で条件を設定する場合`@`が必要になる。例えば，変数`z`という変数があるとしよう。\n",
     "\n",
     "```python\n",
     "z = 100\n",
@@ -4219,7 +4219,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 52,
+   "execution_count": 88,
    "metadata": {
     "tags": [
      "remove-cell"
@@ -4265,18 +4265,18 @@
        "  <tbody>\n",
        "    <tr>\n",
        "      <th>2001</th>\n",
-       "      <td>95</td>\n",
+       "      <td>95.0</td>\n",
        "      <td>25.0</td>\n",
        "      <td>70.0</td>\n",
-       "      <td>9</td>\n",
+       "      <td>9.0</td>\n",
        "      <td>b</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>2002</th>\n",
-       "      <td>93</td>\n",
+       "      <td>93.0</td>\n",
        "      <td>21.0</td>\n",
        "      <td>72.0</td>\n",
-       "      <td>10</td>\n",
+       "      <td>10.0</td>\n",
        "      <td>a</td>\n",
        "    </tr>\n",
        "  </tbody>\n",
@@ -4284,10 +4284,10 @@
        "</div>"
       ],
       "text/plain": [
-       "      gdp   inv   con  pop id\n",
-       "year                         \n",
-       "2001   95  25.0  70.0    9  b\n",
-       "2002   93  21.0  72.0   10  a"
+       "       gdp   inv   con   pop id\n",
+       "year                           \n",
+       "2001  95.0  25.0  70.0   9.0  b\n",
+       "2002  93.0  21.0  72.0  10.0  a"
       ]
      },
      "metadata": {
@@ -4303,9 +4303,7 @@
     "from myst_nb import glue\n",
     "z = 100\n",
     "glue0 = df.query('gdp < @z')\n",
-    "glue(\"glue0_txt\", glue0)\n",
-    "# my_variable = \"Hello World!\"\n",
-    "# glue(\"glued_txt\", my_variable)"
+    "glue(\"glue0_txt\", glue0)"
    ]
   },
   {
@@ -4338,7 +4336,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 55,
+   "execution_count": 53,
    "metadata": {
     "hidden": true
    },
@@ -4349,7 +4347,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 56,
+   "execution_count": 54,
    "metadata": {
     "hidden": true
    },
@@ -4422,7 +4420,7 @@
        "2001   95  25.0  70.0    9  b          1"
       ]
      },
-     "execution_count": 56,
+     "execution_count": 54,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -4442,7 +4440,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 57,
+   "execution_count": 55,
    "metadata": {
     "hidden": true
    },
@@ -4457,7 +4455,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 58,
+   "execution_count": 56,
    "metadata": {
     "hidden": true
    },
@@ -4534,7 +4532,7 @@
        "2001   95  25.0  70.0    9  b          1  10.555556"
       ]
      },
-     "execution_count": 58,
+     "execution_count": 56,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -4564,7 +4562,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 59,
+   "execution_count": 57,
    "metadata": {
     "hidden": true
    },
@@ -4585,7 +4583,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 60,
+   "execution_count": 58,
    "metadata": {
     "hidden": true
    },
@@ -4618,7 +4616,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 61,
+   "execution_count": 59,
    "metadata": {
     "hidden": true
    },
@@ -4650,7 +4648,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 62,
+   "execution_count": 60,
    "metadata": {
     "hidden": true
    },
@@ -4661,7 +4659,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 63,
+   "execution_count": 61,
    "metadata": {
     "hidden": true
    },
@@ -4739,7 +4737,7 @@
        "2011  215.0  100.0  115.0  22.0  b"
       ]
      },
-     "execution_count": 63,
+     "execution_count": 61,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -4772,7 +4770,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 64,
+   "execution_count": 62,
    "metadata": {
     "hidden": true
    },
@@ -4830,7 +4828,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 65,
+   "execution_count": 63,
    "metadata": {
     "hidden": true
    },
@@ -4846,7 +4844,7 @@
        "dtype: int64"
       ]
      },
-     "execution_count": 65,
+     "execution_count": 63,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -4883,7 +4881,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 66,
+   "execution_count": 64,
    "metadata": {
     "hidden": true
    },
@@ -4952,7 +4950,7 @@
        "2010  210.0   NaN  NaN  21.0  a"
       ]
      },
-     "execution_count": 66,
+     "execution_count": 64,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -4992,7 +4990,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 67,
+   "execution_count": 65,
    "metadata": {
     "hidden": true
    },
@@ -5124,7 +5122,7 @@
        "2008  119.0  60.0  59.0  18.0  a"
       ]
      },
-     "execution_count": 67,
+     "execution_count": 65,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -5160,7 +5158,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 68,
+   "execution_count": 66,
    "metadata": {
     "hidden": true
    },
@@ -5301,7 +5299,7 @@
        "2009  200.0  62.0   NaN  20.0  b"
       ]
      },
-     "execution_count": 68,
+     "execution_count": 66,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -5339,7 +5337,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 69,
+   "execution_count": 67,
    "metadata": {
     "hidden": true
    },
@@ -5435,7 +5433,7 @@
        "2004  110.0  39.0  71.0  12.0  a"
       ]
      },
-     "execution_count": 69,
+     "execution_count": 67,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -5455,7 +5453,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 70,
+   "execution_count": 68,
    "metadata": {
     "hidden": true
    },
@@ -5551,7 +5549,7 @@
        "2005  115.0  55.0  60.0  14.0  b"
       ]
      },
-     "execution_count": 70,
+     "execution_count": 68,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -5571,7 +5569,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 71,
+   "execution_count": 69,
    "metadata": {
     "hidden": true
    },
@@ -5667,7 +5665,7 @@
        "2008  119.0  60.0  59.0  18.0  a"
       ]
      },
-     "execution_count": 71,
+     "execution_count": 69,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -5696,7 +5694,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 72,
+   "execution_count": 70,
    "metadata": {
     "hidden": true
    },
@@ -5710,7 +5708,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 73,
+   "execution_count": 71,
    "metadata": {
     "hidden": true
    },
@@ -5863,7 +5861,7 @@
        "10  2010  210   NaN   NaN   21  a"
       ]
      },
-     "execution_count": 73,
+     "execution_count": 71,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -5874,7 +5872,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 74,
+   "execution_count": 72,
    "metadata": {
     "hidden": true
    },
@@ -5970,7 +5968,7 @@
        "7  2004  110    0"
       ]
      },
-     "execution_count": 74,
+     "execution_count": 72,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -5981,7 +5979,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 75,
+   "execution_count": 73,
    "metadata": {
     "hidden": true
    },
@@ -6054,7 +6052,7 @@
        "2  2015  220   80  140   24  b"
       ]
      },
-     "execution_count": 75,
+     "execution_count": 73,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -6107,7 +6105,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 76,
+   "execution_count": 74,
    "metadata": {
     "hidden": true
    },
@@ -6212,7 +6210,7 @@
        "4  2004  110  39.0  71.0   12  a  110    0"
       ]
      },
-     "execution_count": 76,
+     "execution_count": 74,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -6223,7 +6221,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 77,
+   "execution_count": 75,
    "metadata": {
     "hidden": true
    },
@@ -6400,7 +6398,7 @@
        "10  2010  210   NaN   NaN   21  a    NaN  NaN"
       ]
      },
-     "execution_count": 77,
+     "execution_count": 75,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -6411,7 +6409,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 78,
+   "execution_count": 76,
    "metadata": {
     "hidden": true
    },
@@ -6552,7 +6550,7 @@
        "7  1997    NaN   NaN   NaN   NaN  NaN   96    1"
       ]
      },
-     "execution_count": 78,
+     "execution_count": 76,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -6563,7 +6561,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 79,
+   "execution_count": 77,
    "metadata": {
     "hidden": true
    },
@@ -6776,7 +6774,7 @@
        "13  1997    NaN   NaN   NaN   NaN  NaN   96.0  1.0"
       ]
      },
-     "execution_count": 79,
+     "execution_count": 77,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -6808,7 +6806,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 80,
+   "execution_count": 78,
    "metadata": {
     "hidden": true
    },
@@ -6819,7 +6817,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 81,
+   "execution_count": 79,
    "metadata": {
     "hidden": true
    },
@@ -6912,7 +6910,7 @@
        "2   2015  220  80.0  140.0   24  b"
       ]
      },
-     "execution_count": 81,
+     "execution_count": 79,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -6923,9 +6921,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true
-   },
+   "metadata": {},
    "source": [
     "## その他"
    ]
@@ -6933,8 +6929,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### インデックスを振り直す"
@@ -6951,7 +6946,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 82,
+   "execution_count": 80,
    "metadata": {
     "hidden": true
    },
@@ -7149,7 +7144,7 @@
        "13      2  2015  220  80.0  140.0   24  b"
       ]
      },
-     "execution_count": 82,
+     "execution_count": 80,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -7169,7 +7164,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 83,
+   "execution_count": 81,
    "metadata": {
     "hidden": true
    },
@@ -7262,7 +7257,7 @@
        "4  2004  110  39.0  71.0   12  a"
       ]
      },
-     "execution_count": 83,
+     "execution_count": 81,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -7274,8 +7269,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "### 列のラベルの変更"
@@ -7300,7 +7294,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 84,
+   "execution_count": 82,
    "metadata": {
     "hidden": true
    },
@@ -7393,7 +7387,7 @@
        "4  2004  110  39.0  71.0       12      a"
       ]
      },
-     "execution_count": 84,
+     "execution_count": 82,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -7404,10 +7398,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "### 列の並び替え"
    ]
@@ -7415,8 +7406,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "#### アルファベット順"
@@ -7435,7 +7425,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 85,
+   "execution_count": 83,
    "metadata": {
     "hidden": true
    },
@@ -7528,7 +7518,7 @@
        "4  71.0  110  a  39.0   12  2004"
       ]
      },
-     "execution_count": 85,
+     "execution_count": 83,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -7539,10 +7529,7 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "#### 順番を指定する"
    ]
@@ -7550,8 +7537,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
+    "heading_collapsed": true
    },
    "source": [
     "##### 方法１"
@@ -7564,6 +7550,252 @@
    },
    "source": [
     "列を選択する方法を使い並び替える。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 84,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>id</th>\n",
+       "      <th>year</th>\n",
+       "      <th>gdp</th>\n",
+       "      <th>con</th>\n",
+       "      <th>inv</th>\n",
+       "      <th>pop</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>a</td>\n",
+       "      <td>2000</td>\n",
+       "      <td>100</td>\n",
+       "      <td>80.0</td>\n",
+       "      <td>20.0</td>\n",
+       "      <td>8</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>b</td>\n",
+       "      <td>2001</td>\n",
+       "      <td>95</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>25.0</td>\n",
+       "      <td>9</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>a</td>\n",
+       "      <td>2002</td>\n",
+       "      <td>93</td>\n",
+       "      <td>72.0</td>\n",
+       "      <td>21.0</td>\n",
+       "      <td>10</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>b</td>\n",
+       "      <td>2003</td>\n",
+       "      <td>100</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>30.0</td>\n",
+       "      <td>11</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>a</td>\n",
+       "      <td>2004</td>\n",
+       "      <td>110</td>\n",
+       "      <td>71.0</td>\n",
+       "      <td>39.0</td>\n",
+       "      <td>12</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "  id  year  gdp   con   inv  pop\n",
+       "0  a  2000  100  80.0  20.0    8\n",
+       "1  b  2001   95  70.0  25.0    9\n",
+       "2  a  2002   93  72.0  21.0   10\n",
+       "3  b  2003  100  70.0  30.0   11\n",
+       "4  a  2004  110  71.0  39.0   12"
+      ]
+     },
+     "execution_count": 84,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "var = ['id','year','gdp','con','inv','pop']\n",
+    "\n",
+    "df13.loc[:,var].head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "##### 方法２"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "もちろん次の方法も可。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 85,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>id</th>\n",
+       "      <th>year</th>\n",
+       "      <th>gdp</th>\n",
+       "      <th>con</th>\n",
+       "      <th>inv</th>\n",
+       "      <th>pop</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>a</td>\n",
+       "      <td>2000</td>\n",
+       "      <td>100</td>\n",
+       "      <td>80.0</td>\n",
+       "      <td>20.0</td>\n",
+       "      <td>8</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>b</td>\n",
+       "      <td>2001</td>\n",
+       "      <td>95</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>25.0</td>\n",
+       "      <td>9</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>a</td>\n",
+       "      <td>2002</td>\n",
+       "      <td>93</td>\n",
+       "      <td>72.0</td>\n",
+       "      <td>21.0</td>\n",
+       "      <td>10</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>b</td>\n",
+       "      <td>2003</td>\n",
+       "      <td>100</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>30.0</td>\n",
+       "      <td>11</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>a</td>\n",
+       "      <td>2004</td>\n",
+       "      <td>110</td>\n",
+       "      <td>71.0</td>\n",
+       "      <td>39.0</td>\n",
+       "      <td>12</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "  id  year  gdp   con   inv  pop\n",
+       "0  a  2000  100  80.0  20.0    8\n",
+       "1  b  2001   95  70.0  25.0    9\n",
+       "2  a  2002   93  72.0  21.0   10\n",
+       "3  b  2003  100  70.0  30.0   11\n",
+       "4  a  2004  110  71.0  39.0   12"
+      ]
+     },
+     "execution_count": 85,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df13[var].head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "##### 方法３"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "メソッド`.reindex()`を使う。引数は`columns=[]`。"
    ]
   },
   {
@@ -7667,272 +7899,19 @@
     }
    ],
    "source": [
-    "var = ['id','year','gdp','con','inv','pop']\n",
-    "\n",
-    "df13.loc[:,var].head()"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
-   "source": [
-    "##### 方法２"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "もちろん次の方法も可。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 87,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>id</th>\n",
-       "      <th>year</th>\n",
-       "      <th>gdp</th>\n",
-       "      <th>con</th>\n",
-       "      <th>inv</th>\n",
-       "      <th>pop</th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>0</th>\n",
-       "      <td>a</td>\n",
-       "      <td>2000</td>\n",
-       "      <td>100</td>\n",
-       "      <td>80.0</td>\n",
-       "      <td>20.0</td>\n",
-       "      <td>8</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>1</th>\n",
-       "      <td>b</td>\n",
-       "      <td>2001</td>\n",
-       "      <td>95</td>\n",
-       "      <td>70.0</td>\n",
-       "      <td>25.0</td>\n",
-       "      <td>9</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2</th>\n",
-       "      <td>a</td>\n",
-       "      <td>2002</td>\n",
-       "      <td>93</td>\n",
-       "      <td>72.0</td>\n",
-       "      <td>21.0</td>\n",
-       "      <td>10</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>3</th>\n",
-       "      <td>b</td>\n",
-       "      <td>2003</td>\n",
-       "      <td>100</td>\n",
-       "      <td>70.0</td>\n",
-       "      <td>30.0</td>\n",
-       "      <td>11</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>4</th>\n",
-       "      <td>a</td>\n",
-       "      <td>2004</td>\n",
-       "      <td>110</td>\n",
-       "      <td>71.0</td>\n",
-       "      <td>39.0</td>\n",
-       "      <td>12</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "  id  year  gdp   con   inv  pop\n",
-       "0  a  2000  100  80.0  20.0    8\n",
-       "1  b  2001   95  70.0  25.0    9\n",
-       "2  a  2002   93  72.0  21.0   10\n",
-       "3  b  2003  100  70.0  30.0   11\n",
-       "4  a  2004  110  71.0  39.0   12"
-      ]
-     },
-     "execution_count": 87,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "df13[var].head()"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
-   "source": [
-    "##### 方法３"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
-   "source": [
-    "メソッド`.reindex()`を使う。引数は`columns=[]`。"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 88,
-   "metadata": {
-    "hidden": true
-   },
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>id</th>\n",
-       "      <th>year</th>\n",
-       "      <th>gdp</th>\n",
-       "      <th>con</th>\n",
-       "      <th>inv</th>\n",
-       "      <th>pop</th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>0</th>\n",
-       "      <td>a</td>\n",
-       "      <td>2000</td>\n",
-       "      <td>100</td>\n",
-       "      <td>80.0</td>\n",
-       "      <td>20.0</td>\n",
-       "      <td>8</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>1</th>\n",
-       "      <td>b</td>\n",
-       "      <td>2001</td>\n",
-       "      <td>95</td>\n",
-       "      <td>70.0</td>\n",
-       "      <td>25.0</td>\n",
-       "      <td>9</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2</th>\n",
-       "      <td>a</td>\n",
-       "      <td>2002</td>\n",
-       "      <td>93</td>\n",
-       "      <td>72.0</td>\n",
-       "      <td>21.0</td>\n",
-       "      <td>10</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>3</th>\n",
-       "      <td>b</td>\n",
-       "      <td>2003</td>\n",
-       "      <td>100</td>\n",
-       "      <td>70.0</td>\n",
-       "      <td>30.0</td>\n",
-       "      <td>11</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>4</th>\n",
-       "      <td>a</td>\n",
-       "      <td>2004</td>\n",
-       "      <td>110</td>\n",
-       "      <td>71.0</td>\n",
-       "      <td>39.0</td>\n",
-       "      <td>12</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "  id  year  gdp   con   inv  pop\n",
-       "0  a  2000  100  80.0  20.0    8\n",
-       "1  b  2001   95  70.0  25.0    9\n",
-       "2  a  2002   93  72.0  21.0   10\n",
-       "3  b  2003  100  70.0  30.0   11\n",
-       "4  a  2004  110  71.0  39.0   12"
-      ]
-     },
-     "execution_count": 88,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
     "df13.reindex(columns=['id','year','gdp','con','inv','pop']).head()"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "heading_collapsed": true,
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "##### 方法３の応用"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {
-    "hidden": true
-   },
+   "metadata": {},
    "source": [
     "最後の行を最初に移動する。\n",
     "* `.columns.tolist()`：コラムのラベルを取得し，それをリストに変換\n",
@@ -7944,10 +7923,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 89,
-   "metadata": {
-    "hidden": true
-   },
+   "execution_count": 87,
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -8040,7 +8017,7 @@
        "2004  a   NaN  110.0  39.0  71.0"
       ]
      },
-     "execution_count": 89,
+     "execution_count": 87,
      "metadata": {},
      "output_type": "execute_result"
     }
