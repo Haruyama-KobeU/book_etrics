@@ -1,0 +1,25 @@
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
+
+# Pythonで学ぶ入門計量経済学
+
+```{epigraph}
+[春山 鉄源](https://t-haruyama.github.io)
+
+神戸大学経済学研究科
+```
+
+下のサイトに移りました。
+
+↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓
+
+[https://spring-book.github.io/py4etrics/](https://spring-book.github.io/py4etrics/)
+
